@@ -16,6 +16,7 @@ std::string FileManager::readDirectory(const std::filesystem::path &directory, b
     } catch (const std::filesystem::__cxx11::filesystem_error &) {
         paths.append("ACCESS_DENIED");
     }
+    if (folder) paths.append("/");
 
     return paths;
 }

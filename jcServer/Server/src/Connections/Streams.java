@@ -199,7 +199,7 @@ public class Streams {
             case R_A_DIR -> {
                 sendSize(3);
                 sendString(name);
-                return new ArrayList<String>(Arrays.asList(readString().split("\\|")));
+                return new ArrayList<>(Arrays.asList(readString().split("\\|")));
             }
             case R_FO_DIR -> {
                 sendSize(4);
