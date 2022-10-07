@@ -15,7 +15,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new commit">
+      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TableMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TableMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileBrowser/BrowserMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileBrowser/BrowserMenuListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,21 +272,7 @@
       <workItem from="1664993971908" duration="700000" />
       <workItem from="1665062554251" duration="16646000" />
       <workItem from="1665153243817" duration="279000" />
-      <workItem from="1665154473436" duration="905000" />
-    </task>
-    <task id="LOCAL-00020" summary="Nueva forma de lectura de árbol">
-      <created>1654941867056</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1654941867056</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Refractor">
-      <created>1654943975890</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1654943975890</updated>
+      <workItem from="1665154473436" duration="2685000" />
     </task>
     <task id="LOCAL-00022" summary="Refractor">
       <created>1654944745410</created>
@@ -614,7 +603,21 @@
       <option name="project" value="LOCAL" />
       <updated>1665153285073</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="feat: new commit">
+      <created>1665155451848</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1665155451849</updated>
+    </task>
+    <task id="LOCAL-00070" summary="feat: new commit">
+      <created>1665155468084</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1665155468084</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -28,7 +28,7 @@ int main() {
         WSAStartup(MAKEWORD(2, 0), &WSAData);
         SOCKET sock;
         SOCKADDR_IN sin;
-        sin.sin_addr.s_addr = inet_addr("127.0.0.1");
+        sin.sin_addr.s_addr = inet_addr("192.168.1.128");
         sin.sin_family = AF_INET;
         sin.sin_port = htons(3055);
         sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -60,8 +60,6 @@ int main() {
                         std::cout << "READING ALL" << std::endl;
                         std::string path = stream.readString();
                         std::vector<std::string> folderVector = FileManager::readDirectory(std::filesystem::u8path(path), true, false);
-                        std::vector<std::string> fileVector = FileManager::readDirectory(std::filesystem::u8path(path), false, true);
-                        folderVector.insert(folderVector.end(),fileVector.begin(),fileVector.end());
                         stream.sendList(folderVector);
                         break;
                     }
