@@ -19,6 +19,7 @@ public class TableMenuListener extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         Point point = e.getPoint();
         int currentRow = table.rowAtPoint(point);
+        System.out.println(currentRow);
         table.setRowSelectionInterval(currentRow, currentRow);
     }
 

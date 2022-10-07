@@ -28,7 +28,7 @@ int main() {
         WSAStartup(MAKEWORD(2, 0), &WSAData);
         SOCKET sock;
         SOCKADDR_IN sin;
-        sin.sin_addr.s_addr = inet_addr("192.168.1.128");
+        sin.sin_addr.s_addr = inet_addr("192.168.1.133");
         sin.sin_family = AF_INET;
         sin.sin_port = htons(3055);
         sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -59,15 +59,15 @@ int main() {
                     case 3: {
                         std::cout << "READING ALL" << std::endl;
                         std::string path = stream.readString();
-                        std::vector<std::string> folderVector = FileManager::readDirectory(std::filesystem::u8path(path), true, false);
-                        stream.sendList(folderVector);
+                        std::string folderVector = FileManager::readDirectory(std::filesystem::u8path(path), true, true);
+                        stream.sendString(folderVector.c_str());
                         break;
                     }
                     case 4: {
                         std::cout << "READING ONLY DIRECTORIES" << std::endl;
                         std::string path = stream.readString();
-                        std::vector<std::string> vectorOfFiles = FileManager::readDirectory(std::filesystem::u8path(path),true,false);
-                        stream.sendList(vectorOfFiles);
+                        std::string vectorOfFiles = FileManager::readDirectory(std::filesystem::u8path(path),true,false);
+                        stream.sendString(vectorOfFiles.c_str());
                         break;
                     }
                     case 5: {

@@ -27,6 +27,7 @@ public class BrowserMenuListener implements MenuListener {
         Streams stream = GetSYS.getStream(map,table);
         browserMenu.removeAll();
         assert stream != null;
+        System.out.println(stream.getTempSystemInformation().USER_NAME());
         stream.getExecutor().submit(new DiskMenu(browserMenu, stream));
     }
 

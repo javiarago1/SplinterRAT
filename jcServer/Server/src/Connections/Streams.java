@@ -12,6 +12,7 @@ import org.json.JSONTokener;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -198,7 +199,7 @@ public class Streams {
             case R_A_DIR -> {
                 sendSize(3);
                 sendString(name);
-                return readList();
+                return new ArrayList<String>(Arrays.asList(readString().split("\\|")));
             }
             case R_FO_DIR -> {
                 sendSize(4);
