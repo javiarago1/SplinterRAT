@@ -20,6 +20,7 @@
 
 
 
+
 int main() {
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(L"877a590a-a49a-489e-af04-666f5f98d5a7"));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
