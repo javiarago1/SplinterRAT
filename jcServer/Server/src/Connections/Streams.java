@@ -140,6 +140,7 @@ public class Streams {
     public Object sendAndReadJSON(Action action) {
         switch (action) {
             case SYS_INFO -> {
+                
                 sendSize(0);
                 List<String> informationList = readList();
                 return listToSystemInformation(informationList);
