@@ -14,7 +14,9 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: discarding JSON for space" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new commit">
+      <change beforePath="$PROJECT_DIR$/../jcClient/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/.idea/vcs.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +44,7 @@
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -61,27 +63,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/javier/jcRAT/jcServer",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/javier/jcRAT/jcServer&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="Server.GUI.TreeInterpreter.TreeGUI" />
@@ -266,20 +268,7 @@
       <workItem from="1664993546548" duration="248000" />
       <workItem from="1664993971908" duration="700000" />
       <workItem from="1665062554251" duration="16646000" />
-    </task>
-    <task id="LOCAL-00019" summary="Cambios generales">
-      <created>1654879663181</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1654879663181</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Nueva forma de lectura de árbol">
-      <created>1654941867056</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1654941867056</updated>
+      <workItem from="1665136116798" duration="228000" />
     </task>
     <task id="LOCAL-00021" summary="Refractor">
       <created>1654943975890</created>
@@ -610,7 +599,21 @@
       <option name="project" value="LOCAL" />
       <updated>1665071333164</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="feat: discarding JSON for space">
+      <created>1665136179823</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1665136179823</updated>
+    </task>
+    <task id="LOCAL-00069" summary="feat: new commit">
+      <created>1665136303623</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1665136303623</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -646,7 +649,6 @@
       <path value="$PROJECT_DIR$/Downloaded Files/185.105.38.67 - JAVIER/[2022-08-30] - [22-01-46]/Documents/OK/vcpkg" />
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
     </ignored-roots>
-    <MESSAGE value="Cambiado mensaje de Tree [] a &lt;&gt;" />
     <MESSAGE value="New feature: Upload client side" />
     <MESSAGE value="Nueva clase de escucha de directorio JTreeDirectory" />
     <MESSAGE value="Fix: arreglo de bug de selección de directorio y tarea en hilo" />
@@ -671,7 +673,8 @@
     <MESSAGE value="refactoring" />
     <MESSAGE value="feat: status of operations (progress bars)" />
     <MESSAGE value="feat: discarding JSON for space" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: discarding JSON for space" />
+    <MESSAGE value="feat: new commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: new commit" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
