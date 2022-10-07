@@ -12,7 +12,7 @@ class FileManager {
 public:
     FileManager();
 
-    static std::vector<std::string> readDirectory(const std::filesystem::path &directory, bool folder, bool file);
+    static std::string readDirectory(const std::filesystem::path &directory, bool folder, bool file);
 
     static void copyFiles(const std::vector<std::string> &vectorOfFiles, const std::vector<std::string> &vectorOfDirectories);
 

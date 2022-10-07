@@ -1,22 +1,22 @@
 #include "FileManager.h"
 #include "../converter/Converter.h"
 
-std::vector<std::string> FileManager::readDirectory(const std::filesystem::path &directory, bool folder, bool file) {
-    std::vector<std::string> paths;
+std::string FileManager::readDirectory(const std::filesystem::path &directory, bool folder, bool file) {
+    std::string paths;
     try {
         for (const auto &entry: std::filesystem::directory_iterator(directory)) {
             if (std::filesystem::is_directory(entry) && folder) {
                 std::cout << "Is directory -> " << entry.path().filename() << std::endl;
-                paths.push_back(entry.path().filename().string());
+                paths.append(entry.path().filename().string()).append("|");
             } else if (std::filesystem::is_regular_file(entry) && file) {
                 std::cout << "Is file -> " << entry.path().filename() << std::endl;
-                paths.push_back(entry.path().filename().string());
+                paths.append(entry.path().filename().string().append("|"));
             }
         }
     } catch (const std::filesystem::__cxx11::filesystem_error &) {
-        paths.emplace_back("ACCESS_DENIED");
+        paths.append("ACCESS_DENIED");
     }
-    if (folder) paths.emplace_back("/");
+
     return paths;
 }
 
