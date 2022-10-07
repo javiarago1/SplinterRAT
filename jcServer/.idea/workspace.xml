@@ -16,6 +16,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: commit from intellij to c++">
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,7 +270,7 @@
       <workItem from="1664993971908" duration="700000" />
       <workItem from="1665062554251" duration="16646000" />
       <workItem from="1665153243817" duration="279000" />
-      <workItem from="1665154473436" duration="4466000" />
+      <workItem from="1665154473436" duration="5208000" />
     </task>
     <task id="LOCAL-00024" summary="Refractor">
       <created>1654958154979</created>
