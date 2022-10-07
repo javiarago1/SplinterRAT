@@ -1,0 +1,31 @@
+package Connections;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ThreadPool extends Thread {
+    private final ServerSocket server;
+    private final ConcurrentHashMap<Socket, Streams> dialog;
+    private final ExecutorService executor = Executors.newFixedThreadPool(4);
+
+    public ThreadPool(ServerSocket server, ConcurrentHashMap<Socket, Streams> dialog) {
+        if (server == null || dialog == null) throw new IllegalArgumentException();
+        this.server = server;
+        this.dialog = dialog;
+    }
+
+    public void run() {
+        if (server == null || dialog == null || executor == null)
+            throw new IllegalArgumentException("Invalid arguments!");
+        for (int i = 0; i < 4; i++)
+            executor.submit(new Connection(server, executor, dialog));
+    }
+
+    public void shutdownNow() {
+        executor.shutdownNow();
+    }
+
+}

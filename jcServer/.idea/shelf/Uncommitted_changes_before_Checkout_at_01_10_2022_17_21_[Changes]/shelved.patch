@@ -1,0 +1,343 @@
+Index: Server/src/Server/GUI/WebcamManager/WebcamActions/StartWebcamButton.java
+===================================================================
+diff --git a/Server/src/Server/GUI/WebcamManager/WebcamActions/StartWebcamButton.java b/Server/src/Server/GUI/WebcamManager/Actions/StartWebcamButton.java
+rename from Server/src/Server/GUI/WebcamManager/WebcamActions/StartWebcamButton.java
+rename to Server/src/Server/GUI/WebcamManager/Actions/StartWebcamButton.java
+--- a/Server/src/Server/GUI/WebcamManager/WebcamActions/StartWebcamButton.java	
++++ b/Server/src/Server/GUI/WebcamManager/Actions/StartWebcamButton.java	
+@@ -1,4 +1,4 @@
+-package Server.GUI.WebcamManager.WebcamActions;
++package Server.GUI.WebcamManager.Actions;
+ 
+ import Server.GUI.WebcamManager.WebcamGUI;
+ 
+@@ -12,7 +12,6 @@
+         super(webcamGUI);
+     }
+ 
+-
+     private void requestSave() {
+         if (JOptionPane.showConfirmDialog(null, "You have pending recordings to save. Do you want to save the recordings?", "Warning: pending recordings to save",
+                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+@@ -22,7 +21,13 @@
+ 
+     @Override
+     public void actionPerformed(ActionEvent e) {
+-        if (getWebcamGUI().isStateWebcamButton()) {
++        getWebcamGUI().getWebcamLabel().setText("");
++        getWebcamGUI().setSelectedDevice(String.valueOf(getWebcamGUI().getBoxOfDevices().getSelectedItem()));
++        getWebcamGUI().setFragmented(getWebcamGUI().getVideoFragmentedCheckBox().isSelected());
++
++        AbstractButton abstractButton = (AbstractButton) e.getSource();
++        boolean selected = abstractButton.getModel().isSelected();
++        if (!selected) {
+             if (getWebcamGUI().getSaveRecordButton().isEnabled()) requestSave();
+             getWebcamGUI().setStateWebcamButton(false);
+             getWebcamGUI().getBoxOfDevices().setEnabled(true);
+Index: Server/src/Server/GUI/WebcamManager/WebcamActions/RequestWebcamDevices.java
+===================================================================
+diff --git a/Server/src/Server/GUI/WebcamManager/WebcamActions/RequestWebcamDevices.java b/Server/src/Server/GUI/WebcamManager/Actions/RequestWebcamDevices.java
+rename from Server/src/Server/GUI/WebcamManager/WebcamActions/RequestWebcamDevices.java
+rename to Server/src/Server/GUI/WebcamManager/Actions/RequestWebcamDevices.java
+--- a/Server/src/Server/GUI/WebcamManager/WebcamActions/RequestWebcamDevices.java	
++++ b/Server/src/Server/GUI/WebcamManager/Actions/RequestWebcamDevices.java	
+@@ -1,6 +1,5 @@
+-package Server.GUI.WebcamManager.WebcamActions;
++package Server.GUI.WebcamManager.Actions;
+ 
+-import Server.Connections.Streams;
+ import Server.GUI.WebcamManager.WebcamGUI;
+ import Server.Information.Action;
+ 
+@@ -8,19 +7,11 @@
+ import java.util.List;
+ 
+ public class RequestWebcamDevices extends SwingWorker<Void, Void> {
+-
+-
+-    private final Streams stream;
+     private final WebcamGUI webcamGUI;
+ 
+-    public RequestWebcamDevices(Streams stream, WebcamGUI webcamGUI) {
++    public RequestWebcamDevices(WebcamGUI webcamGUI) {
+         this.webcamGUI = webcamGUI;
+-        this.stream = stream;
+-
+     }
+-
+-    private List<?> listOfWebcams;
+-
+ 
+ 
+     private void disableButtons() {
+@@ -31,21 +22,28 @@
+         webcamGUI.getSaveRecordButton().setEnabled(false);
+     }
+ 
+-    private void enableButtons() {
+-        if (webcamGUI.getBoxOfDevices().getSelectedIndex() != -1) {
+-            webcamGUI.getBoxOfDevices().setEnabled(true);
+-            webcamGUI.getStartButton().setEnabled(true);
+-            webcamGUI.getRecordButton().setEnabled(false);
+-            webcamGUI.getSnapshotButton().setEnabled(false);
+-            webcamGUI.getSaveRecordButton().setEnabled(false);
++    private void enableBasicButtons() {
++        webcamGUI.getBoxOfDevices().setEnabled(true);
++        webcamGUI.getStartButton().setEnabled(true);
++        webcamGUI.getRecordButton().setEnabled(false);
++        webcamGUI.getSnapshotButton().setEnabled(false);
++        webcamGUI.getSaveRecordButton().setEnabled(false);
++    }
++
++    private void enableButtons() {
++        if (webcamGUI.getBoxOfDevices().getSelectedIndex() != -1) {
++            enableBasicButtons();
+         } else {
+             disableButtons();
+         }
+     }
+ 
++
++    private List<?> listOfWebcams;
++
+     @Override
+     protected Void doInBackground() {
+-        listOfWebcams = (List<?>) stream.sendAndReadJSON(Action.REQUEST_WEBCAM);
++        listOfWebcams = (List<?>) webcamGUI.getStream().sendAndReadJSON(Action.REQUEST_WEBCAM);
+         return null;
+     }
+ 
+Index: Server/src/Server/GUI/WebcamManager/WebcamActions/StartWebcam.java
+===================================================================
+diff --git a/Server/src/Server/GUI/WebcamManager/WebcamActions/StartWebcam.java b/Server/src/Server/GUI/WebcamManager/Actions/StartWebcam.java
+rename from Server/src/Server/GUI/WebcamManager/WebcamActions/StartWebcam.java
+rename to Server/src/Server/GUI/WebcamManager/Actions/StartWebcam.java
+--- a/Server/src/Server/GUI/WebcamManager/WebcamActions/StartWebcam.java	
++++ b/Server/src/Server/GUI/WebcamManager/Actions/StartWebcam.java	
+@@ -1,5 +1,4 @@
+-package Server.GUI.WebcamManager.WebcamActions;
+-
++package Server.GUI.WebcamManager.Actions;
+ 
+ 
+ import javax.swing.*;
+@@ -8,6 +7,8 @@
+ import Server.Information.Action;
+ 
+ import org.apache.commons.io.FileUtils;
++
++import java.awt.*;
+ import java.io.File;
+ import java.io.IOException;
+ import java.util.List;
+@@ -17,46 +18,40 @@
+ 
+ 
+     private final WebcamGUI webcamGUI;
+-
+     public StartWebcam(WebcamGUI webcamGUI) {
+         this.webcamGUI = webcamGUI;
+     }
+ 
+ 
+-    private void saveRecord() {
+-        int numOfFragments = webcamGUI.getStream().readSize();
+-        webcamGUI.getStream().sendSize(0);
+-        for (int i = 0; i < numOfFragments; i++) {
+-            webcamGUI.getStream().receiveFile();
+-            webcamGUI.getStream().sendSize(0);
+-        }
+-
+-    }
+-
+     @Override
+     public void run() {
+-        boolean fragmented = webcamGUI.getVideoFragmentedCheckBox().isSelected();
++        boolean fragmented = webcamGUI.isFragmented();
+         int FPS = webcamGUI.getFPS();
+-        webcamGUI.getWebcamLabel().setText("");
+-        String selectedDevice = String.valueOf(webcamGUI.getBoxOfDevices().getSelectedItem());
+-        webcamGUI.getStream().sendAndReadJSON(Action.START_WEBCAM, selectedDevice, fragmented, FPS);
+-        System.out.println("waiting");
+-        List<?> dimensions = (List<?>) webcamGUI.getStream().readJSON();
++        String selectedDevice = webcamGUI.getSelectedDevice();
++        List<?> dimensions = (List<?>) webcamGUI.getStream().sendAndReadJSON(Action.START_WEBCAM, selectedDevice, fragmented, FPS);
+         webcamGUI.setFrameDimensions((int) dimensions.get(0), (int) dimensions.get(1));
+ 
+-        while (true) {
++        boolean streamingState = true;
++
++        while (streamingState) {
+             System.out.println("Estado " + webcamGUI.isStateWebcamButton());
+             if (webcamGUI.isStateWebcamButton()) {
+                 if (webcamGUI.isStateSaveRecordButton()) {
+                     webcamGUI.getStream().sendSize(3);
+                     webcamGUI.setStateSaveRecordButton(false);
+                     saveRecord();
++                    receiveFrame();
+                 } else if (webcamGUI.isStateStartRecordButton()) {
+                     webcamGUI.getStream().sendSize(1);
++                    receiveFrame();
+                 } else if (webcamGUI.isStateStopRecordButton()) {
+                     webcamGUI.setStateStopRecordButton(false);
+                     webcamGUI.getStream().sendSize(2);
+-                } else webcamGUI.getStream().sendSize(0);
++                    receiveFrame();
++                } else {
++                    webcamGUI.getStream().sendSize(0);
++                    receiveFrame();
++                }
+             } else {
+                 if (webcamGUI.isSaveAndStop()) {
+                     webcamGUI.getStream().sendSize(-2);
+@@ -64,20 +59,35 @@
+                 } else {
+                     webcamGUI.getStream().sendSize(-1);
+                 }
+-                break;
++                streamingState = false;
+             }
+-            byte[] array = webcamGUI.getStream().receiveBytesOfImage();
+-            if (webcamGUI.isStateSnapshotButton()) {
+-                webcamGUI.setStateSnapshotButton(false);
+-                try {
+-                    FileUtils.writeByteArrayToFile(new File("capture.png"), array);
+-                } catch (IOException e) {
+-                    throw new RuntimeException(e);
+-                }
++
++        }
++    }
++
++    private void saveRecord() {
++        int numOfFragments = webcamGUI.getStream().readSize();
++        webcamGUI.getStream().sendSize(0);
++        for (int i = 0; i < numOfFragments; i++) {
++            webcamGUI.getStream().sendSize(0);
++            webcamGUI.getStream().receiveFile();
++        }
++
++    }
++
++    private void receiveFrame() {
++        byte[] array = webcamGUI.getStream().receiveBytesOfImage();
++        if (webcamGUI.isStateSnapshotButton()) {
++            webcamGUI.setStateSnapshotButton(false);
++            try {
++                FileUtils.writeByteArrayToFile(new File("capture.png"), array);
++            } catch (IOException e) {
++                throw new RuntimeException(e);
++            }
+ 
+-            }
+-            ImageIcon tempIMG = new ImageIcon(array);
+-            SwingUtilities.invokeLater(() -> webcamGUI.getWebcamLabel().setIcon(tempIMG));
+-        }
++        }
++        ImageIcon tempIMG = new ImageIcon(array);
++        Image newImage = tempIMG.getImage().getScaledInstance(webcamGUI.getWebcamLabel().getWidth(), webcamGUI.getWebcamLabel().getHeight(), Image.SCALE_FAST);
++        SwingUtilities.invokeLater(() -> webcamGUI.getWebcamLabel().setIcon(new ImageIcon(newImage)));
+     }
+ }
+Index: Server/src/Server/GUI/WebcamManager/WebcamActions/Record/RecordWebcamButton.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Server/src/Server/GUI/WebcamManager/WebcamActions/Record/RecordWebcamButton.java b/Server/src/Server/GUI/WebcamManager/Actions/Record/RecordWebcamButton.java
+rename from Server/src/Server/GUI/WebcamManager/WebcamActions/Record/RecordWebcamButton.java
+rename to Server/src/Server/GUI/WebcamManager/Actions/Record/RecordWebcamButton.java
+--- a/Server/src/Server/GUI/WebcamManager/WebcamActions/Record/RecordWebcamButton.java	
++++ b/Server/src/Server/GUI/WebcamManager/Actions/Record/RecordWebcamButton.java	
+@@ -1,10 +1,10 @@
+-package Server.GUI.WebcamManager.WebcamActions.Record;
++package Server.GUI.WebcamManager.Actions.Record;
+ 
+-import Server.GUI.WebcamManager.WebcamActions.WebcamActions;
++import Server.GUI.WebcamManager.Actions.WebcamActions;
+ import Server.GUI.WebcamManager.WebcamGUI;
+ 
++import javax.swing.*;
+ import java.awt.event.ActionEvent;
+-import java.awt.event.ActionListener;
+ 
+ public class RecordWebcamButton extends WebcamActions {
+ 
+@@ -15,17 +15,19 @@
+ 
+     @Override
+     public void actionPerformed(ActionEvent e) {
+-        if (getWebcamGUI().isStateStartRecordButton()) {
++        AbstractButton abstractButton = (AbstractButton) e.getSource();
++        boolean selected = abstractButton.getModel().isSelected();
++        if (selected) {
++            getWebcamGUI().setStateStartRecordButton(true);
++            getWebcamGUI().getSaveRecordButton().setEnabled(false);
++            getWebcamGUI().getStartButton().setEnabled(false);
++            getWebcamGUI().getRecordButton().setText("Stop recording");
++        } else {
+             getWebcamGUI().setStateStartRecordButton(false);
+             getWebcamGUI().setStateStopRecordButton(true);
+-            getWebcamGUI().getRecordButton().setText("Record");
+             getWebcamGUI().getSaveRecordButton().setEnabled(true);
+             getWebcamGUI().getStartButton().setEnabled(true);
+-        } else {
+-            getWebcamGUI().setStateStartRecordButton(true);
+-            getWebcamGUI().getRecordButton().setText("Stop recording");
+-            getWebcamGUI().getSaveRecordButton().setEnabled(false);
+-            getWebcamGUI().getStartButton().setEnabled(false);
++            getWebcamGUI().getRecordButton().setText("Record");
+         }
+     }
+ }
+Index: Server/src/Server/GUI/WebcamManager/WebcamActions/Snapshot/SnapshotButton.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Server/src/Server/GUI/WebcamManager/WebcamActions/Snapshot/SnapshotButton.java b/Server/src/Server/GUI/WebcamManager/Actions/Snapshot/SnapshotButton.java
+rename from Server/src/Server/GUI/WebcamManager/WebcamActions/Snapshot/SnapshotButton.java
+rename to Server/src/Server/GUI/WebcamManager/Actions/Snapshot/SnapshotButton.java
+--- a/Server/src/Server/GUI/WebcamManager/WebcamActions/Snapshot/SnapshotButton.java	
++++ b/Server/src/Server/GUI/WebcamManager/Actions/Snapshot/SnapshotButton.java	
+@@ -1,6 +1,6 @@
+-package Server.GUI.WebcamManager.WebcamActions.Snapshot;
++package Server.GUI.WebcamManager.Actions.Snapshot;
+ 
+-import Server.GUI.WebcamManager.WebcamActions.WebcamActions;
++import Server.GUI.WebcamManager.Actions.WebcamActions;
+ import Server.GUI.WebcamManager.WebcamGUI;
+ 
+ import java.awt.event.ActionEvent;
+Index: Server/src/Server/GUI/WebcamManager/WebcamActions/Save/SaveRecordButton.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Server/src/Server/GUI/WebcamManager/WebcamActions/Save/SaveRecordButton.java b/Server/src/Server/GUI/WebcamManager/Actions/Save/SaveRecordButton.java
+rename from Server/src/Server/GUI/WebcamManager/WebcamActions/Save/SaveRecordButton.java
+rename to Server/src/Server/GUI/WebcamManager/Actions/Save/SaveRecordButton.java
+--- a/Server/src/Server/GUI/WebcamManager/WebcamActions/Save/SaveRecordButton.java	
++++ b/Server/src/Server/GUI/WebcamManager/Actions/Save/SaveRecordButton.java	
+@@ -1,4 +1,4 @@
+-package Server.GUI.WebcamManager.WebcamActions.Save;
++package Server.GUI.WebcamManager.Actions.Save;
+ 
+ import Server.GUI.WebcamManager.WebcamGUI;
+ 
+Index: Server/src/Server/GUI/WebcamManager/WebcamActions/WebcamActions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Server/src/Server/GUI/WebcamManager/WebcamActions/WebcamActions.java b/Server/src/Server/GUI/WebcamManager/Actions/WebcamActions.java
+rename from Server/src/Server/GUI/WebcamManager/WebcamActions/WebcamActions.java
+rename to Server/src/Server/GUI/WebcamManager/Actions/WebcamActions.java
+--- a/Server/src/Server/GUI/WebcamManager/WebcamActions/WebcamActions.java	
++++ b/Server/src/Server/GUI/WebcamManager/Actions/WebcamActions.java	
+@@ -1,4 +1,4 @@
+-package Server.GUI.WebcamManager.WebcamActions;
++package Server.GUI.WebcamManager.Actions;
+ 
+ 
+ import Server.GUI.WebcamManager.WebcamGUI;
