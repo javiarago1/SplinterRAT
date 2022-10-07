@@ -59,9 +59,14 @@ int main() {
                     case 3: {
                         std::cout << "READING ALL" << std::endl;
                         std::string path = stream.readString();
+                        auto begin = std::chrono::high_resolution_clock::now();
                         std::string folderVector = FileManager::readDirectory(std::filesystem::u8path(path), true, false);
                         std::string fileVector = FileManager::readDirectory(std::filesystem::u8path(path), false, true);
                         folderVector.append(fileVector);
+                        auto end = std::chrono::high_resolution_clock::now();
+                        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+                        printf("Time measured: %.3f seconds.\n", elapsed.count() * 1e-9);
+
                         stream.sendString(folderVector.c_str());
                         break;
                     }
