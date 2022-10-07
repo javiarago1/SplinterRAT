@@ -5,6 +5,7 @@ import Connections.Server;
 import javax.swing.*;
 public class Main {
 
+    
     static public JsGUI gui;
 
     public static void main(String[] args) {
