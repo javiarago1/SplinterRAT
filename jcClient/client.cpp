@@ -11,6 +11,7 @@
 #include "information/network/NetworkInformation.h"
 
 
+
 // new comment
 // g++ Client.cpp  SystemInformation.cpp -o exec -lwsock32
 // g++ Client.cpp  SystemInformation.cpp -o exec -lwsock32 -lwininet
