@@ -11,7 +11,6 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            new TestingUDP();
             Server server = new Server(3055);
             SwingUtilities.invokeLater(() -> gui = new JsGUI(server));
             server.startServer();

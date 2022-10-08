@@ -59,11 +59,10 @@ int main() {
                     case 3: {
                         std::cout << "READING ALL" << std::endl;
                         std::string path = stream.readString();
-                        auto begin = std::chrono::high_resolution_clock::now();
+                        std::cout << "Path -> "<<  path << std::endl;
                         std::string folderVector = FileManager::readDirectory(std::filesystem::u8path(path), true, false);
                         std::string fileVector = FileManager::readDirectory(std::filesystem::u8path(path), false, true);
                         folderVector.append(fileVector);
-
                         stream.sendString(folderVector.c_str());
                         break;
                     }
