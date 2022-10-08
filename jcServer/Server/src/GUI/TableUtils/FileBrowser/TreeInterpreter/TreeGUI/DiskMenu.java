@@ -37,7 +37,6 @@ public class DiskMenu implements Runnable {
     }
 
     private void createFileBrowserOptions() {
-        System.out.println("Array de discos -> " + Arrays.toString(disksArray));
         for (String s : disksArray) {
             if (s.equals(diskWindows + "\\")) {
                 JMenu windowsDiskMenu = new JMenu(stream.getTempSystemInformation().OPERATING_SYSTEM());

@@ -12,8 +12,8 @@ void WebcamManager::sendRecord() {
     if (!fragmented) output.release();
     stream.sendSize(static_cast<int>(pathVector.size()));
     for (const auto &file: pathVector) {
-        stream.readSize();
         stream.sendFile(file.c_str());
+        stream.readSize();
         std::filesystem::remove(file);
     }
     removeTempFiles();

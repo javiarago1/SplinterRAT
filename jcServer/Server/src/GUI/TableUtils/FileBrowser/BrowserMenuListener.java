@@ -3,11 +3,13 @@ package GUI.TableUtils.FileBrowser;
 import Connections.Streams;
 import GUI.TableUtils.Configuration.GetSYS;
 import GUI.TableUtils.FileBrowser.TreeInterpreter.TreeGUI.DiskMenu;
+import Information.Action;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BrowserMenuListener implements MenuListener {
@@ -27,7 +29,6 @@ public class BrowserMenuListener implements MenuListener {
         Streams stream = GetSYS.getStream(map,table);
         browserMenu.removeAll();
         assert stream != null;
-        System.out.println(stream.getTempSystemInformation().USER_NAME());
         stream.getExecutor().submit(new DiskMenu(browserMenu, stream));
     }
 

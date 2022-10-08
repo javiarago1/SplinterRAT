@@ -20,10 +20,11 @@ import java.util.stream.Stream;
 
 
 public class Streams {
-    static InputStream is;
-    static OutputStream os;
-    static DataInputStream dis;
-    static DataOutputStream dos;
+
+    private InputStream is;
+    private OutputStream os;
+    private DataInputStream dis;
+    private DataOutputStream dos;
     private SystemInformation tempSystemInformation;
     private NetworkInformation tempNetworkInformation;
     private boolean webcamDialogOpen;
@@ -140,6 +141,7 @@ public class Streams {
             }
             case DISK -> {
                 sendSize(2);
+                System.out.println();
                 List<String> listOfDisks = readList();
                 System.out.println(listOfDisks);
                 return listOfDisks.toArray(new String[0]);
@@ -260,11 +262,9 @@ public class Streams {
         sendSize(buffer.length);
         try {
             dos.write(buffer);
-            System.out.println("String sent");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(message);
     }
 
     public int readSize() {
@@ -277,11 +277,9 @@ public class Streams {
 
     public String readString() {
         int size = readSize();
-        System.out.println("Size to receive -> " + size);
         byte[] buffer = new byte[size];
         try {
             int read = is.read(buffer, 0, size);
-            System.out.println("read string -> " + read);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -77,9 +77,9 @@ public class StartWebcam implements Runnable {
         String time = new Time().getTime();
         int numOfFragments = webcamGUI.getStream().readSize();
         for (int i = 0; i < numOfFragments; i++) {
-            webcamGUI.getStream().sendSize(0);
             String recordDirectory = "\\Webcam Records\\";
             webcamGUI.getStream().receiveFile(webcamGUI.getStream().getSessionFolder() + recordDirectory + time);
+            webcamGUI.getStream().sendSize(0);
         }
 
     }
