@@ -1,6 +1,7 @@
 package GUI;
 
 import Connections.Server;
+import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
 public class Main {
@@ -9,9 +10,8 @@ public class Main {
     static public JsGUI gui;
 
     public static void main(String[] args) {
-        
-
         try {
+            new TestingUDP();
             Server server = new Server(3055);
             SwingUtilities.invokeLater(() -> gui = new JsGUI(server));
             server.startServer();

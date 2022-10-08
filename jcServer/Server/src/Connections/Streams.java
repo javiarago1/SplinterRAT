@@ -41,19 +41,19 @@ public class Streams {
         int fileSize = readSize();
         int total = 0;
         byte[] buffer = new byte[fileSize];
-        System.out.println("buffer size -> " + buffer.length);
+       // System.out.println("buffer size -> " + buffer.length);
         try {
             while (total < fileSize) {
                 int read = dis.read(buffer, total, fileSize - total);
                 total += read;
-                System.out.println("total " + total + " /" + fileSize);
+                //  System.out.println("total " + total + " /" + fileSize);
             }
-            System.out.println("REAL TOTAL -> " + total);
+            //System.out.println("REAL TOTAL -> " + total);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        System.out.println(total);
+//        System.out.println(total);
 
         return buffer;
     }
