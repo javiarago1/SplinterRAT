@@ -18,7 +18,7 @@ void Stream::sendSize(int size) const {
     if (send(sock, (char *) &convertedInt, sizeof(size), 0) == SOCKET_ERROR) {
         std::cout << "Failed to send message" << std::endl;
     }
-    std::cout << "Size sent" << std::endl;
+    //std::cout << "Size sent" << std::endl;
 
 }
 
@@ -151,7 +151,7 @@ int Stream::readSize() const {
         std::cout << "Error reading message size" << std::endl;
     }
     int length = (int) ntohl(aux);
-    std::cout << "Read -> " << length << std::endl;
+    //std::cout << "Read -> " << length << std::endl;
     return length;
 }
 
