@@ -104,7 +104,8 @@ public class StartWebcam implements Runnable {
         }
         // Setting up image size and call to EDT for changing state of JLabel
         ImageIcon tempIMG = new ImageIcon(array);
-        Image newImage = tempIMG.getImage().getScaledInstance(webcamGUI.getWebcamLabel().getWidth(), webcamGUI.getWebcamLabel().getHeight(), Image.SCALE_SMOOTH);
-        SwingUtilities.invokeLater(() -> webcamGUI.getWebcamLabel().setIcon(new ImageIcon(newImage)));
+        // Image newImage = tempIMG.getImage().getScaledInstance(webcamGUI.getWebcamLabel().getWidth(), webcamGUI.getWebcamLabel().getHeight(), Image.SCALE_FAST);
+        // is used the other one ->
+        SwingUtilities.invokeLater(() -> webcamGUI.getWebcamLabel().setIcon(tempIMG));
     }
 }

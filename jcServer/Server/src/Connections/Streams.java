@@ -46,7 +46,6 @@ public class Streams {
             while (total < fileSize) {
                 int read = dis.read(buffer, total, fileSize - total);
                 total += read;
-                //  System.out.println("total " + total + " /" + fileSize);
             }
             //System.out.println("REAL TOTAL -> " + total);
         } catch (IOException e) {
@@ -105,18 +104,7 @@ public class Streams {
     }
 
 
-    public void sendString(String message) {
-        sendSize(message.length());
-        byte[] buffer = message.getBytes();
-        try {
-            os.write(buffer);
-            System.out.println("String sent");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        readSize();
 
-    }
 
 
     private SystemInformation listToSystemInformation(List<String> list) {
@@ -267,6 +255,18 @@ public class Streams {
         }
     }
 
+    public void sendString(String message) {
+        byte[] buffer = message.getBytes();
+        sendSize(buffer.length);
+        try {
+            dos.write(buffer);
+            System.out.println("String sent");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(message);
+    }
+
     public int readSize() {
         try {
             return dis.readInt();
@@ -277,21 +277,15 @@ public class Streams {
 
     public String readString() {
         int size = readSize();
-        byte[] buffer = new byte[1024];
-        StringBuilder sb = new StringBuilder();
-        int total = 0;
-        int read;
-        while (total < size) {
-            try {
-                read = is.read(buffer);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            total += read;
-            sb.append(new String(buffer, 0, read));
+        System.out.println("Size to receive -> " + size);
+        byte[] buffer = new byte[size];
+        try {
+            int read = is.read(buffer, 0, size);
+            System.out.println("read string -> " + read);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        sendSize(-20);
-        return sb.toString();
+        return new String(buffer);
     }
 
 

@@ -2,15 +2,11 @@
 
 
 void Stream::sendString(const char *c_str) const {
-    const int size = (int) strlen(c_str);
+    const int size = static_cast<int>(strlen(c_str));
     sendSize(size);
-
     if (send(sock, c_str, size, 0) == SOCKET_ERROR) {
         std::cout << "Failed to send message" << std::endl;
     }
-    std::cout << "Message sent" << std::endl;
-    readSize();
-
 }
 
 void Stream::sendSize(int size) const {
@@ -58,23 +54,21 @@ void Stream::sendFile(const wchar_t *stringPath,const wchar_t *basePath) const {
 }
 
 void Stream::sendFile(const wchar_t *stringPath) const {
-
     if (FILE *fp = _wfopen(stringPath, L"rb")) {
         fseek(fp, 0L, SEEK_END);
         long int size = ftell(fp);
         fseek(fp, 0L, SEEK_SET);
-        std::cout << "size " << size << std::endl;
         sendString(extractFileName(stringPath).c_str());
         readSize();
         sendSize(size);
         unsigned int readBytes;
-        char buffer[1024];
+        char buffer[16384];
         while ((readBytes = fread(buffer, 1, sizeof(buffer), fp)) > 0) {
-            std::cout << readBytes << std::endl;
             if (send(sock, buffer, (int) readBytes, 0) != readBytes) {
                 break;
             }
         }
+
         fclose(fp);
     } else {
         std::cout << "Incorrect" << std::endl;
@@ -157,21 +151,13 @@ int Stream::readSize() const {
 
 std::string Stream::readString() const {
     int size = readSize();
-    std::cout << "Size string -> " << size << std::endl;
-    char buffer[1024];
-    int total = 0;
-    std::string mainString;
-    while (total < size) {
-        const int result = recv(sock, buffer, sizeof(buffer), 0);
-        total += result;
-        mainString.append(buffer, result);
-        if (result == SOCKET_ERROR) {
+    char buffer[size];
+    const int result = recv(sock, buffer, size, 0);
+    std::string str(buffer,result);
+    if (result == SOCKET_ERROR) {
             std::cout << "Error sending message" << std::endl;
-        }
     }
-    sendSize(-69);
-    return mainString;
-
+    return str;
 }
 
 

@@ -29,7 +29,6 @@ public class DownloadProgressBar extends Bar {
         String tempPath;
         // receives files till string equals to "/". "/" = no more files to send
         while (!(tempPath = stream.readString()).equals("/")) {
-            System.out.println("Route -> " + tempPath);
             // where to save the file
             String formedPath = stream.getSessionFolder() + "\\Downloaded Files\\" + time + "\\" + tempPath;
             try {
@@ -56,7 +55,6 @@ public class DownloadProgressBar extends Bar {
                 int read = dis.read(buffer, total, fileSize - total); // read to buffer
                 total += read; // total readed
                 publish((int) Math.floor((float) total * 100 / fileSize), fileName);     // publish % and file name
-                System.out.println(total + " /" + fileSize);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
