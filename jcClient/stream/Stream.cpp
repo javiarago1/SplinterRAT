@@ -1,4 +1,5 @@
 #include "Stream.h"
+#include "../file/FileManager.h"
 
 
 void Stream::sendString(const char *c_str) const {
@@ -19,7 +20,8 @@ void Stream::sendSize(int size) const {
 }
 
 std::string Stream::extractRelativePath(const wchar_t *stringPath, const wchar_t *basePath) {
-    const std::filesystem::path relativePath= std::filesystem::relative(stringPath,std::filesystem::path (basePath).parent_path());
+    const std::filesystem::path relativePath = std::filesystem::relative(stringPath,
+                                                                         std::filesystem::path(basePath).parent_path());
     std::cout << "Relative -> " << relativePath << std::endl;
     return relativePath.string();
 }
@@ -30,17 +32,17 @@ std::string Stream::extractFileName(const wchar_t *stringPath) {
     return tempPath.filename().string();
 }
 
-void Stream::sendFile(const wchar_t *stringPath,const wchar_t *basePath) const {
+void Stream::sendFile(const wchar_t *stringPath, const wchar_t *basePath) const {
     if (FILE *fp = _wfopen(stringPath, L"rb")) {
         fseek(fp, 0L, SEEK_END);
         long int size = ftell(fp);
         fseek(fp, 0L, SEEK_SET);
         std::cout << "size " << size << std::endl;
-        sendString(extractRelativePath(stringPath,basePath).c_str());
+        sendString(extractRelativePath(stringPath, basePath).c_str());
         readSize();
         sendSize(size);
         unsigned int readBytes;
-        char buffer[1024];
+        char buffer[16384];
         while ((readBytes = fread(buffer, 1, sizeof(buffer), fp)) > 0) {
             std::cout << readBytes << std::endl;
             if (send(sock, buffer, (int) readBytes, 0) != readBytes) {
@@ -75,8 +77,8 @@ void Stream::sendFile(const wchar_t *stringPath) const {
     }
 }
 
-void Stream::sendList(const std::vector<std::string>& list){
-    for (const auto& file: list){
+void Stream::sendList(const std::vector<std::string> &list) {
+    for (const auto &file: list) {
         sendSize(0);
         sendString(file.c_str());
     }
@@ -84,55 +86,52 @@ void Stream::sendList(const std::vector<std::string>& list){
 }
 
 
-std::vector<std::string> Stream::readList(){
+std::vector<std::string> Stream::readList() {
     std::vector<std::string> vectorToDownload;
-    while (readSize()!=-1){
+    while (readSize() != -1) {
         vectorToDownload.push_back(readString());
     }
     return vectorToDownload;
 }
 
 
-
-
-void Stream::readFile(const std::vector<std::string>& destinationVector) const {
+void Stream::readFile(const std::vector<std::string> &destinationVector) const {
     sendSize(1); // start reading (sent to Server)
     std::cout << "1st -> Read filename" << std::endl;
     std::wstring wide = Converter::string2wstring(readString());
     std::wcout << wide << std::endl;
-    sendSize(69);
+    // sendSize(69);
     int size = readSize();
     std::cout << "File size -> " << size << std::endl;
-    char buffer[4096];
+    char buffer[16384];
     int total = 0;
-
-    bool firstInteraction=true;
+    std::ofstream out;
+    out.open(wide.c_str(), std::ios::binary | std::ios::app);
     while (total < size) {
         const int result = recv(sock, buffer, sizeof(buffer), 0);
         total += result;
         std::cout << total << std::endl;
-
-        for (const auto& dest: destinationVector){
-            std::wstring finalPath = Converter::string2wstring(dest).append(L"\\"+wide);
-            std::ofstream out;
-            std::cout << "Exist -> " << std::filesystem::exists(finalPath) << std::endl;
-            if (firstInteraction && std::filesystem::exists(finalPath)){
-                std::filesystem::resize_file(finalPath,0);
-            }
-            std::ios_base::openmode mode = std::filesystem::exists(finalPath) ? std::ios::binary | std::ios::app
-                    : std::ios::binary |  std::ios::out;
-            out.open(finalPath.c_str(), mode);
-            out.write(buffer, result);
-            out.close();
-        }
-        firstInteraction=false;
-
+        out.write(buffer, result);
         if (result == SOCKET_ERROR) {
             std::cout << "Error reading file bytes" << std::endl;
         }
     }
 
-    sendSize(-19);
+    out.close();
+    for (const auto &directory: destinationVector) {
+        std::filesystem::path pathI = std::filesystem::path(wide);
+        std::filesystem::path pathF = std::filesystem::u8path(directory);
+        pathF /= pathI.filename();
+        if (!std::filesystem::exists(pathF)) {
+            std::filesystem::copy(pathI, pathF, std::filesystem::copy_options::overwrite_existing |
+                                                std::filesystem::copy_options::recursive);
+        }
+
+    }
+
+
+
+    // sendSize(-19);
     std::cout << "Sent -> " << total << std::endl;
 
 }
@@ -153,9 +152,9 @@ std::string Stream::readString() const {
     int size = readSize();
     char buffer[size];
     const int result = recv(sock, buffer, size, 0);
-    std::string str(buffer,result);
+    std::string str(buffer, result);
     if (result == SOCKET_ERROR) {
-            std::cout << "Error sending message" << std::endl;
+        std::cout << "Error sending message" << std::endl;
     }
     return str;
 }

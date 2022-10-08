@@ -35,7 +35,7 @@ public class UploadProgressBar extends Bar {
             // Adding new name file to GUI
 
             // Wait for response to start sending bytes
-            stream.readSize();
+            //stream.readSize();
 
             try {
                 stream.sendSize((int) Files.size(path)); // Sending size of bytes
@@ -53,7 +53,7 @@ public class UploadProgressBar extends Bar {
 
             int read = 0;
             while (read < fileBytes.length) {
-                int toRead = Math.min(fileBytes.length - read, 4096); // Read size by size with buffer -> 4096
+                int toRead = Math.min(fileBytes.length - read, 8192); // Read size by size with buffer -> 4096
                 try {
                     dos.write(fileBytes, read, toRead);
                 } catch (IOException e) {
@@ -64,7 +64,8 @@ public class UploadProgressBar extends Bar {
                 System.out.println(read + "/" + total);
             }
             countOfFiles++;
-            stream.readSize(); // Wait for response of process done
+            System.out.println("finished with first file ? ");
+            //stream.readSize(); // Wait for response of process done
 
         }
         return null;

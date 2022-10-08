@@ -11,7 +11,6 @@ void Download::start() {
         std::wstring wide = Converter::string2wstring(file);
         if (std::filesystem::is_directory(wide)) {
             downloadFolder(wide, wide.c_str());
-
         } else {
             downloadFile(wide);
         }
@@ -26,7 +25,7 @@ void Download::downloadFolder(const std::filesystem::path &filePath, const wchar
                 downloadFolder(entry, relativePath);
             } else {
                 stream.sendFile(entry.path().wstring().c_str(), relativePath);
-                stream.readSize();
+               // stream.readSize();
             }
         } catch (std::filesystem::__cxx11::filesystem_error&) {}
     }
@@ -34,5 +33,5 @@ void Download::downloadFolder(const std::filesystem::path &filePath, const wchar
 
 void Download::downloadFile(const std::filesystem::path &filePath) {
     stream.sendFile(filePath.wstring().c_str());
-    stream.readSize();
+    //stream.readSize();
 }
