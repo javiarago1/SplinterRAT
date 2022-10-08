@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 
 /*
@@ -38,7 +39,8 @@ public class StartWebcam implements Runnable {
         int[] dimensions = (int[]) webcamGUI.getStream().sendAndReadJSON(Action.START_WEBCAM, selectedDevice,
                 fragmented, FPS);
         // Setting dimension of video capture
-        webcamGUI.setFrameDimensions(dimensions[0], dimensions[1]);
+        webcamGUI.setFrameDimensions(dimensions[0] + 25, dimensions[1] + 75);
+        System.out.println(Arrays.toString(dimensions));
 
         boolean streamingState = true;
 
