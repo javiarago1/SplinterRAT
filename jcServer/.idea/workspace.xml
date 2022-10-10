@@ -15,12 +15,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: commit from intellij to c++">
-      <change beforePath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/CellRenderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerMenuListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/MouseListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDirectory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDisk.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/TableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_2022_17_18_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_2022_17_18__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_2022_17_21_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_2022_17_21__Changes_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileBrowser/BrowserMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileBrowser/BrowserMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileBrowser/TreeInterpreter/TreeGUI/DiskMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileBrowser/TreeInterpreter/TreeGUI/DiskMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/StartWebcam.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/StartWebcam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +71,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectId" id="2AIAeL6o3JnVkslciuwihAU76c2" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -78,12 +90,12 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/JAVIER/jcRAT/jcServer",
+    "last_opened_file_path": "C:/Users/JAVIER/jcRAT/jcServer/Server/src/GUI/TableUtils/FileManager/Icons",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
@@ -94,16 +106,20 @@
       <recent name="Server.GUI.TreeInterpreter.TreeGUI" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src\GUI\TableUtils\FileManager\Icons" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Server\src\Server\GUI\Compiler" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Server\src" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Client\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Client\src" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Client\src\Client" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Client" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Client\src\res" />
-      <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Server" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="GUI.TableUtils.FileManager" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="Server.Information" />
@@ -276,6 +292,10 @@
       <workItem from="1665153243817" duration="279000" />
       <workItem from="1665154473436" duration="8217000" />
       <workItem from="1665208658716" duration="20845000" />
+      <workItem from="1665297247280" duration="630000" />
+      <workItem from="1665311561429" duration="488000" />
+      <workItem from="1665335801072" duration="11000" />
+      <workItem from="1665410841318" duration="16573000" />
     </task>
     <task id="LOCAL-00031" summary="Refractor: parámetros innecesarios">
       <created>1655119473781</created>
@@ -684,16 +704,5 @@
     <MESSAGE value="feat: commit from intellij to c++" />
     <option name="LAST_COMMIT_MESSAGE" value="feat: commit from intellij to c++" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/StartWebcam.java</url>
-          <line>76</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

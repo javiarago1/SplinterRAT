@@ -1,6 +1,7 @@
 package GUI;
 
 import Connections.Server;
+import GUI.TableUtils.FileManager.FileManagerGUI;
 import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
