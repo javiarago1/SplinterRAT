@@ -1,5 +1,6 @@
 package GUI.TableUtils.FileManager.Actions;
 
+import Connections.Streams;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import javax.swing.*;
@@ -23,11 +24,19 @@ public abstract class Manager implements ActionListener {
         JTable table = fileManagerGUI.getTable();
         int[] selectedRows = table.getSelectedRows();
         List<String> listOfPaths = new ArrayList<>();
-        for (int e : selectedRows) {
-            listOfPaths.add(fileManagerGUI.getTextField().getText() + table.getValueAt(e, 0));
+        if (selectedRows.length == 0) {
+            listOfPaths.add(fileManagerGUI.getStack().peek());
+        } else {
+            for (int e : selectedRows) {
+                listOfPaths.add(fileManagerGUI.getTextField().getText() + table.getValueAt(e, 0));
+            }
         }
         return listOfPaths;
 
+    }
+
+    public Streams getStream() {
+        return fileManagerGUI.getStream();
     }
 
     public FileManagerGUI getFileManagerGUI() {

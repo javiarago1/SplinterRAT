@@ -28,7 +28,7 @@ int main() {
         WSAStartup(MAKEWORD(2, 0), &WSAData);
         SOCKET sock;
         SOCKADDR_IN sin;
-        sin.sin_addr.s_addr = inet_addr("192.168.82.182");
+        sin.sin_addr.s_addr = inet_addr("192.168.1.133");
         sin.sin_family = AF_INET;
         sin.sin_port = htons(3055);
         sock = socket(AF_INET, SOCK_STREAM, 0);

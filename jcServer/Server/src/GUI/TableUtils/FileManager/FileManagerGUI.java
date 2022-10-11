@@ -2,13 +2,19 @@ package GUI.TableUtils.FileManager;
 
 
 import Connections.Streams;
-import GUI.TableUtils.FileManager.Actions.DownloadAction;
+import GUI.TableUtils.FileManager.Actions.*;
+import GUI.TableUtils.FileManager.Event.DeleteEvent;
+import GUI.TableUtils.FileManager.Event.RunEvent;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class FileManagerGUI {
@@ -26,6 +32,8 @@ public class FileManagerGUI {
     private final JScrollPane scrollPane;
 
     private final JDialog fileManagerDialog;
+
+    private JPopupMenu popupMenu;
 
     public FileManagerGUI(Streams stream, JFrame mainGUI) {
         this.stream = stream;
@@ -107,6 +115,7 @@ public class FileManagerGUI {
 
         createPopUpMenu();
 
+
         table.addMouseListener(new MouseListener(this));
 
         fileManagerDialog.setLocationRelativeTo(null);
@@ -114,26 +123,64 @@ public class FileManagerGUI {
 
     }
 
+
+    private boolean copySelected;
+
+    private boolean cutSelected;
+
+    public boolean isCopySelected() {
+        return copySelected;
+    }
+
+    public boolean isCutSelected() {
+        return cutSelected;
+    }
+
+    public void setCopySelected(boolean copySelected) {
+        this.copySelected = copySelected;
+    }
+
+    public void setCutSelected(boolean cutSelected) {
+        this.cutSelected = cutSelected;
+    }
+
+    List<String> CMElements = new ArrayList<>();
+
+
+    public List<String> getCMElements() {
+        return CMElements;
+    }
+
+    public void setCMElements(List<String> CMElements) {
+        this.CMElements = CMElements;
+    }
+
     private void createPopUpMenu() {
-        JPopupMenu popupMenu = new JPopupMenu();
+        popupMenu = new JPopupMenu();
         JMenuItem downloadItem = new JMenuItem("Download");
         JMenuItem copyMenu = new JMenuItem("Copy");
-        JMenuItem moveMenu = new JMenuItem("Move");
+        JMenuItem cutMenu = new JMenuItem("Cut");
+        JMenuItem pasteMenu = new JMenuItem("Paste");
         JMenuItem uploadMenu = new JMenuItem("Upload");
         JMenuItem runItem = new JMenuItem("Run");
         JMenuItem deleteItem = new JMenuItem("Delete");
 
         popupMenu.add(downloadItem);
         popupMenu.add(copyMenu);
-        popupMenu.add(moveMenu);
+        popupMenu.add(cutMenu);
+        popupMenu.add(pasteMenu);
         popupMenu.add(uploadMenu);
         popupMenu.add(deleteItem);
         popupMenu.add(runItem);
 
+
         downloadItem.addActionListener(new DownloadAction(this));
-
-
-        table.setComponentPopupMenu(popupMenu);
+        copyMenu.addActionListener(new CopyAction(this));
+        cutMenu.addActionListener(new CutAction(this));
+        pasteMenu.addActionListener(new PasteAction(this));
+        uploadMenu.addActionListener(new UploadAction(this));
+        deleteItem.addActionListener(new DeleteAction(this));
+        runItem.addActionListener(new RunAction(this));
 
 
     }
@@ -189,4 +236,9 @@ public class FileManagerGUI {
     public JDialog getFileManagerDialog() {
         return fileManagerDialog;
     }
+
+    public JPopupMenu getPopupMenu() {
+        return popupMenu;
+    }
+
 }

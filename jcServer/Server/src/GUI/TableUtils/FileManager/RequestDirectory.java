@@ -47,7 +47,7 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
 
     @Override
     protected void done() {
-        if (list.get(0).equals("ACCESS_DENIED")) {
+        if (!list.isEmpty() && list.get(0).equals("ACCESS_DENIED")) {
             JOptionPane.showMessageDialog(null, "Access denied to this folder",
                     "Access denied", JOptionPane.ERROR_MESSAGE);
             fileManagerGUI.getStack().pop();

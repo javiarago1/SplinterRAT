@@ -1,40 +1,39 @@
-package GUI.TableUtils.FileBrowser.TreeInterpreter.TreeGUI.Menus;
+package GUI.TableUtils.FileManager.Actions;
 
-import Connections.Streams;
 import GUI.ProgressBar.UploadProgressBar;
-import GUI.TableUtils.FileBrowser.TreeInterpreter.TreeUtils.TreeMenu;
+import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Arrays;
 
-public class UploadAction extends TreeMenu {
+public class UploadAction extends Manager {
+
 
     private final JFileChooser fileChooser = new JFileChooser();
 
-
-    public UploadAction(JTree tree, Streams stream, JDialog dialog) {
-        super(tree, stream, dialog);
+    public UploadAction(FileManagerGUI fileManagerGUI) {
+        super(fileManagerGUI);
         fileChooser.setDialogTitle("Select files");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setMultiSelectionEnabled(true);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int returnVal = fileChooser.showOpenDialog(getDialog());
+        int returnVal = fileChooser.showOpenDialog(getFileManagerGUI().getFileManagerDialog());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File[] selectedFiles = fileChooser.getSelectedFiles();
             if ((selectedFiles == null)) {
                 System.out.println("File exception");
             } else {
                 System.out.println("Selection list -> " + Arrays.toString(selectedFiles));
-                getStream().getExecutor().submit(new UploadProgressBar(getDialog(), getStream(), selectedFiles, getSelectedPaths()));
+                getFileManagerGUI().getStream().getExecutor().submit(new UploadProgressBar(
+                        getFileManagerGUI().getFileManagerDialog(),
+                        getFileManagerGUI().getStream(), selectedFiles, getSelectedPaths()));
             }
         }
-
-
     }
-
 }

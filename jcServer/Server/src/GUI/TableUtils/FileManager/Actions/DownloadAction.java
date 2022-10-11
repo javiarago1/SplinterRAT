@@ -2,7 +2,6 @@ package GUI.TableUtils.FileManager.Actions;
 
 import GUI.ProgressBar.DownloadProgressBar;
 import GUI.TableUtils.FileManager.FileManagerGUI;
-import Information.Action;
 
 import java.awt.event.ActionEvent;
 
