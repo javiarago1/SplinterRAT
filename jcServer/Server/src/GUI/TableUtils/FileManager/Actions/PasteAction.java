@@ -24,7 +24,7 @@ public class PasteAction extends Manager {
             getFileManagerGUI().setCutSelected(false);
             getFileManagerGUI().getStream().getExecutor().submit(new MoveEvent(
                     getFileManagerGUI().getStream(), getFileManagerGUI().getCMElements(),
-                    getSelectedPaths().get(getSelectedPaths().size() - 1)));
+                    getSelectedPaths().get(0)));
         }
 
 

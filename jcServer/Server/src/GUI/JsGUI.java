@@ -2,20 +2,18 @@ package GUI;
 
 import Connections.Server;
 import Connections.Streams;
-import GUI.ProgressBar.UploadProgressBar;
+
 import GUI.TableUtils.Configuration.StateColumnRenderer;
 import GUI.TableUtils.Configuration.TableMenuListener;
 import GUI.TableUtils.Configuration.TableModel;
-import GUI.TableUtils.FileBrowser.BrowserMenuListener;
 import GUI.TableUtils.FileManager.FileManagerMenuListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.sun.jna.platform.win32.COM.IStream;
+
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
-import java.io.File;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -88,14 +86,12 @@ public class JsGUI {
     // Menus of table
     private JPopupMenu popupMenu;
     private JMenuItem fileManagerMenu;
-    private JMenu browserMenu;
     private JMenuItem webcamMenu;
 
 
     private void addPopUpMenu() {
         popupMenu = new JPopupMenu();
         fileManagerMenu = new JMenuItem("File Manager");
-        browserMenu = new JMenu("File Manager");
         webcamMenu = new JMenuItem("Webcam manager");
 
         // set actions
@@ -103,7 +99,6 @@ public class JsGUI {
 
         popupMenu.add(fileManagerMenu);
         // add to popup
-        popupMenu.add(browserMenu);
 
         popupMenu.add(webcamMenu);
 
@@ -119,7 +114,6 @@ public class JsGUI {
 
 
         connectionTable.addMouseListener(new TableMenuListener(connectionTable));
-        browserMenu.addMenuListener(new BrowserMenuListener(connectionTable, browserMenu, map));
         webcamMenu.addActionListener(new WebcamMenuListener(connectionTable, map, this));
         fileManagerMenu.addActionListener(new FileManagerMenuListener(connectionTable, map, this));
 

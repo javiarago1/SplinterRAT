@@ -29,7 +29,8 @@ public class MouseListener extends MouseAdapter {
             }
         } else if (SwingUtilities.isRightMouseButton(e)) {
             JPopupMenu popupMenu = fileManagerGUI.getPopupMenu();
-            popupMenu.getComponent(3).setVisible(fileManagerGUI.isCopySelected() || fileManagerGUI.isCutSelected());
+            popupMenu.getComponent(3).setVisible(fileManagerGUI.isCopySelected() || fileManagerGUI.isCutSelected()
+                    && checkSelected(fileManagerGUI, rows));
             popupMenu.getComponent(4).setVisible(checkSelected(fileManagerGUI, rows));
             popupMenu.show(e.getComponent(), e.getX(), e.getY());
         }
