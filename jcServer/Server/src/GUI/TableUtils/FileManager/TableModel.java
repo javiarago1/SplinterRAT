@@ -4,7 +4,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class TableModel extends DefaultTableModel {
 
-    String[] col = {"Column 1", "Column 2", "Column 3"};
+    String[] col = {"File name", "Size", "Creation date"};
 
     public TableModel() {
         //Adding columns

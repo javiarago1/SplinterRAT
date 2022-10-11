@@ -2,9 +2,12 @@ package GUI.TableUtils.FileManager;
 
 
 import Connections.Streams;
+import GUI.TableUtils.FileManager.Actions.DownloadAction;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.util.Stack;
 
 public class FileManagerGUI {
@@ -21,10 +24,11 @@ public class FileManagerGUI {
 
     private final JScrollPane scrollPane;
 
-    public FileManagerGUI(Streams stream, JFrame mainGUI) {
+    private final JDialog fileManagerDialog;
 
+    public FileManagerGUI(Streams stream, JFrame mainGUI) {
         this.stream = stream;
-        JDialog fileManagerDialog = new JDialog(mainGUI, "File Manager - " + stream.getIdentifier());
+        fileManagerDialog = new JDialog(mainGUI, "File Manager - " + stream.getIdentifier());
         fileManagerDialog.setSize(new Dimension(600, 340));
 
         fileManagerDialog.getContentPane().setLayout(new GridBagLayout());
@@ -60,10 +64,19 @@ public class FileManagerGUI {
         constraints.gridheight = 1;
         constraints.weightx = 0.25;
         fileManagerDialog.add(diskComboBox, constraints);
+        diskComboBox.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Object item = e.getItem();
+                stack.clear();
+                requestDirectory((String) item);
+            }
+        });
 
 
         table = new JTable();
         table.setModel(new TableModel());
+        TableColumn someColumn = table.getColumnModel().getColumn(0);
+        someColumn.setCellRenderer(new CellRenderer(this));
 
 
         constraints.gridx = 0;
@@ -82,11 +95,36 @@ public class FileManagerGUI {
 
         requestDisk();
 
+        createPopUpMenu();
 
         table.addMouseListener(new MouseListener(this));
 
         fileManagerDialog.setLocationRelativeTo(null);
         fileManagerDialog.setVisible(true);
+
+    }
+
+    private void createPopUpMenu() {
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem downloadItem = new JMenuItem("Download");
+        JMenuItem copyMenu = new JMenuItem("Copy");
+        JMenuItem moveMenu = new JMenuItem("Move");
+        JMenuItem uploadMenu = new JMenuItem("Upload");
+        JMenuItem runItem = new JMenuItem("Run");
+        JMenuItem deleteItem = new JMenuItem("Delete");
+
+        popupMenu.add(downloadItem);
+        popupMenu.add(copyMenu);
+        popupMenu.add(moveMenu);
+        popupMenu.add(uploadMenu);
+        popupMenu.add(deleteItem);
+        popupMenu.add(runItem);
+
+        downloadItem.addActionListener(new DownloadAction(this));
+
+
+        table.setComponentPopupMenu(popupMenu);
+
 
     }
 
@@ -97,8 +135,12 @@ public class FileManagerGUI {
 
     private int divider;
 
-    protected void requestDirectory(String directory, boolean goBack) {
-        stream.getExecutor().submit(new RequestDirectory(this, directory, goBack));
+    protected void requestDirectory(String directory) {
+        stream.getExecutor().submit(new RequestDirectory(this, directory));
+    }
+
+    protected void requestDirectory() {
+        stream.getExecutor().submit(new RequestDirectory(this));
     }
 
     public void setDivider(int divider) {
@@ -134,5 +176,7 @@ public class FileManagerGUI {
         return scrollPane;
     }
 
-
+    public JDialog getFileManagerDialog() {
+        return fileManagerDialog;
+    }
 }

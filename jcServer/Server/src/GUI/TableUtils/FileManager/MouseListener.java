@@ -3,7 +3,6 @@ package GUI.TableUtils.FileManager;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Stack;
 
 public class MouseListener extends MouseAdapter {
 
@@ -15,18 +14,17 @@ public class MouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 2) {     // to detect doble click events
-            JTable target = (JTable) e.getSource();
-            int row = target.getSelectedRow(); // select a row
-            int column = target.getSelectedColumn();
+        JTable table = (JTable) e.getSource();
+        if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
+            int row = table.getSelectedRow();
+            int column = table.getSelectedColumn();
             if (row == 0) {
-                Stack<String> stack = fileManagerGUI.getStack();
-                stack.pop();
-                fileManagerGUI.requestDirectory(stack.peek(), true);
+                if (fileManagerGUI.getStack().size() == 1) {
+                    JOptionPane.showMessageDialog(null, "No more folders to show",
+                            "Nothing to show", JOptionPane.ERROR_MESSAGE);
+                } else fileManagerGUI.requestDirectory();
             } else if (row <= fileManagerGUI.getDivider()) {
-                fileManagerGUI.requestDirectory((String) target.getValueAt(row, column), false);
-            } else {
-                JOptionPane.showMessageDialog(null, "Is file ");
+                fileManagerGUI.requestDirectory((String) table.getValueAt(row, column));
             }
         }
     }

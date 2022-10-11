@@ -26,8 +26,5 @@ public class RequestDisk extends SwingWorker<Void, Void> {
         for (String e : disks) {
             fileManagerGUI.getDiskComboBox().addItem(e);
         }
-        String selected = (String) fileManagerGUI.getDiskComboBox().getSelectedItem();
-        fileManagerGUI.requestDirectory(selected, false);
-
     }
 }
