@@ -1,4 +1,6 @@
-package GUI.TableUtils.FileManager;
+package GUI.TableUtils.FileManager.Style;
+
+import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

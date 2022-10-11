@@ -3,15 +3,14 @@ package GUI.TableUtils.FileManager;
 
 import Connections.Streams;
 import GUI.TableUtils.FileManager.Actions.*;
-import GUI.TableUtils.FileManager.Event.DeleteEvent;
-import GUI.TableUtils.FileManager.Event.RunEvent;
+import GUI.TableUtils.FileManager.Listener.MouseListener;
+import GUI.TableUtils.FileManager.Style.CellRenderer;
+import GUI.TableUtils.FileManager.Style.TableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -192,11 +191,11 @@ public class FileManagerGUI {
 
     private int divider;
 
-    protected void requestDirectory(String directory) {
+    public void requestDirectory(String directory) {
         stream.getExecutor().submit(new RequestDirectory(this, directory));
     }
 
-    protected void requestDirectory() {
+    public void requestDirectory() {
         stream.getExecutor().submit(new RequestDirectory(this));
     }
 

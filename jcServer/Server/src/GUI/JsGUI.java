@@ -6,7 +6,7 @@ import Connections.Streams;
 import GUI.TableUtils.Configuration.StateColumnRenderer;
 import GUI.TableUtils.Configuration.TableMenuListener;
 import GUI.TableUtils.Configuration.TableModel;
-import GUI.TableUtils.FileManager.FileManagerMenuListener;
+import GUI.TableUtils.FileManager.Listener.FileManagerMenuListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 import com.formdev.flatlaf.FlatDarkLaf;
 

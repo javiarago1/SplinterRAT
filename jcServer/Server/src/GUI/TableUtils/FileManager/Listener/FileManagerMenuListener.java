@@ -1,8 +1,9 @@
-package GUI.TableUtils.FileManager;
+package GUI.TableUtils.FileManager.Listener;
 
 import Connections.Streams;
 import GUI.JsGUI;
 import GUI.TableUtils.Configuration.GetSYS;
+import GUI.TableUtils.FileManager.FileManagerGUI;
 import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 
 import javax.swing.*;

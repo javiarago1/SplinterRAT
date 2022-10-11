@@ -1,4 +1,4 @@
-package GUI.TableUtils.FileManager;
+package GUI.TableUtils.FileManager.Style;
 
 import javax.swing.table.DefaultTableModel;
 

@@ -1,4 +1,6 @@
-package GUI.TableUtils.FileManager;
+package GUI.TableUtils.FileManager.Listener;
+
+import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;

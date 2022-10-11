@@ -14,9 +14,7 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new file manager">
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/MouseListener.java" afterDir="false" />
-    </list>
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new file manager" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -284,13 +282,6 @@
       <workItem from="1665410841318" duration="16573000" />
       <workItem from="1665479090870" duration="26000" />
       <workItem from="1665481787175" duration="7682000" />
-    </task>
-    <task id="LOCAL-00035" summary="feat: nuevo menu para el TreeGUi (UPLOAD)">
-      <created>1655119602483</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1655119602483</updated>
     </task>
     <task id="LOCAL-00036" summary="feat: comprobar que los elementos seleccionados son carpetas para mostrar la opción de UPLOAD">
       <created>1655119633489</created>
@@ -628,7 +619,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665505410078</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="feat: new file manager">
+      <created>1665505908572</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1665505908572</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
