@@ -10,6 +10,13 @@
 #include "information/system/SystemInformation.h"
 #include "information/network/NetworkInformation.h"
 
+// g++ -I
+// opencv/include
+// -L opencv/lib main.cpp
+// -lopencv_core460
+// -lopencv_videoio460
+// -lopencv_highgui460
+// -o loadimage
 
 
 // new comment 2
@@ -18,7 +25,11 @@
 // g++ Client.cpp  SystemInformation.cpp NetworkInformation.cpp -o exec
 // -lwsock32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
 
+// final
 
+/*
+ * g++  -I opencv/include  -L opencv/lib client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -lopencv_core460 -lopencv_videoio460 -lopencv_imgcodecs460 -lwsock32 -lWininet -lole32 -loleaut32 -o client
+ */
 
 
 int main() {

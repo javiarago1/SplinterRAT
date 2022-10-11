@@ -6,6 +6,7 @@
 #include <string>
 #include <filesystem>
 #include <windows.h>
+#include "../converter/Converter.h"
 
 class FileManager {
 

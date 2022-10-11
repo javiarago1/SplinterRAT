@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <initguid.h>
 #include <dshow.h>
 #include <map>
 #include <string>

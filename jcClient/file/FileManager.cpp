@@ -1,5 +1,5 @@
 #include "FileManager.h"
-#include "../converter/Converter.h"
+
 
 std::string FileManager::readDirectory(const std::filesystem::path &directory, bool folder, bool file) {
     std::string paths;

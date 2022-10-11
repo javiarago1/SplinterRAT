@@ -14,7 +14,13 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new file manager" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="refactoring">
+      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/file/FileManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/file/FileManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/video_audio/DeviceEnumerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/video_audio/DeviceEnumerator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,11 +102,11 @@
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Client\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src\GUI\TableUtils\FileManager\Style" />
       <recent name="C:\Users\javier\jcRAT\jcServer\Server\src\GUI\TableUtils\FileManager" />
       <recent name="C:\Users\javier\jcRAT\jcServer\Server\src" />
       <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Client\src" />
-      <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Client\src\Client" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="GUI.TableUtils.FileManager" />
@@ -282,13 +288,7 @@
       <workItem from="1665410841318" duration="16573000" />
       <workItem from="1665479090870" duration="26000" />
       <workItem from="1665481787175" duration="7682000" />
-    </task>
-    <task id="LOCAL-00036" summary="feat: comprobar que los elementos seleccionados son carpetas para mostrar la opción de UPLOAD">
-      <created>1655119633489</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1655119633489</updated>
+      <workItem from="1665512115861" duration="364000" />
     </task>
     <task id="LOCAL-00037" summary="feat: creación de filechooser para elegir archivo y crear nuevo hilo de socket">
       <created>1655119671054</created>
@@ -626,7 +626,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665505908572</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="refactoring">
+      <created>1665506229000</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1665506229000</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -680,7 +687,6 @@
     <MESSAGE value="feat: c++ new client" />
     <MESSAGE value="feat: more webcam features" />
     <MESSAGE value="feat: improved methods of communication" />
-    <MESSAGE value="refactoring" />
     <MESSAGE value="feat: status of operations (progress bars)" />
     <MESSAGE value="feat: discarding JSON for space" />
     <MESSAGE value="feat: new commit" />
@@ -688,7 +694,8 @@
     <MESSAGE value="feat: image looking and file manager" />
     <MESSAGE value="feat: configuring file manager" />
     <MESSAGE value="feat: new file manager" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: new file manager" />
+    <MESSAGE value="refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
