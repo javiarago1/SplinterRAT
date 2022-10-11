@@ -18,9 +18,9 @@ public class CellRenderer extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
 
-        if (row <= divider) {
-            setIcon(new ImageIcon("C:\\Users\\JAVIER\\jcRAT\\jcServer\\Server\\Icons\\folder.png"));
-        } else setIcon(new ImageIcon("C:\\Users\\JAVIER\\jcRAT\\jcServer\\Server\\Icons\\file.png"));
+        if (row <= divider)
+            setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Icons/folder.png"))));
+        else setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getResource("Icons/file.png"))));
 
         return this;
 

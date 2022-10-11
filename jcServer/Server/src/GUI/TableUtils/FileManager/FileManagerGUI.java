@@ -4,7 +4,6 @@ package GUI.TableUtils.FileManager;
 import Connections.Streams;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.Stack;
 
@@ -19,6 +18,8 @@ public class FileManagerGUI {
     private final JTable table;
 
     private final JTextField textField;
+
+    private final JScrollPane scrollPane;
 
     public FileManagerGUI(Streams stream, JFrame mainGUI) {
 
@@ -74,7 +75,7 @@ public class FileManagerGUI {
         constraints.fill = GridBagConstraints.BOTH;
 
 
-        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane = new JScrollPane(table);
         fileManagerDialog.add(scrollPane, constraints);
 
         //add disks
@@ -127,6 +128,10 @@ public class FileManagerGUI {
 
     public JTable getTable() {
         return table;
+    }
+
+    public JScrollPane getScrollPane() {
+        return scrollPane;
     }
 
 

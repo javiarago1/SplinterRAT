@@ -42,6 +42,7 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
             stack.push(path);
         }
         list = fileManagerGUI.getStream().sendAndReadJSON(Action.R_A_DIR, path);
+        System.out.println(list);
         divider = list.indexOf("/");
         list.remove(divider);
         return null;
@@ -49,16 +50,22 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
 
     @Override
     protected void done() {
-        fileManagerGUI.setDivider(divider);
-        fileManagerGUI.getTextField().setText(path);
-        DefaultTableModel tableModel = (DefaultTableModel) fileManagerGUI.getTable().getModel();
-        tableModel.setRowCount(0);
-        someColumn.setCellRenderer(new CellRenderer(divider));
-        tableModel.addRow(new String[]{"..."});
-        for (String e : list) {
-            tableModel.addRow(new String[]{e, "200 kb", "12/32/23"});
+        if (list.get(0).equals("ACCESS_DENIED")) {
+            JOptionPane.showMessageDialog(null, "Access denied to this folder",
+                    "Access denied", JOptionPane.ERROR_MESSAGE);
+            fileManagerGUI.getStack().pop();
+        } else {
+            fileManagerGUI.setDivider(divider);
+            fileManagerGUI.getTextField().setText(path);
+            DefaultTableModel tableModel = (DefaultTableModel) fileManagerGUI.getTable().getModel();
+            tableModel.setRowCount(0);
+            someColumn.setCellRenderer(new CellRenderer(divider));
+            tableModel.addRow(new String[]{"..."});
+            for (String e : list) {
+                tableModel.addRow(new String[]{e, "200 kb", "12/32/23"});
+            }
+            fileManagerGUI.getScrollPane().getVerticalScrollBar().setValue(0);
         }
-
     }
 
 
