@@ -14,16 +14,10 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: image looking and file manager">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DownloadAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/Manager.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: configuring file manager">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/CellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/CellRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/MouseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDirectory.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDirectory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDisk.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDisk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/TableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/TableModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,14 +285,7 @@
       <workItem from="1665335801072" duration="11000" />
       <workItem from="1665410841318" duration="16573000" />
       <workItem from="1665479090870" duration="26000" />
-      <workItem from="1665481787175" duration="4980000" />
-    </task>
-    <task id="LOCAL-00033" summary="feat: nuevo stream para enviar archivos (DataOutputStream)&#10;refrator: renombrado y eliminación de variables">
-      <created>1655119542522</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1655119542522</updated>
+      <workItem from="1665481787175" duration="7682000" />
     </task>
     <task id="LOCAL-00034" summary="refractor: eliminación de variables innecesarias">
       <created>1655119574896</created>
@@ -636,7 +623,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665476761733</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="feat: configuring file manager">
+      <created>1665487035418</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1665487035418</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -673,7 +667,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="Fix: arreglo de bug de selección de directorio y tarea en hilo" />
     <MESSAGE value="refractor: reformateo" />
     <MESSAGE value="Refractor: parámetros innecesarios" />
     <MESSAGE value="Refractor: renombrado de variables en InfoObject" />
@@ -698,7 +691,8 @@
     <MESSAGE value="feat: new commit" />
     <MESSAGE value="feat: commit from intellij to c++" />
     <MESSAGE value="feat: image looking and file manager" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: image looking and file manager" />
+    <MESSAGE value="feat: configuring file manager" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: configuring file manager" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

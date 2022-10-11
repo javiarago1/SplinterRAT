@@ -5,6 +5,7 @@ import Connections.Streams;
 import GUI.TableUtils.FileManager.Actions.DownloadAction;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -73,10 +74,19 @@ public class FileManagerGUI {
         });
 
 
-        table = new JTable();
-        table.setModel(new TableModel());
+        table = new JTable(new TableModel());
         TableColumn someColumn = table.getColumnModel().getColumn(0);
         someColumn.setCellRenderer(new CellRenderer(this));
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+
+        table.getColumnModel().getColumn(2).setMinWidth(100);
+        table.getColumnModel().getColumn(2).setMaxWidth(220);
+        table.getColumnModel().getColumn(1).setMinWidth(100);
+        table.getColumnModel().getColumn(1).setMaxWidth(200);
 
 
         constraints.gridx = 0;
