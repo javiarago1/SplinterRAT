@@ -1,7 +1,7 @@
 #include <winsock2.h>
 #include <string>
 #include <thread>
-#include "opencv2/opencv.hpp"
+#include <opencv2/opencv.hpp>
 #include "../stream/Stream.h"
 #include "../time/Time.h"
 

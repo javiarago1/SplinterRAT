@@ -15,7 +15,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new command line for g++">
-      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -287,7 +288,9 @@
       <workItem from="1665481787175" duration="7682000" />
       <workItem from="1665512115861" duration="801000" />
       <workItem from="1665554328286" duration="1207000" />
-      <workItem from="1665573534429" duration="579000" />
+      <workItem from="1665573534429" duration="806000" />
+      <workItem from="1665574483494" duration="358000" />
+      <workItem from="1665578259572" duration="18000" />
     </task>
     <task id="LOCAL-00038" summary="refractor: eliminación">
       <created>1655119688875</created>
