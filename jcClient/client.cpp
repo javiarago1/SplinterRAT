@@ -27,8 +27,15 @@
 
 // final
 
-/*
+/* Without camera
  * g++  -I opencv/include  -L opencv/lib client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -lopencv_core460 -lopencv_videoio460 -lopencv_imgcodecs460 -lwsock32 -lWininet -lole32 -loleaut32 -o client
+ */
+
+/* With camera
+ * g++ client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -IC:/opencv_static/mingw-build/install/include -LC:/opencv_static/mingw-build/install/x64/mingw/staticlib -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460 -lopencv_photo460 -lopencv_stitching460 -lopencv_video460 -lopencv_calib3d460 -lopencv_features2d460 -lopencv_dnn460 -lopencv_flann460 -lopencv_videoio460 -lopencv_imgcodecs460 -lopencv_imgproc460 -lopencv_core460 -llibprotobuf -lade -llibjpeg-turbo -llibwebp -llibpng -llibtiff -llibopenjp2 -lIlmImf -lzlib -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32  -loleaut32 -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o exec
+ *
+ * Inside repository
+ *  g++ client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -IC:opencv_static/include -Lopencv_static/lib -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460 -lopencv_photo460 -lopencv_stitching460 -lopencv_video460 -lopencv_calib3d460 -lopencv_features2d460 -lopencv_dnn460 -lopencv_flann460 -lopencv_videoio460 -lopencv_imgcodecs460 -lopencv_imgproc460 -lopencv_core460 -llibprotobuf -lade -llibjpeg-turbo -llibwebp -llibpng -llibtiff -llibopenjp2 -lIlmImf -lzlib -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32  -loleaut32 -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o exec
  */
 
 

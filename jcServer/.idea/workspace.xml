@@ -14,11 +14,8 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="refactoring">
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new command line for g++">
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/file/FileManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/file/FileManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/video_audio/DeviceEnumerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/video_audio/DeviceEnumerator.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -288,14 +285,9 @@
       <workItem from="1665410841318" duration="16573000" />
       <workItem from="1665479090870" duration="26000" />
       <workItem from="1665481787175" duration="7682000" />
-      <workItem from="1665512115861" duration="364000" />
-    </task>
-    <task id="LOCAL-00037" summary="feat: creación de filechooser para elegir archivo y crear nuevo hilo de socket">
-      <created>1655119671054</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1655119671054</updated>
+      <workItem from="1665512115861" duration="801000" />
+      <workItem from="1665554328286" duration="1207000" />
+      <workItem from="1665573534429" duration="579000" />
     </task>
     <task id="LOCAL-00038" summary="refractor: eliminación">
       <created>1655119688875</created>
@@ -633,7 +625,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665506229000</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="feat: new command line for g++">
+      <created>1665512805270</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1665512805270</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -670,7 +669,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="Refractor: parámetros innecesarios" />
     <MESSAGE value="Refractor: renombrado de variables en InfoObject" />
     <MESSAGE value="feat: nuevo stream para enviar archivos (DataOutputStream)&#10;refrator: renombrado y eliminación de variables" />
     <MESSAGE value="refractor: eliminación de variables innecesarias" />
@@ -695,7 +693,8 @@
     <MESSAGE value="feat: configuring file manager" />
     <MESSAGE value="feat: new file manager" />
     <MESSAGE value="refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <MESSAGE value="feat: new command line for g++" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: new command line for g++" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
