@@ -14,8 +14,8 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new command line for g++">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Mutex.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: compiler GUI">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
     </list>
@@ -189,7 +189,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.CompilerGUI" />
-        <item itemvalue="Application.GUI.CompilerGUI" />
         <item itemvalue="Application.WebcamGUI" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Client (1)" />
@@ -292,14 +291,8 @@
       <workItem from="1665573534429" duration="806000" />
       <workItem from="1665574483494" duration="358000" />
       <workItem from="1665578259572" duration="18000" />
-      <workItem from="1665667149684" duration="7818000" />
-    </task>
-    <task id="LOCAL-00038" summary="refractor: eliminación">
-      <created>1655119688875</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1655119688875</updated>
+      <workItem from="1665667149684" duration="8227000" />
+      <workItem from="1665677631125" duration="4147000" />
     </task>
     <task id="LOCAL-00039" summary="refractor: especificar título y tipo de selección">
       <created>1655119716034</created>
@@ -637,7 +630,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665512805270</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="feat: compiler GUI">
+      <created>1665676089654</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1665676089654</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -674,7 +674,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="Refractor: renombrado de variables en InfoObject" />
     <MESSAGE value="feat: nuevo stream para enviar archivos (DataOutputStream)&#10;refrator: renombrado y eliminación de variables" />
     <MESSAGE value="refractor: eliminación de variables innecesarias" />
     <MESSAGE value="feat: nuevo menu para el TreeGUi (UPLOAD)" />
@@ -699,7 +698,8 @@
     <MESSAGE value="feat: new file manager" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="feat: new command line for g++" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: new command line for g++" />
+    <MESSAGE value="feat: compiler GUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: compiler GUI" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

