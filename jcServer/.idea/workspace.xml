@@ -15,7 +15,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: compiler GUI">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/FieldListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
     </list>
@@ -292,14 +292,9 @@
       <workItem from="1665574483494" duration="358000" />
       <workItem from="1665578259572" duration="18000" />
       <workItem from="1665667149684" duration="8227000" />
-      <workItem from="1665677631125" duration="4147000" />
-    </task>
-    <task id="LOCAL-00039" summary="refractor: especificar título y tipo de selección">
-      <created>1655119716034</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1655119716034</updated>
+      <workItem from="1665677631125" duration="4251000" />
+      <workItem from="1665683257755" duration="5000" />
+      <workItem from="1665769102179" duration="2352000" />
     </task>
     <task id="LOCAL-00040" summary="feat: clase para envío de objeto y archivo">
       <created>1655119752158</created>
@@ -637,7 +632,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665676089654</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="feat: compiler GUI">
+      <created>1665682240592</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1665682240593</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

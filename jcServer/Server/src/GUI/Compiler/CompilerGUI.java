@@ -3,26 +3,26 @@ package GUI.Compiler;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
 
 public class CompilerGUI {
     JTabbedPane tabPane;
-    JDialog dialog;
+    JDialog compilerDialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
 
     public CompilerGUI() {
-        dialog = new JDialog();
-        dialog.setModal(true);
-        dialog.setSize(450, 275);
-        dialog.setLocationRelativeTo(null);
-        dialog.setLayout(new GridBagLayout());
+        compilerDialog = new JDialog();
+        compilerDialog.setModal(true);
+        compilerDialog.setSize(450, 275);
+        compilerDialog.setLocationRelativeTo(null);
+        compilerDialog.setLayout(new GridBagLayout());
         addTabbedPane();
         addLowerPanel();
-        dialog.setVisible(true);
+        compilerDialog.setVisible(true);
 
     }
 
@@ -40,7 +40,7 @@ public class CompilerGUI {
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
-        dialog.add(tabPane, constraints);
+        compilerDialog.add(tabPane, constraints);
     }
 
     private void addLowerPanel() {
@@ -80,6 +80,7 @@ public class CompilerGUI {
                 case 4 -> {
                     nextButton.setVisible(false);
                     compileButton.setVisible(true);
+                    goBackButton.setVisible(true);
                 }
             }
         });
@@ -89,17 +90,56 @@ public class CompilerGUI {
         constraints.gridheight = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weighty = 0.0;
-        dialog.add(lowerPanel, constraints);
+        compilerDialog.add(lowerPanel, constraints);
     }
 
     private void addCompilePanel() {
         JPanel compilePanel = new JPanel();
         compilePanel.setLayout(null);
 
-        JLabel tagLabel = new JLabel("Compile spec:");
-        tagLabel.setBounds(10, 10, 210, 20);
+
+        JLabel tagLabel = new JLabel("Path where the compiler (g++) is located if it isn't in the system variables:");
+        tagLabel.setBounds(10, 10, 400, 20);
         compilePanel.add(tagLabel);
-        tabPane.add(compilePanel, "Compile");
+        String defaultCompiler = "Default system compiler";
+        JComboBox<String> compilerComboBox = new JComboBox<>();
+        compilerComboBox.addItem(defaultCompiler);
+        compilerComboBox.addItem("Select custom path");
+
+        JTextField compilerNameField = new JTextField("g++");
+        compilerNameField.setEditable(false);
+        compilerNameField.setBounds(190, 40, 125, 25);
+        compilePanel.add(compilerNameField);
+        compilerComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) compilerComboBox.getSelectedItem();
+                if (selectedItem != null && !selectedItem.equals(defaultCompiler)) {
+                    JFileChooser fc = new JFileChooser();
+                    fc.setCurrentDirectory(new java.io.File(".")); // start at application current directory
+                    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    int returnVal = fc.showSaveDialog(compilerDialog);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File selectedFolder = fc.getSelectedFile();
+                        compilerNameField.setText(selectedFolder.toString() + "\\g++");
+                    } else {
+                        compilerComboBox.setSelectedIndex(0);
+                    }
+                } else {
+                    compilerNameField.setText("g++");
+                }
+
+            }
+        });
+        compilerComboBox.setBounds(10, 40, 175, 25);
+        compilePanel.add(compilerComboBox);
+
+
+        JButton checkButton = new JButton("Check g++");
+        checkButton.setBounds(320, 40, 90, 25);
+        compilePanel.add(checkButton);
+
+        tabPane.add(compilePanel, "Compiler");
     }
 
 
@@ -160,19 +200,7 @@ public class CompilerGUI {
         identificationPanel.add(tagLabel);
         JTextField tagField = new JTextField("Client 1");
         tagField.setBounds(225, 11, 125, 20);
-        tagField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {
-                if (tagField.getText().equals("Client 1")) {
-                    tagField.setText("");
-                }
-            }
-
-            public void focusLost(FocusEvent e) {
-                if (tagField.getText().equals("")) {
-                    tagField.setText("Client 1");
-                }
-            }
-        });
+        tagField.addFocusListener(new FieldListener(tagField, "Client 1"));
         identificationPanel.add(tagField);
 
         JSeparator horizontal = new JSeparator();
