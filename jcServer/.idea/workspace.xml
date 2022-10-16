@@ -14,8 +14,8 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: compiler GUI">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/FieldListener.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: compiler GUI features">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/VersionChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
     </list>
@@ -294,14 +294,9 @@
       <workItem from="1665667149684" duration="8227000" />
       <workItem from="1665677631125" duration="4251000" />
       <workItem from="1665683257755" duration="5000" />
-      <workItem from="1665769102179" duration="2352000" />
-    </task>
-    <task id="LOCAL-00040" summary="feat: clase para envío de objeto y archivo">
-      <created>1655119752158</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1655119752158</updated>
+      <workItem from="1665769102179" duration="2587000" />
+      <workItem from="1665838100343" duration="10000" />
+      <workItem from="1665908396890" duration="2498000" />
     </task>
     <task id="LOCAL-00041" summary="ignore">
       <created>1655119761921</created>
@@ -639,7 +634,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665682240593</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="feat: compiler GUI features">
+      <created>1665771688171</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1665771688172</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -676,7 +678,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: nuevo stream para enviar archivos (DataOutputStream)&#10;refrator: renombrado y eliminación de variables" />
     <MESSAGE value="refractor: eliminación de variables innecesarias" />
     <MESSAGE value="feat: nuevo menu para el TreeGUi (UPLOAD)" />
     <MESSAGE value="feat: comprobar que los elementos seleccionados son carpetas para mostrar la opción de UPLOAD" />
@@ -701,7 +702,8 @@
     <MESSAGE value="refactoring" />
     <MESSAGE value="feat: new command line for g++" />
     <MESSAGE value="feat: compiler GUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: compiler GUI" />
+    <MESSAGE value="feat: compiler GUI features" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: compiler GUI features" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

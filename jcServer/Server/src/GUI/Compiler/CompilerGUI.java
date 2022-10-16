@@ -3,6 +3,7 @@ package GUI.Compiler;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,9 +11,11 @@ import java.io.File;
 
 
 public class CompilerGUI {
-    JTabbedPane tabPane;
-    JDialog compilerDialog;
+    private JTabbedPane tabPane;
+    private final JDialog compilerDialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
+    private JButton compileButton;
+    private final Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
 
     public CompilerGUI() {
         compilerDialog = new JDialog();
@@ -44,7 +47,6 @@ public class CompilerGUI {
     }
 
     private void addLowerPanel() {
-        Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
         JPanel lowerPanel = new JPanel();
         lowerPanel.setBackground(new Color(57, 60, 62));
         lowerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -53,11 +55,7 @@ public class CompilerGUI {
         goBackButton.setBackground(new Color(26, 33, 42));
         goBackButton.addActionListener(e -> tabPane.setSelectedIndex(tabPane.getSelectedIndex() - 1));
         lowerPanel.add(goBackButton);
-        JButton compileButton = new JButton("Compile");
-        compileButton.setVisible(false);
-        compileButton.setCursor(handCursor);
-        compileButton.setBackground(new Color(0, 136, 6));
-        compileButton.addActionListener(e -> System.out.println("Start compiling"));
+
         lowerPanel.add(compileButton);
 
         JButton nextButton = new JButton("Next >");
@@ -114,9 +112,9 @@ public class CompilerGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = (String) compilerComboBox.getSelectedItem();
+                compileButton.setEnabled(false);
                 if (selectedItem != null && !selectedItem.equals(defaultCompiler)) {
                     JFileChooser fc = new JFileChooser();
-                    fc.setCurrentDirectory(new java.io.File(".")); // start at application current directory
                     fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                     int returnVal = fc.showSaveDialog(compilerDialog);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -134,9 +132,31 @@ public class CompilerGUI {
         compilerComboBox.setBounds(10, 40, 175, 25);
         compilePanel.add(compilerComboBox);
 
+        compileButton = new JButton("Compile");
+        compileButton.setVisible(false);
+        compileButton.setCursor(handCursor);
+        compileButton.setBackground(new Color(0, 136, 6));
+        compileButton.addActionListener(e -> System.out.println("Start compiling"));
+        compileButton.setToolTipText("You must check the version you have " +
+                "installed on your system using the g++ check button");
+        compileButton.setEnabled(false);
+        compileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooser = new JFileChooser();
+
+                int returnVal = chooser.showSaveDialog(compilerDialog);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    System.out.println("You chose to open this file: " +
+                            chooser.getSelectedFile().getName());
+                }
+            }
+        });
+
 
         JButton checkButton = new JButton("Check g++");
         checkButton.setBounds(320, 40, 90, 25);
+        checkButton.addActionListener(new VersionChecker(compilerNameField, compilerDialog, compileButton));
         compilePanel.add(checkButton);
 
         tabPane.add(compilePanel, "Compiler");
@@ -151,7 +171,6 @@ public class CompilerGUI {
         tagLabel.setBounds(10, 10, 210, 20);
         assemblyPanel.add(tagLabel);
         tabPane.add(assemblyPanel, "Assembly");
-
 
     }
 
