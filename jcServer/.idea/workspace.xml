@@ -15,7 +15,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: compiler GUI features">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/VersionChecker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
     </list>
@@ -113,7 +113,7 @@
       <recent name="Server.Information" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CompilerGUI">
+  <component name="RunManager" selected="Application.Server">
     <configuration name="Client (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client.Client" />
       <module name="Client" />
@@ -297,13 +297,7 @@
       <workItem from="1665769102179" duration="2587000" />
       <workItem from="1665838100343" duration="10000" />
       <workItem from="1665908396890" duration="2498000" />
-    </task>
-    <task id="LOCAL-00041" summary="ignore">
-      <created>1655119761921</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1655119761921</updated>
+      <workItem from="1665925988158" duration="5141000" />
     </task>
     <task id="LOCAL-00042" summary="ignore">
       <created>1655137715656</created>
@@ -641,7 +635,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665771688172</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="feat: compiler GUI features">
+      <created>1665925998169</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1665925998169</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

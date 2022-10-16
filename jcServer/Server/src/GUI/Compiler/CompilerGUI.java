@@ -4,9 +4,13 @@ import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.FileChooserUI;
+import javax.swing.plaf.basic.BasicFileChooserUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 
 
@@ -16,6 +20,8 @@ public class CompilerGUI {
     private final GridBagConstraints constraints = new GridBagConstraints();
     private JButton compileButton;
     private final Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
+
+    private JCheckBox webcamCheckBox;
 
     public CompilerGUI() {
         compilerDialog = new JDialog();
@@ -136,22 +142,10 @@ public class CompilerGUI {
         compileButton.setVisible(false);
         compileButton.setCursor(handCursor);
         compileButton.setBackground(new Color(0, 136, 6));
-        compileButton.addActionListener(e -> System.out.println("Start compiling"));
+        compileButton.addActionListener(new Compiler(compilerDialog, new JCheckBox[]{webcamCheckBox, null}, compilerNameField));
         compileButton.setToolTipText("You must check the version you have " +
                 "installed on your system using the g++ check button");
         compileButton.setEnabled(false);
-        compileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser = new JFileChooser();
-
-                int returnVal = chooser.showSaveDialog(compilerDialog);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("You chose to open this file: " +
-                            chooser.getSelectedFile().getName());
-                }
-            }
-        });
 
 
         JButton checkButton = new JButton("Check g++");
@@ -179,7 +173,7 @@ public class CompilerGUI {
         JPanel monitorPanel = new JPanel();
         monitorPanel.setLayout(null);
 
-        JCheckBox webcamCheckBox = new JCheckBox("Enable webcam monitoring");
+        webcamCheckBox = new JCheckBox("Enable webcam monitoring");
         webcamCheckBox.setBounds(10, 10, 210, 20);
         monitorPanel.add(webcamCheckBox);
 
