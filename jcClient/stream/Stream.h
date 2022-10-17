@@ -3,7 +3,7 @@
 #include <string>
 #include <filesystem>
 #include <fstream>
-#include <opencv2/opencv.hpp>
+#include <vector>
 #include "../converter/Converter.h"
 
 #ifndef CLIENT_STREAM_H

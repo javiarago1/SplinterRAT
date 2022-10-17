@@ -14,9 +14,12 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: compiler GUI features">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: configuring file manager">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/IncludeModifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +89,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -113,7 +116,7 @@
       <recent name="Server.Information" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Server">
+  <component name="RunManager" selected="Application.CompilerGUI">
     <configuration name="Client (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client.Client" />
       <module name="Client" />
@@ -142,6 +145,19 @@
     </configuration>
     <configuration name="CompilerGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Compiler.CompilerGUI" />
+      <module name="Server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.Compiler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IncludeModifier" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.Compiler.IncludeModifier" />
       <module name="Server" />
       <extension name="coverage">
         <pattern>
@@ -189,6 +205,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.CompilerGUI" />
+        <item itemvalue="Application.IncludeModifier" />
         <item itemvalue="Application.WebcamGUI" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Client (1)" />
@@ -298,6 +315,8 @@
       <workItem from="1665838100343" duration="10000" />
       <workItem from="1665908396890" duration="2498000" />
       <workItem from="1665925988158" duration="5141000" />
+      <workItem from="1666002983733" duration="1607000" />
+      <workItem from="1666005203028" duration="2999000" />
     </task>
     <task id="LOCAL-00042" summary="ignore">
       <created>1655137715656</created>

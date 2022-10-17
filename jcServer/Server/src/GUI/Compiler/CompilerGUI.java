@@ -212,12 +212,12 @@ public class CompilerGUI {
         tagLabel.setBounds(10, 10, 210, 20);
         identificationPanel.add(tagLabel);
         JTextField tagField = new JTextField("Client 1");
-        tagField.setBounds(225, 11, 125, 20);
+        tagField.setBounds(225, 11, 190, 20);
         tagField.addFocusListener(new FieldListener(tagField, "Client 1"));
         identificationPanel.add(tagField);
 
         JSeparator horizontal = new JSeparator();
-        horizontal.setBounds(5, 100, 375, 5);
+        horizontal.setBounds(5, 100, 425, 5);
         horizontal.setOrientation(SwingConstants.HORIZONTAL);
         identificationPanel.add(horizontal);
 
@@ -225,11 +225,11 @@ public class CompilerGUI {
         mutexLabel.setBounds(10, 40, 400, 20);
         identificationPanel.add(mutexLabel);
         JTextField mutexField = new JTextField(Mutex.generateMutex());
-        mutexField.setBounds(10, 70, 240, 20);
+        mutexField.setBounds(10, 70, 250, 20);
         identificationPanel.add(mutexField);
 
-        JButton mutexButton = new JButton("Generate");
-        mutexButton.setBounds(260, 70, 90, 20);
+        JButton mutexButton = new JButton("Generate mutex");
+        mutexButton.setBounds(270, 70, 145, 20);
         mutexButton.addActionListener(e -> mutexField.setText(Mutex.generateMutex()));
         identificationPanel.add(mutexButton);
 
@@ -266,11 +266,5 @@ public class CompilerGUI {
 
 
         tabPane.addTab("Identification", identificationPanel);
-    }
-
-
-    public static void main(String[] args) throws UnsupportedLookAndFeelException {
-        UIManager.setLookAndFeel(new FlatDarkLaf());
-        new CompilerGUI();
     }
 }
