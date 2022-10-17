@@ -4,7 +4,6 @@ import Connections.Streams;
 import GUI.JsGUI;
 import GUI.TableUtils.Configuration.GetSYS;
 import GUI.TableUtils.FileManager.FileManagerGUI;
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -29,6 +28,6 @@ public class FileManagerMenuListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Streams stream = GetSYS.getStream(map, table);
         assert stream != null;
-        new FileManagerGUI(stream, mainGUI.getFrame());
+        new FileManagerGUI(stream, mainGUI.getMainGUI());
     }
 }

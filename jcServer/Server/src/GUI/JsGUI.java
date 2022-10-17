@@ -3,6 +3,7 @@ package GUI;
 import Connections.Server;
 import Connections.Streams;
 
+import GUI.Compiler.CompilerGUI;
 import GUI.TableUtils.Configuration.StateColumnRenderer;
 import GUI.TableUtils.Configuration.TableMenuListener;
 import GUI.TableUtils.Configuration.TableModel;
@@ -14,6 +15,8 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,7 +26,7 @@ public class JsGUI {
     private final String[] column = {"IP", "Country", "Tag", "Username", "Operating System", "Status"};
     private JPanel panel;
     private JTable connectionTable;
-    private JFrame frame;
+    private JFrame mainGUI;
 
     private final ConcurrentHashMap<Socket, Streams> map;
 
@@ -36,11 +39,11 @@ public class JsGUI {
 
 
     private void setUpFrame() {
-        frame = new JFrame("jRat Interface");
-        frame.setSize(new Dimension(800, 400));
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
+        mainGUI = new JFrame("jRat Interface");
+        mainGUI.setSize(new Dimension(800, 400));
+        mainGUI.setResizable(false);
+        mainGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainGUI.setLocationRelativeTo(null);
 
     }
 
@@ -52,11 +55,15 @@ public class JsGUI {
 
     private void addJMenu(){
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("size");
-        JMenuItem menuItem = new JMenuItem("size");
-        menu.add(menuItem);
-        menuBar.add(menu);
-        frame.setJMenuBar(menuBar);
+        JMenu builderMenu = new JMenu("Builder");
+        builderMenu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new CompilerGUI(mainGUI);
+            }
+        });
+        menuBar.add(builderMenu);
+        mainGUI.setJMenuBar(menuBar);
     }
 
     private void addJPanel(){
@@ -79,7 +86,7 @@ public class JsGUI {
         //
 
 
-        frame.setVisible(true);
+        mainGUI.setVisible(true);
     }
 
 
@@ -119,7 +126,7 @@ public class JsGUI {
 
 
         panel.add(tableScroll);
-        frame.add(panel);
+        mainGUI.add(panel);
     }
 
     private void setupTable() {
@@ -144,8 +151,8 @@ public class JsGUI {
     }
 
 
-    public JFrame getFrame() {
-        return frame;
+    public JFrame getMainGUI() {
+        return mainGUI;
     }
 
     public JTable getConnectionTable() {

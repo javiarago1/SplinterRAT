@@ -13,17 +13,19 @@ public class Compiler implements ActionListener {
 
     private final JDialog compilerDialog;
     private final JCheckBox[] checkBoxes;
-    private final JTextField compilerPathField;
+    private final JTextField[] fieldsArray;
 
 
-    public Compiler(JDialog compilerDialog, JCheckBox[] checkBoxes, JTextField compilerPathField) {
+    public Compiler(JDialog compilerDialog, JCheckBox[] checkBoxesArray, JTextField[] fieldsArray) {
         this.compilerDialog = compilerDialog;
-        this.checkBoxes = checkBoxes;
-        this.compilerPathField = compilerPathField;
+        this.checkBoxes = checkBoxesArray;
+        this.fieldsArray = fieldsArray;
     }
 
+    // Creating command line for compiling with g++, several options to include on the client
     @Override
     public void actionPerformed(ActionEvent e) {
+        // File chooser where to save file
         final StringBuilder command = new StringBuilder();
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new FileNameExtensionFilter(".exe", "."));
@@ -31,9 +33,20 @@ public class Compiler implements ActionListener {
         chooser.setSelectedFile(new File("client"));
         chooser.setAcceptAllFileFilterUsed(false);
         int returnVal = chooser.showSaveDialog(compilerDialog);
-        IncludeModifier modifier = new IncludeModifier("../jcClient/client.cpp");
+        CPPModifier modifier = new CPPModifier("../jcClient/client.cpp");
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            command.append(compilerPathField.getText()).append(" client.cpp video_audio/DeviceEnumerator.cpp " +
+            // Set IP
+            modifier.setIP(fieldsArray[0].getText());
+            // Set PORT
+            modifier.setPORT(fieldsArray[1].getText());
+            // Set tag name
+            modifier.setTagName(fieldsArray[2].getText());
+            // Set mutex
+            modifier.setMutex(fieldsArray[3].getText());
+            // Set timing
+            modifier.setTimingRetry(fieldsArray[4].getText());
+            // Create command line
+            command.append(fieldsArray[5].getText()).append(" client.cpp video_audio/DeviceEnumerator.cpp " +
                     "stream/Stream.cpp  " +
                     "time/Time.cpp  converter/Converter.cpp " +
                     "download/Download.cpp " +
@@ -61,16 +74,15 @@ public class Compiler implements ActionListener {
                     "-lole32 -lsetupapi -lws2_32  -loleaut32 -luuid" +
                     " -lcomdlg32 -lwininet -static-libgcc " +
                     "-static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o ").append(
-                    chooser.getSelectedFile().getAbsolutePath()
-            );
+                    chooser.getSelectedFile().getAbsolutePath());
+            modifier.writeToFile();
             System.out.println(command);
-
             compile(command.toString());
-            //modifier.removeInclude("#define WEBCAM");
         }
 
     }
 
+    // Thread for compiling the project opening shell in client project directory
     private void compile(String command) {
         new Thread(() -> {
             ProcessBuilder processBuilder = new ProcessBuilder();
@@ -86,11 +98,11 @@ public class Compiler implements ActionListener {
                     output.append(line).append("\n");
                 }
                 int exitVal = process.waitFor();
-                if (exitVal == 0) {
-                    System.out.println("No errors");
-                } else {
-                    System.out.println("Errors");
-                }
+                if (exitVal != 0) {
+                    JOptionPane.showMessageDialog(compilerDialog,
+                            "Error compiling client, check your compiler and try again.",
+                            "Error compiling", JOptionPane.ERROR_MESSAGE);
+                } else System.out.println("Compiled successfully");
                 System.out.println(output);
 
             } catch (IOException | InterruptedException ex) {
