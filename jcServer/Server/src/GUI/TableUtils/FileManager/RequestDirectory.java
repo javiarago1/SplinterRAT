@@ -57,8 +57,12 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
             DefaultTableModel tableModel = (DefaultTableModel) fileManagerGUI.getTable().getModel();
             tableModel.setRowCount(0);
             tableModel.addRow(new String[]{"..."});
-            for (String e : list) {
-                tableModel.addRow(new String[]{e, "200 kb", "12/32/23"});
+            for (int i = 0; i < list.size(); i++) {
+                if (i >= divider) {
+                    tableModel.addRow(new String[]{list.get(i), list.get(i + 1)});
+                    i++;
+                } else tableModel.addRow(new String[]{list.get(i), ""});
+
             }
             fileManagerGUI.getScrollPane().getVerticalScrollBar().setValue(0);
         }

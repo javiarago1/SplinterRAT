@@ -25,7 +25,6 @@ public class CompilerGUI {
         addTabbedPane();
         addLowerPanel();
         compilerDialog.setVisible(true);
-
     }
 
     private void addTabbedPane() {

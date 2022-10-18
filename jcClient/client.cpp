@@ -12,7 +12,7 @@
 #include "information/system/SystemInformation.h"
 #include "information/network/NetworkInformation.h"
 
-#define IP "192.168.1.133"
+#define IP "192.168.82.182"
 
 #define PORT 3055
 
@@ -98,6 +98,7 @@ int main() {
                             std::string fileVector = FileManager::readDirectory(std::filesystem::u8path(path), false,
                                                                                 true);
                             folderVector.append(fileVector);
+                            std::cout << folderVector << std::endl;
                             stream.sendString(folderVector.c_str());
                             break;
                         }

@@ -14,16 +14,11 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: more compiler features">
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: compiler done, need to add to menu">
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/IncludeModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPModifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Mutex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Mutex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/FileManagerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/FileManagerMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDirectory.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDirectory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
