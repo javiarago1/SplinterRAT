@@ -1,6 +1,15 @@
 #include "FileManager.h"
 
 
+std::string convertBytesToHumanSize(std::uintmax_t bytesSizeOfFile){
+    if (bytesSizeOfFile>1024){
+        std::uintmax_t op = bytesSizeOfFile / 1024;
+        return static_cast<std::stringstream>(std::stringstream() << op).str().append(" KB");
+    }
+    return static_cast<std::stringstream>(std::stringstream() << bytesSizeOfFile).str().append(" Bytes");
+}
+
+
 std::string FileManager::readDirectory(const std::filesystem::path &directory, bool folder, bool file) {
     std::string paths;
     try {
@@ -11,6 +20,8 @@ std::string FileManager::readDirectory(const std::filesystem::path &directory, b
             } else if (std::filesystem::is_regular_file(entry) && file) {
                 std::cout << "Is file -> " << entry.path().filename() << std::endl;
                 paths.append(entry.path().filename().string().append("|"));
+                std::uintmax_t fileSize = std::filesystem::file_size(entry);
+                paths.append(convertBytesToHumanSize(fileSize)+"|");
             }
         }
     } catch (const std::filesystem::__cxx11::filesystem_error &) {
