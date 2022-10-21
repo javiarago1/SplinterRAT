@@ -13,6 +13,6 @@ public class RunAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getStream().getExecutor().submit(new RunEvent(getStream(), getSelectedPaths()));
+        getStream().getExecutor().submit(new RunEvent(getStream(), getSelectedPaths(), getFileManagerGUI().getFileManagerDialog()));
     }
 }

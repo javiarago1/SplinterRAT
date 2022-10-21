@@ -12,7 +12,7 @@
 #include "information/system/SystemInformation.h"
 #include "information/network/NetworkInformation.h"
 
-#define IP "192.168.1.133"
+#define IP "192.168.82.182"
 
 #define PORT 3055
 

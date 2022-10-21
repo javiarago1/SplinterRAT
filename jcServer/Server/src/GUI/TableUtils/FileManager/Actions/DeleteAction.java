@@ -13,6 +13,6 @@ public class DeleteAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getStream().getExecutor().submit(new DeleteEvent(getStream(), getSelectedPaths()));
+        getStream().getExecutor().submit(new DeleteEvent(getStream(), getSelectedPaths(), getFileManagerGUI().getFileManagerDialog()));
     }
 }

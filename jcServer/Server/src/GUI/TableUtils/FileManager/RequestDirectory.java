@@ -1,5 +1,6 @@
 package GUI.TableUtils.FileManager;
 
+import Connections.ClientErrorHandler;
 import Information.Action;
 
 import javax.swing.*;
@@ -47,24 +48,28 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
 
     @Override
     protected void done() {
-        if (!list.isEmpty() && list.get(0).equals("ACCESS_DENIED")) {
-            JOptionPane.showMessageDialog(null, "Access denied to this folder",
-                    "Access denied", JOptionPane.ERROR_MESSAGE);
-            fileManagerGUI.getStack().pop();
-        } else {
-            fileManagerGUI.setDivider(divider);
-            fileManagerGUI.getTextField().setText(path);
-            DefaultTableModel tableModel = (DefaultTableModel) fileManagerGUI.getTable().getModel();
-            tableModel.setRowCount(0);
-            tableModel.addRow(new String[]{"..."});
-            for (int i = 0; i < list.size(); i++) {
-                if (i >= divider) {
-                    tableModel.addRow(new String[]{list.get(i), list.get(i + 1)});
-                    i++;
-                } else tableModel.addRow(new String[]{list.get(i), ""});
+        if (list != null) {
+            if (!list.isEmpty() && list.get(0).equals("ACCESS_DENIED")) {
+                JOptionPane.showMessageDialog(null, "Access denied to this folder",
+                        "Access denied", JOptionPane.ERROR_MESSAGE);
+                fileManagerGUI.getStack().pop();
+            } else {
+                fileManagerGUI.setDivider(divider);
+                fileManagerGUI.getTextField().setText(path);
+                DefaultTableModel tableModel = (DefaultTableModel) fileManagerGUI.getTable().getModel();
+                tableModel.setRowCount(0);
+                tableModel.addRow(new String[]{"..."});
+                for (int i = 0; i < list.size(); i++) {
+                    if (i >= divider) {
+                        tableModel.addRow(new String[]{list.get(i), list.get(i + 1)});
+                        i++;
+                    } else tableModel.addRow(new String[]{list.get(i), ""});
 
+                }
+                fileManagerGUI.getScrollPane().getVerticalScrollBar().setValue(0);
             }
-            fileManagerGUI.getScrollPane().getVerticalScrollBar().setValue(0);
+        } else {
+            new ClientErrorHandler("Unable to enter directory, connection lost with client", fileManagerGUI.getFileManagerDialog());
         }
     }
 
