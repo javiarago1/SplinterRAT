@@ -22,7 +22,8 @@ public class MoveEvent extends Event {
         try {
             getStream().sendAndReadJSON(Action.MOVE, getCMElements(), directoryToMove);
         } catch (Exception ex) {
-            new ClientErrorHandler("Unable to move, connection lost with client", fileManagerDialog);
+            new ClientErrorHandler("Unable to move, connection lost with client", fileManagerDialog,
+                    getStream().getClientSocket());
         }
     }
 }

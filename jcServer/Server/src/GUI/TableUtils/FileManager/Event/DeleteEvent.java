@@ -21,7 +21,9 @@ public class DeleteEvent extends Event {
         try {
             getStream().sendAndReadJSON(Action.DELETE, getCMElements());
         } catch (Exception e) {
-            new ClientErrorHandler("Unable to delete, connection lost with client", fileManagerDialog);
+            new ClientErrorHandler("Unable to delete, connection lost with client",
+                    fileManagerDialog,
+                    getStream().getClientSocket());
         }
     }
 }

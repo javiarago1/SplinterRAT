@@ -6,6 +6,7 @@ import Information.Action;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
 
@@ -40,7 +41,12 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
             path = stack.isEmpty() ? directory : stack.peek() + directory + "\\";
             stack.push(path);
         }
-        list = fileManagerGUI.getStream().sendAndReadJSON(Action.R_A_DIR, path);
+        try {
+            list = fileManagerGUI.getStream().sendAndReadJSON(Action.R_A_DIR, path);
+        } catch (IOException e) {
+            new ClientErrorHandler("Unable to read directory, connection lost with client",
+                    fileManagerGUI.getFileManagerDialog(), fileManagerGUI.getStream().getClientSocket());
+        }
         divider = list.indexOf("/");
         list.remove(divider);
         return null;
@@ -69,7 +75,9 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
                 fileManagerGUI.getScrollPane().getVerticalScrollBar().setValue(0);
             }
         } else {
-            new ClientErrorHandler("Unable to enter directory, connection lost with client", fileManagerGUI.getFileManagerDialog());
+            new ClientErrorHandler("Unable to enter directory, connection lost with client",
+                    fileManagerGUI.getFileManagerDialog(),
+                    fileManagerGUI.getStream().getClientSocket());
         }
     }
 

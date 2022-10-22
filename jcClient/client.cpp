@@ -12,7 +12,7 @@
 #include "information/system/SystemInformation.h"
 #include "information/network/NetworkInformation.h"
 
-#define IP "192.168.82.182"
+#define IP "192.168.1.133"
 
 #define PORT 3055
 
@@ -71,6 +71,9 @@ int main() {
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
+                        case -1:{
+                            streamListening=false;
+                        }
                         case 0: {
                             std::cout << "GATHERING SYSTEM INFORMATION" << std::endl;
                             std::vector<std::string> informationVector = SystemInformation::getSystemInformation();
@@ -190,7 +193,6 @@ int main() {
 
                         }
                         default: {
-                            connectionState=false;
                             streamListening = false;
                             break;
                         }

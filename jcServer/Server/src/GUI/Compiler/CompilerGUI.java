@@ -205,9 +205,9 @@ public class CompilerGUI {
         JLabel tagLabel = new JLabel("Client tag for connection identification:");
         tagLabel.setBounds(10, 10, 210, 20);
         identificationPanel.add(tagLabel);
-        tagField = new JTextField("Client 1");
+        tagField = new JTextField("Client");
         tagField.setBounds(225, 11, 190, 20);
-        tagField.addFocusListener(new FieldListener(tagField, "Client 1"));
+        tagField.addFocusListener(new FieldListener(tagField, "Client"));
         identificationPanel.add(tagField);
 
         JSeparator horizontal = new JSeparator();

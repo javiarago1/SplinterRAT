@@ -24,7 +24,8 @@ public class PasteEvent extends Event {
         try {
             getStream().sendAndReadJSON(Action.COPY, getCMElements(), listWhereToPaste);
         } catch (Exception ex) {
-            new ClientErrorHandler("Unable to paste, connection lost with client", fileManagerDialog);
+            new ClientErrorHandler("Unable to paste, connection lost with client",
+                    fileManagerDialog, getStream().getClientSocket());
         }
     }
 }

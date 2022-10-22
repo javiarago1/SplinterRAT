@@ -9,7 +9,6 @@ public class Main {
 
     
     static public JsGUI gui;
-
     public static void main(String[] args) {
         try {
             Server server = new Server(3055);

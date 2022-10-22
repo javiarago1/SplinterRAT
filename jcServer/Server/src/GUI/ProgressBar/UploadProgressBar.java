@@ -1,5 +1,6 @@
 package GUI.ProgressBar;
 
+import Connections.ClientErrorHandler;
 import Connections.Streams;
 import Information.Action;
 
@@ -25,6 +26,15 @@ public class UploadProgressBar extends Bar {
 
     @Override
     protected Void doInBackground() {
+        try {
+            uploadFiles();
+        } catch (IOException e) {
+            new ClientErrorHandler("Unable to upload, connection lost with client", getDialog(), stream.getClientSocket());
+        }
+        return null;
+    }
+
+    private void uploadFiles() throws IOException {
         int countOfFiles = 0; // counter for GUI
         System.out.println("am i at edt " + SwingUtilities.isEventDispatchThread());
         stream.sendJSON(Action.UPLOAD, destinationPaths, localFiles.length);
@@ -37,28 +47,22 @@ public class UploadProgressBar extends Bar {
             // Wait for response to start sending bytes
             //stream.readSize();
 
-            try {
-                stream.sendSize((int) Files.size(path)); // Sending size of bytes
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+
+            stream.sendSize((int) Files.size(path)); // Sending size of bytes
+
             byte[] fileBytes;
-            try {
-                fileBytes = Files.readAllBytes(path); // getting bytes of file
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+
+            fileBytes = Files.readAllBytes(path); // getting bytes of file
+
             DataOutputStream dos = stream.getDos();
             int total = fileBytes.length; // total amount to send
 
             int read = 0;
             while (read < fileBytes.length) {
                 int toRead = Math.min(fileBytes.length - read, 8192); // Read size by size with buffer -> 4096
-                try {
-                    dos.write(fileBytes, read, toRead);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+
+                dos.write(fileBytes, read, toRead);
+
                 read += toRead;
                 publish((int) Math.floor((float) read * 100 / total), (countOfFiles + 1) + "/" + localFiles.length + " " + file.getName()); // Publish to GUI % of upload
                 System.out.println(read + "/" + total);
@@ -68,7 +72,6 @@ public class UploadProgressBar extends Bar {
             //stream.readSize(); // Wait for response of process done
 
         }
-        return null;
     }
 
 }

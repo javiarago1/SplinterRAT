@@ -143,6 +143,7 @@ public class WebcamGUI {
         addMenuBar();
         // getting the video devices working in client machine
         getDevices();
+
         // Show webcam dialog
         webcamDialog.setVisible(true);
     }
@@ -162,7 +163,7 @@ public class WebcamGUI {
     }
 
     private void getDevices() {
-        stream.getExecutor().submit(new RequestWebcamDevices(this));
+        stream.getExecutor().submit(new WebcamRequester(this));
     }
 
 

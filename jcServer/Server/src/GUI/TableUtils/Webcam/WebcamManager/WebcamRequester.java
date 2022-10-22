@@ -1,8 +1,10 @@
 package GUI.TableUtils.Webcam.WebcamManager;
 
+import Connections.ClientErrorHandler;
 import Information.Action;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -10,10 +12,10 @@ import java.util.List;
  * Requesting webcam devices through sockets and getting
  * a list containing them.
  */
-public class RequestWebcamDevices extends SwingWorker<Void, Void> {
+public class WebcamRequester extends SwingWorker<Void, Void> {
     private final WebcamGUI webcamGUI;
 
-    public RequestWebcamDevices(WebcamGUI webcamGUI) {
+    public WebcamRequester(WebcamGUI webcamGUI) {
         this.webcamGUI = webcamGUI;
     }
 
@@ -47,21 +49,29 @@ public class RequestWebcamDevices extends SwingWorker<Void, Void> {
 
     @Override
     protected Void doInBackground() {
-        listOfWebcams = (List<?>) webcamGUI.getStream().sendAndReadJSON(Action.REQUEST_WEBCAM);
+        try {
+            listOfWebcams = (List<?>) webcamGUI.getStream().sendAndReadJSON(Action.REQUEST_WEBCAM);
+
+        } catch (IOException e) {
+            new ClientErrorHandler("Unable to request devices, connection lost with client",
+                    webcamGUI.getWebcamDialog(), webcamGUI.getStream().getClientSocket());
+        }
         return null;
     }
 
     @Override
     protected void done() {
-        // Case where no devices are found -> all buttons are turned disabled (add no webcam found)
-        if (listOfWebcams.isEmpty()) {
-            disableButtons();
-            webcamGUI.getBoxOfDevices().addItem("No webcam found");
-        } else {
-            for (Object listOfWebcam : listOfWebcams) {
-                webcamGUI.getBoxOfDevices().addItem((String) listOfWebcam);
+        if (listOfWebcams != null) {
+            // Case where no devices are found -> all buttons are turned disabled (add no webcam found)
+            if (listOfWebcams.isEmpty()) {
+                disableButtons();
+                webcamGUI.getBoxOfDevices().addItem("No webcam found");
+            } else {
+                for (Object listOfWebcam : listOfWebcams) {
+                    webcamGUI.getBoxOfDevices().addItem((String) listOfWebcam);
+                }
+                enableButtons();
             }
-            enableButtons();
         }
 
     }

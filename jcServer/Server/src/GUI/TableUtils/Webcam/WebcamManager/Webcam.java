@@ -3,6 +3,7 @@ package GUI.TableUtils.Webcam.WebcamManager;
 
 import javax.swing.*;
 
+import Connections.ClientErrorHandler;
 import Information.Action;
 
 import Information.Time;
@@ -18,12 +19,12 @@ import java.io.IOException;
  * - Sending recording information to client
  */
 
-public class StartWebcam implements Runnable {
+public class Webcam implements Runnable {
 
 
     private final WebcamGUI webcamGUI;
 
-    public StartWebcam(WebcamGUI webcamGUI) {
+    public Webcam(WebcamGUI webcamGUI) {
         this.webcamGUI = webcamGUI;
     }
 
@@ -31,6 +32,15 @@ public class StartWebcam implements Runnable {
     @Override
     public void run() {
         // Saving configuration to send it to client
+        try {
+            startWebcam();
+        } catch (IOException e) {
+            new ClientErrorHandler("Unable to reproduce webcam, connection lost with client",
+                    webcamGUI.getWebcamDialog(), webcamGUI.getStream().getClientSocket());
+        }
+    }
+
+    private void startWebcam() throws IOException {
         boolean fragmented = webcamGUI.isFragmented();
         int FPS = webcamGUI.getFPS();
         String selectedDevice = webcamGUI.getSelectedDevice();
@@ -73,7 +83,7 @@ public class StartWebcam implements Runnable {
     }
 
     // Receive record through socket
-    private void saveRecord() {
+    private void saveRecord() throws IOException {
         String time = new Time().getTime();
         int numOfFragments = webcamGUI.getStream().readSize();
         for (int i = 0; i < numOfFragments; i++) {
@@ -85,7 +95,7 @@ public class StartWebcam implements Runnable {
     }
 
     // Receive frame through socket
-    private void receiveFrame() {
+    private void receiveFrame() throws IOException {
         // Receiving files into byte array
         byte[] array = webcamGUI.getStream().receiveBytes();
         // Check if snapshot is needed to be made

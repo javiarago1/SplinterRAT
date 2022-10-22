@@ -17,6 +17,5 @@ public class GetSYS {
         }
         return null;
     }
-
 }
 

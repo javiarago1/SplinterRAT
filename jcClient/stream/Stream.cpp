@@ -142,9 +142,9 @@ int Stream::readSize() const {
     const int result = recv(sock, (char *) &aux, sizeof(int), 0);
     if (result == SOCKET_ERROR) {
         std::cout << "Error reading message size" << std::endl;
+        return -1;
     }
     int length = (int) ntohl(aux);
-    //std::cout << "Read -> " << length << std::endl;
     return length;
 }
 

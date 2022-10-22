@@ -5,7 +5,6 @@ import Connections.Streams;
 import Information.Action;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.util.List;
 
 public class RunEvent extends Event {
@@ -22,7 +21,9 @@ public class RunEvent extends Event {
         try {
             getStream().sendAndReadJSON(Action.RUN, getCMElements());
         } catch (Exception ex) {
-            new ClientErrorHandler("Unable to run, connection lost with client", fileManagerDialog);
+            new ClientErrorHandler("Unable to run, connection lost with client",
+                    fileManagerDialog,
+                    getStream().getClientSocket());
         }
     }
 }
