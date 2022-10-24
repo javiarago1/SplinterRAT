@@ -38,7 +38,7 @@ public class JsGUI {
 
 
     private void setUpFrame() {
-        mainGUI = new JFrame("jRat Interface");
+        mainGUI = new JFrame("jcRat Interface");
         mainGUI.setSize(new Dimension(800, 400));
         mainGUI.setResizable(false);
         mainGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
