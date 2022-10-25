@@ -3,6 +3,7 @@ package GUI.TableUtils.Configuration;
 import Connections.Streams;
 import GUI.JsGUI;
 import GUI.TableUtils.FileManager.Listener.FileManagerMenuListener;
+import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 
 import javax.swing.*;
@@ -36,15 +37,18 @@ public class TablePopUpListener extends MouseAdapter {
         connectedPopUpMenu = new JPopupMenu();
         JMenuItem fileManagerMenu = new JMenuItem("File Manager");
         JMenuItem webcamMenu = new JMenuItem("Webcam manager");
-        connectedPopUpMenu.add(fileManagerMenu);
+        JMenuItem reverseShellMenu = new JMenuItem("Reverse shell");
         // add to popup
+        connectedPopUpMenu.add(fileManagerMenu);
         connectedPopUpMenu.add(webcamMenu);
+        connectedPopUpMenu.add(reverseShellMenu);
 
         JTable connectionsTable = mainGUI.getConnectionsTable();
         ConcurrentHashMap<Socket, Streams> mapOfConnections = mainGUI.getMap();
         // set actions
         webcamMenu.addActionListener(new WebcamMenuListener(connectionsTable, mapOfConnections, mainGUI));
         fileManagerMenu.addActionListener(new FileManagerMenuListener(connectionsTable, mapOfConnections, mainGUI));
+        reverseShellMenu.addActionListener(new ReverseShellMenuListener(connectionsTable, mapOfConnections, mainGUI));
 
     }
 

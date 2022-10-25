@@ -15,10 +15,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: adding exceptions for client disconnections">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellMenuListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/SendCommandAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Information/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/Action.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +124,7 @@
       <recent name="Server.Information" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ReverseShellGUI">
+  <component name="RunManager" selected="Application.Server">
     <configuration name="CPPModifier" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Compiler.CPPModifier" />
       <module name="Server" />
@@ -323,13 +331,9 @@
       <workItem from="1666594177434" duration="2430000" />
       <workItem from="1666608037322" duration="6000" />
       <workItem from="1666609166345" duration="121000" />
-    </task>
-    <task id="LOCAL-00043" summary="feat: run archivo y delete archivo">
-      <created>1655202907452</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1655202907452</updated>
+      <workItem from="1666611224874" duration="626000" />
+      <workItem from="1666681045710" duration="7542000" />
+      <workItem from="1666694743425" duration="5286000" />
     </task>
     <task id="LOCAL-00044" summary="feat: dump chrome passwords">
       <created>1655226599606</created>
@@ -667,7 +671,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666457652593</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="feat: adding exceptions for client disconnections">
+      <created>1666614501706</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1666614501707</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -704,7 +715,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: nuevo menu para el TreeGUi (UPLOAD)" />
     <MESSAGE value="feat: comprobar que los elementos seleccionados son carpetas para mostrar la opción de UPLOAD" />
     <MESSAGE value="feat: creación de filechooser para elegir archivo y crear nuevo hilo de socket" />
     <MESSAGE value="refractor: eliminación" />
@@ -729,7 +739,8 @@
     <MESSAGE value="feat: compiler GUI" />
     <MESSAGE value="feat: compiler GUI features" />
     <MESSAGE value="feat: handling exceptions" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: handling exceptions" />
+    <MESSAGE value="feat: adding exceptions for client disconnections" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: adding exceptions for client disconnections" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

