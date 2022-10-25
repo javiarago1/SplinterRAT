@@ -12,7 +12,7 @@ public class ReverseShellGUI {
 
     public ReverseShellGUI(Streams stream, JFrame mainGUI) {
         this.stream = stream;
-        reverseShellDialog = new JDialog(mainGUI, "Reverse shell " + stream.getIdentifier());
+        reverseShellDialog = new JDialog(mainGUI, "Reverse shell -" + stream.getIdentifier());
         reverseShellDialog.setSize(new Dimension(500, 300));
         reverseShellDialog.setLocationRelativeTo(null);
         reverseShellDialog.setLayout(new GridBagLayout());

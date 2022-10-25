@@ -22,19 +22,19 @@ public class CommandSender extends SwingWorker<Void, Void> {
 
     @Override
     protected Void doInBackground() throws IOException {
-        resultOfCommand = reverseShellGUI.getStream().sendAndReadJSONX(Action.SHELL_COMMAND, command);
-        String[] arrayOfInformation = resultOfCommand.split("\\|");
-        System.out.println(arrayOfInformation.length);
+        String response = reverseShellGUI.getStream().sendAndReadJSONX(Action.SHELL_COMMAND, command);
+        System.out.println(response);
+        String[] arrayOfInformation = response.split("\\|");
         userConsolePosition = arrayOfInformation[0];
-        if (resultOfCommand.length() > 1) resultOfCommand = arrayOfInformation[1];
+        if (arrayOfInformation.length > 1) resultOfCommand = arrayOfInformation[1];
+        System.out.println(arrayOfInformation.length);
+        System.out.println(resultOfCommand);
         return null;
     }
 
     @Override
     protected void done() {
-        System.out.println(resultOfCommand.length());
-        String totalResult = userConsolePosition + ">" + command + "\n";
-        if (!resultOfCommand.equals("")) totalResult += resultOfCommand + "\n";
+        String totalResult = userConsolePosition + ">" + command + "\n"+resultOfCommand + "\n";
         reverseShellGUI.getTextAreaOfResult().append(totalResult);
     }
 }

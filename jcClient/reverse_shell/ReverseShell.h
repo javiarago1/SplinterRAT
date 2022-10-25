@@ -7,7 +7,7 @@
 class ReverseShell {
 public:
     ReverseShell() = default;
-    static std::string executeCommand(const std::string&);
+    static std::string executeCommand(const std::wstring&);
 };
 
 
