@@ -14,8 +14,9 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: handling exceptions">
-      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: shell reverse">
+      <change beforePath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" afterDir="false" />
@@ -327,6 +328,7 @@
       <workItem from="1666681045710" duration="7542000" />
       <workItem from="1666694743425" duration="5286000" />
       <workItem from="1666719244082" duration="4058000" />
+      <workItem from="1666767439235" duration="9389000" />
     </task>
     <task id="LOCAL-00044" summary="feat: dump chrome passwords">
       <created>1655226599606</created>

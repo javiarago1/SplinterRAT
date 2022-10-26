@@ -27,14 +27,12 @@ public class CommandSender extends SwingWorker<Void, Void> {
         String[] arrayOfInformation = response.split("\\|");
         userConsolePosition = arrayOfInformation[0];
         if (arrayOfInformation.length > 1) resultOfCommand = arrayOfInformation[1];
-        System.out.println(arrayOfInformation.length);
-        System.out.println(resultOfCommand);
         return null;
     }
 
     @Override
     protected void done() {
-        String totalResult = userConsolePosition + ">" + command + "\n"+resultOfCommand + "\n";
+        String totalResult = userConsolePosition + ">" + command + "\n"+resultOfCommand + "\n"+userConsolePosition+">";
         reverseShellGUI.getTextAreaOfResult().append(totalResult);
     }
 }
