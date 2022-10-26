@@ -5,6 +5,8 @@ import Connections.Streams;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ReverseShellGUI {
     private final Streams stream;
@@ -54,7 +56,16 @@ public class ReverseShellGUI {
         constraints.weightx = 1.0;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         fieldOfCommands.addActionListener(new SendCommandAction(this));
-
+        fieldOfCommands.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE || e.getKeyChar() == KeyEvent.VK_DELETE) {
+                    textAreaOfResult.setText(textAreaOfResult.getText().substring(0, textAreaOfResult.getText().length() - 1));
+                } else {
+                    textAreaOfResult.append(String.valueOf(e.getKeyChar()));
+                }
+            }
+        });
         reverseShellDialog.add(fieldOfCommands, constraints);
 
     }
