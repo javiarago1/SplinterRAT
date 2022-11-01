@@ -12,7 +12,10 @@ public class SendCommandAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        reverseShellGUI.getStream().getExecutor().submit(new CommandSender(reverseShellGUI));
-        reverseShellGUI.getFieldOfCommands().setText("");
+        if (reverseShellGUI.getFieldOfCommands().getText().length() > 0) {
+            reverseShellGUI.setPressedEnter(true);
+            reverseShellGUI.getStream().getExecutor().submit(new CommandSender(reverseShellGUI));
+            reverseShellGUI.getFieldOfCommands().setText(""); // set field text empty
+        }
     }
 }

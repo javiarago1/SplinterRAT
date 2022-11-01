@@ -3,7 +3,6 @@ package GUI.TableUtils.ReverseShell;
 import Connections.Streams;
 import GUI.JsGUI;
 import GUI.TableUtils.Configuration.GetSYS;
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

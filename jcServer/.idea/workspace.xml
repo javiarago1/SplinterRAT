@@ -14,12 +14,13 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: handling exceptions">
-      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: reverse shell modeling">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/FieldDocumentListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/SendCommandAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/SendCommandAction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +34,7 @@
         <option value="JavaScript File" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -329,13 +331,12 @@
       <workItem from="1666694743425" duration="5286000" />
       <workItem from="1666719244082" duration="4058000" />
       <workItem from="1666767439235" duration="9389000" />
-    </task>
-    <task id="LOCAL-00044" summary="feat: dump chrome passwords">
-      <created>1655226599606</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1655226599606</updated>
+      <workItem from="1666807378943" duration="13000" />
+      <workItem from="1666851698635" duration="2237000" />
+      <workItem from="1667113777597" duration="7676000" />
+      <workItem from="1667122301296" duration="52000" />
+      <workItem from="1667205978924" duration="4495000" />
+      <workItem from="1667290152510" duration="7312000" />
     </task>
     <task id="LOCAL-00045" summary="feat: dump chrome passwords">
       <created>1655300078508</created>
@@ -673,7 +674,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666614501707</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="feat: reverse shell modeling">
+      <created>1666798201338</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1666798201338</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -710,7 +718,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: comprobar que los elementos seleccionados son carpetas para mostrar la opción de UPLOAD" />
     <MESSAGE value="feat: creación de filechooser para elegir archivo y crear nuevo hilo de socket" />
     <MESSAGE value="refractor: eliminación" />
     <MESSAGE value="refractor: especificar título y tipo de selección" />
@@ -735,7 +742,8 @@
     <MESSAGE value="feat: compiler GUI features" />
     <MESSAGE value="feat: handling exceptions" />
     <MESSAGE value="feat: adding exceptions for client disconnections" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: adding exceptions for client disconnections" />
+    <MESSAGE value="feat: reverse shell modeling" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: reverse shell modeling" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

