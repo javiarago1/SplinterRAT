@@ -1,7 +1,6 @@
 #include "Stream.h"
 #include "../file/FileManager.h"
 
-
 void Stream::sendString(const char *c_str) const {
     const int size = static_cast<int>(strlen(c_str));
     sendSize(size);

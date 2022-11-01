@@ -14,13 +14,13 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: reverse shell modeling">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/FieldDocumentListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/reverse_shell/ReverseShell.cpp" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: finished reverse shell">
+      <change afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/SendCommandAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/SendCommandAction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -336,14 +336,8 @@
       <workItem from="1667113777597" duration="7676000" />
       <workItem from="1667122301296" duration="52000" />
       <workItem from="1667205978924" duration="4495000" />
-      <workItem from="1667290152510" duration="7312000" />
-    </task>
-    <task id="LOCAL-00045" summary="feat: dump chrome passwords">
-      <created>1655300078508</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1655300078508</updated>
+      <workItem from="1667290152510" duration="8349000" />
+      <workItem from="1667312760381" duration="1101000" />
     </task>
     <task id="LOCAL-00046" summary="feat: dump chrome passwords">
       <created>1655300148823</created>
@@ -681,7 +675,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666798201338</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="feat: finished reverse shell">
+      <created>1667300926951</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1667300926952</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -718,7 +719,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: creación de filechooser para elegir archivo y crear nuevo hilo de socket" />
     <MESSAGE value="refractor: eliminación" />
     <MESSAGE value="refractor: especificar título y tipo de selección" />
     <MESSAGE value="feat: clase para envío de objeto y archivo" />
@@ -743,7 +743,8 @@
     <MESSAGE value="feat: handling exceptions" />
     <MESSAGE value="feat: adding exceptions for client disconnections" />
     <MESSAGE value="feat: reverse shell modeling" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: reverse shell modeling" />
+    <MESSAGE value="feat: finished reverse shell" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: finished reverse shell" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

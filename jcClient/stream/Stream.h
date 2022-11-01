@@ -42,6 +42,7 @@ public :
     std::vector<std::string> readList();
 
     std::string readString() const;
+
 };
 
 
