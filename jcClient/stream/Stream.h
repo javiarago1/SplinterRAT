@@ -1,3 +1,5 @@
+#ifndef CLIENT_STREAM_H
+#define CLIENT_STREAM_H
 #include <iostream>
 #include <winsock2.h>
 #include <string>
@@ -5,10 +7,6 @@
 #include <fstream>
 #include <vector>
 #include "../converter/Converter.h"
-
-#ifndef CLIENT_STREAM_H
-#define CLIENT_STREAM_H
-
 
 
 class Stream {
