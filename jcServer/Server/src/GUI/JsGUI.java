@@ -86,10 +86,6 @@ public class JsGUI {
 
 
 
-
-
-
-
     private void addTable() {
         TableModel tableModel = new TableModel(column);
         connectionsTable = new JTable(tableModel);

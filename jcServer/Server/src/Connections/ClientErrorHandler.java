@@ -9,22 +9,46 @@ import java.net.Socket;
 
 public class ClientErrorHandler {
 
-    public ClientErrorHandler(String errorMessage, JDialog dialog, Socket clientSocket) {
-        Main.gui.getMap().remove(clientSocket);
-        SwingUtilities.invokeLater(() -> {
-            DefaultTableModel connectionsDefaultTableModel = Main.gui.getConnectionsDefaultTableModel();
-            boolean founded = false;
-            for (int i = 0; i < connectionsDefaultTableModel.getRowCount() || !founded; i++) {
-                if (Main.gui.getConnectionsTable().getValueAt(i, 0).equals(clientSocket.getInetAddress().toString())) {
-                    connectionsDefaultTableModel.setValueAt("Disconnected", i, 5);
-                    founded = true;
-                }
-            }
-            JOptionPane.showMessageDialog(Main.gui.getMainGUI(), errorMessage,
-                    "Exception with client", JOptionPane.ERROR_MESSAGE);
-            dialog.dispose();
-        });
 
+    public ClientErrorHandler(String errorMessage, JDialog dialog, Socket clientSocket) {
+        removeClientFromMap(clientSocket);
+        SwingUtilities.invokeLater(() -> {
+            closeDialogOfClient(dialog);
+            setDisconnectedUser(clientSocket);
+            showErrorMessage(errorMessage);
+        });
+    }
+
+    public ClientErrorHandler(String errorMessage, Socket clientSocket) {
+        removeClientFromMap(clientSocket);
+        SwingUtilities.invokeLater(() -> {
+            showErrorMessage(errorMessage);
+            setDisconnectedUser(clientSocket);
+        });
+    }
+
+    private void removeClientFromMap(Socket clientSocket) {
+        Main.gui.getMap().remove(clientSocket);
+    }
+
+    private void showErrorMessage(String errorMessage) {
+        JOptionPane.showMessageDialog(Main.gui.getMainGUI(), errorMessage,
+                "Exception with client", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void closeDialogOfClient(JDialog dialog) {
+        dialog.dispose();
+    }
+
+    private void setDisconnectedUser(Socket clientSocket) {
+        DefaultTableModel connectionsDefaultTableModel = Main.gui.getConnectionsDefaultTableModel();
+        boolean founded = false;
+        for (int i = 0; i < connectionsDefaultTableModel.getRowCount() || !founded; i++) {
+            if (Main.gui.getConnectionsTable().getValueAt(i, 0).equals(clientSocket.getInetAddress().toString())) {
+                connectionsDefaultTableModel.setValueAt("Disconnected", i, 5);
+                founded = true;
+            }
+        }
     }
 
 }

