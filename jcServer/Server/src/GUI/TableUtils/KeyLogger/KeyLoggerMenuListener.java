@@ -1,39 +1,38 @@
 package GUI.TableUtils.KeyLogger;
 
-import Connections.ClientErrorHandler;
 import Connections.Streams;
+import GUI.Main;
 import GUI.TableUtils.Configuration.GetSYS;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class KeyLoggerMenuListener implements ActionListener {
-    private final ConcurrentHashMap<Socket, Streams> map;
-    private final JTable table;
-    private final KeyloggerEvents event;
+public class KeyLoggerMenuListener implements MenuListener {
 
-    public KeyLoggerMenuListener(JTable table, ConcurrentHashMap<Socket, Streams> map, KeyloggerEvents event) {
-        this.map = map;
-        this.table = table;
-        this.event = event;
+    private final ConcurrentHashMap<Socket, Streams> mapOfConnections;
+    private final JMenuItem[] keyloggerOptions;
+
+    public KeyLoggerMenuListener(ConcurrentHashMap<Socket,Streams>mapOfConnections, JMenuItem[]keyloggerOptions){
+        this.mapOfConnections = mapOfConnections;
+        this.keyloggerOptions = keyloggerOptions;
+    }
+    @Override
+    public void menuSelected(MenuEvent e) {
+        Streams stream = GetSYS.getStream(mapOfConnections, Main.gui.getConnectionsTable());
+        assert stream != null;
+        stream.getExecutor().submit(new KeyLoggerStateChecker(stream,keyloggerOptions));
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        Streams stream = GetSYS.getStream(map, table);
-        assert stream != null;
-        stream.getExecutor().submit(() -> {
-            try {
-                stream.sendJSON(event);
-            } catch (IOException ex) {
-                new ClientErrorHandler("Unable to manage keylogger, connection lost with client",
-                        stream.getClientSocket());
-            }
-        });
+    public void menuDeselected(MenuEvent e) {
+
+    }
+
+    @Override
+    public void menuCanceled(MenuEvent e) {
+
     }
 }
-

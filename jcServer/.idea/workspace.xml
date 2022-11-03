@@ -15,8 +15,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: keylogger">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerEventsListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerStateChecker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/Information/FolderOpener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
@@ -34,8 +38,8 @@
         <option value="UML Class" />
         <option value="JavaScript File" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
