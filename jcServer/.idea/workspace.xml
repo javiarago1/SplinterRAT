@@ -15,16 +15,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: keylogger">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerMenuListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyloggerEvents.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyloggerEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyloggerEvents.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -345,6 +342,7 @@
       <workItem from="1667317504742" duration="33000" />
       <workItem from="1667317571445" duration="2000" />
       <workItem from="1667409467628" duration="5877000" />
+      <workItem from="1667465232191" duration="971000" />
     </task>
     <task id="LOCAL-00047" summary="feat: adapted to c++">
       <created>1661890197266</created>

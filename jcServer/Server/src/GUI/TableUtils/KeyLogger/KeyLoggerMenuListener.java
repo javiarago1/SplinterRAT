@@ -28,7 +28,7 @@ public class KeyLoggerMenuListener implements ActionListener {
         assert stream != null;
         stream.getExecutor().submit(() -> {
             try {
-                stream.sendAndReadJSON(event);
+                stream.sendJSON(event);
             } catch (IOException ex) {
                 new ClientErrorHandler("Unable to manage keylogger, connection lost with client",
                         stream.getClientSocket());

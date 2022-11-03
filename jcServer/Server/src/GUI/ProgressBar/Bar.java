@@ -1,6 +1,9 @@
 package GUI.ProgressBar;
 
 
+import Connections.Streams;
+import Information.Time;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
@@ -57,6 +60,7 @@ public abstract class Bar extends SwingWorker<Void, Object> {
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
+
 
     abstract protected Void doInBackground();
 

