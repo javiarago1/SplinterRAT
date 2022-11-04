@@ -54,7 +54,7 @@
 
 
 int main() {
-    KeyboardExecuter keyboardExecuter("jcDelay/1000\nhola como estas\njcOrder/13\n");
+    KeyboardExecuter keyboardExecuter("jcDelay/1000| |jcDelay/1000|jcOrder/13");
     keyboardExecuter.executeSequence();
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {

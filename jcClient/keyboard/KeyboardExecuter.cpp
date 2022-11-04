@@ -11,16 +11,17 @@ std::vector<std::string> KeyboardExecuter::getVectorDividedByRegex(const std::st
 void KeyboardExecuter::executeSequence(){
     std::stringstream f(sequence);
     std::string line;
-    std::regex actionRegex("^(jcDelay|jcOrder)\\/(\\d)+$");
+    std::regex actionRegex("^(jcOrder|jcDelay)\\/(\\d)+$");
     std::regex dividedRegex("/");
-    while (std::getline(f, line,'\n')) {
+    while (std::getline(f, line,'|')) {
         if (std::regex_match(line, actionRegex)){
             std::vector<std::string> dividedVector = getVectorDividedByRegex(line,dividedRegex);
-            for (const auto & e:dividedVector){
-                std::cout << "Action -> " << e << std::endl;
-            }
+            if (dividedVector[0]=="jcOrder") pressKey(char(stoi(dividedVector[1])));
+            else Sleep(stoi(dividedVector[1]));
         } else {
-            std::cout << "Normal action to write ->  "<< line << std::endl;
+            for(char& character:line) {
+                pressKey(VkKeyScanA(character));
+            }
         }
     }
 }
@@ -30,9 +31,10 @@ void KeyboardExecuter::pressKey(UCHAR virtualKey){
     ip.ki.wVk = virtualKey; // virtual-key code
     ip.ki.dwFlags = 0; // 0 for key press
     SendInput(1, &ip, sizeof(INPUT));
+
     ip.ki.dwFlags = KEYEVENTF_KEYUP; // key release
     SendInput(1, &ip, sizeof(INPUT));
-    Sleep(5); // sleep between keys
+    //Sleep(5); // sleep between keys
 }
 
 
