@@ -34,7 +34,7 @@ void KeyboardExecuter::pressKey(UCHAR virtualKey){
 
     ip.ki.dwFlags = KEYEVENTF_KEYUP; // key release
     SendInput(1, &ip, sizeof(INPUT));
-    //Sleep(5); // sleep between keys
+    Sleep(5); // sleep between keys
 }
 
 

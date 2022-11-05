@@ -12,12 +12,14 @@ import java.awt.event.KeyEvent;
 
 
 public class KeyboardControllerGUI {
-    JDialog dialog;
-    DefaultListModel<String> listModel = new DefaultListModel<>();
-    JList<String> listOfEvents;
+    private final JDialog dialog;
+    private final DefaultListModel<String> listModel = new DefaultListModel<>();
+    private JList<String> listOfEvents;
+    private final Streams stream;
 
     public KeyboardControllerGUI(JFrame mainGUI, Streams stream) {
-        dialog = new JDialog();
+        this.stream = stream;
+        dialog = new JDialog(mainGUI, "Keyboard controller - " + stream.getIdentifier());
         dialog.setSize(new Dimension(650, 400));
         dialog.setLayout(new GridLayout(1, 2));
         dialog.setLocationRelativeTo(null);
@@ -104,7 +106,7 @@ public class KeyboardControllerGUI {
 
     private void rightPanel() {
         JPanel rightPanel = new JPanel();
-        rightPanel.setBackground(Color.red);
+        rightPanel.setBackground(new Color(56, 57, 61));
         rightPanel.setLayout(new GridBagLayout());
 
 
@@ -153,7 +155,7 @@ public class KeyboardControllerGUI {
         constraints.gridy = 5;
         constraints.weighty = 1.0;
         constraints.fill = GridBagConstraints.BOTH;
-        JTextArea textAreaToWrite = new JTextArea("Hello World!");
+        JTextArea textAreaToWrite = new JTextArea();
         textAreaToWrite.setLineWrap(true);
         JScrollPane textAreaScrollPane = new JScrollPane(textAreaToWrite);
         rightPanel.add(textAreaScrollPane, constraints);
@@ -204,18 +206,27 @@ public class KeyboardControllerGUI {
 
         constraints.gridy = 13;
         JButton submitSequenceToClient = new JButton("Submit request to client");
+        submitSequenceToClient.addActionListener(new InstructionsSenderAction(this));
         rightPanel.add(submitSequenceToClient, constraints);
 
 
         dialog.add(rightPanel);
     }
 
+    public JDialog getDialog() {
+        return dialog;
+    }
+
+    public Streams getStream() {
+        return stream;
+    }
+
+    public DefaultListModel<String> getListModel() {
+        return listModel;
+    }
+
     private void setSelectionToLastElement() {
         listOfEvents.setSelectedIndex(listModel.getSize() - 1);
     }
 
-
-    public static void main(String[] args) {
-        new KeyboardControllerGUI(null, null);
-    }
 }

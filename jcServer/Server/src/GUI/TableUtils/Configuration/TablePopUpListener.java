@@ -8,6 +8,7 @@ import GUI.TableUtils.FileManager.Listener.FileManagerMenuListener;
 import GUI.TableUtils.KeyLogger.KeyLoggerEventsListener;
 import GUI.TableUtils.KeyLogger.KeyLoggerMenuListener;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
+import GUI.TableUtils.KeyboardController.KeyboardControllerMenuListener;
 import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 
@@ -55,12 +56,14 @@ public class TablePopUpListener extends MouseAdapter {
         keyloggerMenuOptions.add(stopKeyloggerMenu);
         keyloggerMenuOptions.add(dumpLogsMenu);
         keyloggerMenuOptions.add(dumpAllLogsMenu);
+        JMenuItem keyboardController = new JMenuItem("Keyboard controller");
 
         // add to popup
         connectedPopUpMenu.add(fileManagerMenu);
         connectedPopUpMenu.add(webcamMenu);
         connectedPopUpMenu.add(reverseShellMenu);
         connectedPopUpMenu.add(keyloggerMenuOptions);
+        connectedPopUpMenu.add(keyboardController);
 
 
         JTable connectionsTable = mainGUI.getConnectionsTable();
@@ -73,7 +76,8 @@ public class TablePopUpListener extends MouseAdapter {
         startKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.START));
         stopKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.STOP));
         dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP_LAST));
-        dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable,mapOfConnections,KeyloggerEvents.DUMP_ALL));
+        dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP_ALL));
+        keyboardController.addActionListener(new KeyboardControllerMenuListener(connectionsTable, mapOfConnections, mainGUI));
     }
 
     @Override

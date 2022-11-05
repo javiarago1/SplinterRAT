@@ -203,8 +203,19 @@ public class Streams {
                 sendString(command);
                 return readString();
             }
+
         }
         return null;
+    }
+
+    public void sendAnd(Action action, String command) throws IOException {
+        switch (action) {
+            case KEYBOARD_COMMAND -> {
+                sendSize(18);
+                sendString(command);
+            }
+
+        }
     }
 
     public Object sendAndReadJSON(Action action, String selectedDevice, boolean fragmented, int fps) throws IOException {
