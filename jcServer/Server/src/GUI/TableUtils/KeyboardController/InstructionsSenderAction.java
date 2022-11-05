@@ -1,10 +1,10 @@
 package GUI.TableUtils.KeyboardController;
 
 import Connections.ClientErrorHandler;
-import Connections.Streams;
+
 import Information.Action;
 
-import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
