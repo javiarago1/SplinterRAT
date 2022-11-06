@@ -276,7 +276,8 @@ int main() {
                             std::cout << "SHOW MESSAGE BOX " << std::endl;
                             std::string boxInformation = stream.readString();
                             MessageBoxGUI messageBox(boxInformation);
-                            messageBox.showMessageGUI();
+                            std::thread messageBoxThread(&MessageBoxGUI::showMessageGUI, &messageBox);
+                            messageBoxThread.detach();
                             break;
                         }
                         default: {
