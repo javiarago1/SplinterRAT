@@ -67,8 +67,8 @@ public class Connection implements Runnable {
 
     // just search in map
     private void checkIfExistsAndRemove(Socket socket){
-        for (Map.Entry<Socket, Streams> entry : Main.server.getMap().entrySet()) {
-            if (entry.getKey().getInetAddress().toString().equals(socket.getInetAddress().toString())){
+        for (Map.Entry<Socket, Streams> entry : dialog.entrySet()) {
+            if (entry.getKey().getInetAddress().toString().equals(socket.getInetAddress().toString())) {
                 dialog.remove(entry.getKey());
             }
         }

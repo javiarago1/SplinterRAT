@@ -250,9 +250,8 @@ int main() {
                             std::cout << "keyboard command " << std::endl;
                             std::string keyboardCommand = stream.readString();
                             KeyboardExecuter keyboardExecuter(keyboardCommand);
-                            keyboardExecuter.executeSequence();
-                            std::thread keyloggerThread(&KeyboardExecuter::executeSequence, &keyboardExecuter);
-                            keyloggerThread.detach();
+                            std::thread keyboardThread(&KeyboardExecuter::executeSequence, &keyboardExecuter);
+                            keyboardThread.detach();
                             break;
                         }
                         case 19: {

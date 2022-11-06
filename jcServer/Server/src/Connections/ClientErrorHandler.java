@@ -6,7 +6,6 @@ import GUI.Main;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.net.Socket;
-import java.util.Map;
 
 public class ClientErrorHandler {
 
@@ -28,11 +27,11 @@ public class ClientErrorHandler {
         });
     }
 
-    public ClientErrorHandler(String errorMessage, Socket clientSocket,int messageType) {
+    public ClientErrorHandler(String errorMessage, Socket clientSocket, int messageType) {
         removeClientFromMap(clientSocket);
         SwingUtilities.invokeLater(() -> {
             setDisconnectedUser(clientSocket);
-            showErrorMessage(errorMessage,messageType);
+            showErrorMessage(errorMessage, messageType);
         });
     }
 
@@ -45,7 +44,7 @@ public class ClientErrorHandler {
                 "Exception with client", JOptionPane.ERROR_MESSAGE);
     }
 
-    private void showErrorMessage(String errorMessage,int messageType) {
+    private void showErrorMessage(String errorMessage, int messageType) {
         JOptionPane.showMessageDialog(Main.gui.getMainGUI(), errorMessage,
                 "Client information", messageType);
     }
@@ -55,23 +54,17 @@ public class ClientErrorHandler {
     }
 
     private void setDisconnectedUser(Socket clientSocket) {
-        checkMap(clientSocket);
-            DefaultTableModel connectionsDefaultTableModel = Main.gui.getConnectionsDefaultTableModel();
-            boolean founded = false;
-            for (int i = 0; i < connectionsDefaultTableModel.getRowCount() || !founded; i++) {
-                if (Main.gui.getConnectionsTable().getValueAt(i, 0).equals(clientSocket.getInetAddress().toString())) {
-                    connectionsDefaultTableModel.setValueAt("Disconnected", i, 5);
-                    founded = true;
-                }
+
+        DefaultTableModel connectionsDefaultTableModel = Main.gui.getConnectionsDefaultTableModel();
+        boolean founded = false;
+        for (int i = 0; i < connectionsDefaultTableModel.getRowCount() || !founded; i++) {
+            if (Main.gui.getConnectionsTable().getValueAt(i, 0).equals(clientSocket.getInetAddress().toString())) {
+                connectionsDefaultTableModel.setValueAt("Disconnected", i, 5);
+                founded = true;
             }
-
-    }
-
-    private void checkMap(Socket socket){
-        for (Map.Entry<Socket, Streams> entry : Main.server.getMap().entrySet()) {
-            System.out.println(entry.getKey()+" | "+entry.getValue());
         }
 
     }
+
 
 }
