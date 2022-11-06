@@ -8,6 +8,7 @@ import GUI.TableUtils.KeyLogger.KeyLoggerEventsListener;
 import GUI.TableUtils.KeyLogger.KeyLoggerMenuListener;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.KeyboardController.KeyboardControllerMenuListener;
+import GUI.TableUtils.MessageBox.MessageBoxMenuListener;
 import GUI.TableUtils.Permissions.CheckAdmin.AdminPermissionAction;
 import GUI.TableUtils.Permissions.ElevatePermission.ElevatePermissionAction;
 import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
@@ -59,6 +60,8 @@ public class TablePopUpListener extends MouseAdapter {
         JMenuItem fileManagerMenu = new JMenuItem("File manager");
         JMenuItem webcamMenu = new JMenuItem("Webcam manager");
         JMenuItem reverseShellMenu = new JMenuItem("Reverse shell");
+        JMenuItem keyboardController = new JMenuItem("Keyboard controller");
+        JMenuItem messageBoxMenu = new JMenuItem("Message box");
         JMenu keyloggerMenuOptions = new JMenu("Keylogger options");
         JMenuItem startKeyloggerMenu = new JMenuItem("Start");
         JMenuItem stopKeyloggerMenu = new JMenuItem("Stop");
@@ -68,7 +71,6 @@ public class TablePopUpListener extends MouseAdapter {
         keyloggerMenuOptions.add(stopKeyloggerMenu);
         keyloggerMenuOptions.add(dumpLogsMenu);
         keyloggerMenuOptions.add(dumpAllLogsMenu);
-        JMenuItem keyboardController = new JMenuItem("Keyboard controller");
         JMenu permissionsMenu = new JMenu("Admin privileges");
         JMenuItem isAdminMenu = new JMenuItem("Is admin");
         JMenuItem elevatePrivilegesMenu = new JMenuItem("Elevate privileges");
@@ -78,8 +80,9 @@ public class TablePopUpListener extends MouseAdapter {
         connectedPopUpMenu.add(fileManagerMenu);
         connectedPopUpMenu.add(webcamMenu);
         connectedPopUpMenu.add(reverseShellMenu);
-        connectedPopUpMenu.add(keyloggerMenuOptions);
         connectedPopUpMenu.add(keyboardController);
+        connectedPopUpMenu.add(messageBoxMenu);
+        connectedPopUpMenu.add(keyloggerMenuOptions);
         connectedPopUpMenu.add(permissionsMenu);
 
 
@@ -96,7 +99,8 @@ public class TablePopUpListener extends MouseAdapter {
         dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(connectionsTable, mapOfConnections, mainGUI));
         isAdminMenu.addActionListener(new AdminPermissionAction(connectionsTable,mapOfConnections));
-        elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction(connectionsTable,mapOfConnections));
+        elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction(connectionsTable, mapOfConnections));
+        messageBoxMenu.addActionListener(new MessageBoxMenuListener(connectionsTable, mapOfConnections));
     }
 
     @Override

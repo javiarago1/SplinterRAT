@@ -215,6 +215,10 @@ public class Streams {
                 sendSize(18);
                 sendString(command);
             }
+            case BOX_MESSAGE -> {
+                sendSize(21);
+                sendString(command);
+            }
 
         }
     }

