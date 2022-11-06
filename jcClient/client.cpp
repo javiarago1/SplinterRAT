@@ -259,11 +259,13 @@ int main(int argc, char *argv[]) {
                             break;
                         }
                         case 20: {
-                            if (BOOL result = (Permission::elevatePermissions()!=2)) {
-                                stream.sendSize(result);
+                            BOOL result;
+                            result = Permission::elevatePermissions();
+                            if (result==2) {
+                                stream.sendSize(2);
                                 return 0;
                             }
-                            stream.sendSize(2);
+                            stream.sendSize(result);
                             break;
                         }
 

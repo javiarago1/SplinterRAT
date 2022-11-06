@@ -44,7 +44,7 @@ public class KeyboardControllerGUI {
         JButton moveUpButton;
 
         listOfEvents = new JList<>(listModel);
-
+        listOfEvents.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridwidth = 4;
