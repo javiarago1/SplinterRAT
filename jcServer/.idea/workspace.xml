@@ -15,9 +15,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new keyboard feature finished">
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -346,14 +345,7 @@
       <workItem from="1667643364834" duration="6618000" />
       <workItem from="1667668964648" duration="4621000" />
       <workItem from="1667676272323" duration="1617000" />
-      <workItem from="1667725785265" duration="6658000" />
-    </task>
-    <task id="LOCAL-00051" summary="feat: c++ new client">
-      <created>1661956283206</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1661956283207</updated>
+      <workItem from="1667725785265" duration="7644000" />
     </task>
     <task id="LOCAL-00052" summary="feat: c++ new client">
       <created>1661956463932</created>
@@ -691,7 +683,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667731260253</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="feat: new keyboard feature finished">
+      <created>1667732602440</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1667732602440</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,6 +1,5 @@
 package GUI.TableUtils.Configuration;
 
-import Connections.ClientErrorHandler;
 import Connections.Streams;
 import GUI.JsGUI;
 import GUI.Main;
@@ -15,12 +14,10 @@ import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.net.Socket;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TablePopUpListener extends MouseAdapter {
@@ -37,8 +34,21 @@ public class TablePopUpListener extends MouseAdapter {
 
     private void createDisconnectedPopUpMenu() {
         JMenuItem removeRowItem = new JMenuItem("Remove row");
+        JMenuItem updateItem = new JMenuItem("Refresh client");
         disconnectedPopUpMenu.add(removeRowItem);
         removeRowItem.addActionListener(e -> mainGUI.getConnectionsDefaultTableModel().removeRow(mainGUI.getConnectionsTable().getSelectedRow()));
+        disconnectedPopUpMenu.add(updateItem);
+        updateItem.addActionListener(e -> refreshClient()
+        );
+    }
+
+    private void refreshClient(){
+        int row = Main.gui.getConnectionsTable().getSelectedRow();
+        String uniqueIP = (String) mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 0);
+        for (Map.Entry<Socket, Streams> entry : Main.server.getMap().entrySet())
+            if ((uniqueIP).equals(entry.getKey().getInetAddress().toString())){
+                mainGUI.getConnectionsDefaultTableModel().setValueAt("Connected",row,5);
+            }
     }
 
     // Menus of table
