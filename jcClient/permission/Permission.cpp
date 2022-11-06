@@ -21,13 +21,10 @@ BOOL Permission::elevatePermissions() {
         char szPath[MAX_PATH];
         if (GetModuleFileName(nullptr, szPath, ARRAYSIZE(szPath))) {
             SHELLEXECUTEINFO sei = {sizeof(sei)};
-
             sei.lpVerb = "runas";
             sei.lpFile = szPath;
             sei.hwnd = nullptr;
             sei.nShow = SW_NORMAL;
-            sei.lpParameters = "5000";
-
             return ShellExecuteEx(&sei);
         }
     }

@@ -16,7 +16,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new keyboard feature finished">
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/KeyboardControllerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/KeyboardControllerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/permission/Permission.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/permission/Permission.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -345,14 +346,7 @@
       <workItem from="1667643364834" duration="6618000" />
       <workItem from="1667668964648" duration="4621000" />
       <workItem from="1667676272323" duration="1617000" />
-      <workItem from="1667725785265" duration="5417000" />
-    </task>
-    <task id="LOCAL-00050" summary="feat: c++ new client">
-      <created>1661954035999</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1661954036000</updated>
+      <workItem from="1667725785265" duration="6143000" />
     </task>
     <task id="LOCAL-00051" summary="feat: c++ new client">
       <created>1661956283206</created>
@@ -690,7 +684,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667650512096</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="feat: new keyboard feature finished">
+      <created>1667731260253</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1667731260253</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

