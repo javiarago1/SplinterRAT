@@ -14,17 +14,23 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new keyboard GUI feature on JAVA">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/InstructionsSenderAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/JCodeCompiler.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new keyboard feature finished">
+      <change afterPath="$PROJECT_DIR$/../jcClient/permission/Permission.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/permission/Permission.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/CheckAdmin/AdminChecker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/CheckAdmin/AdminPermissionAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/ElevatePermission/ElevatePermissionAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/ElevatePermission/PrivilegesElevator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/Permissions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/keyboard/KeyboardExecuter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keyboard/KeyboardExecuter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/KeyboardControllerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/KeyboardControllerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/KeyboardControllerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/KeyboardControllerMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Information/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/Action.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -350,21 +356,10 @@
       <workItem from="1667495669707" duration="2822000" />
       <workItem from="1667575727223" duration="10502000" />
       <workItem from="1667586274066" duration="2331000" />
-      <workItem from="1667643364834" duration="6380000" />
-    </task>
-    <task id="LOCAL-00048" summary="feat: adapted to c++">
-      <created>1661890589524</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1661890589524</updated>
-    </task>
-    <task id="LOCAL-00049" summary="feat: c++ new client">
-      <created>1661953795041</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1661953795041</updated>
+      <workItem from="1667643364834" duration="6618000" />
+      <workItem from="1667668964648" duration="4621000" />
+      <workItem from="1667676272323" duration="1617000" />
+      <workItem from="1667725785265" duration="4385000" />
     </task>
     <task id="LOCAL-00050" summary="feat: c++ new client">
       <created>1661954035999</created>
@@ -695,7 +690,21 @@
       <option name="project" value="LOCAL" />
       <updated>1667588580303</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="feat: new keyboard feature finished">
+      <created>1667650500376</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1667650500376</updated>
+    </task>
+    <task id="LOCAL-00098" summary="feat: new keyboard feature finished">
+      <created>1667650512096</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1667650512096</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -732,7 +741,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: clase para envío de objeto y archivo" />
     <MESSAGE value="ignore" />
     <MESSAGE value="feat: run archivo y delete archivo" />
     <MESSAGE value="feat: dump chrome passwords" />
@@ -757,7 +765,8 @@
     <MESSAGE value="feat: finished reverse shell" />
     <MESSAGE value="feat: keylogger" />
     <MESSAGE value="feat: new keyboard GUI feature on JAVA" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: new keyboard GUI feature on JAVA" />
+    <MESSAGE value="feat: new keyboard feature finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: new keyboard feature finished" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

