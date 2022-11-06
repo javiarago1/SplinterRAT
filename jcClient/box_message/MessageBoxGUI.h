@@ -13,10 +13,10 @@ public:
     explicit MessageBoxGUI(std::string);
     void showMessageGUI();
 private:
-    UINT getIconFromItem(int);
+    static UINT getIconFromItem(int);
     std::vector<std::string> generateVectorByDelimiter();
     std::string boxInformation;
-    UINT getTypeFromItem(int selectedType);
+    static UINT getTypeFromItem(int selectedType);
 
 };
 
