@@ -261,8 +261,8 @@ int main(int argc, char *argv[]) {
                         case 20: {
                             BOOL result;
                             result = Permission::elevatePermissions();
-                            if (result==2) {
-                                stream.sendSize(2);
+                            if (result==1) {
+                                stream.sendSize(1);
                                 return 0;
                             }
                             stream.sendSize(result);
