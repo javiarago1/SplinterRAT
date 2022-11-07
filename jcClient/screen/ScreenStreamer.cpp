@@ -60,7 +60,29 @@ cv::Mat ScreenStreamer::captureScreenMat(HWND hwnd) {
 
 void ScreenStreamer::sendPicture() {
 
+    int x = 17;
+    int y = 12;
 
+    double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
+    double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
+    double fx = x*(65535.0f / fScreenWidth);
+    double fy = y*(65535.0f / fScreenHeight);
+    std::cout << fScreenWidth << std::endl;
+    std::cout << fScreenHeight << std::endl;
+    INPUT  Input = { 0 };
+    Input.type = INPUT_MOUSE;
+    Input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
+    Input.mi.dx = (LONG)fx;
+    Input.mi.dy = (LONG)fy;
+    SendInput(1, &Input, sizeof(INPUT));
+    ::ZeroMemory(&Input,sizeof(INPUT));
+    Input.type      = INPUT_MOUSE;
+    Input.mi.dwFlags  = MOUSEEVENTF_LEFTDOWN;
+    ::SendInput(1,&Input,sizeof(INPUT));
+    ::ZeroMemory(&Input,sizeof(INPUT));
+    Input.type      = INPUT_MOUSE;
+    Input.mi.dwFlags  = MOUSEEVENTF_LEFTUP;
+    ::SendInput(1,&Input,sizeof(INPUT));
     while (true) {
         std::string whereTo = stream.readString();
         // capture image
