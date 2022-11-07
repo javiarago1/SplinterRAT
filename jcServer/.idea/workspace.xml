@@ -14,18 +14,14 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new keyboard feature finished">
-      <change afterPath="$PROJECT_DIR$/../jcClient/box_message/MessageBoxGUI.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jcClient/box_message/MessageBoxGUI.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxMenuListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxSender.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: messagebox with thread optimization">
+      <change afterPath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Information/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/Action.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -140,19 +136,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CompilerGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GUI.Compiler.CompilerGUI" />
-      <module name="Server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="GUI.Compiler.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="KeyboardControllerGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.TableUtils.KeyboardController.KeyboardControllerGUI" />
       <module name="Server" />
@@ -192,6 +175,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ScreenStreamingGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.TableUtils.ScreenStreaming.ScreenStreamingGUI" />
+      <module name="Server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.TableUtils.ScreenStreaming.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WebcamGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.TableUtils.Webcam.WebcamManager.WebcamGUI" />
       <module name="Server" />
@@ -214,11 +210,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ScreenStreamingGUI" />
         <item itemvalue="Application.MessageBoxGUI" />
         <item itemvalue="Application.KeyboardControllerGUI" />
         <item itemvalue="Application.WebcamGUI" />
         <item itemvalue="Application.ReverseShellGUI" />
-        <item itemvalue="Application.CompilerGUI" />
       </list>
     </recent_temporary>
   </component>
@@ -356,21 +352,9 @@
       <workItem from="1667668964648" duration="4621000" />
       <workItem from="1667676272323" duration="1617000" />
       <workItem from="1667725785265" duration="8023000" />
-      <workItem from="1667744665167" duration="5306000" />
-    </task>
-    <task id="LOCAL-00052" summary="feat: c++ new client">
-      <created>1661956463932</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1661956463932</updated>
-    </task>
-    <task id="LOCAL-00053" summary="feat: c++ new client">
-      <created>1662401099195</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1662401099196</updated>
+      <workItem from="1667744665167" duration="5579000" />
+      <workItem from="1667761939052" duration="3000" />
+      <workItem from="1667844061587" duration="4476000" />
     </task>
     <task id="LOCAL-00054" summary="feat: c++ new client">
       <created>1662912226952</created>
@@ -701,7 +685,21 @@
       <option name="project" value="LOCAL" />
       <updated>1667732602440</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="feat: messagebox thread?">
+      <created>1667752424620</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1667752424620</updated>
+    </task>
+    <task id="LOCAL-00102" summary="feat: messagebox with thread optimization">
+      <created>1667752591006</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1667752591006</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -738,8 +736,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="ignore" />
-    <MESSAGE value="feat: run archivo y delete archivo" />
     <MESSAGE value="feat: dump chrome passwords" />
     <MESSAGE value="feat: adapted to c++" />
     <MESSAGE value="feat: c++ new client" />
@@ -763,7 +759,9 @@
     <MESSAGE value="feat: keylogger" />
     <MESSAGE value="feat: new keyboard GUI feature on JAVA" />
     <MESSAGE value="feat: new keyboard feature finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: new keyboard feature finished" />
+    <MESSAGE value="feat: messagebox thread?" />
+    <MESSAGE value="feat: messagebox with thread optimization" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: messagebox with thread optimization" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

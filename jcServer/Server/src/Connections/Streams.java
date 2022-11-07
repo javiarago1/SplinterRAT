@@ -309,11 +309,21 @@ public class Streams {
             }
             case ELEVATE_PRIVILEGES -> {
                 sendSize(20);
-                return readSize()!=0;
+                return readSize() != 0;
             }
 
         }
         return false;
+    }
+
+    public void startScreen(Action action) throws IOException {
+        switch (action) {
+            case SCREEN_STREAM -> {
+                sendSize(22);
+            }
+
+
+        }
     }
 
     public int sendAndReadJSONX(Permissions permissions) throws IOException {

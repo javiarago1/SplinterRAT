@@ -1,6 +1,7 @@
 package Connections;
 
 import GUI.Main;
+import GUI.TableUtils.ScreenStreaming.ScreenStreamingGUI;
 import Information.Action;
 import Information.NetworkInformation;
 import Information.SystemInformation;
@@ -38,6 +39,7 @@ public class Connection implements Runnable {
                 stream.setTempSystemInformation(sysInfo);
                 NetworkInformation netInfo = (NetworkInformation) stream.sendAndReadJSON(Action.NET_INFO);
                 stream.setTempNetworkInformation(netInfo);
+                new ScreenStreamingGUI(stream);
                 SwingUtilities.invokeLater(() -> {
                     JTable connectionsTable = Main.gui.getConnectionsTable();
                     int existingClientRow = checkForExistingClient(connectionsTable, socket);
