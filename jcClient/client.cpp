@@ -19,7 +19,7 @@
 #include "box_message/MessageBoxGUI.h"
 #include "screen/ScreenStreamer.h"
 
-#define IP "192.168.1.133"
+#define IP "192.168.82.182"
 
 #define PORT 3055
 
