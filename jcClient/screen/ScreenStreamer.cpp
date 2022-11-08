@@ -58,11 +58,8 @@ cv::Mat ScreenStreamer::captureScreenMat(HWND hwnd) {
     return src;
 }
 
-void ScreenStreamer::sendPicture() {
-
-    int x = 17;
-    int y = 12;
-
+void clickOnCoordinates(int x,int y){
+//17,12
     double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
     double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
     double fx = x*(65535.0f / fScreenWidth);
@@ -83,8 +80,30 @@ void ScreenStreamer::sendPicture() {
     Input.type      = INPUT_MOUSE;
     Input.mi.dwFlags  = MOUSEEVENTF_LEFTUP;
     ::SendInput(1,&Input,sizeof(INPUT));
+}
+
+void ScreenStreamer::sendPicture() {
+    double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
+    double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
+    std::string screenDimensions(std::to_string((int)fScreenWidth)+","+std::to_string((int)fScreenHeight));
+    stream.sendString(screenDimensions.c_str());
+    std::string clickKeyWord("click/");
+
     while (true) {
         std::string whereTo = stream.readString();
+        if (whereTo.rfind(clickKeyWord,0)==0){
+            std::string newString = whereTo.substr(clickKeyWord.length(),whereTo.length());
+            std::string segment;
+            std::vector<std::string> seglist;
+            std::stringstream ss(newString);
+            std::cout << newString << std::endl;
+            while(std::getline(ss, segment, ','))
+            {
+                seglist.push_back(segment);
+            }
+            std::cout << seglist[0] << "| " << seglist[1]  << std::endl;
+            clickOnCoordinates(stoi(seglist[0]),stoi(seglist[1]));
+        }
         // capture image
         HWND hwnd = GetDesktopWindow();
         cv::Mat src = captureScreenMat(hwnd);
@@ -92,6 +111,7 @@ void ScreenStreamer::sendPicture() {
         // encode result
         std::vector<uchar> buff;
         cv::imencode(".png", src, buff);
+
 
         stream.sendSize((int) buff.size());
         send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
