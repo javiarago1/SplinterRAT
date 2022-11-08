@@ -1,6 +1,7 @@
 package GUI.TableUtils.ScreenStreaming;
 
 import Connections.Streams;
+import GUI.Main;
 import Information.Action;
 
 import javax.swing.*;
@@ -18,11 +19,11 @@ public class ScreenStreamingGUI {
     private final JDialog dialog;
     private final Streams stream;
 
-    private Queue<String> queueOfEvents = new LinkedList<>();
+    private final Queue<String> queueOfEvents = new LinkedList<>();
 
     public ScreenStreamingGUI(Streams stream) {
         this.stream = stream;
-        dialog = new JDialog();
+        dialog = new JDialog(Main.gui.getMainGUI());
         dialog.setLayout(new GridBagLayout());
         dialog.setSize(700, 500);
         dialog.setLocationRelativeTo(null);
@@ -87,7 +88,7 @@ public class ScreenStreamingGUI {
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        dialog.setSize(new Dimension(Integer.parseInt(dimensions[0]) / 2, Integer.parseInt(dimensions[1]) / 2));
+                        dialog.setSize(new Dimension(Integer.parseInt(dimensions[0]) / 2 + 15, Integer.parseInt(dimensions[1]) / 2 + 40));
 
                         while (true) {
                             byte[] array = null;
@@ -104,6 +105,7 @@ public class ScreenStreamingGUI {
                             }
                             ImageIcon tempIMG = new ImageIcon(array);
                             Image img = tempIMG.getImage();
+                            System.out.println(streamingScreenShower.getWidth() + "|" + streamingScreenShower.getHeight());
                             Image imgScale = img.getScaledInstance(streamingScreenShower.getWidth(), streamingScreenShower.getHeight(), Image.SCALE_SMOOTH);
                             SwingUtilities.invokeLater(() -> streamingScreenShower.setIcon(new ImageIcon(imgScale)));
                         }

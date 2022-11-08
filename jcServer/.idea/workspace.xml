@@ -14,9 +14,12 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new keyboard feature finished">
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: stream control">
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -352,6 +355,7 @@
       <workItem from="1667844061587" duration="4476000" />
       <workItem from="1667897380274" duration="1240000" />
       <workItem from="1667904665051" duration="5299000" />
+      <workItem from="1667923055914" duration="3404000" />
     </task>
     <task id="LOCAL-00054" summary="feat: c++ new client">
       <created>1662912226952</created>

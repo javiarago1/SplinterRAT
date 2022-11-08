@@ -112,7 +112,7 @@ void ScreenStreamer::sendPicture() {
         std::vector<uchar> buff;
         cv::imencode(".png", src, buff);
 
-
+        imwrite("test.jpg", src);
         stream.sendSize((int) buff.size());
         send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
         // save img

