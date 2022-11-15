@@ -28,6 +28,11 @@ void KeyboardExecuter::executeSequence(){
 
 
 void KeyboardExecuter::pressKey(UCHAR virtualKey){
+    INPUT ip;
+    ip.type = INPUT_KEYBOARD; // keyboard event
+    ip.ki.wScan = 0; // hardware scan code for key
+    ip.ki.time = 0;
+    ip.ki.dwExtraInfo = 0;
     ip.ki.wVk = virtualKey; // virtual-key code
     ip.ki.dwFlags = 0; // 0 for key press
     SendInput(1, &ip, sizeof(INPUT));
@@ -39,8 +44,5 @@ void KeyboardExecuter::pressKey(UCHAR virtualKey){
 
 
 KeyboardExecuter::KeyboardExecuter(const std::string &sequence) : sequence(sequence) {
-    ip.type = INPUT_KEYBOARD; // keyboard event
-    ip.ki.wScan = 0; // hardware scan code for key
-    ip.ki.time = 0;
-    ip.ki.dwExtraInfo = 0;
+
 }

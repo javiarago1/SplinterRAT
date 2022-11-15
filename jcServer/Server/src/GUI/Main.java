@@ -5,12 +5,14 @@ import GUI.TableUtils.FileManager.FileManagerGUI;
 import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
-public class Main {
+public class
+Main {
 
-    
+
     static public JsGUI gui;
 
     public static Server server;
+
     public static void main(String[] args) {
         try {
             server = new Server(3055);

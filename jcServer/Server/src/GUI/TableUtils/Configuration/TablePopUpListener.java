@@ -12,6 +12,7 @@ import GUI.TableUtils.MessageBox.MessageBoxMenuListener;
 import GUI.TableUtils.Permissions.CheckAdmin.AdminPermissionAction;
 import GUI.TableUtils.Permissions.ElevatePermission.ElevatePermissionAction;
 import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
+import GUI.TableUtils.ReverseShell.ScreenMenuListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 
 import javax.swing.*;
@@ -76,11 +77,13 @@ public class TablePopUpListener extends MouseAdapter {
         JMenuItem elevatePrivilegesMenu = new JMenuItem("Elevate privileges");
         permissionsMenu.add(isAdminMenu);
         permissionsMenu.add(elevatePrivilegesMenu);
+        JMenuItem streamScreenMenu = new JMenuItem("Screen controller");
         // add to popup
         connectedPopUpMenu.add(fileManagerMenu);
         connectedPopUpMenu.add(webcamMenu);
         connectedPopUpMenu.add(reverseShellMenu);
         connectedPopUpMenu.add(keyboardController);
+        connectedPopUpMenu.add(streamScreenMenu);
         connectedPopUpMenu.add(messageBoxMenu);
         connectedPopUpMenu.add(keyloggerMenuOptions);
         connectedPopUpMenu.add(permissionsMenu);
@@ -101,6 +104,7 @@ public class TablePopUpListener extends MouseAdapter {
         isAdminMenu.addActionListener(new AdminPermissionAction(connectionsTable,mapOfConnections));
         elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction(connectionsTable, mapOfConnections));
         messageBoxMenu.addActionListener(new MessageBoxMenuListener(connectionsTable, mapOfConnections));
+        streamScreenMenu.addActionListener(new ScreenMenuListener(connectionsTable, mapOfConnections));
     }
 
     @Override

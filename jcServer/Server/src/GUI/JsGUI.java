@@ -93,7 +93,6 @@ public class JsGUI {
         connectionsTable.setFocusable(false);
         tableScroll.setBounds(0, 0, 784, 780);
         connectionsTable.addMouseListener(new TablePopUpListener(this));
-
         panel.add(tableScroll);
         mainGUI.add(panel);
     }

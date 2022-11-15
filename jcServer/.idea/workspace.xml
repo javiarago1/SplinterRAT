@@ -14,12 +14,22 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: stream control">
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: screen streaming and click">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/KeyScreenListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/MouseScreenListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenMenuListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StartAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Streamer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StreamingWindowListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/keyboard/KeyboardExecuter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keyboard/KeyboardExecuter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/keyboard/KeyboardExecuter.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keyboard/KeyboardExecuter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/screen/ScreenStreamer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/JsGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -356,6 +366,10 @@
       <workItem from="1667897380274" duration="1240000" />
       <workItem from="1667904665051" duration="5299000" />
       <workItem from="1667923055914" duration="3404000" />
+      <workItem from="1668072202422" duration="1471000" />
+      <workItem from="1668423445041" duration="536000" />
+      <workItem from="1668499143883" duration="8000" />
+      <workItem from="1668499175667" duration="14107000" />
     </task>
     <task id="LOCAL-00054" summary="feat: c++ new client">
       <created>1662912226952</created>

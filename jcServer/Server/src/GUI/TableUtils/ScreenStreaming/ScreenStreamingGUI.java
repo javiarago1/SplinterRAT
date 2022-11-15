@@ -2,57 +2,46 @@ package GUI.TableUtils.ScreenStreaming;
 
 import Connections.Streams;
 import GUI.Main;
-import Information.Action;
+
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScreenStreamingGUI {
     private final JDialog dialog;
     private final Streams stream;
+    private final AtomicBoolean isScreenshot = new AtomicBoolean(false);
+    private final AtomicBoolean isRunning = new AtomicBoolean(false);
+    private final ConcurrentLinkedQueue<String> queueOfEvents = new ConcurrentLinkedQueue<>();
+    private JMenuItem startMenu;
 
-    private final Queue<String> queueOfEvents = new LinkedList<>();
+    private final AtomicBoolean computerControl = new AtomicBoolean(false);
 
     public ScreenStreamingGUI(Streams stream) {
         this.stream = stream;
-        dialog = new JDialog(Main.gui.getMainGUI());
+        dialog = new JDialog(Main.gui.getMainGUI(), "Screen controller - " + stream.getIdentifier());
         dialog.setLayout(new GridBagLayout());
-        dialog.setSize(700, 500);
+        dialog.setSize(600, 400);
+        dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
         addComponents();
         dialog.setVisible(true);
     }
 
-    String[] dimensions;
 
-    private int[] calculateRelativePosition(int x, int y) {
-        return new int[]{x * Integer.parseInt(dimensions[0]) / streamingScreenShower.getWidth(), y * Integer.parseInt(dimensions[1]) / streamingScreenShower.getHeight()};
-    }
 
     private JLabel streamingScreenShower;
 
     public void addComponents() {
         GridBagConstraints constraints = new GridBagConstraints();
-        streamingScreenShower = new JLabel("Screen streaming");
+        streamingScreenShower = new JLabel("Press start to stream screen", SwingConstants.CENTER);
+        streamingScreenShower.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         streamingScreenShower.setOpaque(true);
-        streamingScreenShower.setBackground(Color.red);
-        streamingScreenShower.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
-                System.out.println(x + "|" + y);
-                queueOfEvents.add("click/" + x * 2 + "," + y * 2);
-            }
-        });
+        streamingScreenShower.addMouseListener(new MouseScreenListener(queueOfEvents, computerControl));
+        dialog.addKeyListener(new KeyScreenListener(queueOfEvents, computerControl));
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 2;
@@ -61,59 +50,55 @@ public class ScreenStreamingGUI {
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
         dialog.add(streamingScreenShower, constraints);
+        dialog.addWindowListener(new StreamingWindowListener(isRunning));
         constraints.weighty = 0.0;
 
         JMenuBar bar = new JMenuBar();
         JMenu menu = new JMenu("Options");
-        JMenuItem startMenu = new JMenuItem("Start");
+        startMenu = new JMenuItem("Start");
+        JCheckBoxMenuItem controlComputerMenu = new JCheckBoxMenuItem("Control computer");
+        controlComputerMenu.addActionListener(e -> computerControl.set(((AbstractButton) e.getSource()).getModel().isSelected()));
+        JMenuItem screenshotMenu = new JMenuItem("Take screenshot");
+        screenshotMenu.addActionListener(e -> isScreenshot.set(true));
         menu.add(startMenu);
+        menu.add(controlComputerMenu);
+        menu.add(screenshotMenu);
         bar.add(menu);
 
         dialog.setJMenuBar(bar);
-
-
-        startMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                new Thread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        try {
-
-                            stream.startScreen(Action.SCREEN_STREAM);
-                            String received = stream.readString();
-                            dimensions = received.split(",");
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        dialog.setSize(new Dimension(Integer.parseInt(dimensions[0]) / 2 + 15, Integer.parseInt(dimensions[1]) / 2 + 40));
-
-                        while (true) {
-                            byte[] array = null;
-                            try {
-                                if (queueOfEvents.isEmpty()) stream.sendString("null");
-                                else {
-                                    System.out.println(queueOfEvents.peek());
-                                    stream.sendString(queueOfEvents.remove());
-
-                                }
-                                array = stream.receiveBytes();
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
-                            }
-                            ImageIcon tempIMG = new ImageIcon(array);
-                            Image img = tempIMG.getImage();
-                            System.out.println(streamingScreenShower.getWidth() + "|" + streamingScreenShower.getHeight());
-                            Image imgScale = img.getScaledInstance(streamingScreenShower.getWidth(), streamingScreenShower.getHeight(), Image.SCALE_SMOOTH);
-                            SwingUtilities.invokeLater(() -> streamingScreenShower.setIcon(new ImageIcon(imgScale)));
-                        }
-                    }
-                }).start();
-            }
-        });
+        startMenu.addActionListener(new StartAction(this));
 
     }
 
+    public JDialog getDialog() {
+        return dialog;
+    }
+
+    public Streams getStream() {
+        return stream;
+    }
+
+    public AtomicBoolean getIsScreenshot() {
+        return isScreenshot;
+    }
+
+    public ConcurrentLinkedQueue<String> getQueueOfEvents() {
+        return queueOfEvents;
+    }
+
+    public JLabel getStreamingScreenShower() {
+        return streamingScreenShower;
+    }
+
+    public AtomicBoolean getIsRunning() {
+        return isRunning;
+    }
+
+    public JMenuItem getStartMenu() {
+        return startMenu;
+    }
+
+    public AtomicBoolean getComputerControl() {
+        return computerControl;
+    }
 }

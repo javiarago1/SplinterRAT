@@ -10,15 +10,11 @@ class KeyboardExecuter {
 public:
     KeyboardExecuter(const std::string & sequence);
     void executeSequence();
-    void pressKey(UCHAR virtualKey);
+    static void pressKey(UCHAR virtualKey);
 
 private:
     std::vector<std::string> getVectorDividedByRegex(const std::string &,const std::regex&);
     std::string sequence;
-    INPUT ip;
-
-
-
 };
 
 

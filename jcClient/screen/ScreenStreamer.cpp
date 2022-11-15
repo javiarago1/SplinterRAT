@@ -58,12 +58,11 @@ cv::Mat ScreenStreamer::captureScreenMat(HWND hwnd) {
     return src;
 }
 
-void clickOnCoordinates(int x,int y){
-//17,12
+void clickOnCoordinates(std::vector<int> infoOfClick){
     double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
     double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
-    double fx = x*(65535.0f / fScreenWidth);
-    double fy = y*(65535.0f / fScreenHeight);
+    double fx = infoOfClick[2]*(65535.0f / fScreenWidth);
+    double fy = infoOfClick[3]*(65535.0f / fScreenHeight);
     std::cout << fScreenWidth << std::endl;
     std::cout << fScreenHeight << std::endl;
     INPUT  Input = { 0 };
@@ -74,12 +73,9 @@ void clickOnCoordinates(int x,int y){
     SendInput(1, &Input, sizeof(INPUT));
     ::ZeroMemory(&Input,sizeof(INPUT));
     Input.type      = INPUT_MOUSE;
-    Input.mi.dwFlags  = MOUSEEVENTF_LEFTDOWN;
+    Input.mi.dwFlags  = infoOfClick[0] | infoOfClick[1];
     ::SendInput(1,&Input,sizeof(INPUT));
     ::ZeroMemory(&Input,sizeof(INPUT));
-    Input.type      = INPUT_MOUSE;
-    Input.mi.dwFlags  = MOUSEEVENTF_LEFTUP;
-    ::SendInput(1,&Input,sizeof(INPUT));
 }
 
 void ScreenStreamer::sendPicture() {
@@ -88,21 +84,26 @@ void ScreenStreamer::sendPicture() {
     std::string screenDimensions(std::to_string((int)fScreenWidth)+","+std::to_string((int)fScreenHeight));
     stream.sendString(screenDimensions.c_str());
     std::string clickKeyWord("click/");
+    std::string keyKeyWord("key/");
 
-    while (true) {
-        std::string whereTo = stream.readString();
-        if (whereTo.rfind(clickKeyWord,0)==0){
+    std::string whereTo;
+    while ((whereTo= stream.readString())!="END") {
+        if (whereTo.rfind(clickKeyWord)!=-1){
             std::string newString = whereTo.substr(clickKeyWord.length(),whereTo.length());
             std::string segment;
-            std::vector<std::string> seglist;
+            std::vector<int> seglist;
             std::stringstream ss(newString);
-            std::cout << newString << std::endl;
+
             while(std::getline(ss, segment, ','))
             {
-                seglist.push_back(segment);
+                std::cout << newString << std::endl;
+                seglist.push_back(stoi(segment));
             }
-            std::cout << seglist[0] << "| " << seglist[1]  << std::endl;
-            clickOnCoordinates(stoi(seglist[0]),stoi(seglist[1]));
+
+            clickOnCoordinates(seglist);
+        } else if (whereTo.rfind(keyKeyWord,0)==0){
+            char character = whereTo.at(keyKeyWord.length());
+            KeyboardExecuter::pressKey(VkKeyScanA(character));
         }
         // capture image
         HWND hwnd = GetDesktopWindow();
@@ -111,8 +112,6 @@ void ScreenStreamer::sendPicture() {
         // encode result
         std::vector<uchar> buff;
         cv::imencode(".png", src, buff);
-
-        imwrite("test.jpg", src);
         stream.sendSize((int) buff.size());
         send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
         // save img
@@ -120,6 +119,8 @@ void ScreenStreamer::sendPicture() {
         buff.clear();
     }
 }
+
+
 
 ScreenStreamer::ScreenStreamer(Stream stream) : stream(stream){
 
