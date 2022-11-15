@@ -1,4 +1,4 @@
-package GUI.TableUtils.ReverseShell;
+package GUI.TableUtils.ScreenStreaming;
 
 import Connections.Streams;
 import GUI.JsGUI;

@@ -26,6 +26,7 @@ public class Streamer implements Runnable {
     public Streamer(ScreenStreamingGUI screenStreamingGUI) {
         stream = screenStreamingGUI.getStream();
         streamingScreenShower = screenStreamingGUI.getStreamingScreenShower();
+        streamingScreenShower.setText("");
         isScreenshot = screenStreamingGUI.getIsScreenshot();
         queueOfEvents = screenStreamingGUI.getQueueOfEvents();
         screenStreamerDialog = screenStreamingGUI.getDialog();
@@ -40,7 +41,7 @@ public class Streamer implements Runnable {
             stream.startScreen(Action.SCREEN_STREAM);
             String received = stream.readString();
             dimensions = received.split(",");
-            screenStreamerDialog.setSize(new Dimension(Integer.parseInt(dimensions[0]) / 2 + 15, Integer.parseInt(dimensions[1]) / 2 + 40));
+            SwingUtilities.invokeLater(() -> screenStreamerDialog.setSize(new Dimension(Integer.parseInt(dimensions[0]) / 2 + 15, Integer.parseInt(dimensions[1]) / 2 + 40)));
             while (isRunning.get()) {
                 byte[] array;
                 if (queueOfEvents.isEmpty() || !controlComputer.get()) stream.sendString("null");
@@ -49,8 +50,10 @@ public class Streamer implements Runnable {
                 if (isScreenshot.get()) takeScreenshot(array);
                 ImageIcon tempIMG = new ImageIcon(array);
                 Image img = tempIMG.getImage();
-                Image imgScale = img.getScaledInstance(streamingScreenShower.getWidth(), streamingScreenShower.getHeight(), Image.SCALE_SMOOTH);
-                SwingUtilities.invokeLater(() -> streamingScreenShower.setIcon(new ImageIcon(imgScale)));
+                SwingUtilities.invokeLater(() -> {
+                    Image imgScale = img.getScaledInstance(streamingScreenShower.getWidth(), streamingScreenShower.getHeight(), Image.SCALE_SMOOTH);
+                    streamingScreenShower.setIcon(new ImageIcon(imgScale));
+                });
             }
             stream.sendString("END");
         } catch (IOException ex) {

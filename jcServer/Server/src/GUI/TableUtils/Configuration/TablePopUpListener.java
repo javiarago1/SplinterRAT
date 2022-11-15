@@ -3,7 +3,11 @@ package GUI.TableUtils.Configuration;
 import Connections.Streams;
 import GUI.JsGUI;
 import GUI.Main;
+import GUI.TableUtils.Connection.DisconnectAction;
+import GUI.TableUtils.Connection.RestartAction;
+import GUI.TableUtils.Connection.UninstallAction;
 import GUI.TableUtils.FileManager.Listener.FileManagerMenuListener;
+
 import GUI.TableUtils.KeyLogger.KeyLoggerEventsListener;
 import GUI.TableUtils.KeyLogger.KeyLoggerMenuListener;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
@@ -12,7 +16,9 @@ import GUI.TableUtils.MessageBox.MessageBoxMenuListener;
 import GUI.TableUtils.Permissions.CheckAdmin.AdminPermissionAction;
 import GUI.TableUtils.Permissions.ElevatePermission.ElevatePermissionAction;
 import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
-import GUI.TableUtils.ReverseShell.ScreenMenuListener;
+import GUI.TableUtils.ScreenStreaming.ScreenMenuListener;
+import GUI.TableUtils.SystemState.State;
+import GUI.TableUtils.SystemState.SystemStateListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 
 import javax.swing.*;
@@ -78,6 +84,22 @@ public class TablePopUpListener extends MouseAdapter {
         permissionsMenu.add(isAdminMenu);
         permissionsMenu.add(elevatePrivilegesMenu);
         JMenuItem streamScreenMenu = new JMenuItem("Screen controller");
+        JMenu connectionActionsMenu = new JMenu("Connection");
+        JMenuItem restartMenu = new JMenuItem("Restart");
+        JMenuItem disconnectMenu = new JMenuItem("Disconnect");
+        JMenuItem uninstallMenu = new JMenuItem("Uninstall");
+        connectionActionsMenu.add(restartMenu);
+        connectionActionsMenu.add(disconnectMenu);
+        connectionActionsMenu.add(uninstallMenu);
+        JMenu stateActionsMenu = new JMenu("System state");
+        JMenuItem logOffAction = new JMenuItem("Log off");
+        JMenuItem shutdownAction = new JMenuItem("Shutdown");
+        JMenuItem rebootAction = new JMenuItem("Reboot");
+        stateActionsMenu.add(logOffAction);
+        stateActionsMenu.add(shutdownAction);
+        stateActionsMenu.add(rebootAction);
+
+
         // add to popup
         connectedPopUpMenu.add(fileManagerMenu);
         connectedPopUpMenu.add(webcamMenu);
@@ -87,6 +109,8 @@ public class TablePopUpListener extends MouseAdapter {
         connectedPopUpMenu.add(messageBoxMenu);
         connectedPopUpMenu.add(keyloggerMenuOptions);
         connectedPopUpMenu.add(permissionsMenu);
+        connectedPopUpMenu.add(stateActionsMenu);
+        connectedPopUpMenu.add(connectionActionsMenu);
 
 
         JTable connectionsTable = mainGUI.getConnectionsTable();
@@ -95,16 +119,23 @@ public class TablePopUpListener extends MouseAdapter {
         webcamMenu.addActionListener(new WebcamMenuListener(connectionsTable, mapOfConnections, mainGUI));
         fileManagerMenu.addActionListener(new FileManagerMenuListener(connectionsTable, mapOfConnections, mainGUI));
         reverseShellMenu.addActionListener(new ReverseShellMenuListener(connectionsTable, mapOfConnections, mainGUI));
-        keyloggerMenuOptions.addMenuListener(new KeyLoggerMenuListener(mapOfConnections,new JMenuItem[]{startKeyloggerMenu,stopKeyloggerMenu}));
+        keyloggerMenuOptions.addMenuListener(new KeyLoggerMenuListener(mapOfConnections, new JMenuItem[]{startKeyloggerMenu, stopKeyloggerMenu}));
         startKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.START));
         stopKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.STOP));
         dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP_LAST));
         dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(connectionsTable, mapOfConnections, mainGUI));
-        isAdminMenu.addActionListener(new AdminPermissionAction(connectionsTable,mapOfConnections));
+        isAdminMenu.addActionListener(new AdminPermissionAction(connectionsTable, mapOfConnections));
         elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction(connectionsTable, mapOfConnections));
         messageBoxMenu.addActionListener(new MessageBoxMenuListener(connectionsTable, mapOfConnections));
         streamScreenMenu.addActionListener(new ScreenMenuListener(connectionsTable, mapOfConnections));
+        restartMenu.addActionListener(new RestartAction(connectionsTable, mapOfConnections));
+        disconnectMenu.addActionListener(new DisconnectAction(connectionsTable, mapOfConnections));
+        uninstallMenu.addActionListener(new UninstallAction(connectionsTable, mapOfConnections));
+        logOffAction.addActionListener(new SystemStateListener(connectionsTable, mapOfConnections, State.LOG_OFF));
+        shutdownAction.addActionListener(new SystemStateListener(connectionsTable, mapOfConnections, State.SHUTDOWN));
+        rebootAction.addActionListener(new SystemStateListener(connectionsTable, mapOfConnections, State.REBOOT));
+
     }
 
     @Override

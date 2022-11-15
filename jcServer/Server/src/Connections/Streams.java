@@ -4,6 +4,7 @@ package Connections;
 import GUI.ProgressBar.DownloadProgressBar;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.Permissions.Permissions;
+import GUI.TableUtils.SystemState.State;
 import Information.*;
 
 import org.json.JSONObject;
@@ -323,6 +324,23 @@ public class Streams {
             }
 
 
+        }
+    }
+
+    public void connectionsAction(Action action) throws IOException {
+        switch (action) {
+            case RESTART -> sendSize(-1);
+            case DISCONNECT -> sendSize(-2);
+            case UNINSTALL -> sendSize(666);
+
+        }
+    }
+
+    public void stateAction(State state) throws IOException {
+        switch (state) {
+            case LOG_OFF -> sendSize(23);
+            case SHUTDOWN -> sendSize(24);
+            case REBOOT -> sendSize(25);
         }
     }
 
