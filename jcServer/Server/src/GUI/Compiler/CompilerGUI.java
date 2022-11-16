@@ -183,9 +183,67 @@ public class CompilerGUI {
         JPanel installationPanel = new JPanel();
         installationPanel.setLayout(null);
 
-        JLabel tagLabel = new JLabel("Installation spec:");
-        tagLabel.setBounds(10, 10, 210, 20);
-        installationPanel.add(tagLabel);
+        JCheckBox installCheckBox = new JCheckBox("Install client on computer");
+        installCheckBox.setBounds(10, 10, 210, 20);
+        installationPanel.add(installCheckBox);
+
+        JSeparator verticalSeparator = new JSeparator(SwingConstants.VERTICAL);
+        verticalSeparator.setBounds(200, 10, 5, 110);
+        installationPanel.add(verticalSeparator);
+
+        JLabel subdirectoryNameLabel = new JLabel("Subdirectory name: ");
+        subdirectoryNameLabel.setBounds(220, 10, 210, 20);
+        installationPanel.add(subdirectoryNameLabel);
+
+        JTextField subdirectoryNameField = new JTextField("Client");
+        subdirectoryNameField.addFocusListener(new FieldListener(subdirectoryNameField, "Client"));
+        subdirectoryNameField.setBounds(330, 10, 85, 20);
+        installationPanel.add(subdirectoryNameField);
+
+        JLabel executableNameLabel = new JLabel("Executable name: ");
+        executableNameLabel.setBounds(220, 40, 210, 20);
+        installationPanel.add(executableNameLabel);
+
+        JTextField executableNameField = new JTextField("client");
+        executableNameField.addFocusListener(new FieldListener(executableNameField, "client"));
+        executableNameField.setBounds(330, 40, 85, 20);
+        installationPanel.add(executableNameField);
+
+        JRadioButton installOnProgramFiles = new JRadioButton("Install on program files (x86)");
+        installOnProgramFiles.setActionCommand("C:\\Program Files (x86)\\");
+        installOnProgramFiles.setBounds(10, 40, 210, 20);
+        installationPanel.add(installOnProgramFiles);
+
+        JRadioButton installOnSystem = new JRadioButton("Install on system directory");
+        installOnSystem.setActionCommand("C:\\Windows\\System32\\");
+        installOnSystem.setBounds(10, 70, 210, 20);
+        installationPanel.add(installOnSystem);
+
+        JRadioButton installOnAppData = new JRadioButton("Install on AppData");
+        installOnAppData.setActionCommand("C:\\Users\\JAVIER\\AppData\\Local\\");
+        installOnAppData.setBounds(10, 100, 210, 20);
+        installationPanel.add(installOnAppData);
+
+        ButtonGroup radioGroup = new ButtonGroup();
+        radioGroup.add(installOnProgramFiles);
+        radioGroup.add(installOnSystem);
+        radioGroup.add(installOnAppData);
+
+        JSeparator horizontalSeparator = new JSeparator(SwingConstants.HORIZONTAL);
+        horizontalSeparator.setBounds(0, 130, 450, 5);
+        installationPanel.add(horizontalSeparator);
+
+        JCheckBox persistentClient = new JCheckBox("Client start on start up");
+        persistentClient.setBounds(10, 140, 210, 20);
+        installationPanel.add(persistentClient);
+
+        JLabel clientNameStartUPLabel = new JLabel("Name for start up file");
+
+        JTextField clientNameStartUp = new JTextField("ClientStartUp");
+        clientNameStartUp.addFocusListener(new FieldListener(clientNameStartUp, "ClientStartUp"));
+        clientNameStartUp.setBounds(200, 140, 85, 20);
+        installationPanel.add(clientNameStartUp);
+
         tabPane.add(installationPanel, "Installation");
 
     }

