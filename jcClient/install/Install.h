@@ -18,7 +18,7 @@ public:
     static std::wstring getAppDataPath();
     static std::wstring getProgramFilesPath();
     static std::wstring getWindowsPath();
-    static void installStartUpFile(const std::string&);
+    static void installStartUpFile(const std::wstring&,const std::string&);
 };
 
 

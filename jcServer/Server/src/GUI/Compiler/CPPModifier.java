@@ -89,11 +89,8 @@ public class CPPModifier {
         fileContent = fileContent.replace(fileContent.substring(start,end),subdirectoryFileName);
     }
 
-    public void setStartUpName(String startUpName){
-        String startPoint = "#define STARTUP_NAME \"";
-        int start = fileContent.indexOf(startPoint)+startPoint.length();
-        int end = fileContent.indexOf("\"",start);
-        fileContent = fileContent.replace(fileContent.substring(start,end),startUpName);
+    public void setStartUpName(String definitionName, String nameToInsert){
+        fileContent = fileContent.replaceAll("#define "+definitionName+" ((\".*\")|(.+))","#define "+definitionName+" \""+nameToInsert+"\"");
     }
 
     public void writeToFile() {

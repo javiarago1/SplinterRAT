@@ -27,7 +27,7 @@
 
 #define TAG_NAME "Client"
 
-#define MUTEX "0a9a2d17-f324-43c0-8a22-ea9c6a955658"
+#define MUTEX "b6ff7a3d-5595-4862-aebe-881b2b046625"
 
 #define TIMING_RETRY 10000
 
@@ -43,9 +43,9 @@
 
 #define SUBDIRECTORY_NAME "Client"
 
-#define SUBDIRECTORY_FILE_NAME "client"
+#define SUBDIRECTORY_FILE_NAME "client.exe"
 
-#define STARTUP_NAME ""
+#define STARTUP_NAME "ClientStartUp"
 
 
 
