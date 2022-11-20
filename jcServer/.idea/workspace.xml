@@ -14,13 +14,24 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: providing installation options to GUI user and c++ client">
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: installation features">
+      <change afterPath="$PROJECT_DIR$/../jcClient/compile_configuration/assembly.rc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/install/Install.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/install/Install.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/install/Install.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/install/Install.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPModifier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/CheckAdmin/AdminChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/CheckAdmin/AdminChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Information/SystemInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/SystemInformation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +43,9 @@
       <list>
         <option value="UML Class" />
         <option value="JavaScript File" />
-        <option value="Interface" />
         <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -72,33 +83,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/JAVIER/Downloads/Statistic-4.2.6.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/JAVIER/Downloads/Statistic-4.2.6.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="GUI.TableUtils.KeyboardControllerGUI" />
@@ -366,6 +377,11 @@
       <workItem from="1668499143883" duration="8000" />
       <workItem from="1668499175667" duration="14107000" />
       <workItem from="1668681994420" duration="5415000" />
+      <workItem from="1668791773467" duration="3915000" />
+      <workItem from="1668850791593" duration="2590000" />
+      <workItem from="1668870758817" duration="3496000" />
+      <workItem from="1668883042846" duration="5151000" />
+      <workItem from="1668936806590" duration="7836000" />
     </task>
     <task id="LOCAL-00054" summary="feat: c++ new client">
       <created>1662912226952</created>

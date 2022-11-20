@@ -10,7 +10,7 @@ import javax.swing.event.MenuListener;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class KeyLoggerMenuListener implements MenuListener {
+public class KeyLoggerMenuListener implements MenuListener{
 
     private final ConcurrentHashMap<Socket, Streams> mapOfConnections;
     private final JMenuItem[] keyloggerOptions;
@@ -24,6 +24,7 @@ public class KeyLoggerMenuListener implements MenuListener {
         Streams stream = GetSYS.getStream(mapOfConnections, Main.gui.getConnectionsTable());
         assert stream != null;
         stream.getExecutor().submit(new KeyLoggerStateChecker(stream,keyloggerOptions));
+
     }
 
     @Override
@@ -35,4 +36,5 @@ public class KeyLoggerMenuListener implements MenuListener {
     public void menuCanceled(MenuEvent e) {
 
     }
+
 }

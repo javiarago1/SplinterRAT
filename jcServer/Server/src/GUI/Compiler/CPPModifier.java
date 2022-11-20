@@ -34,63 +34,63 @@ public class CPPModifier {
 
     public void setIP(String IP) {
         String startPoint = "#define IP \"";
-        int start = fileContent.indexOf(startPoint)+startPoint.length();
-        int end = fileContent.indexOf("\"",start);
-        fileContent = fileContent.replace(fileContent.substring(start,end),IP);
+        int start = fileContent.indexOf(startPoint) + startPoint.length();
+        int end = fileContent.indexOf("\"", start);
+        fileContent = fileContent.replace(fileContent.substring(start, end), IP);
     }
 
 
     public void setPORT(String PORT) {
         String startPoint = "#define PORT ";
-        int start = fileContent.indexOf(startPoint)+startPoint.length();
-        int end = fileContent.indexOf("\n",start);
-        fileContent = fileContent.replace(fileContent.substring(start,end),PORT);
+        int start = fileContent.indexOf(startPoint) + startPoint.length();
+        int end = fileContent.indexOf("\n", start);
+        fileContent = fileContent.replace(fileContent.substring(start, end), PORT);
     }
 
-    public void setTagName(String tagName){
+    public void setTagName(String tagName) {
         String startPoint = "#define TAG_NAME \"";
-        int start = fileContent.indexOf(startPoint)+startPoint.length();
-        int end = fileContent.indexOf("\"",start);
-        fileContent = fileContent.replace(fileContent.substring(start,end),tagName);
+        int start = fileContent.indexOf(startPoint) + startPoint.length();
+        int end = fileContent.indexOf("\"", start);
+        fileContent = fileContent.replace(fileContent.substring(start, end), tagName);
     }
 
-    public void setMutex(String mutex){
+    public void setMutex(String mutex) {
         String startPoint = "#define MUTEX \"";
-        int start = fileContent.indexOf(startPoint)+startPoint.length();
-        int end = fileContent.indexOf("\"",start);
-        fileContent = fileContent.replace(fileContent.substring(start,end),mutex);
+        int start = fileContent.indexOf(startPoint) + startPoint.length();
+        int end = fileContent.indexOf("\"", start);
+        fileContent = fileContent.replace(fileContent.substring(start, end), mutex);
     }
 
-    public void setTimingRetry(String time){
+    public void setTimingRetry(String time) {
         String startPoint = "#define TIMING_RETRY ";
-        int start = fileContent.indexOf(startPoint)+startPoint.length();
-        int end = fileContent.indexOf("\n",start);
-        fileContent = fileContent.replace(fileContent.substring(start,end),time);
+        int start = fileContent.indexOf(startPoint) + startPoint.length();
+        int end = fileContent.indexOf("\n", start);
+        fileContent = fileContent.replace(fileContent.substring(start, end), time);
     }
 
-    public void setInstallationPath(String path){
+    public void setInstallationPath(String path) {
         String startPoint = "#define INSTALL_PATH ";
-        int start = fileContent.indexOf(startPoint)+startPoint.length();
-        int end = fileContent.indexOf("\n",start);
-        fileContent = fileContent.replace(fileContent.substring(start,end),path);
+        int start = fileContent.indexOf(startPoint) + startPoint.length();
+        int end = fileContent.indexOf("\n", start);
+        fileContent = fileContent.replace(fileContent.substring(start, end), path);
     }
 
-    public void setSubdirectoryName(String subdirectoryName){
+    public void setSubdirectoryName(String subdirectoryName) {
         String startPoint = "#define SUBDIRECTORY_NAME \"";
-        int start = fileContent.indexOf(startPoint)+startPoint.length();
-        int end = fileContent.indexOf("\"",start);
-        fileContent = fileContent.replace(fileContent.substring(start,end),subdirectoryName);
+        int start = fileContent.indexOf(startPoint) + startPoint.length();
+        int end = fileContent.indexOf("\"", start);
+        fileContent = fileContent.replace(fileContent.substring(start, end), subdirectoryName);
     }
 
-    public void setSubdirectoryFileName(String subdirectoryFileName){
+    public void setSubdirectoryFileName(String subdirectoryFileName) {
         String startPoint = "#define SUBDIRECTORY_FILE_NAME \"";
-        int start = fileContent.indexOf(startPoint)+startPoint.length();
-        int end = fileContent.indexOf("\"",start);
-        fileContent = fileContent.replace(fileContent.substring(start,end),subdirectoryFileName);
+        int start = fileContent.indexOf(startPoint) + startPoint.length();
+        int end = fileContent.indexOf("\"", start);
+        fileContent = fileContent.replace(fileContent.substring(start, end), subdirectoryFileName);
     }
 
-    public void setStartUpName(String definitionName, String nameToInsert){
-        fileContent = fileContent.replaceAll("#define "+definitionName+" ((\".*\")|(.+))","#define "+definitionName+" \""+nameToInsert+"\"");
+    public void setStartUpName(String definitionName, String nameToInsert) {
+        fileContent = fileContent.replaceAll("#define " + definitionName + " ((\".*\")|(.+))", "#define " + definitionName + " " + nameToInsert);
     }
 
     public void writeToFile() {
@@ -117,5 +117,25 @@ public class CPPModifier {
             fileContent = fileContent.replace(includeTarget, commentedInclude);
         }
     }
+
+    public void modifyAssemblySettings(String fileDescription, String fileVersion, String productName,
+                                       String copyright, String originalName, String iconPath) {
+
+        fileContent = fileContent.replaceAll("VALUE \"ProductVersion\",\"(.)*\"", "VALUE \"ProductVersion\",\"" + fileVersion + "\"");
+        fileVersion = fileVersion.replaceAll("\\.", ",");
+        fileContent = fileContent.replaceAll("FILEVERSION (\\d,){3}\\d|FILEVERSION (\\d,){2}\\d|FILEVERSION \\d,\\d|FILEVERSION \\d", "FILEVERSION " + fileVersion);
+        fileContent = fileContent.replaceAll("PRODUCTVERSION (\\d,){3}\\d|PRODUCTVERSION (\\d,){2}\\d|PRODUCTVERSION \\d,\\d|PRODUCTVERSION \\d", "PRODUCTVERSION " + fileVersion);
+        fileContent = fileContent.replaceAll("VALUE \"FileDescription\",\"(.)*\"", "VALUE \"FileDescription\",\"" + fileDescription + "\"");
+        fileContent = fileContent.replaceAll("VALUE \"ProductName\",\"(.)*\"", "VALUE \"ProductName\",\"" + productName + "\"");
+        fileContent = fileContent.replaceAll("VALUE \"LegalCopyright\",\"(.)*\"", "VALUE \"LegalCopyright\",\"" + copyright + "\"");
+        fileContent = fileContent.replaceAll("VALUE \"OriginalFilename\",\"(.)*\"", "VALUE \"OriginalFilename\",\"" + originalName + "\"");
+        if (!iconPath.isEmpty()) {
+            iconPath = iconPath.replaceAll("\\\\", "/");
+            fileContent = fileContent.replaceAll("(//)?AppIconID ICON \".*\"", "AppIconID ICON \"" + iconPath + "\"");
+        } else if (!fileContent.contains("//AppIconID ICON"))
+            fileContent = fileContent.replace("AppIconID ICON", "//AppIconID ICON");
+    }
+
+
 }
 

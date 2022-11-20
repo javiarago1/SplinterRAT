@@ -62,14 +62,17 @@ public class TablePopUpListener extends MouseAdapter {
     // Menus of table
     private JPopupMenu connectedPopUpMenu;
 
+    private JMenuItem webcamMenu;
+    private JMenu keyloggerMenuOptions;
+    private JMenuItem streamScreenMenu;
     private void createConnectedPopUpMenu() {
         connectedPopUpMenu = new JPopupMenu();
         JMenuItem fileManagerMenu = new JMenuItem("File manager");
-        JMenuItem webcamMenu = new JMenuItem("Webcam manager");
+        webcamMenu = new JMenuItem("Webcam manager");
         JMenuItem reverseShellMenu = new JMenuItem("Reverse shell");
         JMenuItem keyboardController = new JMenuItem("Keyboard controller");
         JMenuItem messageBoxMenu = new JMenuItem("Message box");
-        JMenu keyloggerMenuOptions = new JMenu("Keylogger options");
+        keyloggerMenuOptions = new JMenu("Keylogger options");
         JMenuItem startKeyloggerMenu = new JMenuItem("Start");
         JMenuItem stopKeyloggerMenu = new JMenuItem("Stop");
         JMenuItem dumpLogsMenu = new JMenuItem("Dump last log");
@@ -83,7 +86,7 @@ public class TablePopUpListener extends MouseAdapter {
         JMenuItem elevatePrivilegesMenu = new JMenuItem("Elevate privileges");
         permissionsMenu.add(isAdminMenu);
         permissionsMenu.add(elevatePrivilegesMenu);
-        JMenuItem streamScreenMenu = new JMenuItem("Screen controller");
+        streamScreenMenu = new JMenuItem("Screen controller");
         JMenu connectionActionsMenu = new JMenu("Connection");
         JMenuItem restartMenu = new JMenuItem("Restart");
         JMenuItem disconnectMenu = new JMenuItem("Disconnect");
@@ -147,6 +150,11 @@ public class TablePopUpListener extends MouseAdapter {
             if (!source.isRowSelected(row)) source.changeSelection(row, column, false, false);
             if (mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 5).equals("Connected")) {
                 connectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
+                Streams stream = GetSYS.getStream(Main.gui.getMap(), Main.gui.getConnectionsTable());
+                assert stream != null;
+                webcamMenu.setVisible(stream.getTempSystemInformation().WEBCAM());
+                keyloggerMenuOptions.setVisible(stream.getTempSystemInformation().KEYLOGGER());
+                streamScreenMenu.setVisible(stream.getTempSystemInformation().WEBCAM());
             } else disconnectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
         }
     }

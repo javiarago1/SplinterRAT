@@ -1,0 +1,25 @@
+1 VERSIONINFO
+FILEVERSION 0,0,0,0
+PRODUCTVERSION 0,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "080904E4"
+    BEGIN
+      VALUE "CompanyName","SplinterRAT"
+      VALUE "FileDescription","This program is so pretty!"
+      VALUE "FileVersion",""
+      VALUE "InternalName","Splinter client"
+      VALUE "LegalCopyright","SplinterRAT ©"
+      VALUE "OriginalFilename","client.exe"
+      VALUE "ProductName","Splinter client"
+      VALUE "ProductVersion","0.0.0.0"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x809, 1252
+  END
+END
+
+AppIconID ICON "C:/Users/JAVIER/Downloads/calculator.ico"

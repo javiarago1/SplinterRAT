@@ -19,7 +19,9 @@ public class AdminChecker extends SwingWorker<Void,Void> {
     boolean isAdmin;
     @Override
     protected Void doInBackground() {
+
         try {
+
             isAdmin = stream.sendAndReadJSON(Permissions.IS_ADMIN);
         } catch (IOException e) {
             new ClientErrorHandler("Unable to get privileges, connection lost with client",

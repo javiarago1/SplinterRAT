@@ -105,7 +105,8 @@ public class Streams {
 
 
     private SystemInformation listToSystemInformation(List<String> list) {
-        return new SystemInformation(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6));
+        return new SystemInformation(list.get(0), list.get(1), list.get(2), list.get(3),
+                list.get(4), list.get(5), list.get(6),Boolean.parseBoolean(list.get(7)),Boolean.parseBoolean(list.get(8)));
     }
 
     private NetworkInformation listToNetworkInformation(String jsonString) {

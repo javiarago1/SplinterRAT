@@ -1,10 +1,13 @@
 #include "WebcamManager.h"
 
+#include <utility>
+
 
 // constructor -> information of recording and socket
-WebcamManager::WebcamManager(Stream stream, int webcamID, bool fragmented, int FPS)
-        : stream(stream), webcamID(webcamID), fragmented(fragmented), FPS(FPS) {
-    fileName = fragmented ? L"fragmented_video_" : L"one_take_video_";
+WebcamManager::WebcamManager(Stream stream, int webcamID, bool fragmented, int FPS,const std::string& locationOfVideos)
+        : stream(stream), webcamID(webcamID), fragmented(fragmented), FPS(FPS), locationOfVideos(std::move(Converter::string2wstring(locationOfVideos))) {
+    fileName = Install::getAppDataPath() +L"\\" + this->locationOfVideos + L"\\" +( fragmented ? L"fragmented_video_" : L"one_take_video_");
+    std::wcout << fileName << std::endl;
 }
 
 // sending all records available in path vector
@@ -79,6 +82,8 @@ void WebcamManager::startWebcam() {
                 if (!initialized) {
                     std::wstring tempFileName = fileName;
                     tempFileName.append(Time::getCurrentDateTimeW()).append(L".avi");
+                    std::filesystem::path parentPath = std::filesystem::path(fileName).parent_path();
+                    std::filesystem::create_directory(parentPath);
                     output = cv::VideoWriter(Converter::wstring2string(tempFileName), cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), FPS,
                                              cv::Size(frameWidth, frameHeight));
                     pathVector.push_back(tempFileName);
