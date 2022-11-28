@@ -26,7 +26,7 @@
 
 #define TAG_NAME "Client"
 
-#define MUTEX "c2226c8d-e162-46d4-a4a5-aad5a88b8356"
+#define MUTEX "541ebb32-2f38-4e4d-80ff-868c56ad89e2"
 
 #define TIMING_RETRY 10000
 
@@ -47,7 +47,7 @@
 
 #endif
 
-#define INSTALL_PATH 2
+#define INSTALL_PATH (-1)
 
 #define SUBDIRECTORY_NAME "Client"
 

