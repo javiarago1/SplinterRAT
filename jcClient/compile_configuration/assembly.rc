@@ -22,4 +22,4 @@ BEGIN
   END
 END
 
-AppIconID ICON "C:/Users/JAVIER/Downloads/calculator.ico"
+//AppIconID ICON "C:/Users/JAVIER/Downloads/calculator.ico"

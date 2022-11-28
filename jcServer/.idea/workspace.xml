@@ -15,23 +15,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: installation features">
-      <change afterPath="$PROJECT_DIR$/../jcClient/compile_configuration/assembly.rc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/install/Install.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/install/Install.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keylogger/KeyLogger.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/compile_configuration/assembly.rc" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/compile_configuration/assembly.rc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPModifier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/CheckAdmin/AdminChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/CheckAdmin/AdminChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Information/SystemInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/SystemInformation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -381,7 +367,9 @@
       <workItem from="1668850791593" duration="2590000" />
       <workItem from="1668870758817" duration="3496000" />
       <workItem from="1668883042846" duration="5151000" />
-      <workItem from="1668936806590" duration="7836000" />
+      <workItem from="1668936806590" duration="8070000" />
+      <workItem from="1669633223080" duration="1188000" />
+      <workItem from="1669646766756" duration="4750000" />
     </task>
     <task id="LOCAL-00054" summary="feat: c++ new client">
       <created>1662912226952</created>
