@@ -20,7 +20,7 @@
 #include "install/Install.h"
 
 
-#define IP "192.168.82.182"
+#define IP "192.168.1.133"
 
 #define PORT 3055
 

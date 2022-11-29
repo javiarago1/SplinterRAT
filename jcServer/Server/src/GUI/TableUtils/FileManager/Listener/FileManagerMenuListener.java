@@ -28,13 +28,11 @@ public class FileManagerMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = null;
-        try {
-            stream = GetSYS.getStream(map, table);
-            new FileManagerGUI(stream, mainGUI.getMainGUI());
-        } catch (NullStream ex) {
-            new ClientErrorHandler("Error handleling", 2);
-        }
+        Streams stream;
+        stream = GetSYS.getStream(map, table);
+        assert stream != null;
+        new FileManagerGUI(stream, mainGUI.getMainGUI());
+
 
     }
 }

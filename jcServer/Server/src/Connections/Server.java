@@ -6,30 +6,37 @@ import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Server {
-    private final ServerSocket server;
-    private final ConcurrentHashMap <Socket, Streams> dialog = new ConcurrentHashMap <>();
-    private final ThreadPool tp;
+    private ServerSocket server;
+    private final ConcurrentHashMap<Socket, Streams> dialog = new ConcurrentHashMap<>();
+    private ThreadPool tp;
     private boolean running = false;
-    private final int port;
 
-    public Server(int port) throws IOException{
-        this.port = port;
-        server = new ServerSocket(port);
-        tp = new ThreadPool(server, dialog);
-    }
+    private int port;
 
-    public boolean isRunning(){
+    public boolean isRunning() {
         return running;
     }
 
-    public void startServer(){
+    public Server(int port) {
+        this.port = port;
+    }
+
+    public void startServer() throws IOException {
         if (isRunning()) throw new IllegalStateException("Server already running");
+        server = new ServerSocket(port);
+        tp = new ThreadPool(server, dialog);
         running = true;
         System.out.println("Server started!");
         tp.start();
     }
 
-    public void stopServer() throws IOException{
+    public void definePort(int port) throws IOException {
+        stopServer();
+        this.port = port;
+        startServer();
+    }
+
+    public void stopServer() throws IOException {
         if (!isRunning()) throw new IllegalStateException("Server already idle");
         running = false;
         server.close();

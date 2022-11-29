@@ -34,7 +34,6 @@ public class FileManagerGUI {
     private JPopupMenu popupMenu;
 
     public FileManagerGUI(Streams stream, JFrame mainGUI) {
-        if (stream == null) throw new IllegalStateException("Problems");
         this.stream = stream;
         fileManagerDialog = new JDialog(mainGUI, "File Manager - " + stream.getIdentifier());
         fileManagerDialog.setSize(new Dimension(600, 340));

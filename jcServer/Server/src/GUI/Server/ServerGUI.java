@@ -68,6 +68,7 @@ public class ServerGUI {
         constraints.gridy = 3;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
+
         serverDialog.add(stopListeningButton, constraints);
 
 
@@ -84,13 +85,15 @@ public class ServerGUI {
             if (matcher.matches()) {
                 int integerPortNumber = Integer.parseInt(portNumber.getText());
                 if (Main.server == null || integerPortNumber != Main.server.getPort()) {
+                    // what to do !
+                }
+                new Thread(() -> {
                     try {
-                        Main.server = new Server(integerPortNumber);
+                        Main.server.startServer();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-                }
-                Main.server.startServer();
+                }).start();
                 serverDialog.dispose();
             }
 
