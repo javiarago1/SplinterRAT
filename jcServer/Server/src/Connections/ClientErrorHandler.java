@@ -35,8 +35,16 @@ public class ClientErrorHandler {
         });
     }
 
+
+    public ClientErrorHandler(String errorMessage, int messageType) {
+        SwingUtilities.invokeLater(() -> {
+
+            showErrorMessage(errorMessage, messageType);
+        });
+    }
+
     private void removeClientFromMap(Socket clientSocket) {
-        Main.gui.getMap().remove(clientSocket);
+        Main.server.getMap().remove(clientSocket);
     }
 
     private void showErrorMessage(String errorMessage) {

@@ -4,6 +4,7 @@ import Connections.Server;
 import Connections.Streams;
 
 import GUI.Compiler.CompilerGUI;
+import GUI.Server.ServerGUI;
 import GUI.TableUtils.Configuration.StateColumnRenderer;
 import GUI.TableUtils.Configuration.TableModel;
 import GUI.TableUtils.Configuration.TablePopUpListener;
@@ -27,10 +28,8 @@ public class JsGUI {
     private JTable connectionsTable;
     private JFrame mainGUI;
 
-    private final ConcurrentHashMap<Socket, Streams> map;
 
-    public JsGUI(Server server) {
-        map = server.getMap();
+    public JsGUI() {
         loadStyle();
         setUpFrame();
         addComps();
@@ -54,6 +53,7 @@ public class JsGUI {
 
     private void addJMenu(){
         JMenuBar menuBar = new JMenuBar();
+
         JMenu builderMenu = new JMenu("Builder");
         builderMenu.addMouseListener(new MouseAdapter() {
             @Override
@@ -62,6 +62,17 @@ public class JsGUI {
             }
         });
         menuBar.add(builderMenu);
+
+        JMenu serverBar = new JMenu("Server");
+        serverBar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new ServerGUI(mainGUI);
+            }
+        });
+        menuBar.add(serverBar);
+
+
         mainGUI.setJMenuBar(menuBar);
     }
 
@@ -118,9 +129,6 @@ public class JsGUI {
 
     }
 
-    public ConcurrentHashMap<Socket, Streams> getMap() {
-        return map;
-    }
 
     public JFrame getMainGUI() {
         return mainGUI;

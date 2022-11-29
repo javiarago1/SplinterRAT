@@ -20,7 +20,7 @@ void Install::installClient(int numOfPath, const std::string& locationOfCurrentE
 void Install::installStartUpFile(const std::wstring& clientPath,const std::string& startUpName){
     if (!startUpName.empty()){
         HKEY hkey = nullptr;
-        LONG createStatus = RegCreateKey(HKEY_CURRENT_USER,R"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)", &hkey); //Creates a key
+        RegCreateKey(HKEY_CURRENT_USER,R"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)", &hkey); //Creates a key
         RegSetValueExW(hkey, L"Client", 0, REG_SZ, (LPBYTE)clientPath.c_str(), wcslen(clientPath.c_str())* sizeof(wchar_t ));
     }
 }

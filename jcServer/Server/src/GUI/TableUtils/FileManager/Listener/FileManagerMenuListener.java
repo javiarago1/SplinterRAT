@@ -1,9 +1,11 @@
 package GUI.TableUtils.FileManager.Listener;
 
+import Connections.ClientErrorHandler;
 import Connections.Streams;
 import GUI.JsGUI;
 import GUI.TableUtils.Configuration.GetSYS;
 import GUI.TableUtils.FileManager.FileManagerGUI;
+import Information.NullStream;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,8 +28,13 @@ public class FileManagerMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = GetSYS.getStream(map, table);
-        assert stream != null;
-        new FileManagerGUI(stream, mainGUI.getMainGUI());
+        Streams stream = null;
+        try {
+            stream = GetSYS.getStream(map, table);
+            new FileManagerGUI(stream, mainGUI.getMainGUI());
+        } catch (NullStream ex) {
+            new ClientErrorHandler("Error handleling", 2);
+        }
+
     }
 }

