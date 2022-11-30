@@ -1,6 +1,5 @@
 package GUI.Server;
 
-import Connections.Server;
 import GUI.Compiler.FieldListener;
 import GUI.Main;
 

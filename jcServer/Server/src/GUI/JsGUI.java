@@ -1,7 +1,5 @@
 package GUI;
 
-import Connections.Server;
-import Connections.Streams;
 
 import GUI.Compiler.CompilerGUI;
 import GUI.Server.ServerGUI;
@@ -17,8 +15,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.Socket;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 public class JsGUI {
