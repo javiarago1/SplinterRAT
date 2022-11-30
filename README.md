@@ -105,39 +105,37 @@ SplinterRAT is a remote administration tool for Windows machines that allows you
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Firstly, to run the server and the graphical interface it's necessary to have the <a href="https://www.java.com/">Java JRE </a>installed. <br>
-Secondly, it is necessary to have the C++ compiler collection (g++) and windres utility installed for assembly configuration and compilation. Recomendation for this -> <a href="https://www.mingw-w64.org/">MinGW-w64</a>.
+Firstly, to run the server and the graphical interface it's necessary to have the <a target="_blank" href="https://www.java.com/">Java JRE </a>installed. <br>
+Secondly, it is necessary to have the C++ compiler collection (g++) over 9.0 version and windres utility installed for assembly configuration and compilation. Recomendation for this -> <a target="_blank" href="https://www.mingw-w64.org/">MinGW-w64</a>.
 
-### Windows prerequisites installation
+### Windows prerequisites 
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+For windows you can either install <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download">mingw-w64</a> with the Windows installer or use <a target="_blank" href="https://www.msys2.org/">MSYS2</a> for installing it through command line.
+
+* msys2
   ```sh
-  npm install npm@latest -g
+  pacman -S mingw-w64-x86_64-toolchain
+  ```
+* Add to Windows PATH environment variable
+
+  ```sh
+     C:\msys64\mingw64\bin
   ```
 
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+###  Linux prerequisites 
+From ubuntu we can install the java JRE and the compiler and assembler from the terminal:
+From ubuntu 
+* JRE installation: 
+```sh 
+    sudo apt install default-jre
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Build your client
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
