@@ -11,6 +11,7 @@ void Install::installClient(int numOfPath, const std::string& locationOfCurrentE
             std::filesystem::create_directory(whereToInstall.parent_path());
             std::filesystem::copy(locationOfCurrentExe, whereToInstall);
             installStartUpFile(whereToInstall,nameOfStartUpFile);
+            Install::pathToDelete=whereToInstall.parent_path();
         } catch (const std::filesystem::__cxx11::filesystem_error& e){
             if (numOfPath!=2)installClient(2,locationOfCurrentExe,subdirectoryName,subdirectoryFileName,nameOfStartUpFile);
         }
@@ -33,6 +34,11 @@ std::wstring Install::convertNumToPath(int numOfPath){
         default:;
     }
     return L"";
+}
+
+void Install::uninstall(){
+    // to uninstall think about it
+    std::cout << pathToDelete ;
 }
 
 std::wstring Install::getAppDataPath(){

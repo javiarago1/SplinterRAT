@@ -47,7 +47,7 @@
 
 #endif
 
-#define INSTALL_PATH (-1)
+#define INSTALL_PATH 2
 
 #define SUBDIRECTORY_NAME "Client"
 
@@ -86,6 +86,9 @@ int main(int argc=0,char*argv[]= nullptr) {
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
+                        case -3:{
+                            Install::uninstall();
+                        }
                         case -2: {
                             connectionState = false;
                             streamListening = false;
@@ -327,11 +330,8 @@ int main(int argc=0,char*argv[]= nullptr) {
                             SystemState::setState(2);
                             break;
                         }
-                        default: {
-
+                        default:
                             break;
-                        }
-
                     }
                 }
                 closesocket(sock);
