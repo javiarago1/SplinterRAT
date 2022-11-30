@@ -113,21 +113,21 @@ Secondly, it is necessary to have the C++ compiler collection (g++) over 9.0 ver
 For windows you can either install <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download">mingw-w64</a> with the Windows installer or use <a target="_blank" href="https://www.msys2.org/">MSYS2</a> for installing it through command line.
 
 * msys2
-  ```sh
-  pacman -S mingw-w64-x86_64-toolchain
-  ```
+```sh
+pacman -S mingw-w64-x86_64-toolchain
+```
 * Add to Windows PATH environment variable
 
-  ```sh
-     C:\msys64\mingw64\bin
-  ```
+```sh
+C:\msys64\mingw64\bin
+```
 
 ###  Linux prerequisites 
 From ubuntu we can install the java JRE and the compiler and assembler from the terminal:
 From ubuntu 
 * JRE installation: 
 ```sh 
-    sudo apt install default-jre
+sudo apt install default-jre
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
