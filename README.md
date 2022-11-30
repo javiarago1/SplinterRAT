@@ -1,4 +1,4 @@
-# jcRAT
+# SplinterRAT
 
 ![alt text](https://raw.githubusercontent.com/javiarago1/SplinterRAT/main/resources/splinterRatIcon.png)
 
