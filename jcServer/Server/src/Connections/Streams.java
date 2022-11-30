@@ -332,7 +332,7 @@ public class Streams {
         switch (action) {
             case RESTART -> sendSize(-1);
             case DISCONNECT -> sendSize(-2);
-            case UNINSTALL -> sendSize(666);
+            case UNINSTALL -> sendSize(-3);
 
         }
     }

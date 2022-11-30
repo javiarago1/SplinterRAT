@@ -15,8 +15,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: doc">
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -359,28 +359,7 @@
       <workItem from="1669633223080" duration="1188000" />
       <workItem from="1669646766756" duration="6259000" />
       <workItem from="1669738159836" duration="3196000" />
-      <workItem from="1669838533000" duration="676000" />
-    </task>
-    <task id="LOCAL-00064" summary="feat: status of operations (progress bars)">
-      <created>1664993725638</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1664993725638</updated>
-    </task>
-    <task id="LOCAL-00065" summary="feat: discarding JSON for space">
-      <created>1665064147919</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1665064147919</updated>
-    </task>
-    <task id="LOCAL-00066" summary="feat: discarding JSON for space">
-      <created>1665070488839</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1665070488839</updated>
+      <workItem from="1669838533000" duration="2256000" />
     </task>
     <task id="LOCAL-00067" summary="feat: discarding JSON for space">
       <created>1665071333164</created>
@@ -704,7 +683,28 @@
       <option name="project" value="LOCAL" />
       <updated>1669821792855</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="feat: doc">
+      <created>1669839849596</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1669839849596</updated>
+    </task>
+    <task id="LOCAL-00114" summary="feat: doc">
+      <created>1669839896273</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1669839896273</updated>
+    </task>
+    <task id="LOCAL-00115" summary="feat: doc">
+      <created>1669839971678</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1669839971678</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
