@@ -17,7 +17,7 @@
   <p align="center">
     <i>"You must find the spaces between your thoughts and learn to live there."</i>
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/javiarago1/SplinterRAT/blob/main/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/javiarago1/SplinterRAT/issues">Report Bug</a>
