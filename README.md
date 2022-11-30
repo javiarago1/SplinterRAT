@@ -129,7 +129,10 @@ From ubuntu
 ```sh 
 sudo apt install default-jre
 ```
-
+* Mingw-w64 installation: 
+```sh 
+sudo apt-get install mingw-w64
+```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
