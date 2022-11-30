@@ -26,8 +26,8 @@ public class Server {
         server = new ServerSocket(port);
         tp = new ThreadPool(server, dialog);
         running = true;
-        System.out.println("Server started!");
         tp.start();
+        System.out.println("Server started!");
     }
 
     public void definePort(int port) throws IOException {
@@ -40,8 +40,20 @@ public class Server {
         if (!isRunning()) throw new IllegalStateException("Server already idle");
         running = false;
         server.close();
-        System.out.println("Server closed!");
+        stopStream();
+        dialog.clear();
         tp.shutdownNow();
+        System.out.println("Server closed!");
+    }
+
+    public void stopStream() {
+        for (Socket key : dialog.keySet()) {
+            try {
+                dialog.get(key).getClientSocket().close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public ConcurrentHashMap<Socket, Streams> getMap() {

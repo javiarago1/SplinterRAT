@@ -18,11 +18,7 @@
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/GetSYS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/GetSYS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/FileManagerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/FileManagerMenuListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -772,5 +768,12 @@
     <MESSAGE value="feat: messagebox with thread optimization" />
     <option name="LAST_COMMIT_MESSAGE" value="feat: messagebox with thread optimization" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints-defaults>
+        <breakpoint suspend="THREAD" type="java-line" />
+      </breakpoints-defaults>
+    </breakpoint-manager>
   </component>
 </project>

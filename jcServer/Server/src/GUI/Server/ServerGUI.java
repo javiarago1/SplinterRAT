@@ -6,6 +6,7 @@ import GUI.Main;
 
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 
@@ -84,8 +85,12 @@ public class ServerGUI {
             Matcher matcher = pattern.matcher(portNumber.getText());
             if (matcher.matches()) {
                 int integerPortNumber = Integer.parseInt(portNumber.getText());
-                if (Main.server == null || integerPortNumber != Main.server.getPort()) {
-                    // what to do !
+                if (integerPortNumber != Main.server.getPort()) {
+                    try {
+                        Main.server.definePort(integerPortNumber);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
                 new Thread(() -> {
                     try {
@@ -93,6 +98,7 @@ public class ServerGUI {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                    System.out.println("finished thread");
                 }).start();
                 serverDialog.dispose();
             }
@@ -100,9 +106,18 @@ public class ServerGUI {
         });
         stopListeningButton.addActionListener(e -> {
             try {
-                Main.server.stopServer();
-                stopListeningButton.setEnabled(false);
-                startListeningButton.setEnabled(true);
+                if (Main.server.isRunning()) {
+                    Main.server.stopServer();
+                    JTable mainTable = Main.gui.getConnectionsTable();
+                    DefaultTableModel model = (DefaultTableModel) mainTable.getModel();
+                    for (int i = 0; i < mainTable.getRowCount(); i++) {
+                        model.setValueAt("Disconnected", i, 5);
+                    }
+                    stopListeningButton.setEnabled(Main.server.isRunning());
+                    startListeningButton.setEnabled(!Main.server.isRunning());
+                } else {
+                    System.out.println("Server is not running!");
+                }
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
