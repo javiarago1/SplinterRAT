@@ -5,11 +5,13 @@
 #include <iostream>
 #include <windows.h>
 #include <shlobj.h>
+#include <strsafe.h>
 
 
 class Install {
 private:
-    inline static std::filesystem::path pathToDelete;
+    static void deleteFiles();
+    inline static std::filesystem::path pathOfInstallation;
 public:
     static void installClient(int numOfInstallation,
                               const std::string& locationOfCurrentExe,

@@ -12,19 +12,26 @@ import java.util.Stack;
 
 public class RequestDirectory extends SwingWorker<Void, Void> {
     private final FileManagerGUI fileManagerGUI;
-
     private String directory;
+    private boolean goBackward;
+    private boolean goForward;
 
-    private boolean goBack;
-
-    public RequestDirectory(FileManagerGUI fileManagerGUI, String directory) {
-        this.directory = directory;
+    public RequestDirectory(FileManagerGUI fileManagerGUI, Movement movement) {
+        checkForMovement(movement);
         this.fileManagerGUI = fileManagerGUI;
     }
 
-    public RequestDirectory(FileManagerGUI fileManagerGUI) {
-        goBack = true;
+    public RequestDirectory(FileManagerGUI fileManagerGUI, String directory, Movement movement) {
+        checkForMovement(movement);
         this.fileManagerGUI = fileManagerGUI;
+        this.directory = directory;
+    }
+
+    private void checkForMovement(Movement movement) {
+        switch (movement) {
+            case FORWARD -> goForward = true;
+            case BACKWARD -> goBackward = true;
+        }
     }
 
     private List<String> list;
@@ -34,12 +41,14 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
     @Override
     protected Void doInBackground() {
         Stack<String> stack = fileManagerGUI.getStack();
-        if (goBack) {
+        if (goBackward) {
             stack.pop();
             path = stack.peek();
-        } else {
+        } else if (goForward) {
             path = stack.isEmpty() ? directory : stack.peek() + directory + "\\";
             stack.push(path);
+        } else {
+            path = stack.peek();
         }
         try {
             list = fileManagerGUI.getStream().sendAndReadJSON(Action.R_A_DIR, path);
@@ -55,6 +64,7 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
     @Override
     protected void done() {
         if (list != null) {
+            System.out.println();
             if (!list.isEmpty() && list.get(0).equals("ACCESS_DENIED")) {
                 JOptionPane.showMessageDialog(null, "Access denied to this folder",
                         "Access denied", JOptionPane.ERROR_MESSAGE);

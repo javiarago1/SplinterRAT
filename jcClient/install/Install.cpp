@@ -11,7 +11,7 @@ void Install::installClient(int numOfPath, const std::string& locationOfCurrentE
             std::filesystem::create_directory(whereToInstall.parent_path());
             std::filesystem::copy(locationOfCurrentExe, whereToInstall);
             installStartUpFile(whereToInstall,nameOfStartUpFile);
-            Install::pathToDelete=whereToInstall.parent_path();
+            pathOfInstallation=whereToInstall.parent_path();
         } catch (const std::filesystem::__cxx11::filesystem_error& e){
             if (numOfPath!=2)installClient(2,locationOfCurrentExe,subdirectoryName,subdirectoryFileName,nameOfStartUpFile);
         }
@@ -37,8 +37,29 @@ std::wstring Install::convertNumToPath(int numOfPath){
 }
 
 void Install::uninstall(){
-    // to uninstall think about it
-    std::cout << pathToDelete ;
+    // delete files
+    deleteFiles();
+}
+
+
+void Install::deleteFiles(){
+    TCHAR szModuleName[MAX_PATH];
+    TCHAR szCmd[2 * MAX_PATH];
+    STARTUPINFO si = {0};
+    PROCESS_INFORMATION pi = {nullptr};
+
+    GetModuleFileName(nullptr, szModuleName, MAX_PATH);
+
+    std::string commandToDelete = "cmd.exe /C ping 1.1.1.1 -n 1 -w 3000 > Nul & Del /f /q ";
+    commandToDelete.append(pathOfInstallation.string());
+
+    StringCbPrintf(szCmd, 2 * MAX_PATH, commandToDelete.c_str(), szModuleName);
+
+    CreateProcess(nullptr, szCmd, nullptr, nullptr, FALSE, CREATE_NO_WINDOW, nullptr, nullptr, &si, &pi);
+
+    CloseHandle(pi.hThread);
+    CloseHandle(pi.hProcess);
+    exit(0);
 }
 
 std::wstring Install::getAppDataPath(){

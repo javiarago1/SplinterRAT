@@ -1,6 +1,7 @@
 package GUI.TableUtils.FileManager.Listener;
 
 import GUI.TableUtils.FileManager.FileManagerGUI;
+import GUI.TableUtils.FileManager.Movement;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -25,9 +26,11 @@ public class MouseListener extends MouseAdapter {
                 if (fileManagerGUI.getStack().size() == 1) {
                     JOptionPane.showMessageDialog(null, "No more folders to show",
                             "Nothing to show", JOptionPane.ERROR_MESSAGE);
-                } else fileManagerGUI.requestDirectory();
+                } else {
+                    fileManagerGUI.requestDirectory(Movement.BACKWARD);
+                }
             } else if (row <= fileManagerGUI.getDivider()) {
-                fileManagerGUI.requestDirectory((String) table.getValueAt(row, column));
+                fileManagerGUI.requestDirectory((String) table.getValueAt(row, column), Movement.FORWARD);
             }
         } else if (SwingUtilities.isRightMouseButton(e)) {
             JPopupMenu popupMenu = fileManagerGUI.getPopupMenu();

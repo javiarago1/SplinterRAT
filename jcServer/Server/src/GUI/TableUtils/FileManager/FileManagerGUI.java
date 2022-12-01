@@ -10,6 +10,8 @@ import GUI.TableUtils.FileManager.Style.TableModel;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +44,16 @@ public class FileManagerGUI {
         GridBagConstraints constraints = new GridBagConstraints();
 
 
-        JButton button = new JButton("↻");
+        JButton refreshCurrentFolder = new JButton("↻");
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        fileManagerDialog.add(button, constraints);
+        fileManagerDialog.add(refreshCurrentFolder, constraints);
+
+        refreshCurrentFolder.addActionListener(e -> {
+            stream.getExecutor().submit(new RequestDirectory(this, Movement.REFRESH_DIRECTORY));
+        });
 
 
         textField = new JTextField();
@@ -75,7 +81,8 @@ public class FileManagerGUI {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Object item = e.getItem();
                 stack.clear();
-                requestDirectory((String) item);
+                stack.push((String) item);
+                stream.getExecutor().submit(new RequestDirectory(this, Movement.REFRESH_DIRECTORY));
             }
         });
 
@@ -184,12 +191,12 @@ public class FileManagerGUI {
 
     private int divider;
 
-    public void requestDirectory(String directory) {
-        stream.getExecutor().submit(new RequestDirectory(this, directory));
+    public void requestDirectory(String directory, Movement movement) {
+        stream.getExecutor().submit(new RequestDirectory(this, directory, movement));
     }
 
-    public void requestDirectory() {
-        stream.getExecutor().submit(new RequestDirectory(this));
+    public void requestDirectory(Movement movement) {
+        stream.getExecutor().submit(new RequestDirectory(this, movement));
     }
 
     public void setDivider(int divider) {
