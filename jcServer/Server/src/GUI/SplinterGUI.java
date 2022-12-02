@@ -24,9 +24,7 @@ public class SplinterGUI {
     private JPanel mainPanel;
     private JTable connectionsTable;
     private JFrame mainGUI;
-
     private final JLabel listeningPort = new JLabel();
-
     private final GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
     public SplinterGUI() {
@@ -127,9 +125,9 @@ public class SplinterGUI {
 
         ServerGUI.changeColorAndStateOfPortInformation(listeningPort);
         listeningPort.setForeground(new Color(135, 135, 135));
+        listeningPort.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
         listeningPort.setBorder(new EmptyBorder(1, 4, 1, 8));
-
         bottomInformationPanel.add(listeningPort, BorderLayout.LINE_END);
         mainPanel.add(bottomInformationPanel, gridBagConstraints);
 
