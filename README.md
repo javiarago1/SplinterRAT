@@ -1,4 +1,4 @@
-# SplinterRAT
+# SplinterRAT (Currently developing)
 
 
 [![Stargazers][stars-shield]][stars-url]
