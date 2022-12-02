@@ -32,6 +32,7 @@ public class RequestDisk extends SwingWorker<Void, Void> {
     @Override
     protected void done() {
         if (disks != null) {
+            fileManagerGUI.getDiskComboBox().removeAllItems();
             for (String e : disks) {
                 fileManagerGUI.getDiskComboBox().addItem(e);
             }

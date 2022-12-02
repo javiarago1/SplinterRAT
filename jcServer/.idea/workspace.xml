@@ -15,14 +15,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: user stop and start server with custom port">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Movement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/install/Install.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/install/Install.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/install/Install.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/install/Install.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Server_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Server_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/Manager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/MouseListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDirectory.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDirectory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -368,6 +362,7 @@
       <workItem from="1669738159836" duration="3196000" />
       <workItem from="1669838533000" duration="2256000" />
       <workItem from="1669892123679" duration="3913000" />
+      <workItem from="1669966599988" duration="333000" />
     </task>
     <task id="LOCAL-00067" summary="feat: discarding JSON for space">
       <created>1665071333164</created>

@@ -27,7 +27,7 @@ public class FileManagerGUI {
 
     private final JTable table;
 
-    private final JTextField textField;
+    private final JTextField pathField;
 
     private final JScrollPane scrollPane;
 
@@ -56,8 +56,8 @@ public class FileManagerGUI {
         });
 
 
-        textField = new JTextField();
-        textField.setEditable(false);
+        pathField = new JTextField();
+        pathField.setEditable(false);
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 1;
@@ -66,7 +66,7 @@ public class FileManagerGUI {
         constraints.weighty = 0.0;
         constraints.weightx = 1;
         constraints.insets = new Insets(5, 5, 5, 5);
-        fileManagerDialog.add(textField, constraints);
+        fileManagerDialog.add(pathField, constraints);
 
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -82,10 +82,21 @@ public class FileManagerGUI {
                 Object item = e.getItem();
                 stack.clear();
                 stack.push((String) item);
-                stream.getExecutor().submit(new RequestDirectory(this, Movement.REFRESH_DIRECTORY));
+                requestDirectory(Movement.REFRESH_DIRECTORY);
             }
         });
 
+
+        JButton refreshDiskButton = new JButton("↻");
+        constraints.gridx = 3;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        constraints.weightx = 0;
+        fileManagerDialog.add(refreshDiskButton, constraints);
+        refreshDiskButton.addActionListener(e -> {
+            requestDisk();
+        });
 
         table = new JTable(new TableModel());
         TableColumn someColumn = table.getColumnModel().getColumn(0);
@@ -98,7 +109,7 @@ public class FileManagerGUI {
 
         constraints.gridx = 0;
         constraints.gridy = 1;
-        constraints.gridwidth = 3;
+        constraints.gridwidth = 4;
         constraints.gridheight = 1;
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
@@ -216,8 +227,8 @@ public class FileManagerGUI {
     }
 
 
-    public JTextField getTextField() {
-        return textField;
+    public JTextField getPathField() {
+        return pathField;
     }
 
     public JComboBox<String> getDiskComboBox() {

@@ -71,7 +71,7 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
                 fileManagerGUI.getStack().pop();
             } else {
                 fileManagerGUI.setDivider(divider);
-                fileManagerGUI.getTextField().setText(path);
+                fileManagerGUI.getPathField().setText(path);
                 DefaultTableModel tableModel = (DefaultTableModel) fileManagerGUI.getTable().getModel();
                 tableModel.setRowCount(0);
                 tableModel.addRow(new String[]{"..."});

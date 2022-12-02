@@ -28,7 +28,7 @@ public abstract class Manager implements ActionListener {
             listOfPaths.add(fileManagerGUI.getStack().peek());
         } else {
             for (int e : selectedRows) {
-                listOfPaths.add(fileManagerGUI.getTextField().getText() + table.getValueAt(e, 0));
+                listOfPaths.add(fileManagerGUI.getPathField().getText() + table.getValueAt(e, 0));
             }
         }
         return listOfPaths;
