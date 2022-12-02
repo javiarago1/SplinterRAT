@@ -1,7 +1,7 @@
 package GUI.TableUtils.Configuration;
 
 import Connections.Streams;
-import GUI.JsGUI;
+import GUI.SplinterGUI;
 import GUI.Main;
 import GUI.TableUtils.Connection.DisconnectAction;
 import GUI.TableUtils.Connection.RestartAction;
@@ -30,9 +30,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TablePopUpListener extends MouseAdapter {
 
-    private final JsGUI mainGUI;
+    private final SplinterGUI mainGUI;
 
-    public TablePopUpListener(JsGUI mainGUI) {
+    public TablePopUpListener(SplinterGUI mainGUI) {
         this.mainGUI = mainGUI;
         createConnectedPopUpMenu();
         createDisconnectedPopUpMenu();

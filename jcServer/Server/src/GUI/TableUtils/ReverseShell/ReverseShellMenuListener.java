@@ -1,7 +1,7 @@
 package GUI.TableUtils.ReverseShell;
 
 import Connections.Streams;
-import GUI.JsGUI;
+import GUI.SplinterGUI;
 import GUI.TableUtils.Configuration.GetSYS;
 
 import javax.swing.*;
@@ -14,9 +14,9 @@ public class ReverseShellMenuListener implements ActionListener {
     private final ConcurrentHashMap<Socket, Streams> map;
     private final JTable table;
 
-    private final JsGUI mainGUI;
+    private final SplinterGUI mainGUI;
 
-    public ReverseShellMenuListener(JTable table, ConcurrentHashMap<Socket, Streams> map, JsGUI mainGUI) {
+    public ReverseShellMenuListener(JTable table, ConcurrentHashMap<Socket, Streams> map, SplinterGUI mainGUI) {
         this.mainGUI = mainGUI;
         this.map = map;
         this.table = table;

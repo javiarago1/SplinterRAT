@@ -1,11 +1,9 @@
 package GUI.TableUtils.FileManager.Listener;
 
-import Connections.ClientErrorHandler;
 import Connections.Streams;
-import GUI.JsGUI;
+import GUI.SplinterGUI;
 import GUI.TableUtils.Configuration.GetSYS;
 import GUI.TableUtils.FileManager.FileManagerGUI;
-import Information.NullStream;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,9 +16,9 @@ public class FileManagerMenuListener implements ActionListener {
     private final ConcurrentHashMap<Socket, Streams> map;
     private final JTable table;
 
-    private final JsGUI mainGUI;
+    private final SplinterGUI mainGUI;
 
-    public FileManagerMenuListener(JTable table, ConcurrentHashMap<Socket, Streams> map, JsGUI mainGUI) {
+    public FileManagerMenuListener(JTable table, ConcurrentHashMap<Socket, Streams> map, SplinterGUI mainGUI) {
         this.mainGUI = mainGUI;
         this.map = map;
         this.table = table;

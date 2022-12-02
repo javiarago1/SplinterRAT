@@ -1,5 +1,6 @@
 package Connections;
 
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,6 +22,10 @@ public class Server {
         this.port = port;
     }
 
+    public void definePort(int port) throws IOException {
+        this.port = port;
+    }
+
     public void startServer() throws IOException {
         if (isRunning()) throw new IllegalStateException("Server already running");
         server = new ServerSocket(port);
@@ -30,19 +35,14 @@ public class Server {
         System.out.println("Server started!");
     }
 
-    public void definePort(int port) throws IOException {
-        stopServer();
-        this.port = port;
-        startServer();
-    }
 
     public void stopServer() throws IOException {
         if (!isRunning()) throw new IllegalStateException("Server already idle");
-        running = false;
-        server.close();
         stopStream();
+        server.close();
         dialog.clear();
         tp.shutdownNow();
+        running = false;
         System.out.println("Server closed!");
     }
 

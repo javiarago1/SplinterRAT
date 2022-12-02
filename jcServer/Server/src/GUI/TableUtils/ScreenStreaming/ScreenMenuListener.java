@@ -1,10 +1,7 @@
 package GUI.TableUtils.ScreenStreaming;
 
 import Connections.Streams;
-import GUI.JsGUI;
-import GUI.Main;
 import GUI.TableUtils.Configuration.GetSYS;
-import GUI.TableUtils.ScreenStreaming.ScreenStreamingGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

