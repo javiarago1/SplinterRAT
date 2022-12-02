@@ -1,7 +1,6 @@
 package GUI.Server;
 
 import GUI.Main;
-import GUI.TableUtils.Configuration.StateColumnRenderer;
 
 
 import javax.swing.*;
@@ -154,7 +153,6 @@ public class ServerGUI {
             labelOfState.setText("Listening on port: " + Main.server.getPort());
         } else {
             labelOfState.setText("Server not listening on any port");
-            labelOfState.setForeground(new Color(135, 135, 135));
         }
 
     }
