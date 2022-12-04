@@ -99,6 +99,7 @@ public class ServerGUI {
                     // Open new thread for handling new connections, this creates the server itself (thread pool, etc)
 
                     try {
+                        if (Main.server.isRunning()) Main.server.stopServer();
                         Main.server.startServer();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);

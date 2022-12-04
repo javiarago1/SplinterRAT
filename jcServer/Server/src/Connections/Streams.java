@@ -13,7 +13,6 @@ import Information.Action;
 import org.json.JSONObject;
 
 
-import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -63,14 +62,11 @@ public class Streams {
         return buffer;
     }
 
-
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void receiveFile(String path) throws IOException {
         String fileName = readString();
         File filePath = new File(path + "\\" + fileName);
-        if (!filePath.getParentFile().mkdirs()) {
-            SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "Error creating folder, check permissions!",
-                    "Error creating folder", JOptionPane.ERROR_MESSAGE));
-        }
+        filePath.getParentFile().mkdirs();
 
 
         boolean resultOfCreation = filePath.createNewFile();
@@ -339,19 +335,14 @@ public class Streams {
 
 
     public void sendList(List<String> fileList) throws IOException {
-        for (String file : fileList) {
-            sendSize(0);
-            sendString(file);
-        }
-        sendSize(-1);
+        String convertedListWithSeparator = String.join("|", fileList);
+        sendString(convertedListWithSeparator);
+
     }
 
     public List<String> readList() throws IOException {
-        List<String> listOfFiles = new ArrayList<>();
-        while (readSize() != -1) {
-            listOfFiles.add(readString());
-        }
-        return listOfFiles;
+        String stringList = readString();
+        return new ArrayList<>(Arrays.asList(stringList.split("\\|")));
     }
 
     public void sendSize(int size) throws IOException {

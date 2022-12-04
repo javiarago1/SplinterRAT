@@ -1,5 +1,6 @@
 #ifndef CLIENT_STREAM_H
 #define CLIENT_STREAM_H
+
 #include <iostream>
 #include <winsock2.h>
 #include <string>
@@ -7,6 +8,7 @@
 #include <fstream>
 #include <vector>
 #include "../converter/Converter.h"
+
 
 
 class Stream {
@@ -35,9 +37,9 @@ public :
 
     int readSize() const;
 
-    void sendList(const std::vector<std::string>&);
+    void sendList(const std::vector<std::string>&) const;
 
-    std::vector<std::string> readList();
+    std::vector<std::string> readList() const;
 
     std::string readString() const;
 

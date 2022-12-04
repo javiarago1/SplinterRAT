@@ -14,7 +14,7 @@ void Stream::sendSize(int size) const {
     if (send(sock, (char *) &convertedInt, sizeof(size), 0) == SOCKET_ERROR) {
         std::cout << "Failed to send message" << std::endl;
     }
-    //std::cout << "Size sent" << std::endl;
+
 
 }
 
@@ -76,19 +76,22 @@ void Stream::sendFile(const wchar_t *stringPath) const {
     }
 }
 
-void Stream::sendList(const std::vector<std::string> &list) {
-    for (const auto &file: list) {
-        sendSize(0);
-        sendString(file.c_str());
-    }
-    sendSize(-1);
+void Stream::sendList(const std::vector<std::string> &list) const {
+    const char* const delim = "|";
+    std::ostringstream imploded;
+    std::copy(list.begin(), list.end(),
+              std::ostream_iterator<std::string>(imploded, delim));
+    sendString(imploded.str().c_str());
 }
 
 
-std::vector<std::string> Stream::readList() {
+std::vector<std::string> Stream::readList() const {
+    std::string stringList = readString();
+    std::string tmp;
+    std::stringstream ss(stringList);
     std::vector<std::string> vectorToDownload;
-    while (readSize() != -1) {
-        vectorToDownload.push_back(readString());
+    while(getline(ss, tmp, '|')){
+        vectorToDownload.push_back(tmp);
     }
     return vectorToDownload;
 }
