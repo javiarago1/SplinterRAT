@@ -111,7 +111,6 @@ public class Compiler implements ActionListener {
     // Thread for compiling the project opening shell in client project directory
     private void compile(String command) {
         new Thread(() -> {
-
             ProcessBuilder assemblyProcess = new ProcessBuilder();
             assemblyProcess.command("cmd.exe", "/c", "windres assembly.rc compiled_assembly.opc").directory(new File("../jcClient/compile_configuration/"));
             executeProcess(assemblyProcess);

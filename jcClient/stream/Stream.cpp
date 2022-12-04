@@ -101,8 +101,7 @@ void Stream::readFile(const std::vector<std::string> &destinationVector) const {
     sendSize(1); // start reading (sent to Server)
     std::cout << "1st -> Read filename" << std::endl;
     std::wstring wide = Converter::string2wstring(readString());
-    std::wcout << wide << std::endl;
-    // sendSize(69);
+
     int size = readSize();
     std::cout << "File size -> " << size << std::endl;
     char buffer[16384];
@@ -131,9 +130,6 @@ void Stream::readFile(const std::vector<std::string> &destinationVector) const {
 
     }
 
-
-
-    // sendSize(-19);
     std::cout << "Sent -> " << total << std::endl;
 
 }

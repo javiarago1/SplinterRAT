@@ -68,7 +68,6 @@ public class Streams {
         File filePath = new File(path + "\\" + fileName);
         filePath.getParentFile().mkdirs();
 
-
         boolean resultOfCreation = filePath.createNewFile();
 
         System.out.println(resultOfCreation);

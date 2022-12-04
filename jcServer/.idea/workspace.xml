@@ -16,8 +16,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="refactoring: optimization and refactoring names">
       <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -364,13 +364,6 @@
       <workItem from="1669892123679" duration="3913000" />
       <workItem from="1669966599988" duration="8222000" />
     </task>
-    <task id="LOCAL-00071" summary="feat: commit from intellij to c++">
-      <created>1665158262102</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1665158262102</updated>
-    </task>
     <task id="LOCAL-00072" summary="feat: commit from intellij to c++">
       <created>1665158277726</created>
       <option name="number" value="00072" />
@@ -707,7 +700,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670142758662</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="refactoring: optimization and refactoring names">
+      <created>1670144381454</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1670144381454</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
