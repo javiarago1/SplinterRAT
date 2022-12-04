@@ -4,8 +4,6 @@ import Connections.ClientErrorHandler;
 import Connections.Streams;
 import GUI.TableUtils.Configuration.GetSYS;
 
-import Information.Action;
-
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +29,7 @@ public class UninstallAction implements ActionListener {
         assert stream != null;
         stream.getExecutor().submit(() -> {
             try {
-                stream.connectionsAction(Action.UNINSTALL);
+                stream.sendAction(Connection.UNINSTALL);
             } catch (IOException ex) {
                 new ClientErrorHandler("Unable to uninstall, connection lost with client.",
                         stream.getClientSocket());

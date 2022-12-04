@@ -4,8 +4,6 @@ import Connections.ClientErrorHandler;
 import Connections.Streams;
 import GUI.TableUtils.Configuration.GetSYS;
 
-import Information.Action;
-
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +29,7 @@ public class DisconnectAction implements ActionListener {
         assert stream != null;
         stream.getExecutor().submit(() -> {
             try {
-                stream.connectionsAction(Action.DISCONNECT);
+                stream.sendAction(Connection.DISCONNECT);
             } catch (IOException ex) {
                 new ClientErrorHandler("Unable to disconnect, connection lost with client.", stream.getClientSocket());
             }

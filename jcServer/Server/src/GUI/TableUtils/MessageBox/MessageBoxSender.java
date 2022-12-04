@@ -18,7 +18,7 @@ public class MessageBoxSender implements Runnable {
     @Override
     public void run() {
         try {
-            messageBoxGUI.getStream().sendAnd(Action.BOX_MESSAGE, messageBoxInformation);
+            messageBoxGUI.getStream().sendAndReadAction(Action.BOX_MESSAGE, messageBoxInformation);
             System.out.println(messageBoxInformation);
         } catch (IOException e) {
             new ClientErrorHandler("Unable to open message box, connection lost with client",

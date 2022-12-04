@@ -44,7 +44,7 @@ public class Webcam implements Runnable {
         boolean fragmented = webcamGUI.isFragmented();
         int FPS = webcamGUI.getFPS();
         String selectedDevice = webcamGUI.getSelectedDevice();
-        int[] dimensions = (int[]) webcamGUI.getStream().sendAndReadJSON(Action.START_WEBCAM, selectedDevice,
+        int[] dimensions = (int[]) webcamGUI.getStream().sendAndReadAction(Action.START_WEBCAM, selectedDevice,
                 fragmented, FPS);
         // Setting dimension of video capture
         webcamGUI.setFrameDimensions(dimensions[0] + 25, dimensions[1] + 75);

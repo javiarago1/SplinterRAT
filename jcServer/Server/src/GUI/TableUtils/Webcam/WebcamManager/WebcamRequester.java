@@ -50,7 +50,7 @@ public class WebcamRequester extends SwingWorker<Void, Void> {
     @Override
     protected Void doInBackground() {
         try {
-            listOfWebcams = (List<?>) webcamGUI.getStream().sendAndReadJSON(Action.REQUEST_WEBCAM);
+            listOfWebcams = (List<?>) webcamGUI.getStream().sendAction(Action.REQUEST_WEBCAM);
 
         } catch (IOException e) {
             new ClientErrorHandler("Unable to request devices, connection lost with client",

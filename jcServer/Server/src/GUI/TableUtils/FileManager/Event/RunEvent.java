@@ -19,7 +19,7 @@ public class RunEvent extends Event {
     @Override
     public void run() {
         try {
-            getStream().sendAndReadJSON(Action.RUN, getCMElements());
+            getStream().sendAction(Action.RUN, getCMElements());
         } catch (Exception ex) {
             new ClientErrorHandler("Unable to run, connection lost with client",
                     fileManagerDialog,

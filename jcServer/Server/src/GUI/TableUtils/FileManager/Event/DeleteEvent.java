@@ -19,7 +19,7 @@ public class DeleteEvent extends Event {
     @Override
     public void run() {
         try {
-            getStream().sendAndReadJSON(Action.DELETE, getCMElements());
+            getStream().sendAction(Action.DELETE, getCMElements());
         } catch (Exception e) {
             new ClientErrorHandler("Unable to delete, connection lost with client",
                     fileManagerDialog,

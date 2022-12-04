@@ -38,7 +38,7 @@ public class Streamer implements Runnable {
     public void run() {
         String[] dimensions;
         try {
-            stream.startScreen(Action.SCREEN_STREAM);
+            stream.sendAction(Screen.STREAM);
             String received = stream.readString();
             dimensions = received.split(",");
             SwingUtilities.invokeLater(() -> screenStreamerDialog.setSize(new Dimension(Integer.parseInt(dimensions[0]) / 2 + 15, Integer.parseInt(dimensions[1]) / 2 + 40)));

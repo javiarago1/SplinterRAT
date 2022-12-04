@@ -22,7 +22,7 @@ public class AdminChecker extends SwingWorker<Void,Void> {
 
         try {
 
-            isAdmin = stream.sendAndReadJSON(Permissions.IS_ADMIN);
+            isAdmin = stream.sendAndReadAction(Permissions.IS_ADMIN) != 0;
         } catch (IOException e) {
             new ClientErrorHandler("Unable to get privileges, connection lost with client",
                     stream.getClientSocket());

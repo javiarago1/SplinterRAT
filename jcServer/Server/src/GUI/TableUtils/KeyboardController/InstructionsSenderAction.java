@@ -24,7 +24,7 @@ public class InstructionsSenderAction implements ActionListener {
         String commandToSend = JCodeCompiler.compile(keyboardControllerGUI.getListModel());
         keyboardControllerGUI.getStream().getExecutor().submit(() -> {
             try {
-                keyboardControllerGUI.getStream().sendAnd(Action.KEYBOARD_COMMAND, commandToSend);
+                keyboardControllerGUI.getStream().sendAndReadAction(Action.KEYBOARD_COMMAND, commandToSend);
             } catch (IOException ex) {
                 new ClientErrorHandler("Unable to send keyboard command, connection lost with client",
                         keyboardControllerGUI.getDialog(),

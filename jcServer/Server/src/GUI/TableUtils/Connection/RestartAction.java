@@ -4,8 +4,6 @@ import Connections.ClientErrorHandler;
 import Connections.Streams;
 import GUI.TableUtils.Configuration.GetSYS;
 
-import Information.Action;
-
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +29,7 @@ public class RestartAction implements ActionListener {
         assert stream != null;
         stream.getExecutor().submit(() -> {
             try {
-                stream.connectionsAction(Action.RESTART);
+                stream.sendAction(Connection.RESTART);
             } catch (IOException ex) {
                 new ClientErrorHandler("Unable to restart, connection lost with client.",
                         stream.getClientSocket());

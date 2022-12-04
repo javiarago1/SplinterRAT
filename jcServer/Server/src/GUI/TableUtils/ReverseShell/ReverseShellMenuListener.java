@@ -26,6 +26,6 @@ public class ReverseShellMenuListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Streams stream = GetSYS.getStream(map, table);
         assert stream != null;
-        if (!stream.isWebcamDialogOpen()) new ReverseShellGUI(stream, mainGUI.getMainGUI());
+        if (stream.isWebcamDialogOpen()) new ReverseShellGUI(stream, mainGUI.getMainGUI());
     }
 }

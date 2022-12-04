@@ -20,7 +20,7 @@ public class MoveEvent extends Event {
     @Override
     public void run() {
         try {
-            getStream().sendAndReadJSON(Action.MOVE, getCMElements(), directoryToMove);
+            getStream().sendAction(Action.MOVE, getCMElements(), directoryToMove);
         } catch (Exception ex) {
             new ClientErrorHandler("Unable to move, connection lost with client", fileManagerDialog,
                     getStream().getClientSocket());

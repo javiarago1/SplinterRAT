@@ -37,7 +37,7 @@ public class UploadProgressBar extends Bar {
     private void uploadFiles() throws IOException {
         int countOfFiles = 0; // counter for GUI
         System.out.println("am i at edt " + SwingUtilities.isEventDispatchThread());
-        stream.sendJSON(Action.UPLOAD, destinationPaths, localFiles.length);
+        stream.sendAction(Action.UPLOAD, destinationPaths, localFiles.length);
         for (File file : localFiles) {
             stream.readSize(); // Start sending information
             Path path = Path.of(String.valueOf(file));  // Converting to path for getting all bytes of file

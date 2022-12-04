@@ -35,7 +35,7 @@ public class DownloadProgressBar extends Bar {
     }
 
     private void startDownload() throws IOException {
-        stream.sendAndReadJSON(Action.DOWNLOAD, downloadList);
+        stream.sendAction(Action.DOWNLOAD, downloadList);
         String tempPath;
         // receives files till string equals to "/". "/" = no more files to send
         while (!(tempPath = stream.readString()).equals("/")) {

@@ -20,7 +20,7 @@ public class PrivilegesElevator implements Runnable{
     @Override
     public void run() {
         try {
-            int wasElevated = stream.sendAndReadJSONX(Permissions.ELEVATE_PRIVILEGES);
+            int wasElevated = stream.sendAndReadAction(Permissions.ELEVATE_PRIVILEGES);
             switch (wasElevated){
                 case 1 -> new ClientErrorHandler(
                         "The client accepted admin privileges, restarting client with privileges.",

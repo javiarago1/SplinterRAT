@@ -34,9 +34,9 @@ public class Connection implements Runnable {
             if (dialog.putIfAbsent(socket, new Streams(socket)) == null) {
                 System.out.println("Connected to: " + socket.getRemoteSocketAddress());
                 Streams stream = dialog.get(socket);
-                SystemInformation sysInfo = (SystemInformation) stream.sendAndReadJSON(Action.SYS_INFO);
+                SystemInformation sysInfo = (SystemInformation) stream.sendAction(Action.SYS_INFO);
                 stream.setTempSystemInformation(sysInfo);
-                NetworkInformation netInfo = (NetworkInformation) stream.sendAndReadJSON(Action.NET_INFO);
+                NetworkInformation netInfo = (NetworkInformation) stream.sendAction(Action.NET_INFO);
                 stream.setTempNetworkInformation(netInfo);
                 SwingUtilities.invokeLater(() -> {
                     JTable connectionsTable = Main.gui.getConnectionsTable();

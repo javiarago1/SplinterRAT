@@ -28,7 +28,7 @@ public class WebcamMenuListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Streams stream = GetSYS.getStream(map, table);
         assert stream != null;
-        if (!stream.isWebcamDialogOpen()) new WebcamGUI(stream, mainGUI.getMainGUI());
+        if (stream.isWebcamDialogOpen()) new WebcamGUI(stream, mainGUI.getMainGUI());
 
     }
 }

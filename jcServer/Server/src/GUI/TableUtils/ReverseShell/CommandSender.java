@@ -30,7 +30,7 @@ public class CommandSender extends SwingWorker<Void, Void> {
 
     @Override
     protected Void doInBackground() throws IOException {
-        String receivedResult = reverseShellGUI.getStream().sendAndReadJSONX(Action.SHELL_COMMAND, command); // raw
+        String receivedResult = reverseShellGUI.getStream().sendAndReadAction(Shell.COMMAND, command); // raw
         String result = "";
         String path;
         String[] parts = receivedResult.split("\\|"); // separate by result of command and current path
