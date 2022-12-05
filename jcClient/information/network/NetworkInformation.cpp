@@ -1,6 +1,7 @@
 #include "NetworkInformation.h"
 
-std::string NetworkInformation::requestNetworkInformation() {
+// extracts JSON from API containing network information such as IP, etc
+std::string NetworkInformation::getNetworkInformation() {
 
     HINTERNET net = InternetOpen("IP retriever",
                                  INTERNET_OPEN_TYPE_PRECONFIG,
@@ -19,9 +20,15 @@ std::string NetworkInformation::requestNetworkInformation() {
     DWORD read;
     InternetReadFile(conn, buffer, sizeof(buffer) / sizeof(buffer[0]), &read);
     InternetCloseHandle(net);
-    std::string str(buffer, read);
-    return str;
+    std::string networkInformationJSON(buffer, read);
+    return networkInformationJSON;
 }
 
+void NetworkInformation::send() {
+    stream.sendString(getNetworkInformation().c_str());
+}
 
-NetworkInformation::NetworkInformation()=default;
+NetworkInformation::NetworkInformation(const Stream &stream) : Sender(stream) {}
+
+
+

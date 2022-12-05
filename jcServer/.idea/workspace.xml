@@ -15,9 +15,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="refactoring: optimization and refactoring names">
-      <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/Sender/Sender.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/Sender/Sender.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/configuration.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/compile_configuration/assembly.rc" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/compile_configuration/assembly.rc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/download/Download.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/download/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/download/Download.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/file/FileManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/file/FileManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/information/network/NetworkInformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/information/network/NetworkInformation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/information/network/NetworkInformation.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/information/network/NetworkInformation.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/information/system/SystemInformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/information/system/SystemInformation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/information/system/SystemInformation.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/information/system/SystemInformation.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/install/Install.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/install/Install.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPModifier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Information/FolderOpener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/FolderOpener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,13 +385,10 @@
       <workItem from="1669838533000" duration="2256000" />
       <workItem from="1669892123679" duration="3913000" />
       <workItem from="1669966599988" duration="8222000" />
-    </task>
-    <task id="LOCAL-00072" summary="feat: commit from intellij to c++">
-      <created>1665158277726</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1665158277726</updated>
+      <workItem from="1670229626241" duration="3348000" />
+      <workItem from="1670233935568" duration="54000" />
+      <workItem from="1670234502491" duration="5800000" />
+      <workItem from="1670242197779" duration="3350000" />
     </task>
     <task id="LOCAL-00073" summary="feat: commit from intellij to c++">
       <created>1665208869601</created>
@@ -707,7 +726,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670144381454</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="refactoring: optimization and refactoring names">
+      <created>1670145866501</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1670145866501</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

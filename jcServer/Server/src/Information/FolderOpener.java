@@ -13,10 +13,5 @@ public class FolderOpener {
         }
     }
 
-    public static void openFolderAndFile(String folderPath,String filePath){
-        open(folderPath);
-        open(filePath);
-    }
-
 
 }

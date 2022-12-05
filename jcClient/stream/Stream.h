@@ -33,7 +33,7 @@ public :
 
     void sendFile(const wchar_t *,const wchar_t *) const;
 
-    void readFile(const std::vector<std::string>& destinationVector) const;
+    void readFile(const std::string & destination) const;
 
     int readSize() const;
 

@@ -1,13 +1,10 @@
 #include "Download.h"
-#include <utility>
 
-Download::Download(Stream stream, std::vector<std::string> pathVector) : stream(stream),
-                                                                         pathVector(std::move(pathVector)) {
-
-}
+Download::Download(const Stream &stream) : Sender(stream) {}
 
 void Download::start() {
-    for (const auto &file: pathVector) {
+    std::vector<std::string> fileList = stream.readList();
+    for (const auto &file: fileList) {
         std::wstring wide = Converter::string2wstring(file);
         if (std::filesystem::is_directory(wide)) {
             downloadFolder(wide, wide.c_str());
@@ -25,7 +22,6 @@ void Download::downloadFolder(const std::filesystem::path &filePath, const wchar
                 downloadFolder(entry, relativePath);
             } else {
                 stream.sendFile(entry.path().wstring().c_str(), relativePath);
-               // stream.readSize();
             }
         } catch (std::filesystem::__cxx11::filesystem_error&) {}
     }
@@ -33,5 +29,11 @@ void Download::downloadFolder(const std::filesystem::path &filePath, const wchar
 
 void Download::downloadFile(const std::filesystem::path &filePath) {
     stream.sendFile(filePath.wstring().c_str());
-    //stream.readSize();
 }
+
+void Download::send() {
+
+}
+
+
+

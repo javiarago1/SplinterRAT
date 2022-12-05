@@ -32,64 +32,7 @@ public class CPPModifier {
         }
     }
 
-    public void setIP(String IP) {
-        String startPoint = "#define IP \"";
-        int start = fileContent.indexOf(startPoint) + startPoint.length();
-        int end = fileContent.indexOf("\"", start);
-        fileContent = fileContent.replace(fileContent.substring(start, end), IP);
-    }
-
-
-    public void setPORT(String PORT) {
-        String startPoint = "#define PORT ";
-        int start = fileContent.indexOf(startPoint) + startPoint.length();
-        int end = fileContent.indexOf("\n", start);
-        fileContent = fileContent.replace(fileContent.substring(start, end), PORT);
-    }
-
-    public void setTagName(String tagName) {
-        String startPoint = "#define TAG_NAME \"";
-        int start = fileContent.indexOf(startPoint) + startPoint.length();
-        int end = fileContent.indexOf("\"", start);
-        fileContent = fileContent.replace(fileContent.substring(start, end), tagName);
-    }
-
-    public void setMutex(String mutex) {
-        String startPoint = "#define MUTEX \"";
-        int start = fileContent.indexOf(startPoint) + startPoint.length();
-        int end = fileContent.indexOf("\"", start);
-        fileContent = fileContent.replace(fileContent.substring(start, end), mutex);
-    }
-
-    public void setTimingRetry(String time) {
-        String startPoint = "#define TIMING_RETRY ";
-        int start = fileContent.indexOf(startPoint) + startPoint.length();
-        int end = fileContent.indexOf("\n", start);
-        fileContent = fileContent.replace(fileContent.substring(start, end), time);
-    }
-
-    public void setInstallationPath(String path) {
-        String startPoint = "#define INSTALL_PATH ";
-        int start = fileContent.indexOf(startPoint) + startPoint.length();
-        int end = fileContent.indexOf("\n", start);
-        fileContent = fileContent.replace(fileContent.substring(start, end), path);
-    }
-
-    public void setSubdirectoryName(String subdirectoryName) {
-        String startPoint = "#define SUBDIRECTORY_NAME \"";
-        int start = fileContent.indexOf(startPoint) + startPoint.length();
-        int end = fileContent.indexOf("\"", start);
-        fileContent = fileContent.replace(fileContent.substring(start, end), subdirectoryName);
-    }
-
-    public void setSubdirectoryFileName(String subdirectoryFileName) {
-        String startPoint = "#define SUBDIRECTORY_FILE_NAME \"";
-        int start = fileContent.indexOf(startPoint) + startPoint.length();
-        int end = fileContent.indexOf("\"", start);
-        fileContent = fileContent.replace(fileContent.substring(start, end), subdirectoryFileName);
-    }
-
-    public void setStartUpName(String definitionName, String nameToInsert) {
+    public void variableModifier(String definitionName, String nameToInsert) {
         fileContent = fileContent.replaceAll("#define " + definitionName + " ((\".*\")|(.+))", "#define " + definitionName + " " + nameToInsert);
     }
 
@@ -100,7 +43,6 @@ public class CPPModifier {
             throw new RuntimeException(e);
         }
     }
-
 
     //  Include directive to file "includeTarget" -> name of directive to be added
     public void addInclude(String includeTarget) {

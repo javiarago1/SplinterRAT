@@ -104,7 +104,7 @@ public class ServerGUI {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     } finally {
-                        changeColorAndStateOfPortInformation();
+                        changeColorAndStateOfPortInformation(Main.gui.getListeningPort());
                     }
 
                     serverDialog.dispose();
@@ -133,19 +133,9 @@ public class ServerGUI {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             } finally {
-                changeColorAndStateOfPortInformation();
+                changeColorAndStateOfPortInformation(Main.gui.getListeningPort());
             }
         });
-
-    }
-
-    public static void changeColorAndStateOfPortInformation() {
-        JLabel labelOfState = Main.gui.getListeningPort();
-        if (Main.server.isRunning()) {
-            labelOfState.setText("Listening on port: " + Main.server.getPort());
-        } else {
-            labelOfState.setText("Server not listening to any port");
-        }
 
     }
 

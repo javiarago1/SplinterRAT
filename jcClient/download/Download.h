@@ -4,17 +4,18 @@
 
 #include "../stream/Stream.h"
 #include "../converter/Converter.h"
+#include "../Sender/Sender.h"
 
-class Download {
+class Download : public Sender {
+
 private:
-    Stream stream;
-    std::vector<std::string> pathVector;
-    void downloadFolder(const std::filesystem::path&, const wchar_t *relativePath);
-    void downloadFile(const std::filesystem::path&);
+    void downloadFolder(const std::filesystem::path &, const wchar_t *relativePath);
+    void downloadFile(const std::filesystem::path &);
 
 public:
-    Download(Stream, std::vector<std::string>);
+    explicit Download(const Stream&);
     void start();
+    void send() override;
 
 };
 

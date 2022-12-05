@@ -1,5 +1,6 @@
 #include "Install.h"
 
+// TODO convert recursive chain to if statement
 void Install::installClient(int numOfPath, const std::string& locationOfCurrentExe,const std::string& subdirectoryName,
                             const std::string& subdirectoryFileName,const std::string& nameOfStartUpFile){
     if (numOfPath==-1)return;

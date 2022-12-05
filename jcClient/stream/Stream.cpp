@@ -97,17 +97,19 @@ std::vector<std::string> Stream::readList() const {
 }
 
 
-void Stream::readFile(const std::vector<std::string> &destinationVector) const {
+void Stream::readFile(const std::string& destination) const {
     sendSize(1); // start reading (sent to Server)
     std::cout << "1st -> Read filename" << std::endl;
-    std::wstring wide = Converter::string2wstring(readString());
-
+    std::filesystem::path fileName =  std::filesystem::u8path(readString());
+    std::filesystem::path destinationPath =  std::filesystem::u8path(destination);
+    destinationPath/=fileName;
+    std::cout << destinationPath;
     int size = readSize();
     std::cout << "File size -> " << size << std::endl;
     char buffer[16384];
     int total = 0;
     std::ofstream out;
-    out.open(wide.c_str(), std::ios::binary | std::ios::app);
+    out.open(destinationPath.c_str(), std::ios::binary | std::ios::out);
     while (total < size) {
         const int result = recv(sock, buffer, sizeof(buffer), 0);
         total += result;
@@ -119,17 +121,6 @@ void Stream::readFile(const std::vector<std::string> &destinationVector) const {
     }
 
     out.close();
-    for (const auto &directory: destinationVector) {
-        std::filesystem::path pathI = std::filesystem::path(wide);
-        std::filesystem::path pathF = std::filesystem::u8path(directory);
-        pathF /= pathI.filename();
-        if (!std::filesystem::exists(pathF)) {
-            std::filesystem::copy(pathI, pathF, std::filesystem::copy_options::overwrite_existing |
-                                                std::filesystem::copy_options::recursive);
-        }
-
-    }
-
     std::cout << "Sent -> " << total << std::endl;
 
 }
@@ -156,6 +147,7 @@ std::string Stream::readString() const {
     }
     return str;
 }
+
 
 
 Stream::Stream(SOCKET sock) : sock(sock) {

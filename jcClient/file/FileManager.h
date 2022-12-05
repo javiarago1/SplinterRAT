@@ -5,25 +5,35 @@
 #include <vector>
 #include <string>
 #include <filesystem>
+#include "../stream/Stream.h"
 #include <windows.h>
+#include <iterator>
 #include "../converter/Converter.h"
+#include "../Sender/Sender.h"
 
-class FileManager {
+class FileManager : public Sender {
 
 public:
-    FileManager();
+
+    explicit FileManager(const Stream &stream);
+
+    std::string readAll();
 
     static std::string readDirectory(const std::filesystem::path &directory, bool folder, bool file);
 
-    static void copyFiles(const std::vector<std::string> &vectorOfFiles, const std::vector<std::string> &vectorOfDirectories);
+    void copyFiles();
 
-    static void moveFiles(const std::vector<std::string> &vectorOfFiles, const std::string &directory);
+    void moveFiles();
 
-    static void deleteFiles(const std::vector<std::string> &vectorOfFiles);
+    void deleteFiles();
 
-    static void runFiles(const std::vector<std::string> &vectorOfFiles);
+    void runFiles();
+
+    void uploadFiles();
+
+    void send() override;
 
 };
 
 
-#endif //CLIENT_FILEMANAGER_H
+#endif

@@ -15,10 +15,8 @@ std::string FileManager::readDirectory(const std::filesystem::path &directory, b
     try {
         for (const auto &entry: std::filesystem::directory_iterator(directory)) {
             if (std::filesystem::is_directory(entry) && folder) {
-                std::cout << "Is directory -> " << entry.path().filename() << std::endl;
                 paths.append(entry.path().filename().string()).append("|");
             } else if (std::filesystem::is_regular_file(entry) && file) {
-                std::cout << "Is file -> " << entry.path().filename() << std::endl;
                 paths.append(entry.path().filename().string().append("|"));
                 std::uintmax_t fileSize = std::filesystem::file_size(entry);
                 paths.append(convertBytesToHumanSize(fileSize)+"|");
@@ -32,7 +30,23 @@ std::string FileManager::readDirectory(const std::filesystem::path &directory, b
     return paths;
 }
 
-void FileManager::copyFiles(const std::vector<std::string> &vectorOfFiles, const std::vector<std::string> &vectorOfDirectories) {
+void FileManager::send() {
+    std::string result = readAll();
+    stream.sendString(result.c_str());
+}
+
+std::string FileManager::readAll(){
+    std::string path = stream.readString();
+    std::string folderString = FileManager::readDirectory(std::filesystem::u8path(path), true, false);
+    std::string fileString = FileManager::readDirectory(std::filesystem::u8path(path), false, true);
+    folderString.append(fileString);
+    return folderString;
+}
+
+
+void FileManager::copyFiles() {
+    std::vector<std::string> vectorOfFiles = stream.readList();
+    std::vector<std::string> vectorOfDirectories = stream.readList();
     for (const auto &directory: vectorOfDirectories) {
         for (const auto &file: vectorOfFiles) {
             std::filesystem::path pathI = std::filesystem::u8path(file);
@@ -46,7 +60,9 @@ void FileManager::copyFiles(const std::vector<std::string> &vectorOfFiles, const
     }
 }
 
-void FileManager::moveFiles(const std::vector<std::string> &vectorOfFiles, const std::string &directory) {
+void FileManager::moveFiles() {
+    std::vector<std::string> vectorOfFiles = stream.readList();
+    std::string directory = stream.readString();
     for (const auto &file: vectorOfFiles) {
         std::filesystem::path pathI = std::filesystem::u8path(file);
         std::filesystem::path pathF = std::filesystem::u8path(directory);
@@ -57,13 +73,15 @@ void FileManager::moveFiles(const std::vector<std::string> &vectorOfFiles, const
     }
 }
 
-void FileManager::deleteFiles(const std::vector<std::string> &vectorOfFiles) {
+void FileManager::deleteFiles() {
+    std::vector<std::string> vectorOfFiles = stream.readList();
     for (const auto &file: vectorOfFiles) {
         std::filesystem::remove_all(std::filesystem::u8path(file));
     }
 }
 
-void FileManager::runFiles(const std::vector<std::string> &vectorOfFiles) {
+void FileManager::runFiles() {
+    std::vector<std::string> vectorOfFiles = stream.readList();
     for (const auto &file: vectorOfFiles) {
         STARTUPINFOW process_startup_info{};
         process_startup_info.cb = sizeof(process_startup_info);
@@ -86,4 +104,23 @@ void FileManager::runFiles(const std::vector<std::string> &vectorOfFiles) {
     }
 }
 
-FileManager::FileManager() = default;
+void FileManager::uploadFiles(){
+    std::string destinationPath = stream.readString();
+    int numOfFiles = stream.readSize();
+    for (int i = 0; i < numOfFiles; i++) {
+        stream.readFile(destinationPath);
+    }
+}
+
+
+FileManager::FileManager(const Stream &stream) : Sender(stream) {}
+
+
+
+
+
+
+
+
+
+
