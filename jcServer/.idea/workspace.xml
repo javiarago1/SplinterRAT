@@ -14,9 +14,7 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="refactoring: optimization and refactoring names">
-      <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="refactoring: optimization and refactoring names" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -365,7 +363,7 @@
       <workItem from="1670233935568" duration="54000" />
       <workItem from="1670234502491" duration="5800000" />
       <workItem from="1670242197779" duration="4009000" />
-      <workItem from="1670317024101" duration="1802000" />
+      <workItem from="1670317024101" duration="2164000" />
     </task>
     <task id="LOCAL-00073" summary="feat: commit from intellij to c++">
       <created>1665208869601</created>
