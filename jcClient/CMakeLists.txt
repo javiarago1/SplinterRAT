@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(Client)
 
+
 set(CMAKE_CXX_STANDARD 20)
 
 set(OpenCV_DIR "C:\\opencv\\mingw-build\\install")
