@@ -132,6 +132,7 @@ int main(int argc=0,char*argv[]= nullptr) {
                         }
 #endif
                         case 16: {
+
                             DeviceEnumerator de;
                             std::map<int, Device> devices = de.getVideoDevicesMap();
                             std::vector<std::string> webcamVector;
