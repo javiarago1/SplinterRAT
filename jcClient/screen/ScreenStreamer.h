@@ -4,17 +4,17 @@
 #include "../stream/Stream.h"
 #include <opencv2/opencv.hpp>
 #include "../keyboard/KeyboardExecuter.h"
+#include "../Sender/sender.h"
 
 
-class ScreenStreamer {
+class ScreenStreamer : public Sender {
 
 public:
-    explicit ScreenStreamer(Stream);
-    void sendPicture();
+    explicit ScreenStreamer(const Stream&);
+    void send() override;
 private:
-    Stream stream;
-    BITMAPINFOHEADER createBitmapHeader(int,int);
-    cv::Mat captureScreenMat(HWND hwnd);
+    static BITMAPINFOHEADER createBitmapHeader(int,int);
+    static cv::Mat captureScreenMat(HWND hwnd);
 
 };
 

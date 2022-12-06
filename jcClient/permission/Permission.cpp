@@ -31,3 +31,18 @@ BOOL Permission::elevatePermissions() {
     return 2;
 }
 
+void Permission::send() {
+    stream.sendSize(Permission::hasAdminPermission());
+}
+
+void Permission::sendElevatedPermissions() {
+    BOOL result = elevatePermissions();
+    if (result == 1) {
+        stream.sendSize(1);
+        exit(0);
+    }
+    stream.sendSize(result);
+}
+
+Permission::Permission(const Stream &stream) : Sender(stream) {}
+

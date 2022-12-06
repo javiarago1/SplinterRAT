@@ -3,15 +3,19 @@
 #include <winsock2.h>
 #include <string>
 #include <thread>
+#include <utility>
 #include <opencv2/opencv.hpp>
 #include "../stream/Stream.h"
 #include "../time/Time.h"
 #include "../install/Install.h"
+#include "../configuration.h"
+#include "../Sender/Sender.h"
+#include "../video_audio/DeviceEnumerator.h"
 
-class WebcamManager {
+
+class WebcamManager : public Sender {
 private:
     // information related to recording
-    Stream stream;
     int webcamID;
     bool fragmented;
     int FPS;
@@ -28,8 +32,10 @@ private:
     void sendDimensions(int,int);
 
 public:
-    WebcamManager(Stream stream, int webcamID, bool fragmented, int FPS,const std::string& locationOfVideos);
+    explicit WebcamManager(const Stream &);
     void startWebcam();
+
+    void send() override;
 
 
 };

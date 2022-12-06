@@ -22,7 +22,6 @@ BITMAPINFOHEADER ScreenStreamer::createBitmapHeader(int width, int height) {
 
 cv::Mat ScreenStreamer::captureScreenMat(HWND hwnd) {
     cv::Mat src;
-
     // get handles to a device context (DC)
     HDC hwindowDC = GetDC(hwnd);
     HDC hwindowCompatibleDC = CreateCompatibleDC(hwindowDC);
@@ -78,7 +77,7 @@ void clickOnCoordinates(std::vector<int> infoOfClick){
     ::ZeroMemory(&Input,sizeof(INPUT));
 }
 
-void ScreenStreamer::sendPicture() {
+void ScreenStreamer::send() {
     double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
     double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
     std::string screenDimensions(std::to_string((int)fScreenWidth)+","+std::to_string((int)fScreenHeight));
@@ -113,15 +112,14 @@ void ScreenStreamer::sendPicture() {
         std::vector<uchar> buff;
         cv::imencode(".png", src, buff);
         stream.sendSize((int) buff.size());
-        send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
+        ::send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
         // save img
-
         buff.clear();
     }
 }
 
 
 
-ScreenStreamer::ScreenStreamer(Stream stream) : stream(stream){
+ScreenStreamer::ScreenStreamer(const Stream& stream) : Sender(stream){
 
 }

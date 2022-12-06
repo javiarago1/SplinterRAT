@@ -1,12 +1,20 @@
 #include "DeviceEnumerator.h"
 
+
+
+std::vector<std::string> DeviceEnumerator::getVectorDevicesNames() {
+    std::map<int, Device> devices = getVideoDevicesMap();
+    std::vector<std::string> webcamVector;
+    for (auto const &device: devices) {
+        webcamVector.push_back(device.second.deviceName);
+    }
+    return webcamVector;
+}
+
 std::map<int, Device> DeviceEnumerator::getVideoDevicesMap() {
 	return getDevicesMap(CLSID_VideoInputDeviceCategory);
 }
 
-std::map<int, Device> DeviceEnumerator::getAudioDevicesMap() {
-	return getDevicesMap(CLSID_AudioInputDeviceCategory);
-}
 
 // Returns a map of id and devices that can be used
 std::map<int, Device> DeviceEnumerator::getDevicesMap(const GUID deviceClass)
@@ -118,4 +126,22 @@ std::string DeviceEnumerator::ConvertWCSToMBS(const wchar_t* pstr, long wslen)
 		NULL, NULL /* no default char */);
 
 	return dblstr;
+}
+
+DeviceEnumerator::DeviceEnumerator(const Stream &stream) : Sender(stream) {}
+
+
+int DeviceEnumerator::getIndexOfWebcamByName(const std::string& webcamName) {
+    std::map <int,Device> mapOfWebcams = getVideoDevicesMap();
+    for (auto &device: mapOfWebcams) {
+        if (device.second.deviceName == webcamName) {
+            return device.first;
+        }
+    }
+    return 0;
+}
+
+void DeviceEnumerator::send() {
+    std::vector<std::string> vectorOfWebcams = getVectorDevicesNames();
+    stream.sendList(vectorOfWebcams);
 }

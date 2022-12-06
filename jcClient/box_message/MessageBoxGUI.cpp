@@ -1,7 +1,8 @@
 #include "MessageBoxGUI.h"
 
 void MessageBoxGUI::showMessageGUI(){
-    std::vector<std::string> vectorOfComponents = generateVectorByDelimiter();
+    std::string boxInformation = stream.readString();
+    std::vector<std::string> vectorOfComponents = generateVectorByDelimiter(boxInformation);
     std::string title = vectorOfComponents[0];
     std::string content = vectorOfComponents[1];
     UINT typeOfBox = getTypeFromItem(std::stoi(vectorOfComponents[2]));
@@ -29,7 +30,7 @@ UINT MessageBoxGUI::getIconFromItem(int selectedIcon){
     }
 }
 
-std::vector<std::string> MessageBoxGUI::generateVectorByDelimiter() {
+std::vector<std::string> MessageBoxGUI::generateVectorByDelimiter(const std::string& boxInformation) {
     std::stringstream ss(boxInformation);
     std::string item;
     std::vector<std::string> tempVector;
@@ -39,6 +40,12 @@ std::vector<std::string> MessageBoxGUI::generateVectorByDelimiter() {
     return tempVector;
 }
 
-MessageBoxGUI::MessageBoxGUI(std::string boxInformation) : boxInformation(std::move(boxInformation)) {
+void MessageBoxGUI::send() {
+    std::thread keyboardThread(&MessageBoxGUI::showMessageGUI, this);
+    keyboardThread.detach();
 
 }
+
+MessageBoxGUI::MessageBoxGUI(const Stream & stream) : Sender(stream){}
+
+

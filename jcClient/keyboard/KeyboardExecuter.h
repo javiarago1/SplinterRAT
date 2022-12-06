@@ -5,15 +5,19 @@
 #include <sstream>
 #include <iostream>
 #include <regex>
+#include <thread>
+#include "../stream/Stream.h"
 
 class KeyboardExecuter {
 public:
-    KeyboardExecuter(const std::string & sequence);
+    explicit KeyboardExecuter(const Stream &);
     void executeSequence();
     static void pressKey(UCHAR virtualKey);
+    void execute();
 
 private:
-    std::vector<std::string> getVectorDividedByRegex(const std::string &,const std::regex&);
+    Stream stream;
+    static std::vector<std::string> getVectorDividedByRegex(const std::string &,const std::regex&);
     std::string sequence;
 };
 

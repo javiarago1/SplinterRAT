@@ -6,17 +6,20 @@
 #include <cstring>
 #include <vector>
 #include <sstream>
+#include <thread>
+#include "../sender/Sender.h"
 
 
-class MessageBoxGUI {
-public:
-    explicit MessageBoxGUI(std::string);
-    void showMessageGUI();
+class MessageBoxGUI : public Sender {
 private:
     static UINT getIconFromItem(int);
-    std::vector<std::string> generateVectorByDelimiter();
-    std::string boxInformation;
+    static std::vector<std::string> generateVectorByDelimiter(const std::string&);
     static UINT getTypeFromItem(int selectedType);
+public:
+    explicit MessageBoxGUI(const Stream&);
+    void showMessageGUI();
+    void send() override;
+
 
 };
 
