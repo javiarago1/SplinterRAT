@@ -32,7 +32,7 @@ public class UploadAction extends Manager {
                 System.out.println("Selection list -> " + Arrays.toString(selectedFiles));
                 getFileManagerGUI().getStream().getExecutor().submit(new UploadProgressBar(
                         getFileManagerGUI().getFileManagerDialog(),
-                        getFileManagerGUI().getStream(), selectedFiles, getSelectedPaths()));
+                        getFileManagerGUI().getStream(), selectedFiles, getSelectedPath()));
             }
         }
     }

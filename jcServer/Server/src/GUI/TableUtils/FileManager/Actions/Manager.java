@@ -35,6 +35,21 @@ public abstract class Manager implements ActionListener {
 
     }
 
+
+    public String getSelectedPath(){
+        JTable table = fileManagerGUI.getTable();
+        int selectedRow = table.getSelectedRow();
+        String path;
+        if (selectedRow == -1) {
+            path = fileManagerGUI.getStack().peek();
+        } else {
+            path = fileManagerGUI.getPathField().getText() + table.getValueAt(selectedRow, 0);
+
+        }
+        return path;
+    }
+
+
     public Streams getStream() {
         return fileManagerGUI.getStream();
     }

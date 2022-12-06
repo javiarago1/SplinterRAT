@@ -15,13 +15,13 @@ import java.util.List;
 public class UploadProgressBar extends Bar {
     private final Streams stream;
     private final File[] localFiles;
-    private final List<String> destinationPaths;
+    private final String destinationPath;
 
-    public UploadProgressBar(JDialog dialog, Streams stream, File[] localFiles, List<String> destinationPaths) {
+    public UploadProgressBar(JDialog dialog, Streams stream, File[] localFiles, String destinationPath) {
         super(dialog, "Uploading");
         this.stream = stream;
         this.localFiles = localFiles;
-        this.destinationPaths = destinationPaths;
+        this.destinationPath = destinationPath;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UploadProgressBar extends Bar {
     private void uploadFiles() throws IOException {
         int countOfFiles = 0; // counter for GUI
         System.out.println("am i at edt " + SwingUtilities.isEventDispatchThread());
-        stream.sendAction(Action.UPLOAD, destinationPaths, localFiles.length);
+        stream.sendAction(Action.UPLOAD, destinationPath, localFiles.length);
         for (File file : localFiles) {
             stream.readSize(); // Start sending information
             Path path = Path.of(String.valueOf(file));  // Converting to path for getting all bytes of file
