@@ -4,7 +4,6 @@
 #include <thread>
 #include "video_audio/DeviceEnumerator.h"
 #include <string>
-#include <shellapi.h>
 #include "stream/Stream.h"
 #include "download/Download.h"
 #include "file/FileManager.h"
@@ -17,6 +16,7 @@
 #include "state/SystemState.h"
 #include "install/Install.h"
 #include "configuration.h"
+
 
 
 
