@@ -14,16 +14,7 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feature: extracting outside and compiling">
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/compile_configuration/assembly.rc" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/compile_configuration/assembly.rc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/configuration.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/configuration.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/keyboard/KeyboardExecuter.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/keyboard/KeyboardExecuter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Server_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Server_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/apache_commons_lang3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feature: extracting outside and compiling" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -374,14 +365,7 @@
       <workItem from="1670234502491" duration="5800000" />
       <workItem from="1670242197779" duration="4009000" />
       <workItem from="1670317024101" duration="11725000" />
-      <workItem from="1670396522656" duration="7210000" />
-    </task>
-    <task id="LOCAL-00074" summary="feat: commit from intellij to c++">
-      <created>1665208877937</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1665208877937</updated>
+      <workItem from="1670396522656" duration="7532000" />
     </task>
     <task id="LOCAL-00075" summary="feat: commit from intellij to c++">
       <created>1665216165670</created>
@@ -719,7 +703,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670401883192</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="feature: extracting outside and compiling">
+      <created>1670404135472</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1670404135472</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
