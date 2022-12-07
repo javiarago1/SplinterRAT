@@ -15,12 +15,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="refactoring: optimization and refactoring names">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPExtractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/box_message/MessageBoxGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/box_message/MessageBoxGUI.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/box_message/MessageBoxGUI.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/box_message/MessageBoxGUI.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/video_audio/DeviceEnumerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/video_audio/DeviceEnumerator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/video_audio/DeviceEnumerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/video_audio/DeviceEnumerator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/webcam/WebcamManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,8 +37,8 @@
         <option value="UML Class" />
         <option value="JavaScript File" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -83,13 +87,13 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last.edited.regexp&quot;: &quot;&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/JAVIER/Downloads/Statistic-4.2.6.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/JAVIER/jcRAT/jcServer/Server/src&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -108,6 +112,7 @@
       <recent name="Server.GUI.TreeInterpreter.TreeGUI" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src" />
       <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src\GUI\TableUtils\FileManager\Icons" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Server\src\Server\GUI\Compiler" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Server\src" />
@@ -370,7 +375,8 @@
       <workItem from="1670233935568" duration="54000" />
       <workItem from="1670234502491" duration="5800000" />
       <workItem from="1670242197779" duration="4009000" />
-      <workItem from="1670317024101" duration="3402000" />
+      <workItem from="1670317024101" duration="11725000" />
+      <workItem from="1670396522656" duration="5288000" />
     </task>
     <task id="LOCAL-00073" summary="feat: commit from intellij to c++">
       <created>1665208869601</created>

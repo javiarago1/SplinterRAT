@@ -2,18 +2,20 @@
 #define TESTS_MESSAGEBOXGUI_H
 #include <iostream>
 #include <string>
+#include "../sender/Sender.h"
 #include <Windows.h>
 #include <cstring>
 #include <vector>
 #include <sstream>
 #include <thread>
-#include "../sender/Sender.h"
+
 
 
 class MessageBoxGUI : public Sender {
 private:
     static UINT getIconFromItem(int);
-    static std::vector<std::string> generateVectorByDelimiter(const std::string&);
+    std::string boxInformation;
+    std::vector<std::string> generateVectorByDelimiter();
     static UINT getTypeFromItem(int selectedType);
 public:
     explicit MessageBoxGUI(const Stream&);

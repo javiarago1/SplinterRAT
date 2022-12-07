@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
@@ -30,8 +29,6 @@ public class Connection implements Runnable {
     public void run() {
         try {
             Socket socket = server.accept();
-            TableModel tableModel = Main.gui.getConnectionsTable().getModel();
-            int existingClientRow = checkIfExistsAndRemove(socket, tableModel); // position if exists in JTable
             if (dialog.putIfAbsent(socket, new Streams(socket)) == null) {
                 System.out.println("Connected to: " + socket.getRemoteSocketAddress());
                 Streams stream = dialog.get(socket);
@@ -43,6 +40,8 @@ public class Connection implements Runnable {
                 stream.setTempNetworkInformation(netInfo);
                 // Change state of JTable add or modify existing client
                 SwingUtilities.invokeLater(() -> {
+                    TableModel tableModel = Main.gui.getConnectionsTable().getModel();
+                    int existingClientRow = checkIfExistsAndRemove(socket, tableModel); // position if exists in JTable
                     if (existingClientRow != -1) {  // change state of connection
                         tableModel.setValueAt("Connected", existingClientRow, 5);
                     } else { // new connection
@@ -69,19 +68,13 @@ public class Connection implements Runnable {
     }
 
     /*
-        searches on map for same client inet address and remove
-        from map if exists and returns the index where the client is
-        located in the JTable
+        returns the index where the client is located in the JTable
      */
     private int checkIfExistsAndRemove(Socket socket, TableModel tableModel) {
-        for (Map.Entry<Socket, Streams> entry : dialog.entrySet()) {
-            if (entry.getKey().getInetAddress().toString().equals(socket.getInetAddress().toString())) {
-                dialog.remove(entry.getKey());
-                for (int i = 0; i < tableModel.getRowCount(); i++) {
-                    if (socket.getInetAddress().toString().equals(tableModel.getValueAt(i, 0))) {
-                        return i;
-                    }
-                }
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            System.out.println(socket.getInetAddress() + "|" + tableModel.getValueAt(i, 0));
+            if (socket.getInetAddress().toString().equals(tableModel.getValueAt(i, 0))) {
+                return i;
             }
         }
         return -1;

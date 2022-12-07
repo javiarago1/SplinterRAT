@@ -12,7 +12,6 @@ import java.awt.*;
    it really consists of a textarea and a text field that are responsible for updating the state
  */
 
-// TODO fix the encoding on display
 
 public class ReverseShellGUI {
     private final Streams stream;

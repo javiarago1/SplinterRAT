@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
 
 public class Compiler implements ActionListener {
 
@@ -16,17 +17,23 @@ public class Compiler implements ActionListener {
     private final JTextField[] fieldsArray;
     private final ButtonGroup buttonGroup;
 
+    public static Path localClientFiles;
+
+    private Path assemblyPath;
 
     public Compiler(JDialog compilerDialog, JCheckBox[] checkBoxesArray, JTextField[] fieldsArray, ButtonGroup buttonGroup) {
         this.compilerDialog = compilerDialog;
         this.checkBoxes = checkBoxesArray;
         this.fieldsArray = fieldsArray;
         this.buttonGroup = buttonGroup;
+
+
     }
 
     // Creating command line for compiling with g++, several options to include on the client
     @Override
     public void actionPerformed(ActionEvent e) {
+        assemblyPath = Path.of(localClientFiles.toString(), "compile_configuration");
         // File chooser where to save file
         final StringBuilder command = new StringBuilder();
         JFileChooser chooser = new JFileChooser();
@@ -35,7 +42,7 @@ public class Compiler implements ActionListener {
         chooser.setSelectedFile(new File("client"));
         chooser.setAcceptAllFileFilterUsed(false);
         int returnVal = chooser.showSaveDialog(compilerDialog);
-        CPPModifier modifier = new CPPModifier("../jcClient/client.cpp");
+        CPPModifier modifier = new CPPModifier(Path.of(localClientFiles.toString(), "configuration.h").toString());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             setAssemblySettings();
             // Set IP
@@ -63,7 +70,8 @@ public class Compiler implements ActionListener {
                     "permission/Permission.cpp " +
                     "box_message/MessageBoxGUI.cpp " +
                     "state/SystemState.cpp " +
-                    "install/Install.cpp ");
+                    "install/Install.cpp " +
+                    "sender/Sender.cpp ");
             // check if installation needs to be make
             if (checkBoxes[0].isSelected()) {
                 modifier.variableModifier("INSTALL_PATH",buttonGroup.getSelection().getActionCommand());
@@ -113,13 +121,15 @@ public class Compiler implements ActionListener {
     private void compile(String command) {
         new Thread(() -> {
             ProcessBuilder assemblyProcess = new ProcessBuilder();
-            assemblyProcess.command("cmd.exe", "/c", "windres assembly.rc compiled_assembly.opc").directory(new File("../jcClient/compile_configuration/"));
+            assemblyProcess.command("cmd.exe", "/c", "windres assembly.rc compiled_assembly.opc").directory(assemblyPath.toFile());
             executeProcess(assemblyProcess);
 
             ProcessBuilder compileProcess = new ProcessBuilder();
-            compileProcess.command("cmd.exe", "/c", command).directory(new File("../jcClient"));
+            compileProcess.command("cmd.exe", "/c", command).directory(localClientFiles.toFile());
             executeProcess(compileProcess);
+            System.out.println("Finished compiling");
         }).start();
+
     }
 
     private void executeProcess(ProcessBuilder processBuilder){
@@ -147,7 +157,7 @@ public class Compiler implements ActionListener {
     }
 
     private void setAssemblySettings(){
-        CPPModifier modifier = new CPPModifier("../jcClient/compile_configuration/assembly.rc");
+        CPPModifier modifier = new CPPModifier(Path.of(assemblyPath.toString(), "assembly.rc").toString());
         modifier.modifyAssemblySettings(
                 fieldsArray[11].getText(),
                 fieldsArray[12].getText(),
