@@ -100,7 +100,7 @@ SplinterRAT is a remote administration tool for Windows machines that allows you
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Firstly, to run the server and the graphical interface it's necessary to have the <a target="_blank" href="https://www.java.com/">Java JRE </a>installed. <br>
+Firstly, to run the server and the graphical interface it's necessary to have the <a target="_blank" href="https://www.java.com/">Java JRE (17 or superior) </a>installed. <br>
 Secondly, it is necessary to have the C++ compiler collection (g++) over 9.0 version and windres utility installed for assembly configuration and compilation. Recomendation for this -> <a target="_blank" href="https://www.mingw-w64.org/">MinGW-w64</a>.
 
 ### Windows prerequisites
@@ -124,7 +124,7 @@ From ubuntu we can install the java JRE and the compiler and assembler from the 
 From ubuntu 
 * JRE installation: 
 ```sh 
-sudo apt install default-jre
+sudo apt install openjdk-17-jdk openjdk-17-jre
 ```
 * Mingw-w64 installation: 
 ```sh 

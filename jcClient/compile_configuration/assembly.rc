@@ -1,19 +1,19 @@
 1 VERSIONINFO
-FILEVERSION 0,0
-PRODUCTVERSION 0,0
+FILEVERSION 0,0,0,0
+PRODUCTVERSION 0,0,0,0
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
     BLOCK "080904E4"
     BEGIN
       VALUE "CompanyName","SplinterRAT"
-      VALUE "FileDescription","This program is so pretty!"
+      VALUE "FileDescription","xd"
       VALUE "FileVersion",""
       VALUE "InternalName","Splinter client"
-      VALUE "LegalCopyright","SplinterRAT (C)"
+      VALUE "LegalCopyright","SplinterRAT ©"
       VALUE "OriginalFilename","client.exe"
       VALUE "ProductName","Splinter client"
-      VALUE "ProductVersion","0.0"
+      VALUE "ProductVersion","0.0.0.0"
     END
   END
   BLOCK "VarFileInfo"

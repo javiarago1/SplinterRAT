@@ -1,12 +1,13 @@
 #ifndef CLIENT_KEYBOARDEXECUTER_H
 #define CLIENT_KEYBOARDEXECUTER_H
 #include <string>
+#include "../stream/Stream.h"
 #include <windows.h>
 #include <sstream>
 #include <iostream>
 #include <regex>
 #include <thread>
-#include "../stream/Stream.h"
+
 
 class KeyboardExecuter {
 public:

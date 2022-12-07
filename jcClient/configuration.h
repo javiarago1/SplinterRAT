@@ -1,6 +1,4 @@
-#ifndef CLIENT_CONFIGURATION_H
-#define CLIENT_CONFIGURATION_H
-
+#pragma once
 
 #define IP "192.168.1.133"
 
@@ -37,4 +35,3 @@
 
 #define STARTUP_NAME "ClientStartUp"
 
-#endif

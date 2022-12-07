@@ -9,7 +9,7 @@
 #include "../time/Time.h"
 #include "../install/Install.h"
 #include "../configuration.h"
-#include "../Sender/Sender.h"
+
 #include "../video_audio/DeviceEnumerator.h"
 
 
