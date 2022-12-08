@@ -2,6 +2,7 @@ package GUI.TableUtils.FileManager;
 
 
 import Connections.Streams;
+import GUI.TableUtils.Configuration.TablePopUpListener;
 import GUI.TableUtils.FileManager.Actions.*;
 import GUI.TableUtils.FileManager.Listener.MouseListener;
 import GUI.TableUtils.FileManager.Style.CellRenderer;
@@ -10,8 +11,6 @@ import GUI.TableUtils.FileManager.Style.TableModel;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +50,7 @@ public class FileManagerGUI {
         constraints.gridheight = 1;
         fileManagerDialog.add(refreshCurrentFolder, constraints);
 
-        refreshCurrentFolder.addActionListener(e -> {
-            stream.getExecutor().submit(new RequestDirectory(this, Movement.REFRESH_DIRECTORY));
-        });
+        refreshCurrentFolder.addActionListener(e -> stream.getExecutor().submit(new RequestDirectory(this, Movement.REFRESH_DIRECTORY)));
 
 
         pathField = new JTextField();
@@ -94,9 +91,7 @@ public class FileManagerGUI {
         constraints.gridheight = 1;
         constraints.weightx = 0;
         fileManagerDialog.add(refreshDiskButton, constraints);
-        refreshDiskButton.addActionListener(e -> {
-            requestDisk();
-        });
+        refreshDiskButton.addActionListener(e -> requestDisk());
 
         table = new JTable(new TableModel());
         TableColumn someColumn = table.getColumnModel().getColumn(0);
@@ -168,12 +163,20 @@ public class FileManagerGUI {
     private void createPopUpMenu() {
         popupMenu = new JPopupMenu();
         JMenuItem downloadItem = new JMenuItem("Download");
+        TablePopUpListener.setIconToMenuItem(downloadItem, "download_icon.png");
         JMenuItem copyMenu = new JMenuItem("Copy");
+        TablePopUpListener.setIconToMenuItem(copyMenu, "copy_icon.png");
         JMenuItem cutMenu = new JMenuItem("Cut");
+        TablePopUpListener.setIconToMenuItem(cutMenu, "cut_icon.png");
         JMenuItem pasteMenu = new JMenuItem("Paste");
+        TablePopUpListener.setIconToMenuItem(pasteMenu, "paste_icon.png");
         JMenuItem uploadMenu = new JMenuItem("Upload");
+        TablePopUpListener.setIconToMenuItem(uploadMenu, "upload_icon.png");
         JMenuItem runItem = new JMenuItem("Run");
+        TablePopUpListener.setIconToMenuItem(runItem, "run_icon.png");
         JMenuItem deleteItem = new JMenuItem("Delete");
+        TablePopUpListener.setIconToMenuItem(deleteItem, "delete_icon.png");
+
 
         popupMenu.add(downloadItem);
         popupMenu.add(copyMenu);

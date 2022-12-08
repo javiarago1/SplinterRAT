@@ -26,6 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.Socket;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TablePopUpListener extends MouseAdapter {
@@ -50,13 +51,17 @@ public class TablePopUpListener extends MouseAdapter {
         );
     }
 
-    private void refreshClient(){
+    private void refreshClient() {
         int row = Main.gui.getConnectionsTable().getSelectedRow();
         String uniqueIP = (String) mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 0);
         for (Map.Entry<Socket, Streams> entry : Main.server.getMap().entrySet())
-            if ((uniqueIP).equals(entry.getKey().getInetAddress().toString())){
-                mainGUI.getConnectionsDefaultTableModel().setValueAt("Connected",row,5);
+            if ((uniqueIP).equals(entry.getKey().getInetAddress().toString())) {
+                mainGUI.getConnectionsDefaultTableModel().setValueAt("Connected", row, 5);
             }
+    }
+
+    public static void setIconToMenuItem(JMenuItem item, String path) {
+        item.setIcon(new ImageIcon((Objects.requireNonNull(TablePopUpListener.class.getClassLoader().getResource(path)))));
     }
 
     // Menus of table
@@ -65,14 +70,21 @@ public class TablePopUpListener extends MouseAdapter {
     private JMenuItem webcamMenu;
     private JMenu keyloggerMenuOptions;
     private JMenuItem streamScreenMenu;
+
     private void createConnectedPopUpMenu() {
         connectedPopUpMenu = new JPopupMenu();
         JMenuItem fileManagerMenu = new JMenuItem("File manager");
+        setIconToMenuItem(fileManagerMenu, "file_manager_icon.png");
         webcamMenu = new JMenuItem("Webcam manager");
+        setIconToMenuItem(webcamMenu, "webcam_icon.png");
         JMenuItem reverseShellMenu = new JMenuItem("Reverse shell");
+        setIconToMenuItem(reverseShellMenu, "shell_icon.png");
         JMenuItem keyboardController = new JMenuItem("Keyboard controller");
+        setIconToMenuItem(keyboardController, "keyboard_icon.png");
         JMenuItem messageBoxMenu = new JMenuItem("Message box");
+        setIconToMenuItem(messageBoxMenu, "message_box_icon.png");
         keyloggerMenuOptions = new JMenu("Keylogger options");
+        setIconToMenuItem(keyloggerMenuOptions, "keylogger_icon.png");
         JMenuItem startKeyloggerMenu = new JMenuItem("Start");
         JMenuItem stopKeyloggerMenu = new JMenuItem("Stop");
         JMenuItem dumpLogsMenu = new JMenuItem("Dump last log");
@@ -82,12 +94,15 @@ public class TablePopUpListener extends MouseAdapter {
         keyloggerMenuOptions.add(dumpLogsMenu);
         keyloggerMenuOptions.add(dumpAllLogsMenu);
         JMenu permissionsMenu = new JMenu("Admin privileges");
+        setIconToMenuItem(permissionsMenu, "permissions_icon.png");
         JMenuItem isAdminMenu = new JMenuItem("Is admin");
         JMenuItem elevatePrivilegesMenu = new JMenuItem("Elevate privileges");
         permissionsMenu.add(isAdminMenu);
         permissionsMenu.add(elevatePrivilegesMenu);
         streamScreenMenu = new JMenuItem("Screen controller");
+        setIconToMenuItem(streamScreenMenu, "screen_icon.png");
         JMenu connectionActionsMenu = new JMenu("Connection");
+        setIconToMenuItem(connectionActionsMenu, "connection_icon.png");
         JMenuItem restartMenu = new JMenuItem("Restart");
         JMenuItem disconnectMenu = new JMenuItem("Disconnect");
         JMenuItem uninstallMenu = new JMenuItem("Uninstall");
@@ -95,6 +110,8 @@ public class TablePopUpListener extends MouseAdapter {
         connectionActionsMenu.add(disconnectMenu);
         connectionActionsMenu.add(uninstallMenu);
         JMenu stateActionsMenu = new JMenu("System state");
+        setIconToMenuItem(stateActionsMenu, "state_icon.png");
+
         JMenuItem logOffAction = new JMenuItem("Log off");
         JMenuItem shutdownAction = new JMenuItem("Shutdown");
         JMenuItem rebootAction = new JMenuItem("Reboot");

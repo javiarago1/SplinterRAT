@@ -15,12 +15,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feature: extracting outside and compiling">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/connection_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/file_manager_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/keyboard_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/keylogger_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/message_box_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/permissions_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/screen_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/shell_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/splinter_icon_250x250.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/state_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/webcam_icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -379,21 +387,7 @@
       <workItem from="1670242197779" duration="4009000" />
       <workItem from="1670317024101" duration="11725000" />
       <workItem from="1670396522656" duration="14455000" />
-      <workItem from="1670488004889" duration="6346000" />
-    </task>
-    <task id="LOCAL-00076" summary="feat: commit from intellij to c++">
-      <created>1665216294991</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1665216294991</updated>
-    </task>
-    <task id="LOCAL-00077" summary="feat: commit from intellij to c++">
-      <created>1665224892250</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1665224892250</updated>
+      <workItem from="1670488004889" duration="10042000" />
     </task>
     <task id="LOCAL-00078" summary="feat: commit from intellij to c++">
       <created>1665226315267</created>
@@ -724,7 +718,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670404159951</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="feature: extracting outside and compiling">
+      <created>1670494603696</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1670494603696</updated>
+    </task>
+    <task id="LOCAL-00126" summary="feature: extracting outside and compiling">
+      <created>1670494609614</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1670494609614</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
