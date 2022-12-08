@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 
+import java.awt.event.ItemEvent;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +20,7 @@ public class ServerGUI {
     private final JDialog serverDialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
 
-    private static final JCheckBox notificationCheckBox = new JCheckBox("Popup notification when client connects");
+    private static boolean notifications;
 
     public ServerGUI(JFrame mainGUI) {
         serverDialog = new JDialog(mainGUI, "Server settings");
@@ -54,10 +55,12 @@ public class ServerGUI {
         constraints.weightx = 1;
         serverDialog.add(portNumber, constraints);
 
+        JCheckBox notificationCheckBox = new JCheckBox("Popup notification when client connects", notifications);
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 2;
         constraints.gridheight = 1;
+        notificationCheckBox.addItemListener(e -> notifications = e.getStateChange() == ItemEvent.SELECTED);
         serverDialog.add(notificationCheckBox, constraints);
 
 
@@ -148,5 +151,7 @@ public class ServerGUI {
 
     }
 
-
+    public static boolean isNotifications() {
+        return notifications;
+    }
 }

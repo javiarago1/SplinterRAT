@@ -1,6 +1,7 @@
 package Connections;
 
 import GUI.Main;
+import GUI.Server.ServerGUI;
 import Information.Action;
 import Information.NetworkInformation;
 import Information.SystemInformation;
@@ -8,8 +9,10 @@ import Information.SystemInformation;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
@@ -55,6 +58,9 @@ public class Connection implements Runnable {
                         DefaultTableModel defaultTableModel = (DefaultTableModel) tableModel;
                         defaultTableModel.addRow(tableRow);
                     }
+
+                    if (ServerGUI.isNotifications() && SystemTray.isSupported())
+                        displayTray(netInfo.IP(), sysInfo.OPERATING_SYSTEM());
                 });
 
             }
@@ -65,6 +71,29 @@ public class Connection implements Runnable {
             e.printStackTrace();
             executor.submit(new Connection(server, executor, dialog));
         }
+    }
+
+    public void displayTray(String ip, String operativeSystem) {
+        //Obtain only one instance of the SystemTray object
+        SystemTray tray = SystemTray.getSystemTray();
+
+        //If the icon is a file
+        Image image = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("splinter_icon_250x250.png"))).getImage();
+        //Alternative (if the icon is on the classpath):
+        //Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
+
+        TrayIcon trayIcon = new TrayIcon(image, "SplinterRAT connection!");
+        //Let the system resize the image if needed
+        trayIcon.setImageAutoSize(true);
+        //Set tooltip text for the tray icon
+        trayIcon.setToolTip("New connection!");
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
+        }
+
+        trayIcon.displayMessage("SplinterRAT has a new connection!", "New connection from " + ip + " - " + operativeSystem, TrayIcon.MessageType.INFO);
     }
 
     /*

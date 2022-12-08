@@ -14,7 +14,14 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feature: extracting outside and compiling" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feature: extracting outside and compiling">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,7 +89,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
@@ -122,6 +129,19 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Server">
+    <configuration name="CompilerGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.Compiler.CompilerGUI" />
+      <module name="Server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.Compiler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="KeyboardControllerGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GUI.TableUtils.KeyboardController.KeyboardControllerGUI" />
       <module name="Server" />
@@ -174,13 +194,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WebcamGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GUI.TableUtils.Webcam.WebcamManager.WebcamGUI" />
-      <module name="Server" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="jcRat" />
       <method v="2">
@@ -196,11 +209,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CompilerGUI" />
         <item itemvalue="Application.ServerGUI" />
         <item itemvalue="Application.ScreenStreamingGUI" />
         <item itemvalue="Application.MessageBoxGUI" />
         <item itemvalue="Application.KeyboardControllerGUI" />
-        <item itemvalue="Application.WebcamGUI" />
       </list>
     </recent_temporary>
   </component>
@@ -365,14 +378,8 @@
       <workItem from="1670234502491" duration="5800000" />
       <workItem from="1670242197779" duration="4009000" />
       <workItem from="1670317024101" duration="11725000" />
-      <workItem from="1670396522656" duration="7532000" />
-    </task>
-    <task id="LOCAL-00075" summary="feat: commit from intellij to c++">
-      <created>1665216165670</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1665216165670</updated>
+      <workItem from="1670396522656" duration="14455000" />
+      <workItem from="1670488004889" duration="6346000" />
     </task>
     <task id="LOCAL-00076" summary="feat: commit from intellij to c++">
       <created>1665216294991</created>
@@ -710,7 +717,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670404135472</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="feature: extracting outside and compiling">
+      <created>1670404159951</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1670404159951</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

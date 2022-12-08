@@ -28,12 +28,16 @@ public class CompilerGUI {
         compilerDialog = new JDialog(parentFrame, "Compiler");
         compilerDialog.setModal(true);
         compilerDialog.setResizable(false);
-        compilerDialog.setSize(450, 275);
+        compilerDialog.setSize(450, 350);
         compilerDialog.setLocationRelativeTo(null);
         compilerDialog.setLayout(new GridBagLayout());
         addTabbedPane();
         addLowerPanel();
         compilerDialog.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new CompilerGUI(null);
     }
 
     private void addTabbedPane() {
@@ -100,21 +104,28 @@ public class CompilerGUI {
 
     private void addCompilePanel() {
         JPanel compilePanel = new JPanel();
-        compilePanel.setLayout(null);
+        compilePanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 3;
+        constraints.gridheight = 1;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 1;
+        constraints.weighty = 0;
+        constraints.insets = new Insets(6, 6, 6, 6);
 
-
-        JLabel tagLabel = new JLabel("Path where the compiler (g++) is located if it isn't in the system variables:");
-        tagLabel.setBounds(10, 10, 400, 20);
-        compilePanel.add(tagLabel);
+        JLabel tagLabel = new JLabel("Path where g++ and windres is located if it isn't in the system variables:");
+        compilePanel.add(tagLabel, constraints);
         String defaultCompiler = "Default system compiler";
         JComboBox<String> compilerComboBox = new JComboBox<>();
         compilerComboBox.addItem(defaultCompiler);
         compilerComboBox.addItem("Select custom path");
 
-        JTextField compilerPathField = new JTextField("g++");
+        String utilities = "g++ / windres";
+        JTextField compilerPathField = new JTextField(utilities);
         compilerPathField.setEditable(false);
-        compilerPathField.setBounds(190, 40, 125, 25);
-        compilePanel.add(compilerPathField);
+
         compilerComboBox.addActionListener(e -> {
             String selectedItem = (String) compilerComboBox.getSelectedItem();
             compileButton.setEnabled(false);
@@ -124,38 +135,45 @@ public class CompilerGUI {
                 int returnVal = fc.showSaveDialog(compilerDialog);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File selectedFolder = fc.getSelectedFile();
-                    compilerPathField.setText(selectedFolder.toString() + "\\g++");
+                    compilerPathField.setText(selectedFolder.toString());
                 } else {
                     compilerComboBox.setSelectedIndex(0);
                 }
             } else {
-                compilerPathField.setText("g++");
+                compilerPathField.setText(utilities);
             }
 
         });
-        compilerComboBox.setBounds(10, 40, 175, 25);
-        compilePanel.add(compilerComboBox);
+        constraints.anchor = GridBagConstraints.NORTH;
+        constraints.weighty = 1;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        constraints.gridx = 0;
+        compilePanel.add(compilerComboBox, constraints);
+
+        constraints.gridx = 1;
+        compilePanel.add(compilerPathField, constraints);
 
         compileButton = new JButton("Compile");
         compileButton.setVisible(false);
         compileButton.setCursor(handCursor);
         compileButton.setBackground(new Color(0, 136, 6));
         compileButton.addActionListener(new Compiler(compilerDialog,
-                new JCheckBox[]{installCheckBox, persistentClientCheckBox,webcamCheckBox,keyloggerCheckBox},
+                new JCheckBox[]{installCheckBox, persistentClientCheckBox, webcamCheckBox, keyloggerCheckBox},
                 new JTextField[]{ipField, portField, tagField, mutexField, timingField, compilerPathField,
-                        subdirectoryNameField,executableNameField,clientNameStartUp,subdirectoryWebcamLogsField,subdirectoryKeyloggerField,
-                        fileDescriptionField,fileVersionField,productNameField,copyrightField,originalNameField,iconPathField
-                },radioGroup));
+                        subdirectoryNameField, executableNameField, clientNameStartUp, subdirectoryWebcamLogsField, subdirectoryKeyloggerField,
+                        fileDescriptionField, fileVersionField, productNameField, copyrightField, originalNameField, iconPathField
+                }, radioGroup));
         compileButton.setToolTipText("You must check the version you have " +
-                "installed on your system using the g++ check button");
+                "installed on your system using the check button");
         compileButton.setEnabled(false);
 
 
-        JButton checkButton = new JButton("Check g++");
-        checkButton.setBounds(320, 40, 90, 25);
+        constraints.gridx = 2;
+        JButton checkButton = new JButton("Check");
         checkButton.addActionListener(new VersionChecker(compilerPathField, compilerDialog, compileButton));
-        compilePanel.add(checkButton);
-
+        compilePanel.add(checkButton, constraints);
+        checkButton.setBackground(new Color(0, 83, 102));
         tabPane.add(compilePanel, "Compiler");
     }
 
@@ -168,66 +186,84 @@ public class CompilerGUI {
     private JTextField iconPathField;
     private void addAssemblyPanel() {
         JPanel assemblyPanel = new JPanel();
-        assemblyPanel.setLayout(null);
-
+        assemblyPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 1;
+        constraints.weighty = 1;
+        constraints.insets = new Insets(6, 6, 6, 6);
         JLabel fileDescriptionLabel = new JLabel("Description of file:");
-        fileDescriptionLabel.setBounds(69, 15, 150, 20);
-        assemblyPanel.add(fileDescriptionLabel);
+        assemblyPanel.add(fileDescriptionLabel, constraints);
 
+        constraints.gridx = 1;
         fileDescriptionField = new JTextField("This program is so pretty!");
-        fileDescriptionField.setBounds(170, 15, 150, 20);
-        assemblyPanel.add(fileDescriptionField);
+        assemblyPanel.add(fileDescriptionField, constraints);
 
+        constraints.gridx = 0;
+        constraints.gridy = 1;
         JLabel versionOfFileAndProduct = new JLabel("Version of file and product:");
-        versionOfFileAndProduct.setBounds(22, 45, 210, 20);
-        assemblyPanel.add(versionOfFileAndProduct);
+        assemblyPanel.add(versionOfFileAndProduct, constraints);
 
+
+        constraints.gridx = 1;
         fileVersionField = new JTextField("0.0.0.0");
         fileVersionField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 fileVersionField.setText(
                         fileVersionField.getText().matches("(\\d)|(\\d\\.\\d)|((\\d\\.){2}\\d)|((\\d\\.){3}\\d)")
-                        ? fileVersionField.getText() : "");
+                                ? fileVersionField.getText() : "");
             }
         });
-        fileVersionField.setBounds(170, 45, 150, 20);
-        assemblyPanel.add(fileVersionField);
 
+        assemblyPanel.add(fileVersionField, constraints);
+
+        constraints.gridx = 2;
+        JLabel exampleOfVersion = new JLabel("(X.X.X.X)");
+        assemblyPanel.add(exampleOfVersion, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 2;
         JLabel productNameLabel = new JLabel("Name of product:");
-        productNameLabel.setBounds(70, 75, 210, 20);
-        assemblyPanel.add(productNameLabel);
-
+        assemblyPanel.add(productNameLabel, constraints);
+        constraints.gridx = 1;
         productNameField = new JTextField("Splinter client");
-        productNameField.setBounds(170, 75, 150, 20);
-        assemblyPanel.add(productNameField);
+        assemblyPanel.add(productNameField, constraints);
 
 
+        constraints.gridx = 0;
+        constraints.gridy = 3;
         JLabel copyrightLabel = new JLabel("Copyright:");
-        copyrightLabel.setBounds(108, 105, 210, 20);
-        assemblyPanel.add(copyrightLabel);
+        assemblyPanel.add(copyrightLabel, constraints);
 
-        copyrightField = new JTextField("SplinterRAT ©");
-        copyrightField.setBounds(170, 105, 150, 20);
-        assemblyPanel.add(copyrightField);
+        constraints.gridx = 1;
+        copyrightField = new JTextField("SplinterRAT (C)");
+        assemblyPanel.add(copyrightField, constraints);
 
+
+        constraints.gridx = 0;
+        constraints.gridy = 4;
         JLabel originalNameLabel = new JLabel("Original name of file:");
-        originalNameLabel.setBounds(54, 135, 210, 20);
-        assemblyPanel.add(originalNameLabel);
+        assemblyPanel.add(originalNameLabel, constraints);
 
+
+        constraints.gridx = 1;
         originalNameField = new JTextField("client.exe");
-        originalNameField.setBounds(170, 135, 150, 20);
-        assemblyPanel.add(originalNameField);
+        assemblyPanel.add(originalNameField, constraints);
 
+        constraints.gridx = 0;
+        constraints.gridy = 5;
         JButton iconButton = new JButton("Select icon");
-        iconButton.setBounds(325, 105, 100, 20);
-        assemblyPanel.add(iconButton);
+        assemblyPanel.add(iconButton, constraints);
 
-
+        constraints.gridx = 1;
         iconPathField = new JTextField();
         iconPathField.setEditable(false);
-        iconPathField.setBounds(325, 135, 100, 20);
-        assemblyPanel.add(iconPathField);
+        assemblyPanel.add(iconPathField, constraints);
 
         iconButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
@@ -254,53 +290,58 @@ public class CompilerGUI {
 
     private void addModulesPanel() {
         JPanel monitorPanel = new JPanel();
-        monitorPanel.setLayout(null);
-        webcamCheckBox = new JCheckBox("Webcam monitoring");
-        webcamCheckBox.setBounds(10, 10, 210, 20);
-        monitorPanel.add(webcamCheckBox);
+        monitorPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 1;
+        constraints.weighty = 0;
+        constraints.insets = new Insets(6, 6, 6, 6);
+        webcamCheckBox = new JCheckBox("Webcam and screen monitoring");
+        monitorPanel.add(webcamCheckBox, constraints);
 
+        constraints.gridx = 1;
         JLabel subdirectoryWebcamLogsLabel = new JLabel("Subdirectory name:");
-        subdirectoryWebcamLogsLabel.setBounds(210, 10, 120, 20);
-        monitorPanel.add(subdirectoryWebcamLogsLabel);
         subdirectoryWebcamLogsLabel.setEnabled(false);
+        monitorPanel.add(subdirectoryWebcamLogsLabel, constraints);
 
-        JSeparator verticalSeparatorOne = new JSeparator(SwingConstants.VERTICAL);
-        verticalSeparatorOne.setBounds(180, 10, 5, 20);
-        monitorPanel.add(verticalSeparatorOne);
+        constraints.gridx = 2;
 
-        subdirectoryWebcamLogsField= new JTextField("WLogs");
-        subdirectoryWebcamLogsField.addFocusListener(new FieldListener(subdirectoryWebcamLogsField,"WLogs"));
-        subdirectoryWebcamLogsField.setBounds(320, 10, 100, 20);
-        monitorPanel.add(subdirectoryWebcamLogsField);
+        subdirectoryWebcamLogsField = new JTextField("WLogs");
+        subdirectoryWebcamLogsField.addFocusListener(new FieldListener(subdirectoryWebcamLogsField, "WLogs"));
         subdirectoryWebcamLogsField.setEnabled(false);
+        monitorPanel.add(subdirectoryWebcamLogsField, constraints);
 
-        JSeparator horizontalSeparatorOne = new JSeparator(SwingConstants.HORIZONTAL);
-        horizontalSeparatorOne.setBounds(10, 40, 410, 5);
-        monitorPanel.add(horizontalSeparatorOne);
 
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 3;
+        JSeparator horizontalSeparator = new JSeparator(SwingConstants.HORIZONTAL);
+        monitorPanel.add(horizontalSeparator, constraints);
+
+        constraints.anchor = GridBagConstraints.NORTH;
+        constraints.gridwidth = 1;
+        constraints.weighty = 1;
+        constraints.gridy = 2;
+        constraints.gridx = 0;
         keyloggerCheckBox = new JCheckBox("Keylogger monitoring");
-        keyloggerCheckBox.setBounds(10, 50, 210, 20);
-        monitorPanel.add(keyloggerCheckBox);
+        monitorPanel.add(keyloggerCheckBox, constraints);
 
+        constraints.gridx = 1;
         JLabel subdirectoryKeyloggerLogsLabel = new JLabel("Subdirectory name:");
-        subdirectoryKeyloggerLogsLabel.setBounds(210, 50, 120, 20);
-        monitorPanel.add(subdirectoryKeyloggerLogsLabel);
         subdirectoryKeyloggerLogsLabel.setEnabled(false);
+        monitorPanel.add(subdirectoryKeyloggerLogsLabel, constraints);
 
-        JSeparator verticalSeparatorTwo = new JSeparator(SwingConstants.VERTICAL);
-        verticalSeparatorTwo.setBounds(180, 50, 5, 20);
-        monitorPanel.add(verticalSeparatorTwo);
 
-        subdirectoryKeyloggerField= new JTextField("KLogs");
+        constraints.gridx = 2;
+        subdirectoryKeyloggerField = new JTextField("KLogs");
         subdirectoryKeyloggerField.addFocusListener(new FieldListener(subdirectoryKeyloggerField,"KLogs"));
-        subdirectoryKeyloggerField.setBounds(320, 50, 100, 20);
-        monitorPanel.add(subdirectoryKeyloggerField);
         subdirectoryKeyloggerField.setEnabled(false);
+        monitorPanel.add(subdirectoryKeyloggerField, constraints);
 
-
-        JSeparator horizontalSeparatorTwo = new JSeparator(SwingConstants.HORIZONTAL);
-        horizontalSeparatorTwo.setBounds(10, 80, 410, 5);
-        monitorPanel.add(horizontalSeparatorTwo);
 
         List<JComponent>webcamComps = new ArrayList<>();
         webcamComps.add(subdirectoryWebcamLogsLabel);
@@ -329,75 +370,88 @@ public class CompilerGUI {
     private JTextField clientNameStartUp;
 
     private void addInstallationPanel() {
+
         JPanel installationPanel = new JPanel();
-        installationPanel.setLayout(null);
-
+        installationPanel.setLayout(new GridBagLayout());
+        GridBagConstraints mainConstraints = new GridBagConstraints();
+        mainConstraints.gridx = 0;
+        mainConstraints.gridy = 0;
+        mainConstraints.gridwidth = 3;
+        mainConstraints.gridheight = 1;
+        mainConstraints.fill = GridBagConstraints.BOTH;
+        mainConstraints.weightx = 1.0;
+        mainConstraints.weighty = 1.0;
+        mainConstraints.insets = new Insets(6, 6, 6, 6);
         installCheckBox = new JCheckBox("Install client on computer");
-        installCheckBox.setBounds(10, 10, 210, 20);
-        installationPanel.add(installCheckBox);
+        installationPanel.add(installCheckBox, mainConstraints);
 
-        JSeparator verticalSeparator = new JSeparator(SwingConstants.VERTICAL);
-        verticalSeparator.setBounds(200, 10, 5, 110);
-        installationPanel.add(verticalSeparator);
-
-        JLabel subdirectoryNameLabel = new JLabel("Subdirectory name: ");
-        subdirectoryNameLabel.setBounds(220, 10, 210, 20);
-        installationPanel.add(subdirectoryNameLabel);
-
-        subdirectoryNameField = new JTextField("Client");
-        subdirectoryNameField.addFocusListener(new FieldListener(subdirectoryNameField, "Client"));
-        subdirectoryNameField.setBounds(330, 10, 85, 20);
-        installationPanel.add(subdirectoryNameField);
-
-        JLabel executableNameLabel = new JLabel("Executable name: ");
-        executableNameLabel.setBounds(220, 40, 210, 20);
-        installationPanel.add(executableNameLabel);
-
-        executableNameField = new JTextField("client");
-        executableNameField.addFocusListener(new FieldListener(executableNameField, "client"));
-        executableNameField.setBounds(330, 40, 85, 20);
-        installationPanel.add(executableNameField);
-
+        mainConstraints.gridy = 1;
         JRadioButton installOnProgramFiles = new JRadioButton("Install on program files (x86)");
         installOnProgramFiles.setActionCommand("0");
-        installOnProgramFiles.setBounds(10, 40, 210, 20);
-        installationPanel.add(installOnProgramFiles);
+        installationPanel.add(installOnProgramFiles, mainConstraints);
 
+        mainConstraints.gridy = 2;
         JRadioButton installOnSystem = new JRadioButton("Install on system directory");
         installOnSystem.setActionCommand("1");
-        installOnSystem.setBounds(10, 70, 210, 20);
-        installationPanel.add(installOnSystem);
+        installationPanel.add(installOnSystem, mainConstraints);
 
+        mainConstraints.gridy = 3;
         JRadioButton installOnAppData = new JRadioButton("Install on AppData", true);
         installOnAppData.setActionCommand("2");
-        installOnAppData.setBounds(10, 100, 210, 20);
-        installationPanel.add(installOnAppData);
+        installationPanel.add(installOnAppData, mainConstraints);
 
+        mainConstraints.gridy = 4;
         radioGroup = new ButtonGroup();
         radioGroup.add(installOnProgramFiles);
         radioGroup.add(installOnSystem);
         radioGroup.add(installOnAppData);
 
+        mainConstraints.gridy = 5;
+        mainConstraints.gridwidth = 1;
+        JLabel subdirectoryNameLabel = new JLabel("Subdirectory name: ");
+        installationPanel.add(subdirectoryNameLabel, mainConstraints);
+
+        mainConstraints.gridx = 1;
+        mainConstraints.gridwidth = 1;
+        subdirectoryNameField = new JTextField("Client");
+        subdirectoryNameField.addFocusListener(new FieldListener(subdirectoryNameField, "Client"));
+        installationPanel.add(subdirectoryNameField, mainConstraints);
+
+        mainConstraints.gridy = 6;
+        mainConstraints.gridx = 0;
+        JLabel executableNameLabel = new JLabel("Executable name: ");
+        installationPanel.add(executableNameLabel, mainConstraints);
+
+        mainConstraints.gridy = 6;
+        mainConstraints.gridx = 2;
+        JLabel executableExtension = new JLabel(".exe");
+        installationPanel.add(executableExtension, mainConstraints);
+
+        mainConstraints.gridx = 1;
+        executableNameField = new JTextField("client");
+        executableNameField.addFocusListener(new FieldListener(executableNameField, "client"));
+        installationPanel.add(executableNameField, mainConstraints);
+
+        mainConstraints.gridx = 0;
+        mainConstraints.gridy = 7;
+        mainConstraints.gridwidth = 3;
         JSeparator horizontalSeparator = new JSeparator(SwingConstants.HORIZONTAL);
-        horizontalSeparator.setBounds(0, 130, 450, 5);
-        installationPanel.add(horizontalSeparator);
+        installationPanel.add(horizontalSeparator, mainConstraints);
 
-        persistentClientCheckBox = new JCheckBox("Client start on start up");
-        persistentClientCheckBox.setBounds(10, 140, 210, 20);
-        installationPanel.add(persistentClientCheckBox);
+        mainConstraints.gridy = 8;
+        persistentClientCheckBox = new JCheckBox("Client start on start up: ");
+        installationPanel.add(persistentClientCheckBox, mainConstraints);
 
-        JLabel clientNameStartUPLabel = new JLabel("Name for start up file: ");
-        clientNameStartUPLabel.setBounds(180, 140, 150, 20);
-        installationPanel.add(clientNameStartUPLabel);
+        mainConstraints.gridwidth = 1;
+        mainConstraints.gridx = 1;
+        JLabel clientNameStartUPLabel = new JLabel("Name for start up file: ", SwingConstants.RIGHT);
+        installationPanel.add(clientNameStartUPLabel, mainConstraints);
 
-        JSeparator verticalSeparatorStartUp = new JSeparator(SwingConstants.VERTICAL);
-        verticalSeparatorStartUp.setBounds(163, 136, 5, 30);
-        installationPanel.add(verticalSeparatorStartUp);
 
+        mainConstraints.gridx = 2;
         clientNameStartUp = new JTextField("ClientStartUp");
         clientNameStartUp.addFocusListener(new FieldListener(clientNameStartUp, "ClientStartUp"));
-        clientNameStartUp.setBounds(300, 141, 100, 20);
-        installationPanel.add(clientNameStartUp);
+        installationPanel.add(clientNameStartUp, mainConstraints);
 
         List<JComponent> listOfComponentsInstallation = new ArrayList<>();
         listOfComponentsInstallation.add(installOnProgramFiles);
@@ -405,11 +459,13 @@ public class CompilerGUI {
         listOfComponentsInstallation.add(installOnSystem);
         listOfComponentsInstallation.add(subdirectoryNameLabel);
         listOfComponentsInstallation.add(subdirectoryNameField);
-        listOfComponentsInstallation.add(executableNameLabel);
+        listOfComponentsInstallation.add(executableExtension);
         listOfComponentsInstallation.add(executableNameField);
+        listOfComponentsInstallation.add(executableNameLabel);
         listOfComponentsInstallation.add(persistentClientCheckBox);
         listOfComponentsInstallation.add(clientNameStartUp);
         listOfComponentsInstallation.add(clientNameStartUPLabel);
+
 
         changeStateOfElements(listOfComponentsInstallation, false);
 
@@ -417,18 +473,21 @@ public class CompilerGUI {
         listOfStartUPComps.add(clientNameStartUp);
         listOfStartUPComps.add(clientNameStartUPLabel);
 
+
         installCheckBox.addActionListener(e -> changeStateOfElements(listOfComponentsInstallation, ((AbstractButton) e.getSource()).getModel().isSelected()));
         persistentClientCheckBox.addActionListener(e -> changeStateOfElements(listOfStartUPComps, ((AbstractButton) e.getSource()).getModel().isSelected()));
 
+        mainConstraints.gridx = 1;
+        mainConstraints.gridheight = 1;
         tabPane.add(installationPanel, "Installation");
 
     }
 
     private void changeStateOfElements(List<JComponent> listOfComponents, boolean isEnabled) {
         for (int i=0;i<listOfComponents.size();i++) {
-            if (i==7 && !((JCheckBox)listOfComponents.get(i)).isSelected() && isEnabled){
+            if (i == 8 && !((JCheckBox) listOfComponents.get(i)).isSelected() && isEnabled) {
                 listOfComponents.get(i).setEnabled(true);
-                isEnabled= false;
+                isEnabled = false;
             } else {
                 listOfComponents.get(i).setEnabled(isEnabled);
             }
@@ -445,72 +504,95 @@ public class CompilerGUI {
 
     private void addIdentificationPanel() {
 
-        JPanel identificationPanel = new JPanel();
-        identificationPanel.setLayout(null);
 
+        JPanel identificationPanel = new JPanel();
+        identificationPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 2;
+        constraints.gridheight = 1;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weighty = 2.0;
+        constraints.weightx = 1.0;
+        constraints.insets = new Insets(6, 6, 6, 6);
 
         JLabel tagLabel = new JLabel("Client tag for connection identification:");
-        tagLabel.setBounds(10, 10, 210, 20);
-        identificationPanel.add(tagLabel);
+        identificationPanel.add(tagLabel, constraints);
+
+
+        constraints.gridx = 2;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
         tagField = new JTextField("Client");
-        tagField.setBounds(225, 11, 190, 20);
         tagField.addFocusListener(new FieldListener(tagField, "Client"));
-        identificationPanel.add(tagField);
+        identificationPanel.add(tagField, constraints);
 
-        JSeparator horizontal = new JSeparator();
-        horizontal.setBounds(5, 100, 425, 5);
-        horizontal.setOrientation(SwingConstants.HORIZONTAL);
-        identificationPanel.add(horizontal);
 
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 3;
         JLabel mutexLabel = new JLabel("Mutex is used to avoid executing the same client multiple times.");
-        mutexLabel.setBounds(10, 40, 400, 20);
-        identificationPanel.add(mutexLabel);
+        identificationPanel.add(mutexLabel, constraints);
+
+
+        constraints.gridy = 2;
+        constraints.gridwidth = 2;
         mutexField = new JTextField(Mutex.generateMutex());
-        mutexField.setBounds(10, 70, 250, 20);
-        identificationPanel.add(mutexField);
+        identificationPanel.add(mutexField, constraints);
 
+
+        constraints.gridx = 2;
+        constraints.gridwidth = 1;
         JButton mutexButton = new JButton("Generate mutex");
-        mutexButton.setBounds(270, 70, 145, 20);
         mutexButton.addActionListener(e -> mutexField.setText(Mutex.generateMutex()));
-        identificationPanel.add(mutexButton);
+        identificationPanel.add(mutexButton, constraints);
 
-        JLabel ipLabel = new JLabel("IP/Hostname:");
-        ipLabel.setBounds(10, 110, 100, 20);
-        identificationPanel.add(ipLabel);
+
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        JLabel ipLabel = new JLabel("IP/Hostname:", SwingConstants.RIGHT);
+        identificationPanel.add(ipLabel, constraints);
         String defaultIP = "192.168.1.133";
+
+        constraints.gridx = 1;
+        constraints.gridwidth = 1;
         ipField = new JTextField(defaultIP);
-        ipField.setBounds(90, 110, 100, 20);
         ipField.addFocusListener(new FieldListener(ipField, defaultIP));
-        identificationPanel.add(ipField);
+        identificationPanel.add(ipField, constraints);
 
+        constraints.gridx = 0;
+        constraints.gridwidth = 1;
+        constraints.gridy = 4;
+        JLabel portLabel = new JLabel("PORT:", SwingConstants.RIGHT);
+        identificationPanel.add(portLabel, constraints);
 
-        JLabel portLabel = new JLabel("PORT:");
-        portLabel.setBounds(50, 140, 50, 20);
-        identificationPanel.add(portLabel);
+        constraints.gridx = 1;
+        constraints.gridwidth = 1;
         String defaultPort = "3055";
         portField = new JTextField(defaultPort);
-        portField.setBounds(90, 140, 50, 20);
         portField.addFocusListener(new FieldListener(portField, defaultPort));
-        identificationPanel.add(portField);
-
-        JSeparator vertical = new JSeparator();
-        vertical.setBounds(200, 106, 10, 60);
-        vertical.setOrientation(SwingConstants.VERTICAL);
-        identificationPanel.add(vertical);
+        identificationPanel.add(portField, constraints);
 
 
-        JLabel timingLabel = new JLabel("Timeout to retry connection:");
-        timingLabel.setBounds(210, 110, 250, 20);
-        identificationPanel.add(timingLabel);
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        JLabel timingLabel = new JLabel("Timeout to retry connection:", SwingConstants.RIGHT);
+        identificationPanel.add(timingLabel, constraints);
+
+        constraints.gridx = 1;
+
         String defaultTime = "10000";
         timingField = new JTextField(defaultTime);
-        timingField.setBounds(212, 140, 80, 20);
         timingField.addFocusListener(new FieldListener(timingField, defaultTime));
-        identificationPanel.add(timingField);
-        JLabel uniteLabel = new JLabel("ms");
-        uniteLabel.setBounds(295, 140, 30, 20);
-        identificationPanel.add(uniteLabel);
+        identificationPanel.add(timingField, constraints);
 
+        constraints.gridx = 2;
+        constraints.insets = new Insets(0, 2, 0, 0);
+        JLabel unite = new JLabel("ms");
+        identificationPanel.add(unite, constraints);
 
         tabPane.addTab("Identification", identificationPanel);
     }
