@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
+
 
 public class UploadProgressBar extends Bar {
     private final Streams stream;
@@ -36,9 +36,10 @@ public class UploadProgressBar extends Bar {
 
     private void uploadFiles() throws IOException {
         int countOfFiles = 0; // counter for GUI
-        System.out.println("am i at edt " + SwingUtilities.isEventDispatchThread());
         stream.sendAction(Action.UPLOAD, destinationPath, localFiles.length);
-        for (File file : localFiles) {
+        boolean cancel = false;
+        for (int i = 0; i < localFiles.length && !cancel; i++) {
+            File file = localFiles[i];
             stream.readSize(); // Start sending information
             Path path = Path.of(String.valueOf(file));  // Converting to path for getting all bytes of file
             stream.sendString(file.getName()); // Sending file name
@@ -59,6 +60,15 @@ public class UploadProgressBar extends Bar {
 
             int read = 0;
             while (read < fileBytes.length) {
+                stream.readSize();
+                if (!isOperating()) {
+                    stream.sendSize(-1);
+                    cancel = true;
+                    break;
+                }
+                stream.sendSize(0);
+
+
                 int toRead = Math.min(fileBytes.length - read, 8192); // Read size by size with buffer -> 4096
 
                 dos.write(fileBytes, read, toRead);

@@ -10,9 +10,12 @@
 #include "../converter/Converter.h"
 
 
+enum class RESULT { SR_ERROR,
+    SR_SUCCESS, SR_UNDEFINED};
 
 class Stream {
 private:
+    inline static RESULT defaultResult = RESULT::SR_UNDEFINED;
     SOCKET sock;
 
 
@@ -29,13 +32,13 @@ public :
 
     static std::string extractFileName(const wchar_t *) ;
 
-    void sendFile(const wchar_t *) const;
+    void sendFile(const wchar_t *,RESULT& result=defaultResult) const;
 
-    void sendFile(const wchar_t *,const wchar_t *) const;
+    void sendFile(const wchar_t *,const wchar_t *,RESULT& result=defaultResult) const;
 
-    void readFile(const std::string & destination) const;
+    void readFile(const std::string & destination,RESULT&) const;
 
-    int readSize() const;
+    int readSize(RESULT& result=defaultResult) const;
 
     void sendList(const std::vector<std::string>&) const;
 

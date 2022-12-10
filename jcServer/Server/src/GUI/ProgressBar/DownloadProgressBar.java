@@ -10,11 +10,13 @@ import javax.swing.*;
 import java.io.*;
 import java.util.List;
 
+
 public class DownloadProgressBar extends Bar {
 
     private final Streams stream;
     private final List<String> downloadList;
     private final String time;
+
 
     public DownloadProgressBar(JDialog parentDialog, Streams stream, List<String> downloadList) {
         super(parentDialog, "Downloading");
@@ -42,14 +44,16 @@ public class DownloadProgressBar extends Bar {
             System.out.println("Route -> " + tempPath);
             // where to save the file
             String formedPath = stream.getSessionFolder() + "\\Downloaded Files\\" + time + "\\" + tempPath;
-
-            stream.sendSize(0); // start sending bytes
-            // Receive and create file if it doesn't exist (Relative folders created too)
-            FileUtils.writeByteArrayToFile(new File(formedPath), receiveBytes(tempPath));
-            //stream.sendSize(0); // finished reading bytes
-
+            if (isOperating()) {
+                stream.sendSize(-666); // start sending bytes
+                // Receive and create file if it doesn't exist (Relative folders created too)
+                FileUtils.writeByteArrayToFile(new File(formedPath), receiveBytes(tempPath));
+            } else {
+                stream.sendSize(-1); // start sending bytes
+            }
 
         }
+
     }
 
     public byte[] receiveBytes(String fileName) throws IOException {

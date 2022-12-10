@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 public class Animation implements ActionListener {
 
     private int counter = 1;
-    private final String dot = ".";
-    private final String space = " ";
     private final String action;
 
     private final JLabel actionAnimationLabel;
@@ -20,6 +18,8 @@ public class Animation implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String dot = ".";
+        String space = " ";
         actionAnimationLabel.setText(action + dot.repeat(counter) + space.repeat(3 - counter));
         counter = counter == 3 ? 1 : counter + 1;
     }

@@ -1,12 +1,10 @@
 package GUI.ProgressBar;
 
 
-import Connections.Streams;
-import Information.Time;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class Bar extends SwingWorker<Void, Object> {
     private final JDialog dialog;
@@ -16,10 +14,12 @@ public abstract class Bar extends SwingWorker<Void, Object> {
     private Timer timer;
     private final String action;
 
+    private final AtomicBoolean operating = new AtomicBoolean(true);
+
     public Bar(JDialog parentDialog, String action) {
         this.action = action;
         dialog = new JDialog(parentDialog, action + " progress bar");
-        dialog.setSize(400, 100);
+        dialog.setSize(400, 150);
         dialog.setResizable(false);
         dialog.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -32,18 +32,18 @@ public abstract class Bar extends SwingWorker<Void, Object> {
         c.gridwidth = 2;
         c.gridheight = 1;
         c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1.0;
         c.weighty = 1.0;
-        c.insets = new Insets(6, 4, 2, 4);
+        c.weightx = 1.0;
+        c.insets = new Insets(4, 4, 4, 4);
         dialog.add(progressBar, c);
-        c.insets = new Insets(2, 6, 2, 6);
 
 
-        fileStateLabel = new JLabel("File");
+        c.weightx = 0;
         c.gridx = 0;
         c.gridy = 1;
-        c.gridwidth = 1;
+        c.gridwidth = 2;
         c.gridheight = 1;
+        fileStateLabel = new JLabel("File");
         dialog.add(fileStateLabel, c);
 
 
@@ -59,6 +59,15 @@ public abstract class Bar extends SwingWorker<Void, Object> {
         startAnimation();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+
+        c.gridwidth = 1;
+        c.gridx = 1;
+        c.gridy = 2;
+        JButton cancelOperation = new JButton("Cancel");
+        cancelOperation.addActionListener(e -> operating.set(false));
+        dialog.add(cancelOperation, c);
+
+
     }
 
 
@@ -66,7 +75,12 @@ public abstract class Bar extends SwingWorker<Void, Object> {
 
     protected void process(List<Object> chunks) {
         getProgressBar().setValue((Integer) chunks.get(chunks.size() - 2));   // case of integer for %
-        getFileStateLabel().setText(String.valueOf(chunks.get(chunks.size() - 1)));  // case of string for current file
+        getFileStateLabel().setText(extractFilename(String.valueOf(chunks.get(chunks.size() - 1))));  // case of string for current file
+    }
+
+    private String extractFilename(String path) {
+        String result = path.substring(path.lastIndexOf('/') + 1);
+        return result.substring(result.lastIndexOf('\\') + 1);
     }
 
     protected void done() {
@@ -98,4 +112,7 @@ public abstract class Bar extends SwingWorker<Void, Object> {
         dialog.dispose();   // close dialog
     }
 
+    public boolean isOperating() {
+        return operating.get();
+    }
 }

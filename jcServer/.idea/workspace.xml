@@ -15,10 +15,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="added icons to modules">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Server_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Splinter_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/download/Download.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/download/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/download/Download.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Animation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Bar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Bar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,35 +75,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last.edited.regexp": "",
-    "last_opened_file_path": "C:/Users/JAVIER/jcRAT/jcServer/Server/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "File.Encoding"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last.edited.regexp&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/JAVIER/jcRAT/jcServer/Server/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="GUI.TableUtils.KeyboardControllerGUI" />
@@ -377,14 +382,10 @@
       <workItem from="1670242197779" duration="4009000" />
       <workItem from="1670317024101" duration="11725000" />
       <workItem from="1670396522656" duration="14455000" />
-      <workItem from="1670488004889" duration="13406000" />
-    </task>
-    <task id="LOCAL-00079" summary="feat: commit from intellij to c++">
-      <created>1665226349289</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1665226349289</updated>
+      <workItem from="1670488004889" duration="14045000" />
+      <workItem from="1670575054741" duration="4216000" />
+      <workItem from="1670595113423" duration="3735000" />
+      <workItem from="1670661022828" duration="4403000" />
     </task>
     <task id="LOCAL-00080" summary="feat: image looking and file manager">
       <created>1665476749332</created>
@@ -722,7 +723,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670498377850</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="added icons to modules">
+      <created>1670506616284</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1670506616284</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
