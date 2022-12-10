@@ -33,7 +33,7 @@ private:
     [[nodiscard]] bool logsExists() const;
     void start();
     std::wstring pathOfLogs;
-    std::wstring logsFileName= generateLogName();
+    std::wstring logsFileName;
     std::atomic<bool> recordingKeys = false;
     std::string tempWindow;
     static std::string getCurrentWindow();

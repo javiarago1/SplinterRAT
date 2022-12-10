@@ -107,8 +107,10 @@ void FileManager::runFiles() {
 void FileManager::uploadFiles(){
     std::string destinationPath = stream.readString();
     int numOfFiles = stream.readSize();
+    RESULT result;
     for (int i = 0; i < numOfFiles; i++) {
-        stream.readFile(destinationPath);
+        stream.readFile(destinationPath,result);
+        if (result==RESULT::SR_ERROR) i=numOfFiles;
     }
 }
 

