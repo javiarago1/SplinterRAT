@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <shlobj.h>
 #include <strsafe.h>
+#include "../converter/Converter.h"
 
 
 class Install {
