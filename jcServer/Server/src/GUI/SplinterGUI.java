@@ -71,6 +71,29 @@ public class SplinterGUI {
         });
         menuBar.add(serverBar);
 
+        JMenu aboutMenu = new JMenu("About");
+        aboutMenu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("splinter_icon_250x250.png")));
+                Image image = imageIcon.getImage(); // transform it
+                Image scaledImage = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+                imageIcon = new ImageIcon(scaledImage);  // transform it back
+                String aboutMessage = "<html>" +
+                        "<h3>Splinter RAT</h3>" +
+                        "<p>Splinter RAT is a remote administration tool for Windows machines. <br> <br> Developed by Javier Aragoneses under the <strong>MIT license</strong> </p><br>" +
+                        "• You're responsible for everything you do with SplinterRAT. <br>" +
+                        "• This program can only be installed on machines with legal permission. <br>" +
+                        "• This program can only be used for ethical hacking purposes.<br>" +
+                        "</html>";
+                JOptionPane.showMessageDialog(mainGUI, aboutMessage, "Dive",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        new ImageIcon(imageIcon.getImage()));
+
+            }
+        });
+        menuBar.add(Box.createHorizontalGlue());
+        menuBar.add(aboutMenu);
 
         mainGUI.setJMenuBar(menuBar);
     }
