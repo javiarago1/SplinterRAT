@@ -6,6 +6,7 @@ import javax.swing.*;
 import Connections.ClientErrorHandler;
 import Information.Action;
 
+import Information.FolderOpener;
 import Information.Time;
 import org.apache.commons.io.FileUtils;
 
@@ -86,11 +87,13 @@ public class Webcam implements Runnable {
     private void saveRecord() throws IOException {
         String time = new Time().getTime();
         int numOfFragments = webcamGUI.getStream().readSize();
+        String recordDirectory = "\\Webcam Records\\";
+        String finalPathForWebcamRecords = webcamGUI.getStream().getSessionFolder() + recordDirectory + time;
         for (int i = 0; i < numOfFragments; i++) {
-            String recordDirectory = "\\Webcam Records\\";
-            webcamGUI.getStream().receiveFile(webcamGUI.getStream().getSessionFolder() + recordDirectory + time);
+            webcamGUI.getStream().receiveFile(finalPathForWebcamRecords);
             webcamGUI.getStream().sendSize(0);
         }
+        FolderOpener.open(finalPathForWebcamRecords);
 
     }
 

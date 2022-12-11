@@ -108,6 +108,7 @@ public class SplinterGUI {
         connectionsTable = new JTable(tableModel);
         JScrollPane tableScroll = new JScrollPane(connectionsTable);
         connectionsTable.setFocusable(false);
+        connectionsTable.getTableHeader().setReorderingAllowed(false);
         connectionsTable.addMouseListener(new TablePopUpListener(this));
         mainPanel.add(tableScroll, gridBagConstraints);
         mainGUI.add(mainPanel);

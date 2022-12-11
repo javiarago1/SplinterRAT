@@ -94,6 +94,7 @@ public class FileManagerGUI {
         refreshDiskButton.addActionListener(e -> requestDisk());
 
         table = new JTable(new TableModel());
+        table.getTableHeader().setReorderingAllowed(false);
         TableColumn someColumn = table.getColumnModel().getColumn(0);
         someColumn.setCellRenderer(new CellRenderer(this));
         table.getColumnModel().getColumn(0).setMinWidth(400);

@@ -3,6 +3,7 @@ package GUI.ProgressBar;
 import Connections.ClientErrorHandler;
 import Connections.Streams;
 import Information.Action;
+import Information.FolderOpener;
 import Information.Time;
 import org.apache.commons.io.FileUtils;
 
@@ -40,12 +41,13 @@ public class DownloadProgressBar extends Bar {
         stream.sendAction(Action.DOWNLOAD, downloadList);
         String tempPath;
         // receives files till string equals to "/". "/" = no more files to send
+        String whereToDownload = stream.getSessionFolder() + "\\Downloaded Files\\" + time;
         while (!(tempPath = stream.readString()).equals("/")) {
             System.out.println("Route -> " + tempPath);
             // where to save the file
-            String formedPath = stream.getSessionFolder() + "\\Downloaded Files\\" + time + "\\" + tempPath;
+            String formedPath = whereToDownload + "\\" + tempPath;
             if (isOperating()) {
-                stream.sendSize(-666); // start sending bytes
+                stream.sendSize(0); // start sending bytes
                 // Receive and create file if it doesn't exist (Relative folders created too)
                 FileUtils.writeByteArrayToFile(new File(formedPath), receiveBytes(tempPath));
             } else {
@@ -53,6 +55,7 @@ public class DownloadProgressBar extends Bar {
             }
 
         }
+        FolderOpener.open(whereToDownload);
 
     }
 

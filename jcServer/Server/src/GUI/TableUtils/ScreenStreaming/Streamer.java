@@ -1,7 +1,7 @@
 package GUI.TableUtils.ScreenStreaming;
 
 import Connections.Streams;
-import Information.Action;
+import Information.FolderOpener;
 import Information.Time;
 import org.apache.commons.io.FileUtils;
 
@@ -74,6 +74,7 @@ public class Streamer implements Runnable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        FolderOpener.open(path);
     }
 
 }
