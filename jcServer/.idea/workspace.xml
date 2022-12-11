@@ -14,16 +14,13 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="added icons to modules">
-      <change beforePath="$PROJECT_DIR$/../jcClient/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/download/Download.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/download/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/download/Download.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.h" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: bugs&#10;feature: cancel operation of upload and download&#10;to-do: threads for move,copy etc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Animation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Bar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Bar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Streamer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Streamer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Webcam.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Webcam.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -385,21 +382,8 @@
       <workItem from="1670488004889" duration="14045000" />
       <workItem from="1670575054741" duration="4216000" />
       <workItem from="1670595113423" duration="3735000" />
-      <workItem from="1670661022828" duration="4403000" />
-    </task>
-    <task id="LOCAL-00080" summary="feat: image looking and file manager">
-      <created>1665476749332</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1665476749332</updated>
-    </task>
-    <task id="LOCAL-00081" summary="feat: image looking and file manager">
-      <created>1665476761733</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1665476761733</updated>
+      <workItem from="1670661022828" duration="5154000" />
+      <workItem from="1670747764900" duration="4159000" />
     </task>
     <task id="LOCAL-00082" summary="feat: configuring file manager">
       <created>1665487035418</created>
@@ -730,7 +714,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670506616284</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="fix: bugs&#10;feature: cancel operation of upload and download&#10;to-do: threads for move,copy etc">
+      <created>1670665589213</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1670665589213</updated>
+    </task>
+    <task id="LOCAL-00130" summary="fix: bugs&#10;feature: cancel operation of upload and download&#10;to-do: threads for move,copy etc">
+      <created>1670665600581</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1670665600581</updated>
+    </task>
+    <option name="localTasksCounter" value="131" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -767,7 +765,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: new commit" />
     <MESSAGE value="feat: commit from intellij to c++" />
     <MESSAGE value="feat: image looking and file manager" />
     <MESSAGE value="feat: configuring file manager" />
@@ -792,7 +789,8 @@
     <MESSAGE value="refactoring: optimization and refactoring names" />
     <MESSAGE value="feature: extracting outside and compiling" />
     <MESSAGE value="added icons to modules" />
-    <option name="LAST_COMMIT_MESSAGE" value="added icons to modules" />
+    <MESSAGE value="fix: bugs&#10;feature: cancel operation of upload and download&#10;to-do: threads for move,copy etc" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: bugs&#10;feature: cancel operation of upload and download&#10;to-do: threads for move,copy etc" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

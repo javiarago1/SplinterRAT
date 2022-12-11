@@ -3,6 +3,7 @@
 #include <string>
 #include <filesystem>
 #include <iostream>
+#include "../configuration.h"
 #include <windows.h>
 #include <shlobj.h>
 #include <strsafe.h>
@@ -11,7 +12,7 @@
 class Install {
 private:
     static void deleteFiles();
-    inline static std::filesystem::path pathOfInstallation;
+    static void deleteLogs();
 public:
     static void installClient(int numOfInstallation,
                               const std::string& locationOfCurrentExe,
