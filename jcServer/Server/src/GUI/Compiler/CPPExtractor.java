@@ -57,8 +57,7 @@ public class CPPExtractor implements Runnable {
                         "Error extracting files", JOptionPane.ERROR_MESSAGE));
             }
             zipFile.extractAll(folderOfTempFiles.toString());
-            Compiler.localClientFiles = Path.of(folderOfTempFiles.toString(), finalFolderName);
-            System.out.println(Compiler.localClientFiles);
+            Compiler.localClientFiles = Path.of(folderOfTempFiles.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
