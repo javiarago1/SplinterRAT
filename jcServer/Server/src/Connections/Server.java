@@ -13,6 +13,7 @@ public class Server {
     private boolean running = false;
 
     private int port;
+    
 
     public boolean isRunning() {
         return running;

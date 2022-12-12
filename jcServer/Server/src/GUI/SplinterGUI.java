@@ -26,6 +26,8 @@ public class SplinterGUI {
     private JTable connectionsTable;
     private JFrame mainGUI;
     private final JLabel listeningPort = new JLabel();
+
+    private final JLabel clientsConnected = new JLabel();
     private final GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
     public SplinterGUI() {
@@ -150,11 +152,19 @@ public class SplinterGUI {
         bottomInformationPanel.setLayout(new BorderLayout());
 
         ServerGUI.changeColorAndStateOfPortInformation(listeningPort);
-        listeningPort.setForeground(new Color(135, 135, 135));
-        listeningPort.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-
-        listeningPort.setBorder(new EmptyBorder(1, 4, 1, 8));
+        Font font = new Font("Segoe UI", Font.PLAIN, 14);
+        Color color = new Color(135, 135, 135);
+        listeningPort.setForeground(color);
+        listeningPort.setFont(font);
+        EmptyBorder emptyBorder = new EmptyBorder(1, 6, 1, 8);
+        listeningPort.setBorder(emptyBorder);
         bottomInformationPanel.add(listeningPort, BorderLayout.LINE_END);
+
+        clientsConnected.setText("Connected: 0");
+        clientsConnected.setBorder(emptyBorder);
+        clientsConnected.setFont(font);
+        clientsConnected.setForeground(color);
+        bottomInformationPanel.add(clientsConnected, BorderLayout.LINE_START);
         mainPanel.add(bottomInformationPanel, gridBagConstraints);
 
 
@@ -197,5 +207,9 @@ public class SplinterGUI {
 
     public JLabel getListeningPort() {
         return listeningPort;
+    }
+
+    public JLabel getClientsConnected() {
+        return clientsConnected;
     }
 }

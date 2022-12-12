@@ -1,5 +1,7 @@
 package GUI.Compiler;
 
+import org.apache.commons.lang3.SystemUtils;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -34,10 +36,6 @@ public class CompilerGUI {
         addTabbedPane();
         addLowerPanel();
         compilerDialog.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new CompilerGUI(null);
     }
 
     private void addTabbedPane() {

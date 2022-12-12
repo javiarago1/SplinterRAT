@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Splinter:jar" />
+      <artifact name="SplinterRAT:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -14,8 +14,12 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="refactoring, fixing small problems">
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: small fixes">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Splinter_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/SplinterRAT_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/VersionChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/VersionChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +89,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -383,20 +387,7 @@
       <workItem from="1670756235539" duration="3000" />
       <workItem from="1670756258916" duration="1547000" />
       <workItem from="1670763447391" duration="1175000" />
-    </task>
-    <task id="LOCAL-00086" summary="feat: new command line for g++">
-      <created>1665512805270</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1665512805270</updated>
-    </task>
-    <task id="LOCAL-00087" summary="feat: compiler GUI">
-      <created>1665676089654</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1665676089654</updated>
+      <workItem from="1670845500687" duration="3413000" />
     </task>
     <task id="LOCAL-00088" summary="feat: compiler GUI">
       <created>1665682240592</created>
@@ -727,7 +718,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670764619484</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="fix: small fixes">
+      <created>1670831943226</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1670831943227</updated>
+    </task>
+    <task id="LOCAL-00136" summary="fix: small fixes">
+      <created>1670831958625</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1670831958625</updated>
+    </task>
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -764,7 +769,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: configuring file manager" />
     <MESSAGE value="feat: new file manager" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="feat: new command line for g++" />
@@ -789,7 +793,8 @@
     <MESSAGE value="fix: bugs&#10;feature: cancel operation of upload and download&#10;to-do: threads for move,copy etc" />
     <MESSAGE value="feature: about splinter rat" />
     <MESSAGE value="fix: keylogger added" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: keylogger added" />
+    <MESSAGE value="fix: small fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: small fixes" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

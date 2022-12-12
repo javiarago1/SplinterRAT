@@ -1,5 +1,7 @@
 package GUI.Compiler;
 
+import org.apache.commons.lang3.SystemUtils;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
@@ -123,12 +125,13 @@ public class Compiler implements ActionListener {
     // Thread for compiling the project opening shell in client project directory
     private void compile(String compileCommand, String assemblyCommand) {
         new Thread(() -> {
+            String[] OSCommand = VersionChecker.getOSProperCommand();
             ProcessBuilder assemblyProcess = new ProcessBuilder();
-            assemblyProcess.command("cmd.exe", "/c", assemblyCommand).directory(assemblyPath.toFile());
+            assemblyProcess.command(OSCommand[0], OSCommand[1], assemblyCommand).directory(assemblyPath.toFile());
             executeProcess(assemblyProcess);
 
             ProcessBuilder compileProcess = new ProcessBuilder();
-            compileProcess.command("cmd.exe", "/c", compileCommand).directory(localClientFiles.toFile());
+            compileProcess.command(OSCommand[0], OSCommand[1], compileCommand).directory(localClientFiles.toFile());
             executeProcess(compileProcess);
             System.out.println("Finished compiling");
         }).start();

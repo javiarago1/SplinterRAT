@@ -1,11 +1,15 @@
 package GUI.Compiler;
 
+import org.apache.commons.lang3.SystemUtils;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
+import java.util.Arrays;
 
 public class VersionChecker implements ActionListener {
     private final JTextField pathField;
@@ -18,12 +22,28 @@ public class VersionChecker implements ActionListener {
         this.compileButton = compileButton;
     }
 
+    static String[] getOSProperCommand() {
+        String shell = "";
+        String typeOfOpening = "";
+        if (SystemUtils.IS_OS_WINDOWS) {
+            shell = "cmd.exe";
+            typeOfOpening = "/c";
+        } else if (SystemUtils.IS_OS_LINUX) {
+            shell = "/bin/bash";
+            typeOfOpening = "-c";
+        }
+        return new String[]{shell, typeOfOpening};
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        String path = pathField.getText();
+        String[] commandArray = getOSProperCommand();
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("cmd.exe", "/c", path + " -dumpversion");
+        String utilities = pathField.getText();
+        String pathOfUtilities = "";
+        if (!utilities.equals("g++ / windres")) pathOfUtilities = "\\" + utilities;
+        processBuilder.command(commandArray[0], commandArray[1], pathOfUtilities + "g++ -dumpversion");
         try {
 
             Process process = processBuilder.start();
@@ -37,7 +57,8 @@ public class VersionChecker implements ActionListener {
             int exitVal = process.waitFor();
             if (exitVal == 0) {
                 System.out.println(output);
-                if (Integer.parseInt(output.substring(0, output.indexOf("."))) >= 9) {
+                int finalPositionOfVersion = output.indexOf(".") == -1 ? output.length() : output.indexOf(".");
+                if (Integer.parseInt(output.substring(0, finalPositionOfVersion).replaceAll("[\n\r]", "")) >= 9) {
                     compileButton.setEnabled(true);
                 } else {
                     JOptionPane.showMessageDialog(dialog,

@@ -9,13 +9,13 @@ import java.net.Socket;
 
 public class ClientErrorHandler {
 
-
     public ClientErrorHandler(String errorMessage, JDialog dialog, Socket clientSocket) {
         removeClientFromMap(clientSocket);
         SwingUtilities.invokeLater(() -> {
             closeDialogOfClient(dialog);
             setDisconnectedUser(clientSocket);
             showErrorMessage(errorMessage);
+            
         });
     }
 
@@ -38,7 +38,6 @@ public class ClientErrorHandler {
 
     public ClientErrorHandler(String errorMessage, int messageType) {
         SwingUtilities.invokeLater(() -> {
-
             showErrorMessage(errorMessage, messageType);
         });
     }

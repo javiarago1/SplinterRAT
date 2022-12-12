@@ -21,6 +21,7 @@ public class Connection implements Runnable {
     private final ExecutorService executor;
     private final ConcurrentHashMap<Socket, Streams> dialog;
 
+
     public Connection(ServerSocket server, ExecutorService executor, ConcurrentHashMap<Socket, Streams> dialog) {
         if (server == null || executor == null || dialog == null) throw new IllegalArgumentException();
         this.server = server;
