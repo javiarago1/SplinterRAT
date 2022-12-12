@@ -12,7 +12,7 @@
 class KeyboardExecuter {
 public:
     explicit KeyboardExecuter(const Stream &);
-    void executeSequence();
+    void executeSequence(const std::string&);
     static void pressKey(UCHAR virtualKey);
     void execute();
 

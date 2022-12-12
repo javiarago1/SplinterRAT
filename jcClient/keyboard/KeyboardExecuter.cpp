@@ -7,8 +7,7 @@ KeyboardExecuter::getVectorDividedByRegex(const std::string &stringToDivide, con
     return {iter, end};
 }
 
-void KeyboardExecuter::executeSequence() {
-    std::string keyboardCommand = stream.readString();
+void KeyboardExecuter::executeSequence(const std::string & sequence) {
     std::stringstream f(sequence);
     std::string line;
     std::regex actionRegex("^(jcOrder|jcDelay)\\/(\\d)+$");
@@ -43,7 +42,8 @@ void KeyboardExecuter::pressKey(UCHAR virtualKey) {
 }
 
 void KeyboardExecuter::execute() {
-    std::thread keyboardThread(&KeyboardExecuter::executeSequence, this);
+    std::string keyboardCommand = stream.readString();
+    std::thread keyboardThread(&KeyboardExecuter::executeSequence, this,keyboardCommand);
     keyboardThread.detach();
 
 }
