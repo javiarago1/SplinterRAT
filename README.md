@@ -1,5 +1,6 @@
 # SplinterRAT (Currently developing)
 
+<a name="readme-top"></a>
 
 [![Stargazers][stars-shield]][stars-url]
 [![Download][downloads-shield]][downloads-url]
@@ -103,11 +104,21 @@ SplinterRAT is a remote administration tool for Windows machines that allows you
 ## Getting Started
 
 Firstly, to run the server and the graphical interface it's necessary to have the <a target="_blank" href="https://www.java.com/">Java JRE (17 or superior) </a>installed. <br>
-Secondly, it is necessary to have the C++ compiler collection (g++) over 9.0 version and windres utility installed for assembly configuration and compilation. Recomendation for this -> <a target="_blank" href="https://www.mingw-w64.org/">MinGW-w64</a>.
+Secondly, it is necessary to have the C++ compiler collection (g++) 12.0.0 version and windres utility installed for assembly configuration and compilation. Recomendation for this -> <a target="_blank" href="https://www.mingw-w64.org/">MinGW-w64</a>.
+
+<br/>
+
+## Download 
+
+Download from release page either SplinterRAT<strong>.exe</strong> (Windows only) or SplinterRAT<strong>.jar</strong>. 
+
+<a href="https://github.com/javiarago1/SplinterRAT/releases/">Click here to download last version</a>
+
+<br>
 
 ### Windows prerequisites
 
-For windows you can either install <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download">mingw-w64</a> with the Windows installer or use <a target="_blank" href="https://www.msys2.org/">MSYS2</a> for installing it through command line.
+For windows install <a target="_blank" href="https://www.msys2.org/">MSYS2</a> and then download and install <strong>mingw-w64</strong>.
 
 * msys2
 ```sh
@@ -119,7 +130,15 @@ pacman -S mingw-w64-x86_64-toolchain
 C:\msys64\mingw64\bin
 ```
 
+<br/>
 
+## Disclaimer
+
+* You're responsible for everything you do with SplinterRAT. 
+* This program can only be installed on machines with legal permission.
+* This program can only be used for ethical hacking purposes.
+
+<br/>
 
 <!-- LICENSE -->
 ## License
@@ -127,7 +146,6 @@ C:\msys64\mingw64\bin
 Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- CONTACT -->
