@@ -8,8 +8,8 @@ import java.util.concurrent.Executors;
 
 public class ThreadPool extends Thread {
     private final ServerSocket server;
-    private final ConcurrentHashMap <Socket, Streams> dialog;
-    private final ExecutorService executor = Executors.newFixedThreadPool(4);
+    private final ConcurrentHashMap<Socket, Streams> dialog;
+    private final ExecutorService executor = Executors.newFixedThreadPool(30);
 
     public ThreadPool(ServerSocket server, ConcurrentHashMap<Socket, Streams> dialog) {
         if (server == null || dialog == null) throw new IllegalArgumentException();
@@ -20,7 +20,7 @@ public class ThreadPool extends Thread {
     public void run(){
         if (server == null || dialog == null || executor == null)
             throw new IllegalArgumentException("Invalid arguments!");
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 30; i++)
             executor.submit(new Connection(server, executor, dialog));
     }
 

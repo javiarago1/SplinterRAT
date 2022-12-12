@@ -1,6 +1,7 @@
 package GUI;
 
 
+import Connections.Server;
 import GUI.Compiler.CompilerGUI;
 import GUI.Server.ServerGUI;
 import GUI.TableUtils.Configuration.StateColumnRenderer;
@@ -16,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.Socket;
 import java.util.Objects;
 
 
@@ -160,7 +162,7 @@ public class SplinterGUI {
         listeningPort.setBorder(emptyBorder);
         bottomInformationPanel.add(listeningPort, BorderLayout.LINE_END);
 
-        clientsConnected.setText("Connected: 0");
+        updateNumOfConnectedClients();
         clientsConnected.setBorder(emptyBorder);
         clientsConnected.setFont(font);
         clientsConnected.setForeground(color);
@@ -168,6 +170,13 @@ public class SplinterGUI {
         mainPanel.add(bottomInformationPanel, gridBagConstraints);
 
 
+    }
+
+    public void updateNumOfConnectedClients() {
+        clientsConnected.setText("Connected: " + Main.server.getNumOfConnectedDevices());
+        for (Socket key : Main.server.getMap().keySet()) {
+            System.out.println(key);
+        }
     }
 
     private void setupTable() {

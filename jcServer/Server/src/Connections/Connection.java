@@ -33,6 +33,7 @@ public class Connection implements Runnable {
     public void run() {
         try {
             Socket socket = server.accept();
+            removeExisting(socket);
             if (dialog.putIfAbsent(socket, new Streams(socket)) == null) {
                 System.out.println("Connected to: " + socket.getRemoteSocketAddress());
                 Streams stream = dialog.get(socket);
@@ -44,8 +45,9 @@ public class Connection implements Runnable {
                 stream.setTempNetworkInformation(netInfo);
                 // Change state of JTable add or modify existing client
                 SwingUtilities.invokeLater(() -> {
+                    System.out.println(socket);
                     TableModel tableModel = Main.gui.getConnectionsTable().getModel();
-                    int existingClientRow = checkIfExistsAndRemove(socket, tableModel); // position if exists in JTable
+                    int existingClientRow = getPositionOfExisting(socket, tableModel); // position if exists in JTable
                     if (existingClientRow != -1) {  // change state of connection
                         tableModel.setValueAt("Connected", existingClientRow, 5);
                     } else { // new connection
@@ -59,9 +61,9 @@ public class Connection implements Runnable {
                         DefaultTableModel defaultTableModel = (DefaultTableModel) tableModel;
                         defaultTableModel.addRow(tableRow);
                     }
-
                     if (ServerGUI.isNotifications() && SystemTray.isSupported())
                         displayTray(netInfo.IP(), sysInfo.OPERATING_SYSTEM());
+                    Main.gui.updateNumOfConnectedClients();
                 });
 
             }
@@ -100,7 +102,14 @@ public class Connection implements Runnable {
     /*
         returns the index where the client is located in the JTable
      */
-    private int checkIfExistsAndRemove(Socket socket, TableModel tableModel) {
+
+    private void removeExisting(Socket socket) {
+        for (Socket key : dialog.keySet()) {
+            if (key.getInetAddress().toString().equals(socket.getInetAddress().toString())) dialog.remove(key);
+        }
+    }
+
+    private int getPositionOfExisting(Socket socket, TableModel tableModel) {
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             System.out.println(socket.getInetAddress() + "|" + tableModel.getValueAt(i, 0));
             if (socket.getInetAddress().toString().equals(tableModel.getValueAt(i, 0))) {

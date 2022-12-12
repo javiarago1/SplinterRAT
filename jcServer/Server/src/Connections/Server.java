@@ -13,7 +13,6 @@ public class Server {
     private boolean running = false;
 
     private int port;
-    
 
     public boolean isRunning() {
         return running;
@@ -55,6 +54,10 @@ public class Server {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public int getNumOfConnectedDevices() {
+        return dialog.size();
     }
 
     public ConcurrentHashMap<Socket, Streams> getMap() {

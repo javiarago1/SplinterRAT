@@ -15,7 +15,7 @@ public class ClientErrorHandler {
             closeDialogOfClient(dialog);
             setDisconnectedUser(clientSocket);
             showErrorMessage(errorMessage);
-            
+            updateNumOfConnected();
         });
     }
 
@@ -24,6 +24,7 @@ public class ClientErrorHandler {
         SwingUtilities.invokeLater(() -> {
             setDisconnectedUser(clientSocket);
             showErrorMessage(errorMessage);
+            updateNumOfConnected();
         });
     }
 
@@ -32,6 +33,7 @@ public class ClientErrorHandler {
         SwingUtilities.invokeLater(() -> {
             setDisconnectedUser(clientSocket);
             showErrorMessage(errorMessage, messageType);
+            updateNumOfConnected();
         });
     }
 
@@ -39,7 +41,13 @@ public class ClientErrorHandler {
     public ClientErrorHandler(String errorMessage, int messageType) {
         SwingUtilities.invokeLater(() -> {
             showErrorMessage(errorMessage, messageType);
+            updateNumOfConnected();
         });
+    }
+
+
+    private void updateNumOfConnected() {
+        Main.gui.updateNumOfConnectedClients();
     }
 
     private void removeClientFromMap(Socket clientSocket) {
