@@ -17,6 +17,9 @@
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: small fixes">
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/Splinter_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/SplinterRAT_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/VersionChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/VersionChecker.java" afterDir="false" />
@@ -387,14 +390,7 @@
       <workItem from="1670756235539" duration="3000" />
       <workItem from="1670756258916" duration="1547000" />
       <workItem from="1670763447391" duration="1175000" />
-      <workItem from="1670845500687" duration="3413000" />
-    </task>
-    <task id="LOCAL-00088" summary="feat: compiler GUI">
-      <created>1665682240592</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1665682240593</updated>
+      <workItem from="1670845500687" duration="3878000" />
     </task>
     <task id="LOCAL-00089" summary="feat: compiler GUI features">
       <created>1665771688171</created>
@@ -732,7 +728,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670831958625</updated>
     </task>
-    <option name="localTasksCounter" value="137" />
+    <task id="LOCAL-00137" summary="fix: small fixes">
+      <created>1670851236567</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1670851236568</updated>
+    </task>
+    <option name="localTasksCounter" value="138" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

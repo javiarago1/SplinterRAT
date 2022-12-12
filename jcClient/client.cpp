@@ -15,6 +15,7 @@
 #include "install/Install.h"
 #include "configuration.h"
 
+
 int main(int argc = 0, char *argv[] = nullptr) {
     Sleep(argc);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));

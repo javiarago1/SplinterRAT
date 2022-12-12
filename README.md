@@ -40,7 +40,6 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#windows-prerequisites">Windows prerequisites</a></li>
-        <li><a href="#linux-prerequisites">Linux prerequisites</a></li>
       </ul>
     </li>
     <li><a href="#license">License</a></li>
@@ -116,21 +115,6 @@ pacman -S mingw-w64-x86_64-toolchain
 ```sh
 C:\msys64\mingw64\bin
 ```
-
-
-
-###  Linux prerequisites 
-From ubuntu we can install the java JRE and the compiler and assembler from the terminal:
-From ubuntu 
-* JRE installation: 
-```sh 
-sudo apt install openjdk-17-jdk openjdk-17-jre
-```
-* Mingw-w64 installation: 
-```sh 
-sudo apt-get install mingw-w64
-```
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
