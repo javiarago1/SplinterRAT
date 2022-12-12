@@ -111,7 +111,6 @@ public class Connection implements Runnable {
 
     private int getPositionOfExisting(Socket socket, TableModel tableModel) {
         for (int i = 0; i < tableModel.getRowCount(); i++) {
-            System.out.println(socket.getInetAddress() + "|" + tableModel.getValueAt(i, 0));
             if (socket.getInetAddress().toString().equals(tableModel.getValueAt(i, 0))) {
                 return i;
             }
