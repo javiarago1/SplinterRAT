@@ -53,6 +53,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About SplinterRAT
 
+![Alt text](resources/previewCapture.png "Optional Title")
+
 SplinterRAT is a remote administration tool for Windows machines that allows you to take control of the computer the client is running on. The project has two parts:
 
 * Server (<strong>Java</strong>): here we will have a graphical interface, containing the configuration of the client to generate and the server to listen to. We will also have a list of clients connected to our server, from which we can do the actions we want 
