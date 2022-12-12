@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-# SplinterRAT (Currently developing)
+# SplinterRAT
 
 
 
