@@ -2,6 +2,7 @@
 
 
 [![Stargazers][stars-shield]][stars-url]
+[![Download][downloads-shield]][downloads-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
@@ -139,6 +140,8 @@ Javier Aragoneses - javiaragoneses1@gmail.com
 
 
 
+[downloads-shield]:https://img.shields.io/github/downloads/javiarago1/splinterRAT/total?style=for-the-badge
+[downloads-url]: https://github.com/javiarago1/SplinterRAT/releases/
 [stars-shield]: https://img.shields.io/github/stars/javiarago1?style=for-the-badge
 [stars-url]: https://github.com/javiarago1/SplinterRAT/stargazers
 [license-shield]: https://img.shields.io/github/license/javiarago1/SplinterRAT?style=for-the-badge
