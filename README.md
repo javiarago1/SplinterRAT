@@ -1,6 +1,8 @@
+<a name="readme-top"></a>
+
 # SplinterRAT (Currently developing)
 
-<a name="readme-top"></a>
+
 
 [![Stargazers][stars-shield]][stars-url]
 [![Download][downloads-shield]][downloads-url]
