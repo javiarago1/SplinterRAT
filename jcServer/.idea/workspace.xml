@@ -14,7 +14,12 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: small fixes" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: small fixes">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilingAnimation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/Resources/coffeeGIF.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,35 +70,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last.edited.regexp&quot;: &quot;&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/JAVIER/jcRAT/jcServer/Server/src&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last.edited.regexp": "",
+    "last_opened_file_path": "C:/Users/JAVIER/jcRAT/jcServer/Server/src/GUI/Resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "File.Encoding"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="GUI.TableUtils.KeyboardControllerGUI" />
@@ -101,11 +106,11 @@
       <recent name="Server.GUI.TreeInterpreter.TreeGUI" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src\GUI\Resources" />
       <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src" />
       <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src\GUI\TableUtils\FileManager\Icons" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Server\src\Server\GUI\Compiler" />
       <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Server\src" />
-      <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Client\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src\GUI\TableUtils\FileManager\Style" />
@@ -135,12 +140,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="KeyboardControllerGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GUI.TableUtils.KeyboardController.KeyboardControllerGUI" />
+    <configuration name="CompilingAnimation" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.Compiler.CompilingAnimation" />
       <module name="Server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="GUI.TableUtils.KeyboardController.*" />
+          <option name="PATTERN" value="GUI.Compiler.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -202,11 +207,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CompilingAnimation" />
         <item itemvalue="Application.CompilerGUI" />
         <item itemvalue="Application.ServerGUI" />
         <item itemvalue="Application.ScreenStreamingGUI" />
         <item itemvalue="Application.MessageBoxGUI" />
-        <item itemvalue="Application.KeyboardControllerGUI" />
       </list>
     </recent_temporary>
   </component>
@@ -381,21 +386,7 @@
       <workItem from="1670756258916" duration="1547000" />
       <workItem from="1670763447391" duration="1175000" />
       <workItem from="1670845500687" duration="3878000" />
-      <workItem from="1670864614596" duration="2031000" />
-    </task>
-    <task id="LOCAL-00091" summary="feat: handling exceptions">
-      <created>1666457652593</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1666457652593</updated>
-    </task>
-    <task id="LOCAL-00092" summary="feat: adding exceptions for client disconnections">
-      <created>1666614501706</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1666614501707</updated>
+      <workItem from="1670864614596" duration="5228000" />
     </task>
     <task id="LOCAL-00093" summary="feat: reverse shell modeling">
       <created>1666798201338</created>
@@ -726,7 +717,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670866635295</updated>
     </task>
-    <option name="localTasksCounter" value="140" />
+    <task id="LOCAL-00140" summary="fix: small fixes">
+      <created>1670866918721</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1670866918721</updated>
+    </task>
+    <task id="LOCAL-00141" summary="fix: small fixes">
+      <created>1670866929592</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1670866929592</updated>
+    </task>
+    <option name="localTasksCounter" value="142" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,7 +1,5 @@
 package GUI.Compiler;
 
-import org.apache.commons.lang3.SystemUtils;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
@@ -11,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Compiler implements ActionListener {
 
@@ -125,40 +124,45 @@ public class Compiler implements ActionListener {
     // Thread for compiling the project opening shell in client project directory
     private void compile(String compileCommand, String assemblyCommand) {
         new Thread(() -> {
+            AtomicReference<CompilingAnimation> animationDialog = new AtomicReference<>();
+            SwingUtilities.invokeLater(() -> animationDialog.set(new CompilingAnimation(compilerDialog)));
             String[] OSCommand = VersionChecker.getOSProperCommand();
             ProcessBuilder assemblyProcess = new ProcessBuilder();
             assemblyProcess.command(OSCommand[0], OSCommand[1], assemblyCommand).directory(assemblyPath.toFile());
-            executeProcess(assemblyProcess);
-
+            int result = executeProcess(assemblyProcess);
+            if (result != 0) {
+                SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(compilerDialog,
+                        "Error assembling client, check for windres and try again.",
+                        "Error assembling", JOptionPane.ERROR_MESSAGE));
+            }
             ProcessBuilder compileProcess = new ProcessBuilder();
             compileProcess.command(OSCommand[0], OSCommand[1], compileCommand).directory(localClientFiles.toFile());
-            executeProcess(compileProcess);
-            System.out.println("Finished compiling");
+            result = executeProcess(compileProcess);
+            if (result != 0) {
+                SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(compilerDialog,
+                        "Error compiling client, check your compiler and try again.",
+                        "Error compiling", JOptionPane.ERROR_MESSAGE));
+
+            } else SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(
+                    compilerDialog,
+                    "Client compiled successfully!",
+                    "Compiler information",
+                    JOptionPane.INFORMATION_MESSAGE));
+            SwingUtilities.invokeLater(() -> animationDialog.get().dispose());
+
         }).start();
 
     }
 
-    private void executeProcess(ProcessBuilder processBuilder){
+    private int executeProcess(ProcessBuilder processBuilder) {
         try {
             Process process = processBuilder.start();
-            StringBuilder output = new StringBuilder();
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
-            }
-            int exitVal = process.waitFor();
-            if (exitVal != 0) {
-                JOptionPane.showMessageDialog(compilerDialog,
-                        "Error compiling client, check your compiler and try again.",
-                        "Error compiling", JOptionPane.ERROR_MESSAGE);
-            } else System.out.println("Compiled successfully");
-            System.out.println(output);
+            return process.waitFor();
 
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
+        return -1;
 
     }
 
