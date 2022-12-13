@@ -150,13 +150,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-<!-- CONTACT -->
-## Contact
-
-Javier Aragoneses - javiaragoneses1@gmail.com
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 
