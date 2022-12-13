@@ -42,7 +42,8 @@ public class VersionChecker implements ActionListener {
         ProcessBuilder processBuilder = new ProcessBuilder();
         String utilities = pathField.getText();
         String pathOfUtilities = "";
-        if (!utilities.equals("g++ / windres")) pathOfUtilities = "\\" + utilities;
+        if (!utilities.equals("g++ / windres")) pathOfUtilities = utilities + "\\";
+        System.out.println(pathOfUtilities);
         processBuilder.command(commandArray[0], commandArray[1], pathOfUtilities + "g++ -dumpversion");
         try {
 
