@@ -14,7 +14,9 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: small fixes" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: problem with keylogger command">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -385,20 +387,7 @@
       <workItem from="1670874333823" duration="274000" />
       <workItem from="1670874875173" duration="3720000" />
       <workItem from="1670951859960" duration="378000" />
-    </task>
-    <task id="LOCAL-00101" summary="feat: messagebox thread?">
-      <created>1667752424620</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1667752424620</updated>
-    </task>
-    <task id="LOCAL-00102" summary="feat: messagebox with thread optimization">
-      <created>1667752591006</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1667752591006</updated>
+      <workItem from="1671354200807" duration="310000" />
     </task>
     <task id="LOCAL-00103" summary="feat: server feature">
       <created>1669808682745</created>
@@ -729,7 +718,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670952010095</updated>
     </task>
-    <option name="localTasksCounter" value="150" />
+    <task id="LOCAL-00150" summary="fix: problem with keylogger command">
+      <created>1671354502888</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1671354502888</updated>
+    </task>
+    <task id="LOCAL-00151" summary="fix: problem with keylogger command">
+      <created>1671354509435</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1671354509435</updated>
+    </task>
+    <option name="localTasksCounter" value="152" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -766,7 +769,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: new file manager" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="feat: new command line for g++" />
     <MESSAGE value="feat: compiler GUI" />
@@ -791,7 +793,8 @@
     <MESSAGE value="feature: about splinter rat" />
     <MESSAGE value="fix: keylogger added" />
     <MESSAGE value="fix: small fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: small fixes" />
+    <MESSAGE value="fix: problem with keylogger command" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: problem with keylogger command" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
