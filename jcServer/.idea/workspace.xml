@@ -14,9 +14,7 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: small fixes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: small fixes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -386,13 +384,7 @@
       <workItem from="1670864614596" duration="8959000" />
       <workItem from="1670874333823" duration="274000" />
       <workItem from="1670874875173" duration="3720000" />
-    </task>
-    <task id="LOCAL-00100" summary="feat: new keyboard feature finished">
-      <created>1667732602440</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1667732602440</updated>
+      <workItem from="1670951859960" duration="378000" />
     </task>
     <task id="LOCAL-00101" summary="feat: messagebox thread?">
       <created>1667752424620</created>
@@ -730,7 +722,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670876942167</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="fix: small fixes">
+      <created>1670952010095</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1670952010095</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
