@@ -437,6 +437,7 @@ public class CompilerGUI {
         installationPanel.add(horizontalSeparator, mainConstraints);
 
         mainConstraints.gridy = 8;
+        mainConstraints.gridwidth = 1;
         persistentClientCheckBox = new JCheckBox("Client start on start up: ");
         installationPanel.add(persistentClientCheckBox, mainConstraints);
 

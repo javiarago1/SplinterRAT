@@ -14,10 +14,7 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: problem with keylogger command">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" afterDir="false" />
-    </list>
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: problem with keylogger command" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -389,14 +386,7 @@
       <workItem from="1670874875173" duration="3720000" />
       <workItem from="1670951859960" duration="378000" />
       <workItem from="1671354200807" duration="453000" />
-      <workItem from="1671566817936" duration="1543000" />
-    </task>
-    <task id="LOCAL-00104" summary="feat: server feature">
-      <created>1669808814102</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1669808814102</updated>
+      <workItem from="1671566817936" duration="1887000" />
     </task>
     <task id="LOCAL-00105" summary="feat: server feature">
       <created>1669808851466</created>
@@ -734,7 +724,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671354520625</updated>
     </task>
-    <option name="localTasksCounter" value="153" />
+    <task id="LOCAL-00153" summary="fix: problem with keylogger command">
+      <created>1671568631891</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1671568631891</updated>
+    </task>
+    <option name="localTasksCounter" value="154" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
