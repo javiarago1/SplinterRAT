@@ -16,6 +16,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: problem with keylogger command">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,14 +388,8 @@
       <workItem from="1670874333823" duration="274000" />
       <workItem from="1670874875173" duration="3720000" />
       <workItem from="1670951859960" duration="378000" />
-      <workItem from="1671354200807" duration="310000" />
-    </task>
-    <task id="LOCAL-00103" summary="feat: server feature">
-      <created>1669808682745</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1669808682745</updated>
+      <workItem from="1671354200807" duration="453000" />
+      <workItem from="1671566817936" duration="1543000" />
     </task>
     <task id="LOCAL-00104" summary="feat: server feature">
       <created>1669808814102</created>
@@ -732,7 +727,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671354509435</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="fix: problem with keylogger command">
+      <created>1671354520625</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1671354520625</updated>
+    </task>
+    <option name="localTasksCounter" value="153" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

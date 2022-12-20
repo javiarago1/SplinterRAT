@@ -81,7 +81,7 @@ public class Compiler implements ActionListener {
                 modifier.variableModifier("INSTALL_PATH", buttonGroup.getSelection().getActionCommand());
                 modifier.variableModifier("SUBDIRECTORY_NAME", "\"" + fieldsArray[6].getText() + "\"");
                 modifier.variableModifier("SUBDIRECTORY_FILE_NAME", "\"" + fieldsArray[7].getText() + ".exe" + "\"");
-                modifier.variableModifier("STARTUP_NAME", checkBoxes[1].isSelected() ? "\"" + fieldsArray[8].getText() + "\"" : "");
+                modifier.variableModifier("STARTUP_NAME", checkBoxes[1].isSelected() ? "\"" + fieldsArray[8].getText() + "\"" : "\"\"");
             } else {
                 modifier.variableModifier("INSTALL_PATH", "(-1)");
             }

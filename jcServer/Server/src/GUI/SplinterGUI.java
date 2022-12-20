@@ -85,7 +85,7 @@ public class SplinterGUI {
                 imageIcon = new ImageIcon(scaledImage);  // transform it back
                 String aboutMessage = "<html>" +
                         "<h3>Splinter RAT</h3>" +
-                        "<p>Splinter RAT is a remote administration tool for Windows machines. <br> <br> Developed by Javier Aragoneses under the <strong>MIT license</strong> </p><br>" +
+                        "<p>Splinter RAT is a remote administration tool for Windows machines. <br> <br> Developed under the <strong>MIT license</strong> </p><br>" +
                         "• You're responsible for everything you do with SplinterRAT. <br>" +
                         "• This program can only be installed on machines with legal permission. <br>" +
                         "• This program can only be used for ethical hacking purposes.<br>" +
