@@ -111,10 +111,12 @@ public class Compiler implements ActionListener {
                                 "-lzlib -lquirc ");
             } else modifier.removeInclude("#define WEBCAM");
             command.append("-lwsock32 -lcomctl32 -lgdi32 " +
-                    "-lole32 -lsetupapi -lws2_32  -loleaut32 -luuid" +
-                    " -lcomdlg32 -lwininet -static-libgcc " +
-                    "-static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -mwindows -o ").append(
-                    chooser.getSelectedFile().getAbsolutePath());
+                            "-lole32 -lsetupapi -lws2_32  -loleaut32 -luuid" +
+                            " -lcomdlg32 -lwininet -static-libgcc " +
+                            "-static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -mwindows -o ")
+                    .append("\"")
+                    .append(chooser.getSelectedFile().getAbsolutePath())
+                    .append("\"");
 
 
             modifier.writeToFile();

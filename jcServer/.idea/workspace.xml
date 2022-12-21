@@ -14,7 +14,9 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: problem with keylogger command" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: problem with compiler solved">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -386,14 +388,8 @@
       <workItem from="1670874875173" duration="3720000" />
       <workItem from="1670951859960" duration="378000" />
       <workItem from="1671354200807" duration="453000" />
-      <workItem from="1671566817936" duration="1887000" />
-    </task>
-    <task id="LOCAL-00105" summary="feat: server feature">
-      <created>1669808851466</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1669808851466</updated>
+      <workItem from="1671566817936" duration="2252000" />
+      <workItem from="1671622391377" duration="571000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -731,7 +727,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671568631891</updated>
     </task>
-    <option name="localTasksCounter" value="154" />
+    <task id="LOCAL-00154" summary="fix: problem with compiler solved">
+      <created>1671568914327</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1671568914327</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -768,7 +771,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="refactoring" />
     <MESSAGE value="feat: new command line for g++" />
     <MESSAGE value="feat: compiler GUI" />
     <MESSAGE value="feat: compiler GUI features" />
@@ -793,7 +795,8 @@
     <MESSAGE value="fix: keylogger added" />
     <MESSAGE value="fix: small fixes" />
     <MESSAGE value="fix: problem with keylogger command" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: problem with keylogger command" />
+    <MESSAGE value="fix: problem with compiler solved" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: problem with compiler solved" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
