@@ -10,7 +10,7 @@
 
 #define TIMING_RETRY 10000
 
-#define WEBCAM "WLogs"
+//#define WEBCAM "WLogs"
 
 #ifdef WEBCAM
 
