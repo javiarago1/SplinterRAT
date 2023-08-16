@@ -1,28 +1,24 @@
 package GUI.TableUtils.KeyLogger;
 
 import Connections.Streams;
-import GUI.Main;
 import GUI.TableUtils.Configuration.GetSYS;
+import GUI.TableUtils.Configuration.SocketType;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-import java.net.Socket;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Objects;
 
 public class KeyLoggerMenuListener implements MenuListener{
 
-    private final ConcurrentHashMap<Socket, Streams> mapOfConnections;
     private final JMenuItem[] keyloggerOptions;
 
-    public KeyLoggerMenuListener(ConcurrentHashMap<Socket,Streams>mapOfConnections, JMenuItem[]keyloggerOptions){
-        this.mapOfConnections = mapOfConnections;
+    public KeyLoggerMenuListener(JMenuItem[] keyloggerOptions) {
         this.keyloggerOptions = keyloggerOptions;
     }
     @Override
     public void menuSelected(MenuEvent e) {
-        Streams stream = GetSYS.getStream(mapOfConnections, Main.gui.getConnectionsTable());
-        assert stream != null;
+        Streams stream = Objects.requireNonNull(GetSYS.getClientHandler()).getMainStream();
         stream.getExecutor().submit(new KeyLoggerStateChecker(stream,keyloggerOptions));
 
     }

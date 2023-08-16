@@ -174,9 +174,9 @@ public class SplinterGUI {
 
     public void updateNumOfConnectedClients() {
         clientsConnected.setText("Connected: " + Main.server.getNumOfConnectedDevices());
-        for (Socket key : Main.server.getMap().keySet()) {
-            System.out.println(key);
-        }
+        //for (Socket key : Main.server.getMap().keySet()) {
+        //    System.out.println(key);
+        //}
     }
 
     private void setupTable() {

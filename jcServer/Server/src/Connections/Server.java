@@ -2,13 +2,14 @@ package Connections;
 
 
 import java.io.IOException;
+import java.lang.ref.Cleaner;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Server {
     private ServerSocket server;
-    private final ConcurrentHashMap<Socket, Streams> dialog = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, ClientHandler> dialog = new ConcurrentHashMap<>();
     private ThreadPool tp;
     private boolean running = false;
 
@@ -47,12 +48,9 @@ public class Server {
     }
 
     public void stopStream() {
-        for (Socket key : dialog.keySet()) {
-            try {
-                dialog.get(key).getClientSocket().close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        for (String key : dialog.keySet()) {
+            // FIXME
+            dialog.get(key);
         }
     }
 
@@ -60,7 +58,7 @@ public class Server {
         return dialog.size();
     }
 
-    public ConcurrentHashMap<Socket, Streams> getMap() {
+    public ConcurrentHashMap<String, ClientHandler> getMap() {
         return dialog;
     }
 

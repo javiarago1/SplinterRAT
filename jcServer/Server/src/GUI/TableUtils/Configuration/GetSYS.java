@@ -1,17 +1,21 @@
 package GUI.TableUtils.Configuration;
 
+import Connections.ClientHandler;
 import Connections.Streams;
+import GUI.Main;
 
 import javax.swing.*;
-import java.net.Socket;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
+
 
 public class GetSYS {
 
-    public static Streams getStream(ConcurrentHashMap<Socket, Streams> map, JTable table) {
+    public static ClientHandler getClientHandler() {
+        Map<String, ClientHandler> map = Main.server.getMap();
+        JTable table = Main.gui.getConnectionsTable();
         String address = table.getValueAt(table.getSelectedRow(), 0).toString();
-        for (Socket a : map.keySet()) {
-            if (a.getInetAddress().toString().equals(address)) {
+        for (String a : map.keySet()) {
+            if (a.equals(address)) {
                 return map.get(a);
             }
         }

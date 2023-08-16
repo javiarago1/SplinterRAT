@@ -15,15 +15,15 @@ public class PasteAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = getFileManagerGUI().getStream();
+        Streams stream = getFileManagerGUI().getClientHandler().getFileManagerStream();
         if (getFileManagerGUI().isCopySelected()) {
             getFileManagerGUI().setCopySelected(false);
-            getFileManagerGUI().getStream().getExecutor().submit(new PasteEvent(
+            getFileManagerGUI().getClientHandler().getFileManagerStream().getExecutor().submit(new PasteEvent(
                     stream, getFileManagerGUI().getCMElements(), getSelectedPaths(), getFileManagerGUI().getFileManagerDialog()));
         } else {
             getFileManagerGUI().setCutSelected(false);
-            getFileManagerGUI().getStream().getExecutor().submit(new MoveEvent(
-                    getFileManagerGUI().getStream(), getFileManagerGUI().getCMElements(),
+            getFileManagerGUI().getClientHandler().getFileManagerStream().getExecutor().submit(new MoveEvent(
+                    getFileManagerGUI().getClientHandler().getFileManagerStream(), getFileManagerGUI().getCMElements(),
                     getSelectedPaths().get(0), getFileManagerGUI().getFileManagerDialog()));
         }
 

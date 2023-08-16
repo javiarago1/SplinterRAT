@@ -1,5 +1,6 @@
 package GUI.TableUtils.Configuration;
 
+import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.SplinterGUI;
 import GUI.Main;
@@ -24,10 +25,8 @@ import GUI.TableUtils.Webcam.WebcamMenuListener;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.Socket;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class TablePopUpListener extends MouseAdapter {
 
@@ -54,8 +53,8 @@ public class TablePopUpListener extends MouseAdapter {
     private void refreshClient() {
         int row = Main.gui.getConnectionsTable().getSelectedRow();
         String uniqueIP = (String) mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 0);
-        for (Map.Entry<Socket, Streams> entry : Main.server.getMap().entrySet())
-            if ((uniqueIP).equals(entry.getKey().getInetAddress().toString())) {
+        for (Map.Entry<String, ClientHandler> entry : Main.server.getMap().entrySet())
+            if ((uniqueIP).equals(entry.getKey())) {
                 mainGUI.getConnectionsDefaultTableModel().setValueAt("Connected", row, 5);
             }
     }
@@ -134,27 +133,26 @@ public class TablePopUpListener extends MouseAdapter {
 
 
         JTable connectionsTable = mainGUI.getConnectionsTable();
-        ConcurrentHashMap<Socket, Streams> mapOfConnections = Main.server.getMap();
         // set actions
-        webcamMenu.addActionListener(new WebcamMenuListener(connectionsTable, mapOfConnections, mainGUI));
-        fileManagerMenu.addActionListener(new FileManagerMenuListener(connectionsTable, mapOfConnections, mainGUI));
-        reverseShellMenu.addActionListener(new ReverseShellMenuListener(connectionsTable, mapOfConnections, mainGUI));
-        keyloggerMenuOptions.addMenuListener(new KeyLoggerMenuListener(mapOfConnections, new JMenuItem[]{startKeyloggerMenu, stopKeyloggerMenu}));
-        startKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.START));
-        stopKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.STOP));
-        dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP_LAST));
-        dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(connectionsTable, mapOfConnections, KeyloggerEvents.DUMP_ALL));
-        keyboardController.addActionListener(new KeyboardControllerMenuListener(connectionsTable, mapOfConnections, mainGUI));
-        isAdminMenu.addActionListener(new AdminPermissionAction(connectionsTable, mapOfConnections));
-        elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction(connectionsTable, mapOfConnections));
-        messageBoxMenu.addActionListener(new MessageBoxMenuListener(connectionsTable, mapOfConnections));
-        streamScreenMenu.addActionListener(new ScreenMenuListener(connectionsTable, mapOfConnections));
-        restartMenu.addActionListener(new RestartAction(connectionsTable, mapOfConnections));
-        disconnectMenu.addActionListener(new DisconnectAction(connectionsTable, mapOfConnections));
-        uninstallMenu.addActionListener(new UninstallAction(connectionsTable, mapOfConnections));
-        logOffAction.addActionListener(new SystemStateListener(connectionsTable, mapOfConnections, State.LOG_OFF));
-        shutdownAction.addActionListener(new SystemStateListener(connectionsTable, mapOfConnections, State.SHUTDOWN));
-        rebootAction.addActionListener(new SystemStateListener(connectionsTable, mapOfConnections, State.REBOOT));
+        webcamMenu.addActionListener(new WebcamMenuListener());
+        fileManagerMenu.addActionListener(new FileManagerMenuListener(mainGUI));
+        reverseShellMenu.addActionListener(new ReverseShellMenuListener());
+        keyloggerMenuOptions.addMenuListener(new KeyLoggerMenuListener(new JMenuItem[]{startKeyloggerMenu, stopKeyloggerMenu}));
+        startKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.START));
+        stopKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.STOP));
+        dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_LAST));
+        dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_ALL));
+        keyboardController.addActionListener(new KeyboardControllerMenuListener(mainGUI));
+        isAdminMenu.addActionListener(new AdminPermissionAction());
+        elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction());
+        messageBoxMenu.addActionListener(new MessageBoxMenuListener());
+        streamScreenMenu.addActionListener(new ScreenMenuListener());
+        restartMenu.addActionListener(new RestartAction());
+        disconnectMenu.addActionListener(new DisconnectAction());
+        uninstallMenu.addActionListener(new UninstallAction());
+        logOffAction.addActionListener(new SystemStateListener(State.LOG_OFF));
+        shutdownAction.addActionListener(new SystemStateListener(State.SHUTDOWN));
+        rebootAction.addActionListener(new SystemStateListener(State.REBOOT));
 
     }
 
@@ -167,7 +165,7 @@ public class TablePopUpListener extends MouseAdapter {
             if (!source.isRowSelected(row)) source.changeSelection(row, column, false, false);
             if (mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 5).equals("Connected")) {
                 connectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
-                Streams stream = GetSYS.getStream(Main.server.getMap(), Main.gui.getConnectionsTable());
+                Streams stream = GetSYS.getClientHandler().getMainStream();
                 assert stream != null;
                 webcamMenu.setVisible(stream.getTempSystemInformation().WEBCAM());
                 keyloggerMenuOptions.setVisible(stream.getTempSystemInformation().KEYLOGGER());

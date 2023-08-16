@@ -8,10 +8,10 @@ import java.util.concurrent.Executors;
 
 public class ThreadPool extends Thread {
     private final ServerSocket server;
-    private final ConcurrentHashMap<Socket, Streams> dialog;
+    private final ConcurrentHashMap<String, ClientHandler> dialog;
     private final ExecutorService executor = Executors.newFixedThreadPool(30);
 
-    public ThreadPool(ServerSocket server, ConcurrentHashMap<Socket, Streams> dialog) {
+    public ThreadPool(ServerSocket server, ConcurrentHashMap<String, ClientHandler> dialog) {
         if (server == null || dialog == null) throw new IllegalArgumentException();
         this.server = server;
         this.dialog = dialog;

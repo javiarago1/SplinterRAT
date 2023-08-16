@@ -20,11 +20,12 @@ public class RequestDisk extends SwingWorker<Void, Void> {
     @Override
     protected Void doInBackground() {
         try {
-            System.out.println(fileManagerGUI.getStream());
-            disks = (String[]) fileManagerGUI.getStream().sendAction(Action.DISK);
+            System.out.println("Disk requested");
+            fileManagerGUI.getClientHandler().getMainStream().sendSize(2);
+            disks = (String[]) fileManagerGUI.getClientHandler().getFileManagerStream().sendAction(Action.DISK);
         } catch (IOException e) {
             new ClientErrorHandler("Unable get disks, connection lost with client",
-                    fileManagerGUI.getFileManagerDialog(), fileManagerGUI.getStream().getClientSocket());
+                    fileManagerGUI.getFileManagerDialog(), fileManagerGUI.getClientHandler().getFileManagerStream().getClientSocket());
         }
         return null;
     }

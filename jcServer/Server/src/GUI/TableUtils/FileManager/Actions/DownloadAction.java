@@ -13,7 +13,7 @@ public class DownloadAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getFileManagerGUI().getStream().getExecutor().submit(new DownloadProgressBar(getFileManagerGUI().getFileManagerDialog(), getFileManagerGUI().getStream(), getSelectedPaths()));
+        getFileManagerGUI().getClientHandler().getFileManagerStream().getExecutor().submit(new DownloadProgressBar(getFileManagerGUI().getFileManagerDialog(), getFileManagerGUI().getClientHandler().getFileManagerStream(), getSelectedPaths()));
     }
 
 

@@ -30,9 +30,9 @@ public class UploadAction extends Manager {
                 System.out.println("File exception");
             } else {
                 System.out.println("Selection list -> " + Arrays.toString(selectedFiles));
-                getFileManagerGUI().getStream().getExecutor().submit(new UploadProgressBar(
+                getFileManagerGUI().getClientHandler().getFileManagerStream().getExecutor().submit(new UploadProgressBar(
                         getFileManagerGUI().getFileManagerDialog(),
-                        getFileManagerGUI().getStream(), selectedFiles, getSelectedPath()));
+                        getFileManagerGUI().getClientHandler().getFileManagerStream(), selectedFiles, getSelectedPath()));
             }
         }
     }
