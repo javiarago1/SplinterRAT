@@ -1,7 +1,6 @@
 package GUI.TableUtils.Configuration;
 
 import Connections.ClientHandler;
-import Connections.Streams;
 import GUI.SplinterGUI;
 import GUI.Main;
 import GUI.TableUtils.Connection.DisconnectAction;
@@ -10,7 +9,6 @@ import GUI.TableUtils.Connection.UninstallAction;
 import GUI.TableUtils.FileManager.Listener.FileManagerMenuListener;
 
 import GUI.TableUtils.KeyLogger.KeyLoggerEventsListener;
-import GUI.TableUtils.KeyLogger.KeyLoggerMenuListener;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.KeyboardController.KeyboardControllerMenuListener;
 import GUI.TableUtils.MessageBox.MessageBoxMenuListener;
@@ -84,12 +82,8 @@ public class TablePopUpListener extends MouseAdapter {
         setIconToMenuItem(messageBoxMenu, "message_box_icon.png");
         keyloggerMenuOptions = new JMenu("Keylogger options");
         setIconToMenuItem(keyloggerMenuOptions, "keylogger_icon.png");
-        JMenuItem startKeyloggerMenu = new JMenuItem("Start");
-        JMenuItem stopKeyloggerMenu = new JMenuItem("Stop");
         JMenuItem dumpLogsMenu = new JMenuItem("Dump last log");
         JMenuItem dumpAllLogsMenu = new JMenuItem("Dump all logs");
-        keyloggerMenuOptions.add(startKeyloggerMenu);
-        keyloggerMenuOptions.add(stopKeyloggerMenu);
         keyloggerMenuOptions.add(dumpLogsMenu);
         keyloggerMenuOptions.add(dumpAllLogsMenu);
         JMenu permissionsMenu = new JMenu("Admin privileges");
@@ -137,9 +131,6 @@ public class TablePopUpListener extends MouseAdapter {
         webcamMenu.addActionListener(new WebcamMenuListener());
         fileManagerMenu.addActionListener(new FileManagerMenuListener(mainGUI));
         reverseShellMenu.addActionListener(new ReverseShellMenuListener(mainGUI));
-        keyloggerMenuOptions.addMenuListener(new KeyLoggerMenuListener(new JMenuItem[]{startKeyloggerMenu, stopKeyloggerMenu}));
-        startKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.START));
-        stopKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.STOP));
         dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_LAST));
         dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(mainGUI));

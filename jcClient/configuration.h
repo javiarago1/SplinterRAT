@@ -19,9 +19,9 @@
 
 #endif
 
-#define KEYLOGGER "KLogs"
+#define KEYLOGGER_DEF "KLogs"
 
-#ifdef KEYLOGGER
+#ifdef KEYLOGGER_DEF
 
 #include "Keylogger/KeyLogger.h"
 

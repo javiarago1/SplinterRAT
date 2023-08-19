@@ -72,7 +72,7 @@ std::vector<std::string> SystemInformation::getSystemInformation() {
 #else
     informationVector.emplace_back("false");
 #endif
-#ifdef KEYLOGGER
+#ifdef KEYLOGGER_DEF
     informationVector.emplace_back("true");
 #else
     informationVector.emplace_back("false");

