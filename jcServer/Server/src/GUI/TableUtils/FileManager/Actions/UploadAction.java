@@ -1,6 +1,10 @@
 package GUI.TableUtils.FileManager.Actions;
 
+import Connections.ClientHandler;
+import Connections.Streams;
 import GUI.ProgressBar.UploadProgressBar;
+import GUI.TableUtils.Configuration.GetSYS;
+import GUI.TableUtils.Configuration.SocketType;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import javax.swing.*;
@@ -30,9 +34,11 @@ public class UploadAction extends Manager {
                 System.out.println("File exception");
             } else {
                 System.out.println("Selection list -> " + Arrays.toString(selectedFiles));
-                getFileManagerGUI().getStream().getExecutor().submit(new UploadProgressBar(
+                Streams stream = GetSYS.getStream(SocketType.DOWNLOAD_UPLOAD);
+                assert stream != null;
+                stream.getExecutor().submit(new UploadProgressBar(
                         getFileManagerGUI().getFileManagerDialog(),
-                        getFileManagerGUI().getStream(), selectedFiles, getSelectedPath()));
+                        stream, selectedFiles, getSelectedPath()));
             }
         }
     }

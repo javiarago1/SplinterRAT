@@ -1,6 +1,7 @@
 package GUI.ProgressBar;
 
 import Connections.ClientErrorHandler;
+import Connections.ClientHandler;
 import Connections.Streams;
 import Information.Action;
 

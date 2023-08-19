@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 public class ThreadPool extends Thread {
     private final ServerSocket server;
     private final ConcurrentHashMap<String, ClientHandler> dialog;
-    private final ExecutorService executor = Executors.newFixedThreadPool(30);
+    private final ExecutorService executor = Executors.newCachedThreadPool();
 
     public ThreadPool(ServerSocket server, ConcurrentHashMap<String, ClientHandler> dialog) {
         if (server == null || dialog == null) throw new IllegalArgumentException();
@@ -17,15 +17,20 @@ public class ThreadPool extends Thread {
         this.dialog = dialog;
     }
 
-    public void run(){
+    public void run() {
         if (server == null || dialog == null || executor == null)
             throw new IllegalArgumentException("Invalid arguments!");
-        for (int i = 0; i < 30; i++)
-            executor.submit(new Connection(server, executor, dialog));
+        while (!Thread.currentThread().isInterrupted()) {
+            try {
+                Socket socket = server.accept();
+                executor.submit(new Connection(socket, dialog));
+            } catch (Exception e) {
+                // Maneja la excepción adecuadamente aquí
+            }
+        }
     }
 
     public void shutdownNow() {
         executor.shutdownNow();
     }
-
 }
