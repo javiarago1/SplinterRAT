@@ -19,7 +19,7 @@ public class DisconnectAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = GetSYS.getClientHandler().getMainStream();
+        Streams stream = GetSYS.getStream(SocketType.MAIN);
         stream.getExecutor().submit(() -> {
             try {
                 stream.sendAction(Connection.DISCONNECT);

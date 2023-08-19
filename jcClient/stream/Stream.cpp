@@ -103,7 +103,7 @@ std::vector<std::string> Stream::readList() const {
 
 
 void Stream::readFile(const std::string &destination,RESULT&_result) const {
-    sendSize(1); // start reading (sent to Server)
+    sendSize(1); // downloadContent reading (sent to Server)
     std::cout << "1st -> Read filename" << std::endl;
     std::filesystem::path fileName = std::filesystem::u8path(readString());
     std::filesystem::path destinationPath = std::filesystem::u8path(destination);

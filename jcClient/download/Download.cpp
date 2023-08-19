@@ -2,7 +2,8 @@
 
 Download::Download(const Stream &stream) : Sender(stream) {}
 
-void Download::start() {
+
+void Download::downloadContent() {
     std::vector<std::string> fileList = stream.readList();
     for (const auto &file: fileList) {
         if(!download) break;

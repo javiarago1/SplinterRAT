@@ -18,9 +18,13 @@ public:
 
     explicit FileManager(const Stream &stream);
 
-    std::string readAll();
+    std::string getFilesAndFolders();
 
     static std::string readDirectory(const std::filesystem::path &directory, bool folder, bool file);
+
+    static std::vector<std::string> getDisks();
+
+    void sendDisks();
 
     void copyFiles(const std::vector<std::string>&,const std::vector<std::string>&);
 

@@ -18,7 +18,7 @@ public class KeyLoggerMenuListener implements MenuListener{
     }
     @Override
     public void menuSelected(MenuEvent e) {
-        Streams stream = Objects.requireNonNull(GetSYS.getClientHandler()).getMainStream();
+        Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.MAIN));
         stream.getExecutor().submit(new KeyLoggerStateChecker(stream,keyloggerOptions));
 
     }

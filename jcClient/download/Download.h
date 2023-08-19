@@ -2,6 +2,7 @@
 #define CLIENT_DOWNLOAD_H
 
 
+#include <thread>
 #include "../stream/Stream.h"
 #include "../converter/Converter.h"
 #include "../Sender/Sender.h"
@@ -15,9 +16,9 @@ private:
 
 public:
     explicit Download(const Stream&);
-    void start();
+    void downloadContent();
     void send() override;
-
+    void startThread();
 };
 
 

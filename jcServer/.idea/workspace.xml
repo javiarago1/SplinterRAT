@@ -14,20 +14,23 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: problem with compiler solved">
-      <change afterPath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/SocketType.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: developing multi sockets">
+      <change afterPath="$PROJECT_DIR$/../jcClient/thread/ThreadGen.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/thread/ThreadGen.tpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/configuration.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/configuration.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_2022_17_21__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_2022_17_21__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/download/Download.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/download/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/download/Download.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/file/FileManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/file/FileManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/file/FileManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/information/system/SystemInformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/information/system/SystemInformation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/information/system/SystemInformation.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/information/system/SystemInformation.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/stream/Stream.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ThreadPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ThreadPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/GetSYS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/GetSYS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/DisconnectAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/DisconnectAction.java" afterDir="false" />
@@ -47,6 +50,7 @@
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxMenuListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/CheckAdmin/AdminPermissionAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/CheckAdmin/AdminPermissionAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/ElevatePermission/ElevatePermissionAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/ElevatePermission/ElevatePermissionAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellMenuListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenMenuListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/SystemState/SystemStateListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/SystemState/SystemStateListener.java" afterDir="false" />
@@ -96,47 +100,47 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": -1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: -1
+}</component>
   <component name="ProjectId" id="2AIAeL6o3JnVkslciuwihAU76c2" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "dev",
-    "last.edited.regexp": "",
-    "last_opened_file_path": "C:/Users/Nitropc/SplinterRAT/jcServer",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "File.Encoding",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last.edited.regexp&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nitropc/SplinterRAT/jcServer&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="Connections" />
@@ -431,7 +435,13 @@
       <workItem from="1671354200807" duration="453000" />
       <workItem from="1671566817936" duration="2252000" />
       <workItem from="1671622391377" duration="571000" />
-      <workItem from="1692167035796" duration="18871000" />
+      <workItem from="1692167035796" duration="19066000" />
+      <workItem from="1692193385459" duration="594000" />
+      <workItem from="1692205656029" duration="7339000" />
+      <workItem from="1692275764063" duration="5608000" />
+      <workItem from="1692350358882" duration="4424000" />
+      <workItem from="1692365007735" duration="2722000" />
+      <workItem from="1692426387472" duration="2060000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -776,7 +786,7 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="155" />
+    <option name="localTasksCounter" value="156" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -813,7 +823,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: new command line for g++" />
     <MESSAGE value="feat: compiler GUI" />
     <MESSAGE value="feat: compiler GUI features" />
     <MESSAGE value="feat: handling exceptions" />
@@ -838,7 +847,8 @@
     <MESSAGE value="fix: small fixes" />
     <MESSAGE value="fix: problem with keylogger command" />
     <MESSAGE value="fix: problem with compiler solved" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: problem with compiler solved" />
+    <MESSAGE value="fix: developing multi sockets" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: developing multi sockets" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -846,13 +856,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/Server/src/Connections/Streams.java</url>
-          <line>142</line>
+          <line>153</line>
           <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDisk.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>

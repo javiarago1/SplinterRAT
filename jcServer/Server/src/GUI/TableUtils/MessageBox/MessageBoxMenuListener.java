@@ -14,7 +14,7 @@ public class MessageBoxMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = GetSYS.getClientHandler().getMainStream();
+        Streams stream = GetSYS.getStream(SocketType.MAIN);
         new MessageBoxGUI(stream);
     }
 }

@@ -2,6 +2,8 @@ package GUI.TableUtils.FileManager;
 
 
 import Connections.ClientHandler;
+import Connections.Streams;
+import GUI.TableUtils.Configuration.SocketType;
 import GUI.TableUtils.Configuration.TablePopUpListener;
 import GUI.TableUtils.FileManager.Actions.*;
 import GUI.TableUtils.FileManager.Listener.MouseListener;
@@ -20,7 +22,7 @@ public class FileManagerGUI {
 
 
     private final Stack<String> stack = new Stack<>();
-    private final ClientHandler clientHandler;
+    private final Streams stream;
 
     private final JComboBox<String> diskComboBox;
 
@@ -30,18 +32,22 @@ public class FileManagerGUI {
 
     private final JScrollPane scrollPane;
 
+    public ClientHandler getClientHandler() {
+        return clientHandler;
+    }
+
+    private final ClientHandler clientHandler;
     private final JDialog fileManagerDialog;
 
     private JPopupMenu popupMenu;
 
     public FileManagerGUI(ClientHandler clientHandler, JFrame mainGUI) {
+        this.stream = clientHandler.getStreamByName(SocketType.FILE_MANAGER);
         this.clientHandler = clientHandler;
-        fileManagerDialog = new JDialog(mainGUI);
+        fileManagerDialog = new JDialog(mainGUI, "File Manager -" + clientHandler.getIdentifier());
         fileManagerDialog.setSize(new Dimension(600, 340));
-
         fileManagerDialog.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-
 
         JButton refreshCurrentFolder = new JButton("↻");
         constraints.gridx = 1;
@@ -50,7 +56,7 @@ public class FileManagerGUI {
         constraints.gridheight = 1;
         fileManagerDialog.add(refreshCurrentFolder, constraints);
 
-        refreshCurrentFolder.addActionListener(e -> clientHandler.getFileManagerStream().getExecutor().submit(new RequestDirectory(this, Movement.REFRESH_DIRECTORY)));
+        refreshCurrentFolder.addActionListener(e -> stream.getExecutor().submit(new RequestDirectory(this, Movement.REFRESH_DIRECTORY)));
 
 
         pathField = new JTextField();
@@ -201,17 +207,17 @@ public class FileManagerGUI {
 
 
     private void requestDisk() {
-        clientHandler.getFileManagerStream().getExecutor().submit(new RequestDisk(this));
+        stream.getExecutor().submit(new RequestDisk(this));
     }
 
     private int divider;
 
     public void requestDirectory(String directory, Movement movement) {
-        clientHandler.getFileManagerStream().getExecutor().submit(new RequestDirectory(this, directory, movement));
+        stream.getExecutor().submit(new RequestDirectory(this, directory, movement));
     }
 
     public void requestDirectory(Movement movement) {
-        clientHandler.getFileManagerStream().getExecutor().submit(new RequestDirectory(this, movement));
+        stream.getExecutor().submit(new RequestDirectory(this, movement));
     }
 
     public void setDivider(int divider) {
@@ -227,8 +233,8 @@ public class FileManagerGUI {
     }
 
 
-    public ClientHandler getClientHandler() {
-        return clientHandler;
+    public Streams getStream() {
+        return stream;
     }
 
     public JTextField getPathField() {

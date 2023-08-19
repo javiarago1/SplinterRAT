@@ -2,6 +2,7 @@ package Connections;
 
 import GUI.Main;
 import GUI.Server.ServerGUI;
+import GUI.TableUtils.Configuration.SocketType;
 import Information.Action;
 import Information.NetworkInformation;
 import Information.SystemInformation;
@@ -38,44 +39,47 @@ public class Connection implements Runnable {
             String clientIP = socket.getInetAddress().toString();
             ClientHandler clientHandler = dialog.get(clientIP);
             if (clientHandler == null) {
-                clientHandler = new ClientHandler(socket);
+
+                clientHandler = new ClientHandler();
+                clientHandler.addStream(socket);
                 dialog.put(clientIP, clientHandler);
                 System.out.println("Connected to: " + socket.getRemoteSocketAddress());
-                Streams mainStream = clientHandler.getMainStream();
 
-                SystemInformation sysInfo = (SystemInformation) mainStream.sendAction(Action.SYS_INFO);
-                mainStream.setTempSystemInformation(sysInfo);
-                // Network info
-                NetworkInformation netInfo = (NetworkInformation) mainStream.sendAction(Action.NET_INFO);
-                mainStream.setTempNetworkInformation(netInfo);
-                // Change state of JTable add or modify existing client
-                SwingUtilities.invokeLater(() -> {
-                    System.out.println(socket);
-                    TableModel tableModel = Main.gui.getConnectionsTable().getModel();
-                    int existingClientRow = getPositionOfExisting(socket, tableModel); // position if exists in JTable
-                    if (existingClientRow != -1) {  // change state of connection
-                        tableModel.setValueAt("Connected", existingClientRow, 5);
-                    } else { // new connection
-                        String[] tableRow = new String[]{socket.getInetAddress().toString(),
-                                netInfo.USER_COUNTRY(),
-                                sysInfo.TAG_NAME(),
-                                sysInfo.USER_NAME(),
-                                sysInfo.OPERATING_SYSTEM(),
-                                "Connected"
-                        };
-                        DefaultTableModel defaultTableModel = (DefaultTableModel) tableModel;
-                        defaultTableModel.addRow(tableRow);
-                    }
-                    if (ServerGUI.isNotifications() && SystemTray.isSupported())
-                        displayTray(netInfo.IP(), sysInfo.OPERATING_SYSTEM());
-                    Main.gui.updateNumOfConnectedClients();
-                });
+
             } else {
-                Streams operationStream = clientHandler.addStream(socket);
-                Streams mainStream = clientHandler.getMainStream();
-                operationStream.setTempSystemInformation(mainStream.getTempSystemInformation());
-                operationStream.setTempNetworkInformation(mainStream.getTempNetworkInformation());
-                System.out.println("Conexion alternativa " + x++);
+                clientHandler.addStream(socket);
+                int sizeOfMap = clientHandler.getSizeOfMap();
+                if (sizeOfMap == SocketType.values().length) {
+                    Streams mainStream = clientHandler.getStreamByName(SocketType.MAIN);
+                    SystemInformation sysInfo = (SystemInformation) mainStream.sendAction(Action.SYS_INFO);
+                    clientHandler.setTempSystemInformation(sysInfo);
+                    // Network info
+                    NetworkInformation netInfo = (NetworkInformation) mainStream.sendAction(Action.NET_INFO);
+                    clientHandler.setTempNetworkInformation(netInfo);
+
+                    // Change state of JTable add or modify existing client
+                    SwingUtilities.invokeLater(() -> {
+                        System.out.println(socket);
+                        TableModel tableModel = Main.gui.getConnectionsTable().getModel();
+                        int existingClientRow = getPositionOfExisting(socket, tableModel); // position if exists in JTable
+                        if (existingClientRow != -1) {  // change state of connection
+                            tableModel.setValueAt("Connected", existingClientRow, 5);
+                        } else { // new connection
+                            String[] tableRow = new String[]{socket.getInetAddress().toString(),
+                                    netInfo.USER_COUNTRY(),
+                                    sysInfo.TAG_NAME(),
+                                    sysInfo.USER_NAME(),
+                                    sysInfo.OPERATING_SYSTEM(),
+                                    "Connected"
+                            };
+                            DefaultTableModel defaultTableModel = (DefaultTableModel) tableModel;
+                            defaultTableModel.addRow(tableRow);
+                        }
+                        if (ServerGUI.isNotifications() && SystemTray.isSupported())
+                            displayTray(netInfo.IP(), sysInfo.OPERATING_SYSTEM());
+                        Main.gui.updateNumOfConnectedClients();
+                    });
+                }
             }
             // removeExisting(socket);
 

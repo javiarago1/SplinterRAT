@@ -1,6 +1,7 @@
 package GUI.ProgressBar;
 
 import Connections.ClientErrorHandler;
+import Connections.ClientHandler;
 import Connections.Streams;
 import Information.Action;
 import Information.FolderOpener;
@@ -14,13 +15,16 @@ import java.util.List;
 
 public class DownloadProgressBar extends Bar {
 
+    private final ClientHandler clientHandler;
     private final Streams stream;
     private final List<String> downloadList;
     private final String time;
 
 
-    public DownloadProgressBar(JDialog parentDialog, Streams stream, List<String> downloadList) {
+
+    public DownloadProgressBar(JDialog parentDialog, ClientHandler clientHandler, Streams stream , List<String> downloadList) {
         super(parentDialog, "Downloading");
+        this.clientHandler = clientHandler;
         this.stream = stream;
         this.downloadList = downloadList;
         time = new Time().getTime();
@@ -41,7 +45,10 @@ public class DownloadProgressBar extends Bar {
         stream.sendAction(Action.DOWNLOAD, downloadList);
         String tempPath;
         // receives files till string equals to "/". "/" = no more files to send
-        String whereToDownload = stream.getSessionFolder() + "\\Downloaded Files\\" + time;
+        System.out.println("wtf"+clientHandler.getTempNetworkInformation());
+        System.out.println(clientHandler.getSessionFolder());
+
+        String whereToDownload = clientHandler.getSessionFolder() + "\\Downloaded Files\\" + time;
         while (!(tempPath = stream.readString()).equals("/")) {
             System.out.println("Route -> " + tempPath);
             // where to save the file

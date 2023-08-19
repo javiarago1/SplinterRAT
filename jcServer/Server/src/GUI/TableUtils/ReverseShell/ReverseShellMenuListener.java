@@ -1,5 +1,6 @@
 package GUI.TableUtils.ReverseShell;
 
+import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.Main;
 import GUI.SplinterGUI;
@@ -13,13 +14,15 @@ import java.util.Objects;
 public class ReverseShellMenuListener implements ActionListener {
     private final SplinterGUI mainGUI;
 
-    public ReverseShellMenuListener() {
-        this.mainGUI = Main.gui;
+    public ReverseShellMenuListener(SplinterGUI gui) {
+        this.mainGUI = gui;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = Objects.requireNonNull(GetSYS.getClientHandler()).getMainStream();
-        new ReverseShellGUI(stream, mainGUI.getMainGUI());
+        Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.MAIN));
+        ClientHandler clientHandler = GetSYS.getClientHandler();
+        assert clientHandler != null;
+        new ReverseShellGUI(stream,clientHandler,  mainGUI.getMainGUI());
     }
 }

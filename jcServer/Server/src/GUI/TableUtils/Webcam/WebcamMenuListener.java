@@ -19,7 +19,7 @@ public class WebcamMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = GetSYS.getClientHandler().getMainStream();
+        Streams stream = GetSYS.getStream(SocketType.MAIN);
         if (stream.isWebcamDialogOpen()) new WebcamGUI(stream, mainGUI.getMainGUI());
 
     }

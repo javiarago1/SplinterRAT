@@ -10,14 +10,13 @@
 #include <sstream>
 #include "../../configuration.h"
 #include "../../Sender/Sender.h"
+#include "../../file/FileManager.h"
 
 class SystemInformation : public Sender {
 public:
     explicit SystemInformation(const Stream &stream);
 
     static std::string getWindowsVersion();
-
-    static std::vector<std::string> getDisks();
 
     static std::string getUsername();
 
@@ -27,7 +26,6 @@ public:
 
     void send() override;
 
-    void sendDisks();
 };
 
 

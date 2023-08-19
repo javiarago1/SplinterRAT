@@ -1,5 +1,6 @@
 package GUI.TableUtils.ReverseShell;
 
+import Connections.ClientHandler;
 import Connections.Streams;
 
 import javax.swing.*;
@@ -21,9 +22,9 @@ public class ReverseShellGUI {
     private boolean pressedEnter = false;
     private String lastPath;
 
-    public ReverseShellGUI(Streams stream, JFrame mainGUI) {
+    public ReverseShellGUI(Streams stream, ClientHandler clientHandler,JFrame mainGUI) {
         this.stream = stream;
-        reverseShellDialog = new JDialog(mainGUI, "Reverse shell -" + stream.getIdentifier());
+        reverseShellDialog = new JDialog(mainGUI, "Reverse shell -" + clientHandler.getIdentifier());
         reverseShellDialog.setSize(new Dimension(500, 300));
         reverseShellDialog.setLocationRelativeTo(null);
         reverseShellDialog.setLayout(new GridBagLayout());
