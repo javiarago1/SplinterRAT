@@ -1,6 +1,9 @@
 package GUI.TableUtils.KeyboardController;
 
+import Connections.ClientHandler;
 import Connections.Streams;
+import GUI.TableUtils.Configuration.GetSYS;
+import GUI.TableUtils.Configuration.SocketType;
 import GUI.TableUtils.KeyboardController.MoveEvent.Movement;
 import GUI.TableUtils.KeyboardController.MoveEvent.Mover;
 import org.apache.commons.lang3.StringUtils;
@@ -17,9 +20,9 @@ public class KeyboardControllerGUI {
     private JList<String> listOfEvents;
     private final Streams stream;
 
-    public KeyboardControllerGUI(JFrame mainGUI, Streams stream) {
-        this.stream = stream;
-        dialog = new JDialog(mainGUI, "Keyboard controller - " + stream.getIdentifier());
+    public KeyboardControllerGUI(JFrame mainGUI, ClientHandler clientHandler) {
+        this.stream = GetSYS.getStream(SocketType.MAIN);
+        dialog = new JDialog(mainGUI, "Keyboard controller - " + clientHandler.getIdentifier());
         dialog.setSize(new Dimension(650, 400));
         dialog.setLayout(new GridLayout(1, 2));
         dialog.setLocationRelativeTo(null);

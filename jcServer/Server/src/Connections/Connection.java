@@ -42,6 +42,7 @@ public class Connection implements Runnable {
                     Streams mainStream = clientHandler.getStreamByName(SocketType.MAIN);
                     SystemInformation sysInfo = (SystemInformation) mainStream.sendAction(Action.SYS_INFO);
                     clientHandler.setTempSystemInformation(sysInfo);
+
                     // Network info
                     NetworkInformation netInfo = (NetworkInformation) mainStream.sendAction(Action.NET_INFO);
                     clientHandler.setTempNetworkInformation(netInfo);

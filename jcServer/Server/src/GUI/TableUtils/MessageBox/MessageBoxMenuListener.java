@@ -1,5 +1,6 @@
 package GUI.TableUtils.MessageBox;
 
+import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.TableUtils.Configuration.GetSYS;
 import GUI.TableUtils.Configuration.SocketType;
@@ -14,7 +15,7 @@ public class MessageBoxMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = GetSYS.getStream(SocketType.MAIN);
-        new MessageBoxGUI(stream);
+        ClientHandler clientHandler = GetSYS.getClientHandler();
+        new MessageBoxGUI(clientHandler);
     }
 }

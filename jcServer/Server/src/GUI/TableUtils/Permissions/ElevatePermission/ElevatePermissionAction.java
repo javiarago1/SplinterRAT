@@ -15,7 +15,7 @@ public class ElevatePermissionAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.MAIN));
+        Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.PERMISSION));
         stream.getExecutor().submit(new PrivilegesElevator(stream));
 
     }

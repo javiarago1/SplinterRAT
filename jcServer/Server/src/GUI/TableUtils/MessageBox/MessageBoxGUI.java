@@ -1,7 +1,9 @@
 package GUI.TableUtils.MessageBox;
 
+import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.Main;
+import GUI.TableUtils.Configuration.SocketType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +12,9 @@ public class MessageBoxGUI {
     private final Streams stream;
     JDialog messageBoxDialog;
 
-    public MessageBoxGUI(Streams stream) {
-        this.stream = stream;
-        messageBoxDialog = new JDialog(Main.gui.getMainGUI(), "Message box - " + stream.getIdentifier());
+    public MessageBoxGUI(ClientHandler clientHandler) {
+        this.stream = clientHandler.getStreamByName(SocketType.MAIN);
+        messageBoxDialog = new JDialog(Main.gui.getMainGUI(), "Message box - " + clientHandler.getIdentifier());
         messageBoxDialog.setLayout(new GridBagLayout());
         messageBoxDialog.setSize(250, 350);
         messageBoxDialog.setLocationRelativeTo(null);

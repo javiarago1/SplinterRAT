@@ -12,7 +12,6 @@ import GUI.TableUtils.KeyLogger.KeyLoggerEventsListener;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.KeyboardController.KeyboardControllerMenuListener;
 import GUI.TableUtils.MessageBox.MessageBoxMenuListener;
-import GUI.TableUtils.Permissions.CheckAdmin.AdminPermissionAction;
 import GUI.TableUtils.Permissions.ElevatePermission.ElevatePermissionAction;
 import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
 import GUI.TableUtils.ScreenStreaming.ScreenMenuListener;
@@ -88,9 +87,7 @@ public class TablePopUpListener extends MouseAdapter {
         keyloggerMenuOptions.add(dumpAllLogsMenu);
         JMenu permissionsMenu = new JMenu("Admin privileges");
         setIconToMenuItem(permissionsMenu, "permissions_icon.png");
-        JMenuItem isAdminMenu = new JMenuItem("Is admin");
         JMenuItem elevatePrivilegesMenu = new JMenuItem("Elevate privileges");
-        permissionsMenu.add(isAdminMenu);
         permissionsMenu.add(elevatePrivilegesMenu);
         streamScreenMenu = new JMenuItem("Screen controller");
         setIconToMenuItem(streamScreenMenu, "screen_icon.png");
@@ -134,7 +131,6 @@ public class TablePopUpListener extends MouseAdapter {
         dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_LAST));
         dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(mainGUI));
-        isAdminMenu.addActionListener(new AdminPermissionAction());
         elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction());
         messageBoxMenu.addActionListener(new MessageBoxMenuListener());
         streamScreenMenu.addActionListener(new ScreenMenuListener());

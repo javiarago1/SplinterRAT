@@ -1,5 +1,6 @@
 package GUI.TableUtils.KeyboardController;
 
+import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.SplinterGUI;
 import GUI.TableUtils.Configuration.GetSYS;
@@ -7,6 +8,7 @@ import GUI.TableUtils.Configuration.SocketType;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.ref.Cleaner;
 import java.util.Objects;
 
 public class KeyboardControllerMenuListener implements ActionListener {
@@ -19,7 +21,7 @@ public class KeyboardControllerMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.MAIN));
-        new KeyboardControllerGUI(mainGUI.getMainGUI(), stream);
+        ClientHandler clientHandler = GetSYS.getClientHandler();
+        new KeyboardControllerGUI(mainGUI.getMainGUI(), clientHandler);
     }
 }
