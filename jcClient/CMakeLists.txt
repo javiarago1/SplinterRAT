@@ -2,12 +2,17 @@ cmake_minimum_required(VERSION 3.22)
 project(Client)
 
 set(CMAKE_CXX_STANDARD 20)
-
+# ---- OPENCV ----
 set(OpenCV_DIR "C:\\opencv\\mingw-build\\install")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+
+set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)
+# ---- OPENCV ----
 
 include_directories(${CMAKE_SOURCE_DIR}/includes)
-include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_executable(Client
         src/client.cpp
@@ -27,7 +32,11 @@ add_executable(Client
         src/state/SystemState.cpp
         src/install/Install.cpp
         src/sender/Sender.cpp
+        src/webcam/WebcamManager.cpp
+        src/screen/ScreenStreamer.cpp
 )
+
+
 
 target_link_libraries(Client
         ${OpenCV_LIBS}

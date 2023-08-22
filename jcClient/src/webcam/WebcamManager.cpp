@@ -89,7 +89,7 @@ void WebcamManager::startWebcam() {
                 std::cout << "record" << std::endl;
                 if (!initialized) {
                     std::wstring tempFileName = fileName;
-                    tempFileName.append(Time::getCurrentDateTimeW()).append(L".avi");
+                    tempFileName.append(TimeCS::getCurrentDateTimeW()).append(L".avi");
                     std::filesystem::path parentPath = std::filesystem::path(fileName).parent_path();
                     std::filesystem::create_directory(parentPath);
                     output = cv::VideoWriter(Converter::wstring2string(tempFileName), cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), FPS,

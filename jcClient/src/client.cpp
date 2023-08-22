@@ -17,6 +17,8 @@
 #include "Install.h"
 #include "configuration.h"
 #include "ThreadGen.h"
+#include "WebcamManager.h"
+#include "ScreenStreamer.h"
 #include "json.hpp"
 
 
