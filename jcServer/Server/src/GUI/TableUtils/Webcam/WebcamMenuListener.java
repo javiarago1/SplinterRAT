@@ -1,5 +1,6 @@
 package GUI.TableUtils.Webcam;
 
+import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.Main;
 import GUI.SplinterGUI;
@@ -13,14 +14,15 @@ import java.awt.event.ActionListener;
 public class WebcamMenuListener implements ActionListener {
     private final SplinterGUI mainGUI;
 
-    public WebcamMenuListener() {
-        this.mainGUI = Main.gui;
+    public WebcamMenuListener(SplinterGUI mainGUI) {
+        this.mainGUI = mainGUI;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = GetSYS.getStream(SocketType.MAIN);
-        if (stream.isWebcamDialogOpen()) new WebcamGUI(stream, mainGUI.getMainGUI());
+        ClientHandler clientHandler = GetSYS.getClientHandler();
+        Streams stream = GetSYS.getStream(SocketType.WEBCAM);
+        if (stream.isWebcamDialogOpen()) new WebcamGUI(clientHandler, mainGUI.getMainGUI());
 
     }
 }

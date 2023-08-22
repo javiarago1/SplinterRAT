@@ -19,7 +19,7 @@ class DeviceEnumerator : public Sender {
 
 public:
     void send() override;
-
+    void sendWebcamDevices();
     explicit DeviceEnumerator(const Stream &stream);
     static std::map<int, Device> getDevicesMap(GUID deviceClass);
 	static std::map<int, Device> getVideoDevicesMap();

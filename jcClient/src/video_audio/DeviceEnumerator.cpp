@@ -141,7 +141,11 @@ int DeviceEnumerator::getIndexOfWebcamByName(const std::string& webcamName) {
     return 0;
 }
 
-void DeviceEnumerator::send() {
+void DeviceEnumerator::sendWebcamDevices(){
     std::vector<std::string> vectorOfWebcams = getVectorDevicesNames();
     stream.sendList(vectorOfWebcams);
+}
+
+void DeviceEnumerator::send() {
+
 }

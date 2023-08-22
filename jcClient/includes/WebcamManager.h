@@ -9,6 +9,7 @@
 #include "TimeCS.h"
 #include "Install.h"
 #include "configuration.h"
+#include "json.hpp"
 
 #include "DeviceEnumerator.h"
 
@@ -16,9 +17,9 @@
 class WebcamManager : public Sender {
 private:
     // information related to recording
-    int webcamID;
-    bool fragmented;
-    int FPS;
+    int webcamID{};
+    bool fragmented{};
+    int FPS{};
     std::wstring locationOfVideos;
     // video and file managing
     cv::VideoWriter output;
@@ -33,8 +34,8 @@ private:
 
 public:
     explicit WebcamManager(const Stream &);
-    void startWebcam();
-
+    void setConfiguration(nlohmann::json jsonObject);
+    void startWebcam(nlohmann::json jsonObject);
     void send() override;
 
 

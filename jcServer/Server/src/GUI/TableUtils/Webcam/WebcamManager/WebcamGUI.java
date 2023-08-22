@@ -1,6 +1,9 @@
 package GUI.TableUtils.Webcam.WebcamManager;
 
+import Connections.ClientHandler;
 import Connections.Streams;
+import GUI.TableUtils.Configuration.GetSYS;
+import GUI.TableUtils.Configuration.SocketType;
 import GUI.TableUtils.Webcam.WebcamManager.MenuBar.FPSMenuListener;
 import GUI.TableUtils.Webcam.WebcamManager.Actions.Record.RecordWebcamButton;
 import GUI.TableUtils.Webcam.WebcamManager.Actions.Save.SaveRecordButton;
@@ -14,6 +17,7 @@ import java.awt.*;
 
 public class WebcamGUI {
     private final Streams stream;
+    private final ClientHandler clientHandler;
     private int FPS = 30;
     private JComboBox<String> boxOfDevices;
     private JLabel webcamLabel;
@@ -57,8 +61,9 @@ public class WebcamGUI {
     JFrame mainGUI;
 
 
-    public WebcamGUI(Streams stream, JFrame mainGUI) {
-        this.stream = stream;
+    public WebcamGUI(ClientHandler clientHandler, JFrame mainGUI) {
+        this.clientHandler = clientHandler;
+        this.stream = clientHandler.getStreamByName(SocketType.WEBCAM);
         stream.setWebcamDialogOpen(true);
         this.mainGUI = mainGUI;
         setUpDialog();
@@ -66,7 +71,7 @@ public class WebcamGUI {
     }
 
     private void setUpDialog() {
-        webcamDialog = new JDialog(mainGUI, "Webcam -" + getStream().getIdentifier());
+        webcamDialog = new JDialog(mainGUI, "Webcam -" + clientHandler.getIdentifier());
         webcamDialog.setSize(new Dimension(600, 400));
         webcamDialog.setMinimumSize(new Dimension(450, 300));
         webcamDialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

