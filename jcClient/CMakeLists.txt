@@ -44,4 +44,5 @@ target_link_libraries(Client
         wininet
         stdc++fs
         strmiids
+        gdiplus
 )

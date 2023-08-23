@@ -9,34 +9,42 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Streamer implements Runnable {
+public class ScreenStreamer implements Runnable {
 
     private final Streams stream;
     private final JLabel streamingScreenShower;
     private final AtomicBoolean isScreenshot;
     private final AtomicBoolean isRunning;
-    private final ConcurrentLinkedQueue<String> queueOfEvents;
+
     private final JDialog screenStreamerDialog;
+    private final ScreenStreamingGUI screenStreamingGUI;
 
-    private final AtomicBoolean controlComputer;
 
-    public Streamer(ScreenStreamingGUI screenStreamingGUI) {
+    public ScreenStreamer(ScreenStreamingGUI screenStreamingGUI) {
+        this.screenStreamingGUI = screenStreamingGUI;
         stream = screenStreamingGUI.getStream();
         streamingScreenShower = screenStreamingGUI.getStreamingScreenShower();
         streamingScreenShower.setText("");
         isScreenshot = screenStreamingGUI.getIsScreenshot();
-        queueOfEvents = screenStreamingGUI.getQueueOfEvents();
         screenStreamerDialog = screenStreamingGUI.getDialog();
         isRunning = screenStreamingGUI.getIsRunning();
-        controlComputer = screenStreamingGUI.getComputerControl();
     }
 
     @Override
     public void run() {
+        DatagramSocket socket;
         String[] dimensions;
+        try {
+            socket = new DatagramSocket(3055); // S
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+
         try {
             stream.sendAction(Screen.STREAM);
             String received = stream.readString();
@@ -44,18 +52,17 @@ public class Streamer implements Runnable {
             SwingUtilities.invokeLater(() -> screenStreamerDialog.setSize(new Dimension(Integer.parseInt(dimensions[0]) / 2 + 15, Integer.parseInt(dimensions[1]) / 2 + 40)));
             while (isRunning.get()) {
                 byte[] array;
-                if (queueOfEvents.isEmpty() || !controlComputer.get()) stream.sendString("null");
-                else stream.sendString(queueOfEvents.remove());
+                stream.sendSize(1);
                 array = stream.receiveBytes();
-                if (isScreenshot.get()) takeScreenshot(array);
+                // if (isScreenshot.get()) takeScreenshot(array);
                 ImageIcon tempIMG = new ImageIcon(array);
-                Image img = tempIMG.getImage();
+                //Image img = tempIMG.getImage();
                 SwingUtilities.invokeLater(() -> {
-                    Image imgScale = img.getScaledInstance(streamingScreenShower.getWidth(), streamingScreenShower.getHeight(), Image.SCALE_SMOOTH);
-                    streamingScreenShower.setIcon(new ImageIcon(imgScale));
+                    // Image imgScale = img.getScaledInstance(streamingScreenShower.getWidth(), streamingScreenShower.getHeight(), Image.SCALE_DEFAULT);
+                    streamingScreenShower.setIcon(tempIMG);
                 });
             }
-            stream.sendString("END");
+            stream.sendSize(-1);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
@@ -65,9 +72,10 @@ public class Streamer implements Runnable {
 
 
     private void takeScreenshot(byte[] bytes) {
+        System.out.println("take!");
         isScreenshot.set(false);
         String snapshotDirectory = "\\Screen Snapshots\\";
-        String path = stream.getSessionFolder() + snapshotDirectory +
+        String path = screenStreamingGUI.getClientHandler().getSessionFolder() + snapshotDirectory +
                 "screenshot_" + new Time().getTime() + ".png";
         try {
             FileUtils.writeByteArrayToFile(new File(path), bytes);

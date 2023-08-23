@@ -330,8 +330,10 @@ public class Streams {
     }
 
     public void sendAction(Screen action) throws IOException {
+        JSONObject jsonObject = new JSONObject();
         if (action == Screen.STREAM) {
-            sendSize(22);
+            jsonObject.put("action", 22);
+            mainStream.sendString(jsonObject.toString());
         }
     }
 

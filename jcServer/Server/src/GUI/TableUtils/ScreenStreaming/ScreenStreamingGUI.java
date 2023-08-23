@@ -1,7 +1,9 @@
 package GUI.TableUtils.ScreenStreaming;
 
+import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.Main;
+import GUI.TableUtils.Configuration.SocketType;
 
 
 import javax.swing.*;
@@ -12,6 +14,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScreenStreamingGUI {
     private final JDialog dialog;
+    private final Streams auxEventStream;
+    private final ClientHandler clientHandler;
     private final Streams stream;
     private final AtomicBoolean isScreenshot = new AtomicBoolean(false);
     private final AtomicBoolean isRunning = new AtomicBoolean(false);
@@ -20,9 +24,11 @@ public class ScreenStreamingGUI {
 
     private final AtomicBoolean computerControl = new AtomicBoolean(false);
 
-    public ScreenStreamingGUI(Streams stream) {
-        this.stream = stream;
-        dialog = new JDialog(Main.gui.getMainGUI(), "Screen controller - " + stream.getIdentifier());
+    public ScreenStreamingGUI(ClientHandler clientHandler) {
+        this.stream = clientHandler.getStreamByName(SocketType.SCREEN);
+        this.auxEventStream = clientHandler.getStreamByName(SocketType.SCREEN_EVENT);
+        dialog = new JDialog(Main.gui.getMainGUI(), "Screen controller - " + clientHandler.getIdentifier());
+        this.clientHandler = clientHandler;
         dialog.setLayout(new GridBagLayout());
         dialog.setSize(600, 400);
         dialog.setResizable(false);
@@ -100,5 +106,13 @@ public class ScreenStreamingGUI {
 
     public AtomicBoolean getComputerControl() {
         return computerControl;
+    }
+
+    public ClientHandler getClientHandler() {
+        return clientHandler;
+    }
+
+    public Streams getAuxEventStream() {
+        return auxEventStream;
     }
 }
