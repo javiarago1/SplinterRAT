@@ -22,7 +22,7 @@ public class UninstallAction implements ActionListener {
         Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.MAIN));
         stream.getExecutor().submit(() -> {
             try {
-                stream.sendAction(Connection.UNINSTALL);
+                stream.sendAction(ConnectionEnum.UNINSTALL);
             } catch (IOException ex) {
                 new ClientErrorHandler("Unable to uninstall, connection lost with client.",
                         stream.getClientSocket());

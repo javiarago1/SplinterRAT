@@ -14,20 +14,41 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new socket and thread created for new functionality">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/EventStreamer.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: before udp">
+      <change afterPath="$PROJECT_DIR$/../jcClient/includes/Base64.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/includes/CredentialsExtractor.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/src/credentials/CredentialsExtractor.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/xerial_sqlite_jdbc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/Connections/Identifier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CrendentialsDumper/Credentials.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CrendentialsDumper/CredentialsDumper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/includes/ScreenStreamer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ScreenStreamer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Stream.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Stream.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/file/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/file/FileManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/keylogger/KeyLogger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/keylogger/KeyLogger.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/stream/Stream.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/stream/Stream.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/SocketType.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/SocketType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/GetSYS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/GetSYS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/StateColumnRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/StateColumnRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/ConnectionEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/DisconnectAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/DisconnectAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/RestartAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/RestartAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/UninstallAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/UninstallAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/EventStreamer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/EventStreamer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StartAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StartAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Streamer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Information/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/Action.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Information/Time.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/Time.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +63,7 @@
         <option value="Interface" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -83,37 +105,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "dev",
-    "last.edited.regexp": "",
-    "last_opened_file_path": "C:/Users/Nitropc/SplinterRAT/jcServer",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last.edited.regexp&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nitropc/SplinterRAT/jcServer&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="Connections" />
@@ -423,7 +445,9 @@
       <workItem from="1692709472146" duration="4140000" />
       <workItem from="1692721742552" duration="3226000" />
       <workItem from="1692779733852" duration="10005000" />
-      <workItem from="1692800446967" duration="740000" />
+      <workItem from="1692800446967" duration="4501000" />
+      <workItem from="1692867730303" duration="19121000" />
+      <workItem from="1692899123561" duration="8430000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -768,7 +792,7 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="158" />
+    <option name="localTasksCounter" value="159" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -805,7 +829,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: handling exceptions" />
     <MESSAGE value="feat: adding exceptions for client disconnections" />
     <MESSAGE value="feat: reverse shell modeling" />
     <MESSAGE value="feat: finished reverse shell" />
@@ -830,7 +853,8 @@
     <MESSAGE value="fix: developing multi sockets" />
     <MESSAGE value="feat: new thread pool and upload using download socket" />
     <MESSAGE value="feat: new socket and thread created for new functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: new socket and thread created for new functionality" />
+    <MESSAGE value="feat: before udp" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: before udp" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

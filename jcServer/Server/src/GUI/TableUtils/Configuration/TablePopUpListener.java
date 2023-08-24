@@ -20,6 +20,7 @@ import GUI.TableUtils.SystemState.SystemStateListener;
 import GUI.TableUtils.Webcam.WebcamMenuListener;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
@@ -150,7 +151,8 @@ public class TablePopUpListener extends MouseAdapter {
             int row = source.rowAtPoint(e.getPoint());
             int column = source.columnAtPoint(e.getPoint());
             if (!source.isRowSelected(row)) source.changeSelection(row, column, false, false);
-            if (mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 5).equals("Connected")) {
+            DefaultTableModel defaultTableModel = mainGUI.getConnectionsDefaultTableModel();
+            if (defaultTableModel.getValueAt(row, defaultTableModel.getColumnCount() - 1).equals("Connected")) {
                 connectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
                 ClientHandler stream = GetSYS.getClientHandler();
                 assert stream != null;

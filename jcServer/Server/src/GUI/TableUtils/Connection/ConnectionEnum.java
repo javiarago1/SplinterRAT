@@ -1,5 +1,5 @@
 package GUI.TableUtils.Connection;
 
-public enum Connection {
+public enum ConnectionEnum {
     RESTART, DISCONNECT, UNINSTALL
 }

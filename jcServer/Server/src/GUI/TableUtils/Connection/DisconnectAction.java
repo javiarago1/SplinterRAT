@@ -22,7 +22,7 @@ public class DisconnectAction implements ActionListener {
         Streams stream = GetSYS.getStream(SocketType.MAIN);
         stream.getExecutor().submit(() -> {
             try {
-                stream.sendAction(Connection.DISCONNECT);
+                stream.sendAction(ConnectionEnum.DISCONNECT);
             } catch (IOException ex) {
                 new ClientErrorHandler("Unable to disconnect, connection lost with client.", stream.getClientSocket());
             }

@@ -111,7 +111,6 @@ public class ScreenStreamingGUI {
     public ClientHandler getClientHandler() {
         return clientHandler;
     }
-
     public Streams getAuxEventStream() {
         return auxEventStream;
     }

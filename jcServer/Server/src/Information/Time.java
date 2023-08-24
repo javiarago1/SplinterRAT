@@ -9,4 +9,10 @@ public class Time {
         Date date = new Date(System.currentTimeMillis());
         return formatter.format(date);
     }
+
+    public Date WebKitToDate(long webKit) {
+        long unixTimeMilliseconds = (webKit - 11644473600000000L) / 1000; // Convertir a milisegundos
+        return new Date(unixTimeMilliseconds);
+    }
+
 }

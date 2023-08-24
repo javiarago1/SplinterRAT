@@ -1,62 +1,5 @@
 #include "ScreenStreamer.h"
 
-BITMAPINFOHEADER ScreenStreamer::createBitmapHeader(int width, int height) {
-    BITMAPINFOHEADER bi;
-
-    // create a bitmap
-    bi.biSize = sizeof(BITMAPINFOHEADER);
-    bi.biWidth = width;
-    bi.biHeight = -height;  //this is the line that makes it draw upside down or not
-    bi.biPlanes = 1;
-    bi.biBitCount = 32;
-    bi.biCompression = BI_RGB;
-    bi.biSizeImage = 0;
-    bi.biXPelsPerMeter = 0;
-    bi.biYPelsPerMeter = 0;
-    bi.biClrUsed = 0;
-    bi.biClrImportant = 0;
-
-    return bi;
-}
-
-
-cv::Mat ScreenStreamer::captureScreenMat(HWND hwnd) {
-    cv::Mat src;
-    // get handles to a device context (DC)
-    HDC hwindowDC = GetDC(hwnd);
-    HDC hwindowCompatibleDC = CreateCompatibleDC(hwindowDC);
-    SetStretchBltMode(hwindowCompatibleDC, COLORONCOLOR);
-
-    // define scale, height and width
-    int screenx = GetSystemMetrics(SM_XVIRTUALSCREEN);
-    int screeny = GetSystemMetrics(SM_YVIRTUALSCREEN);
-    int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-    int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
-
-    // create mat object
-    src.create(height, width, CV_8UC4);
-
-    // create a bitmap
-    HBITMAP hbwindow = CreateCompatibleBitmap(hwindowDC, width, height);
-    BITMAPINFOHEADER bi = createBitmapHeader(width, height);
-
-    // use the previously created device context with the bitmap
-    SelectObject(hwindowCompatibleDC, hbwindow);
-
-    // copy from the window device context to the bitmap device context
-    StretchBlt(hwindowCompatibleDC, 0, 0, width, height, hwindowDC, screenx, screeny, width, height,
-               SRCCOPY);  //change SRCCOPY to NOTSRCCOPY for wacky colors !
-    GetDIBits(hwindowCompatibleDC, hbwindow, 0, height, src.data, (BITMAPINFO *) &bi,
-              DIB_RGB_COLORS);            //copy from hwindowCompatibleDC to hbwindow
-
-    // avoid memory leak
-    DeleteObject(hbwindow);
-    DeleteDC(hwindowCompatibleDC);
-    ReleaseDC(hwnd, hwindowDC);
-
-    return src;
-}
-
 void clickOnCoordinates(std::vector<int> infoOfClick) {
     double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
     double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
@@ -143,7 +86,7 @@ void ScreenStreamer::startStreaming(nlohmann::json jsonObjet) {
 
 // -------------------------------------
 
-BITMAPINFOHEADER createBitmapHeader(int width, int height)
+BITMAPINFOHEADER ScreenStreamer::createBitmapHeader(int width, int height)
 {
     BITMAPINFOHEADER  bi;
 
@@ -171,7 +114,6 @@ HBITMAP ScreenStreamer::GdiPlusScreenCapture(HWND hWnd)
     SetStretchBltMode(hwindowCompatibleDC, COLORONCOLOR);
 
     // define scale, height and width
-    int scale = 1;
     int screenx = GetSystemMetrics(SM_XVIRTUALSCREEN);
     int screeny = GetSystemMetrics(SM_YVIRTUALSCREEN);
     int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
@@ -201,31 +143,27 @@ HBITMAP ScreenStreamer::GdiPlusScreenCapture(HWND hWnd)
     return hbwindow;
 }
 
-bool ScreenStreamer::saveToMemory(HBITMAP* hbitmap, std::vector<BYTE>& data, std::string dataFormat = "png")
+bool ScreenStreamer::saveToMemory(HBITMAP* hbitmap, std::vector<BYTE>& data)
 {
     Gdiplus::Bitmap bmp(*hbitmap, nullptr);
     // write to IStream
     IStream* istream = nullptr;
-    CreateStreamOnHGlobal(NULL, TRUE, &istream);
+    CreateStreamOnHGlobal(nullptr, TRUE, &istream);
 
     // define encoding
     CLSID clsid;
-    if (dataFormat.compare("bmp") == 0) { CLSIDFromString(L"{557cf400-1a04-11d3-9a73-0000f81ef32e}", &clsid); }
-    else if (dataFormat.compare("jpg") == 0) { CLSIDFromString(L"{557cf401-1a04-11d3-9a73-0000f81ef32e}", &clsid); }
-    else if (dataFormat.compare("gif") == 0) { CLSIDFromString(L"{557cf402-1a04-11d3-9a73-0000f81ef32e}", &clsid); }
-    else if (dataFormat.compare("tif") == 0) { CLSIDFromString(L"{557cf405-1a04-11d3-9a73-0000f81ef32e}", &clsid); }
-    else if (dataFormat.compare("png") == 0) { CLSIDFromString(L"{557cf406-1a04-11d3-9a73-0000f81ef32e}", &clsid); }
+    CLSIDFromString(L"{557cf406-1a04-11d3-9a73-0000f81ef32e}", &clsid);
 
-    Gdiplus::Status status = bmp.Save(istream, &clsid, NULL);
+    Gdiplus::Status status = bmp.Save(istream, &clsid, nullptr);
     if (status != Gdiplus::Status::Ok)
         return false;
 
     // get memory handle associated with istream
-    HGLOBAL hg = NULL;
+    HGLOBAL hg = nullptr;
     GetHGlobalFromStream(istream, &hg);
 
     // copy IStream to buffer
-    int bufsize = GlobalSize(hg);
+    SIZE_T bufsize = GlobalSize(hg);
     data.resize(bufsize);
 
     // lock & unlock memory
@@ -239,12 +177,11 @@ bool ScreenStreamer::saveToMemory(HBITMAP* hbitmap, std::vector<BYTE>& data, std
 void ScreenStreamer::takeScreenshot(std::vector<BYTE> &data){
     Gdiplus::GdiplusStartupInput gdiplusStartupInput;
     ULONG_PTR gdiplusToken;
-    GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+    GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
     HWND hWnd = GetDesktopWindow();
     HBITMAP hBmp = GdiPlusScreenCapture(hWnd);
 
     // save as png to memory
-    std::string dataFormat = "png";
-    saveToMemory(&hBmp, data, dataFormat);
+    saveToMemory(&hBmp, data);
 
 }

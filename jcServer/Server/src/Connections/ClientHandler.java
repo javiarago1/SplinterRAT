@@ -10,31 +10,26 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 public class ClientHandler {
-    private final ConcurrentHashMap<String, Streams> map = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<SocketType, Streams> map = new ConcurrentHashMap<>();
     private SystemInformation tempSystemInformation;
     private NetworkInformation tempNetworkInformation;
 
-    public void addStream(Socket socket) {
-        Streams stream;
-        String nameOfOperation;
-        try {
-            stream = new Streams(socket);
-            stream.sendString("WAU");
-            nameOfOperation = stream.readString();
-            map.put(nameOfOperation, stream);
-            System.out.println("Establecido nuevo socket! "+nameOfOperation);
-            if (nameOfOperation.equals("MAIN")){
-                stream.setMainStream(stream);
-            } else {
-                stream.setMainStream(map.get("MAIN"));
-            }
-            stream.sendString("OK");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private Streams mainStream;
+
+    public void addStream(Identifier identifier) {
+
+        map.put(identifier.socketType(), identifier.stream());
+        if (identifier.socketType() == SocketType.MAIN) {
+            identifier.stream().setMainStream(identifier.stream());
+            mainStream = identifier.stream();
+        } else {
+            identifier.stream().setMainStream(mainStream);
         }
+
+
     }
 
-    public int getSizeOfMap(){
+    public int getSizeOfMap() {
         return map.size();
     }
 
@@ -46,8 +41,8 @@ public class ClientHandler {
         return tempNetworkInformation.IP() + " - " + tempSystemInformation.USER_NAME();
     }
 
-    public Streams getStreamByName(SocketType socketType){
-        return map.get(socketType.toString());
+    public Streams getStreamByName(SocketType socketType) {
+        return map.get(socketType);
     }
 
     public SystemInformation getTempSystemInformation() {

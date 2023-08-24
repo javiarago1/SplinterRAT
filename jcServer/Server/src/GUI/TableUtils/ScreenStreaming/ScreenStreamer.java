@@ -9,8 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -37,14 +35,7 @@ public class ScreenStreamer implements Runnable {
 
     @Override
     public void run() {
-        DatagramSocket socket;
         String[] dimensions;
-        try {
-            socket = new DatagramSocket(3055); // S
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        }
-
         try {
             stream.sendAction(Screen.STREAM);
             String received = stream.readString();
@@ -54,12 +45,12 @@ public class ScreenStreamer implements Runnable {
                 byte[] array;
                 stream.sendSize(1);
                 array = stream.receiveBytes();
-                // if (isScreenshot.get()) takeScreenshot(array);
+                if (isScreenshot.get()) takeScreenshot(array);
                 ImageIcon tempIMG = new ImageIcon(array);
-                //Image img = tempIMG.getImage();
+                Image img = tempIMG.getImage();
                 SwingUtilities.invokeLater(() -> {
-                    // Image imgScale = img.getScaledInstance(streamingScreenShower.getWidth(), streamingScreenShower.getHeight(), Image.SCALE_DEFAULT);
-                    streamingScreenShower.setIcon(tempIMG);
+                    Image imgScale = img.getScaledInstance(streamingScreenShower.getWidth(), streamingScreenShower.getHeight(), Image.SCALE_SMOOTH);
+                    streamingScreenShower.setIcon(new ImageIcon(imgScale));
                 });
             }
             stream.sendSize(-1);

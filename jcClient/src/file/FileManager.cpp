@@ -43,8 +43,8 @@ void FileManager::sendDirectory(nlohmann::json jsonObject){
 
 std::string FileManager::getFilesAndFolders(nlohmann::json jsonObject){
     std::string path = jsonObject["path"];
-    std::string folderString = FileManager::readDirectory(std::filesystem::u8path(path), true, false);
-    std::string fileString = FileManager::readDirectory(std::filesystem::u8path(path), false, true);
+    std::string folderString = FileManager::readDirectory(std::filesystem::path(path), true, false);
+    std::string fileString = FileManager::readDirectory(std::filesystem::path(path), false, true);
     folderString.append(fileString);
     return folderString;
 }
@@ -71,8 +71,8 @@ std::vector<std::string> FileManager::getDisks() {
 void FileManager::copyFiles(const std::vector<std::string> &vectorOfFiles,const std::vector<std::string> &vectorOfDirectories) {
     for (const auto &directory: vectorOfDirectories) {
         for (const auto &file: vectorOfFiles) {
-            std::filesystem::path pathI = std::filesystem::u8path(file);
-            std::filesystem::path pathF = std::filesystem::u8path(directory);
+            std::filesystem::path pathI = std::filesystem::path(file);
+            std::filesystem::path pathF = std::filesystem::path(directory);
             pathF /= pathI.filename();
             if (!std::filesystem::exists(pathF)) {
                 std::filesystem::copy(pathI, pathF, std::filesystem::copy_options::overwrite_existing |
@@ -84,8 +84,8 @@ void FileManager::copyFiles(const std::vector<std::string> &vectorOfFiles,const 
 
 void FileManager::moveFiles(const std::vector<std::string>& vectorOfFiles, const std::string& directory) {
     for (const auto &file: vectorOfFiles) {
-        std::filesystem::path pathI = std::filesystem::u8path(file);
-        std::filesystem::path pathF = std::filesystem::u8path(directory);
+        std::filesystem::path pathI = std::filesystem::path(file);
+        std::filesystem::path pathF = std::filesystem::path(directory);
         pathF /= pathI.filename();
         if (!std::filesystem::exists(pathF)) {
             std::filesystem::rename(pathI, pathF);
@@ -95,7 +95,7 @@ void FileManager::moveFiles(const std::vector<std::string>& vectorOfFiles, const
 
 void FileManager::deleteFiles(const std::vector<std::string>&vectorOfFiles) {
     for (const auto &file: vectorOfFiles) {
-        std::filesystem::remove_all(std::filesystem::u8path(file));
+        std::filesystem::remove_all(std::filesystem::path(file));
     }
 }
 

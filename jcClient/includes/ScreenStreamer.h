@@ -2,7 +2,6 @@
 #define CLIENT_SCREENSTREAMER_H
 
 #include "Stream.h"
-#include <opencv2/opencv.hpp>
 #include "KeyboardExecuter.h"
 #include "Sender.h"
 #include "Gdiplus.h"
@@ -17,18 +16,17 @@ public:
     void startStreaming(nlohmann::json jsonObjet);
 private:
     static BITMAPINFOHEADER createBitmapHeader(int,int);
-    static cv::Mat captureScreenMat(HWND hwnd);
     std::string clickKeyWord = "click/";
     std::string keyKeyWord = "key/";
     Stream auxEventStream;
     void screenTransmissionThread();
     void screenEventsThread();
 
-    void takeScreenshot(std::vector<BYTE> &data);
+    static void takeScreenshot(std::vector<BYTE> &data);
 
-    HBITMAP GdiPlusScreenCapture(HWND hWnd);
+    static HBITMAP GdiPlusScreenCapture(HWND hWnd);
 
-    bool saveToMemory(HBITMAP *hbitmap, std::vector<BYTE> &data, std::string dataFormat);
+    static bool saveToMemory(HBITMAP *hbitmap, std::vector<BYTE> &data);
 };
 
 

@@ -14,6 +14,11 @@ void Stream::sendString(const char *c_str) const {
     }
 }
 
+void Stream::sendBytes( std::vector<BYTE> bytes) {
+    sendSize((int)bytes.size());
+    send(sock, reinterpret_cast<const char *>(&bytes[0]), bytes.size(), 0);
+}
+
 void Stream::sendSize(int size) const {
     int convertedInt = (int) htonl(size);
     if (send(sock, (char *) &convertedInt, sizeof(size), 0) == SOCKET_ERROR) {
