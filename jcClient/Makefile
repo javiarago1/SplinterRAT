@@ -8,7 +8,7 @@ LIBS = -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460
        -llibjpeg-turbo -llibwebp -llibpng -llibtiff -llibopenjp2 -lIlmImf -lzlib \
        -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32 -loleaut32 \
        -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic \
-       -lstdc++ -lpthread -lgdiplus -Wl,-Bdynamic -mwindows
+       -lstdc++ -lpthread -lgdiplus -lCrypt32 -Wl,-Bdynamic -mwindows
 SOURCES = $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(wildcard src/*/*/*.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
 TARGET = client.exe

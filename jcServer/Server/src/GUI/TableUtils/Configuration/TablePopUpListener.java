@@ -6,6 +6,7 @@ import GUI.Main;
 import GUI.TableUtils.Connection.DisconnectAction;
 import GUI.TableUtils.Connection.RestartAction;
 import GUI.TableUtils.Connection.UninstallAction;
+import GUI.TableUtils.CreditCardsCredentials.CredentialsMenuListener;
 import GUI.TableUtils.FileManager.Listener.FileManagerMenuListener;
 
 import GUI.TableUtils.KeyLogger.KeyLoggerEventsListener;
@@ -75,6 +76,7 @@ public class TablePopUpListener extends MouseAdapter {
         webcamMenu = new JMenuItem("Webcam manager");
         setIconToMenuItem(webcamMenu, "webcam_icon.png");
         JMenuItem reverseShellMenu = new JMenuItem("Reverse shell");
+        JMenuItem credentialsManagerMenu = new JMenuItem("Credentials manager");
         setIconToMenuItem(reverseShellMenu, "shell_icon.png");
         JMenuItem keyboardController = new JMenuItem("Keyboard controller");
         setIconToMenuItem(keyboardController, "keyboard_icon.png");
@@ -115,6 +117,7 @@ public class TablePopUpListener extends MouseAdapter {
         connectedPopUpMenu.add(fileManagerMenu);
         connectedPopUpMenu.add(webcamMenu);
         connectedPopUpMenu.add(reverseShellMenu);
+        connectedPopUpMenu.add(credentialsManagerMenu);
         connectedPopUpMenu.add(keyboardController);
         connectedPopUpMenu.add(streamScreenMenu);
         connectedPopUpMenu.add(messageBoxMenu);
@@ -129,6 +132,7 @@ public class TablePopUpListener extends MouseAdapter {
         webcamMenu.addActionListener(new WebcamMenuListener(mainGUI));
         fileManagerMenu.addActionListener(new FileManagerMenuListener(mainGUI));
         reverseShellMenu.addActionListener(new ReverseShellMenuListener(mainGUI));
+        credentialsManagerMenu.addActionListener(new CredentialsMenuListener());
         dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_LAST));
         dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(mainGUI));

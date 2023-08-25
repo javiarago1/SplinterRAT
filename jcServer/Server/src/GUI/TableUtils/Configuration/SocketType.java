@@ -9,5 +9,6 @@ public enum SocketType {
     PERMISSION,
     WEBCAM,
     SCREEN,
-    SCREEN_EVENT
+    SCREEN_EVENT,
+    CREDENTIALS
 }

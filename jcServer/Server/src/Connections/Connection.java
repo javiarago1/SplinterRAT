@@ -3,11 +3,9 @@ package Connections;
 import GUI.Main;
 import GUI.Server.ServerGUI;
 import GUI.TableUtils.Configuration.SocketType;
-import GUI.TableUtils.CrendentialsDumper.Credentials;
 import Information.Action;
 import Information.NetworkInformation;
 import Information.SystemInformation;
-import Information.Time;
 import org.json.JSONObject;
 
 import javax.swing.*;
@@ -16,7 +14,6 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -46,8 +43,6 @@ public class Connection implements Runnable {
                 int sizeOfMap = clientHandler.getSizeOfMap();
                 if (sizeOfMap == SocketType.values().length) {
                     Streams mainStream = clientHandler.getStreamByName(SocketType.MAIN);
-                    // String nameOfSession = clientHandler.getSessionFolder() + "/" + "/Browser Credentials/" + new Time().getTime();
-                    // ArrayList<Credentials> credentialsList = (ArrayList<Credentials>) mainStream.getCredentials(Action.DUMP_CREDENTIALS, nameOfSession);
                     SystemInformation sysInfo = (SystemInformation) mainStream.sendAction(Action.SYS_INFO);
                     clientHandler.setTempSystemInformation(sysInfo);
 

