@@ -15,7 +15,6 @@ private:
     bool download=true;
     void downloadFolder(const std::filesystem::path &, const wchar_t *relativePath);
     void downloadFile(const std::wstring &filePath,const std::wstring &basePath);
-
 public:
     explicit Download(const Stream&);
     void downloadContent(nlohmann::json jsonObject);

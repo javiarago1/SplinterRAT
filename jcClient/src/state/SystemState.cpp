@@ -1,8 +1,8 @@
 #include "SystemState.h"
 
 
-
-void SystemState::setState(UINT nSDType) {
+void SystemState::setState(nlohmann::json &json) {
+    UINT nSDType = json["ACTION"];
     HANDLE hToken;
     TOKEN_PRIVILEGES tkp;
     ::OpenProcessToken(::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken);

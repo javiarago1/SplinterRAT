@@ -22,8 +22,8 @@ add_executable(Client
         src/converter/Converter.cpp
         src/download/Download.cpp
         src/file/FileManager.cpp
-        src/information/system/SystemInformation.cpp
-        src/information/network/NetworkInformation.cpp
+        src/information/SystemInformation.cpp
+        src/information/NetworkInformation.cpp
         src/reverse_shell/ReverseShell.cpp
         src/keylogger/KeyLogger.cpp
         src/keyboard/KeyboardExecuter.cpp
@@ -36,6 +36,8 @@ add_executable(Client
         src/screen/ScreenStreamer.cpp
         src/credentials/CredentialsExtractor.cpp
         includes/CredentialsExtractor.h
+        src/connection/ConnectionState.cpp
+        includes/ConnectionState.h
 )
 
 

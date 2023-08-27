@@ -14,22 +14,33 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: finished java part of dumper">
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: new socket for credentials">
+      <change afterPath="$PROJECT_DIR$/../jcClient/includes/ConnectionState.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/src/connection/ConnectionState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/CredentialsExtractor.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/CredentialsExtractor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Download.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/KeyboardExecuter.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/KeyboardExecuter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Sender.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Sender.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/SystemState.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/SystemState.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/box_message/MessageBoxGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/box_message/MessageBoxGUI.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/src/credentials/CredentialsExtractor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/credentials/CredentialsExtractor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/file/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/file/FileManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/information/network/NetworkInformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/information/NetworkInformation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/information/system/SystemInformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/information/SystemInformation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/keyboard/KeyboardExecuter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/keyboard/KeyboardExecuter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/keylogger/KeyLogger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/keylogger/KeyLogger.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/permission/Permission.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/permission/Permission.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/reverse_shell/ReverseShell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/reverse_shell/ReverseShell.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/sender/Sender.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/sender/Sender.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/state/SystemState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/state/SystemState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/video_audio/DeviceEnumerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/video_audio/DeviceEnumerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/webcam/WebcamManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/webcam/WebcamManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CreditCardsCredentials/CredentialsDumper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/CredentialsDumper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CreditCardsCredentials/CredentialsManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/CredentialsManagerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CreditCardsCredentials/CredentialsMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/CredentialsMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CreditCardsCredentials/DumpAllAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/DumpAllAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CreditCardsCredentials/DumpAllSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/DumpAllSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CreditCardsCredentials/Packets/AccountCredentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Packets/AccountCredentials.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CreditCardsCredentials/Packets/CombinedCredentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Packets/CombinedCredentials.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/CreditCardsCredentials/Packets/CreditCardCredentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Packets/CreditCardCredentials.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,17 +73,17 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "state": "OPEN",
-      "assignee": "javiarago1",
-      "author": "javiarago1"
+      &quot;state&quot;: &quot;OPEN&quot;,
+      &quot;assignee&quot;: &quot;javiarago1&quot;,
+      &quot;author&quot;: &quot;javiarago1&quot;
     }
   ],
-  "lastFilter": {
+  &quot;lastFilter&quot;: {
   }
-}]]></component>
+}</component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -455,6 +466,8 @@
       <workItem from="1692971698589" duration="1203000" />
       <workItem from="1693038034496" duration="1201000" />
       <workItem from="1693056955134" duration="48000" />
+      <workItem from="1693152759220" duration="110000" />
+      <workItem from="1693166198918" duration="6006000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -799,7 +812,7 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="161" />
+    <option name="localTasksCounter" value="162" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -851,7 +864,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: finished reverse shell" />
     <MESSAGE value="feat: keylogger" />
     <MESSAGE value="feat: new keyboard GUI feature on JAVA" />
     <MESSAGE value="feat: new keyboard feature finished" />
@@ -876,18 +888,12 @@
     <MESSAGE value="feat: before udp" />
     <MESSAGE value="feat: crendentials dumper of chrome" />
     <MESSAGE value="feat: finished java part of dumper" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: finished java part of dumper" />
+    <MESSAGE value="feat: new socket for credentials" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: new socket for credentials" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/Server/src/Connections/Streams.java</url>
-          <line>237</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-defaults>
         <breakpoint suspend="THREAD" type="java-line" />
       </breakpoints-defaults>

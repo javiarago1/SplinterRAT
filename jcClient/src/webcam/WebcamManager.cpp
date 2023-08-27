@@ -6,6 +6,9 @@
 // constructor -> information of recording and socket
 WebcamManager::WebcamManager(const Stream &stream)
         : Sender(stream) {
+    actionMap["START_WEBCAM"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &WebcamManager::startWebcam,json);
+    };
 }
 
 void WebcamManager::setConfiguration(nlohmann::json jsonObject) {

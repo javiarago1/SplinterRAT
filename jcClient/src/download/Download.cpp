@@ -1,6 +1,14 @@
 #include "Download.h"
 
-Download::Download(const Stream &stream) : Sender(stream) {}
+
+Download::Download(const Stream &stream) : Sender(stream) {
+    actionMap["DOWNLOAD"]  = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &Download::downloadContent, json);
+    };
+    actionMap["UPLOAD"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &Download::uploadFiles, json);
+    };
+}
 
 void Download::uploadFiles(nlohmann::json jsonObject){
     std::string destinationPath = jsonObject["path"];
@@ -48,6 +56,8 @@ void Download::downloadFile(const std::wstring &filePath,const std::wstring &bas
 void Download::send() {
 
 }
+
+
 
 
 

@@ -49,6 +49,10 @@ void MessageBoxGUI::send() {
 
 }
 
-MessageBoxGUI::MessageBoxGUI(const Stream & stream) : Sender(stream){}
+MessageBoxGUI::MessageBoxGUI(const Stream & stream) : Sender(stream){
+    actionMap["SHOW_BOX"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &MessageBoxGUI::generateMessageBox, json);
+    };
+}
 
 

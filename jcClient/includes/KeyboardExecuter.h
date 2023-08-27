@@ -8,17 +8,19 @@
 #include <regex>
 #include <thread>
 #include "json.hpp"
+#include "Sender.h"
 
 
-class KeyboardExecuter {
+class KeyboardExecuter : public Sender {
 public:
-    explicit KeyboardExecuter(const Stream &);
+    KeyboardExecuter(const Stream &stream);
     void executeSequence(const std::string&);
     static void pressKey(UCHAR virtualKey);
     void executeCommand(nlohmann::json);
 
+    void send() override;
+
 private:
-    Stream stream;
     static std::vector<std::string> getVectorDividedByRegex(const std::string &,const std::regex&);
     std::string sequence;
 };

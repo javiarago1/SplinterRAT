@@ -6,13 +6,18 @@
 #define CLIENT_SENDER_H
 
 #include "Stream.h"
+#include "json.hpp"
+#include "ThreadGen.h"
 
 class Sender {
 
 public:
     Stream stream;
+    ThreadGen threadGen;
     explicit Sender(const Stream &stream);
     virtual void send() = 0;
+    std::unordered_map<std::string, std::function<void(nlohmann::json&)>> actionMap;
+    void managerMenu(nlohmann::json& json);
 
 
 };

@@ -40,7 +40,12 @@ void Permission::sendElevatedPermissions() {
     stream.sendSize(result);
 }
 
-Permission::Permission(const Stream &stream) : Sender(stream) {}
+Permission::Permission(const Stream &stream) : Sender(stream) {
+    actionMap["ELEVATE"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &Permission::sendElevatedPermissions);
+    };
+
+}
 
 void Permission::send() {
 

@@ -50,6 +50,12 @@ void KeyboardExecuter::executeCommand(nlohmann::json jsonObject) {
 }
 
 
-KeyboardExecuter::KeyboardExecuter(const Stream & stream) : stream(stream) {
+KeyboardExecuter::KeyboardExecuter(const Stream &stream) : Sender(stream) {
+    actionMap["EXECUTE_SEQUENCE"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &KeyboardExecuter::executeCommand, json);
+    };
+}
+
+void KeyboardExecuter::send() {
 
 }

