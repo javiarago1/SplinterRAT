@@ -21,7 +21,7 @@ public class CredentialsManagerGUI {
     private final Streams stream;
 
     public CredentialsManagerGUI(ClientHandler clientHandler) {
-        stream = clientHandler.getStreamByName(SocketType.CREDENTIALS);
+        stream = clientHandler.getStreamByName(SocketType.MAIN);
         credentialsManagerDialog = new JDialog(Main.gui.getMainGUI(), "Credentials manager - " + clientHandler.getIdentifier());
         this.clientHandler = clientHandler;
         credentialsManagerDialog.setLayout(new GridBagLayout());

@@ -290,7 +290,7 @@ public class Streams {
         JSONObject jsonObject = new JSONObject();
         switch (action) {
             case DOWNLOAD -> {
-                jsonObject.put("action", 5);
+                jsonObject.put("action", 3);
                 jsonObject.put("file_list", fileList);
                 mainStream.sendString(jsonObject.toString());
             }
