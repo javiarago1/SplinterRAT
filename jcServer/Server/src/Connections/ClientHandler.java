@@ -13,20 +13,16 @@ public class ClientHandler {
     private final ConcurrentHashMap<SocketType, Streams> map = new ConcurrentHashMap<>();
     private SystemInformation tempSystemInformation;
     private NetworkInformation tempNetworkInformation;
-
     private Streams mainStream;
 
     public void addStream(Identifier identifier) {
-
+        identifier.stream().setMainStream(mainStream);
         map.put(identifier.socketType(), identifier.stream());
-        if (identifier.socketType() == SocketType.MAIN) {
-            identifier.stream().setMainStream(identifier.stream());
-            mainStream = identifier.stream();
-        } else {
-            identifier.stream().setMainStream(mainStream);
-        }
+    }
 
-
+    public void setMainStream(Streams stream) {
+        map.put(SocketType.MAIN, stream);
+        this.mainStream = stream;
     }
 
     public int getSizeOfMap() {

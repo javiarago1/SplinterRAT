@@ -1,4 +1,4 @@
-package GUI.TableUtils.CreditCardsCredentials;
+package GUI.TableUtils.Credentials;
 
 
 import java.awt.event.ActionEvent;

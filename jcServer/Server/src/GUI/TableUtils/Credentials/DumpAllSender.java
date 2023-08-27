@@ -1,9 +1,9 @@
-package GUI.TableUtils.CreditCardsCredentials;
+package GUI.TableUtils.Credentials;
 
 import Connections.ClientErrorHandler;
-import GUI.TableUtils.CreditCardsCredentials.Packets.AccountCredentials;
-import GUI.TableUtils.CreditCardsCredentials.Packets.CombinedCredentials;
-import GUI.TableUtils.CreditCardsCredentials.Packets.CreditCardCredentials;
+import GUI.TableUtils.Credentials.Packets.AccountCredentials;
+import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
+import GUI.TableUtils.Credentials.Packets.CreditCardCredentials;
 import Information.Action;
 import Information.Time;
 

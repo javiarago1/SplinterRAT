@@ -35,7 +35,7 @@ public class Connection implements Runnable {
             ClientHandler clientHandler = dialog.get(identifier.UUID());
             if (clientHandler == null) {
                 clientHandler = new ClientHandler();
-                clientHandler.addStream(identifier);
+                clientHandler.setMainStream(identifier.stream());
                 dialog.put(identifier.UUID(), clientHandler);
                 System.out.println("Connected to: " + socket.getRemoteSocketAddress());
             } else {

@@ -1,4 +1,4 @@
-package GUI.TableUtils.CreditCardsCredentials;
+package GUI.TableUtils.Credentials;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -13,9 +13,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import GUI.TableUtils.CreditCardsCredentials.Packets.AccountCredentials;
-import GUI.TableUtils.CreditCardsCredentials.Packets.CombinedCredentials;
-import GUI.TableUtils.CreditCardsCredentials.Packets.CreditCardCredentials;
+import GUI.TableUtils.Credentials.Packets.AccountCredentials;
+import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
+import GUI.TableUtils.Credentials.Packets.CreditCardCredentials;
 import Information.Time;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package GUI.TableUtils.CreditCardsCredentials.Packets;
+package GUI.TableUtils.Credentials.Packets;
 
 import java.util.List;
 

