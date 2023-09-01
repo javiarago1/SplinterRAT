@@ -66,8 +66,8 @@ void ScreenStreamer::send() {
 }
 
 
-ScreenStreamer::ScreenStreamer(const Stream &stream, const Stream &auxEventStream) :
-        Sender(stream), auxEventStream(auxEventStream) {
+ScreenStreamer::ScreenStreamer(const Stream &stream, const Stream &auxEventStream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) :
+        Sender(stream, actionMap), auxEventStream(auxEventStream) {
     actionMap["START_STREAMING"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &ScreenStreamer::startStreaming,json);
     };

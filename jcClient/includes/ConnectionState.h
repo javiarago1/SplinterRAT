@@ -6,11 +6,10 @@
 
 class ConnectionState : public Sender{
 private:
-    bool &connectionState;
-    bool &streamListening;
+
 public:
     void send() override;
-    explicit ConnectionState(const Stream &stream,
+    explicit ConnectionState(const Stream &stream,std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap,
                              bool &connectionState,
                              bool &streamListening);
 };

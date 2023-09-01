@@ -1,12 +1,10 @@
 #include "ConnectionState.h"
 
 
-ConnectionState::ConnectionState(const Stream &stream,
+ConnectionState::ConnectionState(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap,
                                  bool &connectionState,
                                  bool &streamListening) :
-                                 Sender(stream),
-                                 connectionState(connectionState),
-                                 streamListening(streamListening)
+                                 Sender(stream, actionMap)
                                  {
     actionMap["UNINSTALL"] = [](nlohmann::json& json) {
         Install::uninstall();

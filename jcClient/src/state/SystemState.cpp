@@ -1,8 +1,8 @@
 #include "SystemState.h"
 
 
-void SystemState::setState(nlohmann::json &json) {
-    UINT nSDType = json["ACTION"];
+void SystemState::setState(nlohmann::json json) {
+    UINT nSDType = json["SUB_ACTION"];
     HANDLE hToken;
     TOKEN_PRIVILEGES tkp;
     ::OpenProcessToken(::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken);
@@ -25,4 +25,15 @@ void SystemState::setState(nlohmann::json &json) {
             ::ExitWindowsEx(EWX_REBOOT | EWX_FORCE, 0);
             break; // reboot
     }
+}
+
+SystemState::SystemState(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
+        : Sender(stream, actionMap){
+    actionMap["SYSTEM_STATE"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &SystemState::setState, json);
+    };
+}
+
+void SystemState::send() {
+
 }

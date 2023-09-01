@@ -150,7 +150,7 @@ void FileManager::copyFilesThread(nlohmann::json jsonObject){
 }
 
 
-FileManager::FileManager(const Stream &stream) : Sender(stream){
+FileManager::FileManager(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) : Sender(stream, actionMap) {
     actionMap["RUN"] =[&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &FileManager::runFilesThread, json);
     };

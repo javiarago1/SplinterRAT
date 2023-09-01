@@ -40,7 +40,7 @@ void Permission::sendElevatedPermissions() {
     stream.sendSize(result);
 }
 
-Permission::Permission(const Stream &stream) : Sender(stream) {
+Permission::Permission(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) : Sender(stream, actionMap) {
     actionMap["ELEVATE"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &Permission::sendElevatedPermissions);
     };

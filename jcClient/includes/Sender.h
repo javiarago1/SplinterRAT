@@ -14,10 +14,8 @@ class Sender {
 public:
     Stream stream;
     ThreadGen threadGen;
-    explicit Sender(const Stream &stream);
+    explicit Sender(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>>& actionMap);
     virtual void send() = 0;
-    std::unordered_map<std::string, std::function<void(nlohmann::json&)>> actionMap;
-    void managerMenu(nlohmann::json& json);
 
 
 };

@@ -8,7 +8,7 @@ class Permission : public Sender {
 public:
     void send() override;
 
-    explicit Permission(const Stream &stream);
+    explicit Permission(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
     static BOOL hasAdminPermission();
     static BOOL elevatePermissions();
     void sendElevatedPermissions();

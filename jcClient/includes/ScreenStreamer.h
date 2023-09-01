@@ -11,7 +11,7 @@
 class ScreenStreamer : public Sender {
 
 public:
-    explicit ScreenStreamer(const Stream &stream, const Stream &auxEventStream);
+    explicit ScreenStreamer(const Stream &stream, const Stream &auxEventStream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
     void send() override;
     void startStreaming(nlohmann::json jsonObjet);
 private:

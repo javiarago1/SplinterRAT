@@ -1,7 +1,8 @@
 #include "Download.h"
 
 
-Download::Download(const Stream &stream) : Sender(stream) {
+Download::Download(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
+: Sender(stream, actionMap) {
     actionMap["DOWNLOAD"]  = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &Download::downloadContent, json);
     };

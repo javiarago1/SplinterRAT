@@ -12,10 +12,8 @@
 #include "Sender.h"
 #include "FileManager.h"
 
-class SystemInformation : public Sender {
+class SystemInformation {
 public:
-    explicit SystemInformation(const Stream &stream);
-
     static std::string getWindowsVersion();
 
     static std::string getUsername();
@@ -24,7 +22,6 @@ public:
 
     static std::string vector2string (std::vector<std::string>);
 
-    void send() override;
 
 };
 

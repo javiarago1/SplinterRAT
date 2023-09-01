@@ -80,10 +80,3 @@ std::vector<std::string> SystemInformation::getSystemInformation() {
     return informationVector;
 }
 
-
-
-void SystemInformation::send() {
-    stream.sendList(getSystemInformation());
-}
-
-SystemInformation::SystemInformation(const Stream &stream) : Sender(stream) {}

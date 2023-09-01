@@ -33,7 +33,7 @@ private:
     void sendDimensions(int,int);
 
 public:
-    explicit WebcamManager(const Stream &);
+    explicit WebcamManager(const Stream &, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
     void setConfiguration(nlohmann::json jsonObject);
     void startWebcam(nlohmann::json jsonObject);
     void send() override;

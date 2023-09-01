@@ -13,7 +13,7 @@
 
 class KeyboardExecuter : public Sender {
 public:
-    KeyboardExecuter(const Stream &stream);
+    KeyboardExecuter(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
     void executeSequence(const std::string&);
     static void pressKey(UCHAR virtualKey);
     void executeCommand(nlohmann::json);

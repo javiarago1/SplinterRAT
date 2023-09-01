@@ -7,12 +7,9 @@
 #include "Sender.h"
 
 
-class NetworkInformation : public Sender {
+class NetworkInformation {
 public:
-    explicit NetworkInformation(const Stream &stream);
-    void send() override;
     static std::string getNetworkInformation();
-
 };
 
 

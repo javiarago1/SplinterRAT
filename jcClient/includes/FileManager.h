@@ -17,7 +17,7 @@ class FileManager : public Sender {
 
 public:
 
-    explicit FileManager(const Stream &stream);
+    explicit FileManager(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
 
     static std::string getFilesAndFolders(nlohmann::json jsonObject);
 

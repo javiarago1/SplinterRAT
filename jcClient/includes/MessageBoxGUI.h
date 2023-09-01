@@ -19,7 +19,7 @@ private:
     std::vector<std::string> generateVectorByDelimiter();
     static UINT getTypeFromItem(int selectedType);
 public:
-    explicit MessageBoxGUI(const Stream&);
+    explicit MessageBoxGUI(const Stream&, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
     void generateMessageBox(nlohmann::json jsonObject);
     void showMessageGUI();
     void send() override;

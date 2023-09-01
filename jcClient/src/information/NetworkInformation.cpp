@@ -24,11 +24,6 @@ std::string NetworkInformation::getNetworkInformation() {
     return networkInformationJSON;
 }
 
-void NetworkInformation::send() {
-    stream.sendString(getNetworkInformation().c_str());
-}
-
-NetworkInformation::NetworkInformation(const Stream &stream) : Sender(stream) {}
 
 
 

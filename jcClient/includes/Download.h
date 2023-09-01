@@ -16,7 +16,7 @@ private:
     void downloadFolder(const std::filesystem::path &, const wchar_t *relativePath);
     void downloadFile(const std::wstring &filePath,const std::wstring &basePath);
 public:
-    explicit Download(const Stream&);
+    explicit Download(const Stream&, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
     void downloadContent(nlohmann::json jsonObject);
     void send() override;
     void uploadFiles(nlohmann::json jsonObject);

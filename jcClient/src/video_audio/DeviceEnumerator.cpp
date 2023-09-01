@@ -128,7 +128,8 @@ std::string DeviceEnumerator::ConvertWCSToMBS(const wchar_t* pstr, long wslen)
 	return dblstr;
 }
 
-DeviceEnumerator::DeviceEnumerator(const Stream &stream) : Sender(stream) {
+DeviceEnumerator::DeviceEnumerator(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
+        : Sender(stream, actionMap) {
     actionMap["SEND_WEBCAM_DEVICES"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &DeviceEnumerator::sendWebcamDevices);
     };
