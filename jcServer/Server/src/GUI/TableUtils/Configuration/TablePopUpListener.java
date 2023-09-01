@@ -50,11 +50,12 @@ public class TablePopUpListener extends MouseAdapter {
     }
 
     private void refreshClient() {
+        javax.swing.table.TableModel tableModel = Main.gui.getConnectionsTable().getModel();
         int row = Main.gui.getConnectionsTable().getSelectedRow();
-        String uniqueIP = (String) mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 0);
+        String UUID = (String) mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 0);
         for (Map.Entry<String, ClientHandler> entry : Main.server.getMap().entrySet())
-            if ((uniqueIP).equals(entry.getKey())) {
-                mainGUI.getConnectionsDefaultTableModel().setValueAt("Connected", row, 5);
+            if ((UUID).equals(entry.getKey())) {
+                mainGUI.getConnectionsDefaultTableModel().setValueAt("Connected", row, tableModel.getColumnCount() - 1);
             }
     }
 

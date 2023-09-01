@@ -43,6 +43,7 @@ public class Connection implements Runnable {
                 int sizeOfMap = clientHandler.getSizeOfMap();
                 if (sizeOfMap == SocketType.values().length) {
                     Streams mainStream = clientHandler.getStreamByName(SocketType.MAIN);
+                    mainStream.readString();
                     SystemInformation sysInfo = (SystemInformation) mainStream.sendAction(Action.SYS_INFO);
                     clientHandler.setTempSystemInformation(sysInfo);
 
@@ -73,6 +74,7 @@ public class Connection implements Runnable {
                             displayTray(netInfo.IP(), sysInfo.OPERATING_SYSTEM());
                         Main.gui.updateNumOfConnectedClients();
                     });
+                    System.out.println("Mapa: " + dialog);
                 }
             }
         } catch (Exception e) {

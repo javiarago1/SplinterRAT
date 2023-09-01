@@ -56,4 +56,8 @@ public class ClientHandler {
     public void setTempNetworkInformation(NetworkInformation tempNetworkInformation) {
         this.tempNetworkInformation = tempNetworkInformation;
     }
+
+    public ConcurrentHashMap<SocketType, Streams> getMap() {
+        return map;
+    }
 }

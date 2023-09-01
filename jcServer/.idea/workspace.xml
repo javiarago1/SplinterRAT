@@ -15,47 +15,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: converted switch to maps (legibility)">
-      <change afterPath="$PROJECT_DIR$/../jcClient/includes/Information.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jcClient/src/information/Information.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ConnectionState.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ConnectionState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/CredentialsExtractor.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/CredentialsExtractor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/DeviceEnumerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/DeviceEnumerator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Download.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/FileManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/FileManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/KeyLogger.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/KeyLogger.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/KeyboardExecuter.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/KeyboardExecuter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/MessageBoxGUI.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/MessageBoxGUI.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/NetworkInformation.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/NetworkInformation.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Permission.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Permission.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ReverseShell.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ReverseShell.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ScreenStreamer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ScreenStreamer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Sender.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Sender.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/SystemInformation.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/SystemInformation.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/SystemState.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/SystemState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/WebcamManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/WebcamManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/box_message/MessageBoxGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/box_message/MessageBoxGUI.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/connection/ConnectionState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/connection/ConnectionState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/credentials/CredentialsExtractor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/credentials/CredentialsExtractor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/file/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/file/FileManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/information/NetworkInformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/information/NetworkInformation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/information/SystemInformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/information/SystemInformation.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/keyboard/KeyboardExecuter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/keyboard/KeyboardExecuter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/keylogger/KeyLogger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/keylogger/KeyLogger.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/permission/Permission.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/permission/Permission.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/reverse_shell/ReverseShell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/reverse_shell/ReverseShell.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/sender/Sender.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/sender/Sender.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/state/SystemState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/state/SystemState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/video_audio/DeviceEnumerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/video_audio/DeviceEnumerator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/webcam/WebcamManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/webcam/WebcamManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -487,7 +449,7 @@
       <workItem from="1693315723171" duration="365000" />
       <workItem from="1693324967491" duration="558000" />
       <workItem from="1693484374535" duration="4873000" />
-      <workItem from="1693555816508" duration="3846000" />
+      <workItem from="1693555816508" duration="4320000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
