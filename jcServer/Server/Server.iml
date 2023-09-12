@@ -15,5 +15,7 @@
     <orderEntry type="library" name="commons-io-2.11.0" level="project" />
     <orderEntry type="library" name="apache.commons.lang3" level="project" />
     <orderEntry type="library" name="xerial.sqlite.jdbc" level="project" />
+    <orderEntry type="library" name="eclipse.jetty.websocket.server" level="project" />
+    <orderEntry type="library" name="eclipse.jetty.websocket.servlet" level="project" />
   </component>
 </module>

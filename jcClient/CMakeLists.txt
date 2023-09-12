@@ -1,16 +1,30 @@
 cmake_minimum_required(VERSION 3.22)
 project(Client)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 # ---- OPENCV ----
 set(OpenCV_DIR "C:\\opencv\\mingw-build\\install")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
-
-
 set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)
 # ---- OPENCV ----
+
+# ---- Sockets ----
+
+set(BOOST_ROOT "C:/Program Files (x86)/boost.asio")
+
+# Buscar el paquete de Boost
+find_package(Boost 1.71 REQUIRED COMPONENTS system)
+
+# Agregar el directorio de incluye de Boost
+include_directories(${Boost_INCLUDE_DIRS})
+
+message("Boost include dirs: ${Boost_INCLUDE_DIRS}")
+message("Boost libraries: ${Boost_LIBRARIES}")
+include_directories("C:/Program Files (x86)/websocketpp-0.8.2")
+
+# ---- Sockets ----
 
 include_directories(${CMAKE_SOURCE_DIR}/includes)
 
@@ -40,16 +54,22 @@ add_executable(Client
         includes/ConnectionState.h
         src/information/Information.cpp
         includes/Information.h
+        src/websocket/ClientSocket.cpp
+        includes/ClientSocket.h
+        src/websocket/ClientSocket.cpp
 )
 
 
 
 target_link_libraries(Client
         ${OpenCV_LIBS}
+        ${Boost_LIBRARIES}
         ws2_32
         wininet
         stdc++fs
         strmiids
         gdiplus
         Crypt32
+
+
 )

