@@ -10,7 +10,7 @@ void Stream::sendString(const char *c_str) const {
     const int size = static_cast<int>(strlen(c_str));
     sendSize(size);
     if (send(sock, c_str, size, 0) == SOCKET_ERROR) {
-        std::cout << "Failed to send message" << std::endl;
+        std::cout << "Failed to send message " << std::endl;
     }
 }
 

@@ -51,6 +51,7 @@ std::string FileManager::getFilesAndFolders(nlohmann::json jsonObject){
 }
 
 void FileManager::sendDisks(){
+    std::cout << "Socket: " << stream.getSock() << std::endl;
     stream.sendList(getDisks());
 }
 
@@ -164,6 +165,7 @@ FileManager::FileManager(const Stream &stream, std::unordered_map<std::string, s
         threadGen.runInNewThread(this, &FileManager::moveFilesThread, json);
     };
     actionMap["SEND_DISKS"]  = [&](nlohmann::json& json) {
+        std::cout << "hello world" << std::endl;
         threadGen.runInNewThread(this, &FileManager::sendDisks);
     };
     actionMap["SEND_DIRECTORY"]  = [&](nlohmann::json& json) {

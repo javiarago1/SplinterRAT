@@ -47,6 +47,7 @@ public class Connection implements Runnable {
                     SystemInformation sysInfo = (SystemInformation) mainStream.sendAction(Action.SYS_INFO);
                     clientHandler.setTempSystemInformation(sysInfo);
 
+                    System.out.println(sysInfo);
                     // Network info
                     NetworkInformation netInfo = (NetworkInformation) mainStream.sendAction(Action.NET_INFO);
                     clientHandler.setTempNetworkInformation(netInfo);

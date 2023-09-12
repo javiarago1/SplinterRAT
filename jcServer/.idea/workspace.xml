@@ -14,11 +14,13 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: converted switch to maps (legibility)">
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: converted">
+      <change beforePath="$PROJECT_DIR$/../jcClient/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/file/FileManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/file/FileManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/stream/Stream.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/stream/Stream.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -449,7 +451,10 @@
       <workItem from="1693315723171" duration="365000" />
       <workItem from="1693324967491" duration="558000" />
       <workItem from="1693484374535" duration="4873000" />
-      <workItem from="1693555816508" duration="4320000" />
+      <workItem from="1693555816508" duration="9689000" />
+      <workItem from="1693649473467" duration="4066000" />
+      <workItem from="1694075796117" duration="15000" />
+      <workItem from="1694519413749" duration="731000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -794,7 +799,7 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="163" />
+    <option name="localTasksCounter" value="164" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -846,7 +851,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: new keyboard GUI feature on JAVA" />
     <MESSAGE value="feat: new keyboard feature finished" />
     <MESSAGE value="feat: messagebox thread?" />
     <MESSAGE value="feat: messagebox with thread optimization" />
@@ -871,7 +875,8 @@
     <MESSAGE value="feat: finished java part of dumper" />
     <MESSAGE value="feat: new socket for credentials" />
     <MESSAGE value="feat: converted switch to maps (legibility)" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: converted switch to maps (legibility)" />
+    <MESSAGE value="feat: converted" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: converted" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

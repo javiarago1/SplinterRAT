@@ -51,6 +51,7 @@ void WebcamManager::sendFrame(const cv::Mat& frame){
     // encoding image into buffer
     cv::imencode(".jpeg", frame, buff);
     // sending process
+    std::cout << buff.size() << std::endl;
     stream.sendSize((int) buff.size());
     ::send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
 }
