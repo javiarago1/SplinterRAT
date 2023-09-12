@@ -1,5 +1,5 @@
 #include "DeviceEnumerator.h"
-
+#include <dshow.h>
 
 
 std::vector<std::string> DeviceEnumerator::getVectorDevicesNames() {
