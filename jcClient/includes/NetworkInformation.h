@@ -5,11 +5,12 @@
 #include <windows.h>
 #include <wininet.h>
 #include "Sender.h"
+#include "json.hpp"
 
 
 class NetworkInformation {
 public:
-    static std::string getNetworkInformation();
+    static nlohmann::json getNetworkInformation();
 };
 
 

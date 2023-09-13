@@ -15,19 +15,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: converted">
-      <change afterPath="$PROJECT_DIR$/../jcClient/includes/ClientSocket.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/eclipse_jetty_websocket_server.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/eclipse_jetty_websocket_servlet.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/Information/Information.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ClientSocket.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ClientSocket.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Information.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Information.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/NetworkInformation.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/NetworkInformation.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/SystemInformation.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/SystemInformation.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/configuration.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/configuration.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/information/Information.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/information/Information.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/information/NetworkInformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/information/NetworkInformation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/information/SystemInformation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/information/SystemInformation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_2022_17_21__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_01_10_2022_17_21__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Information/SystemInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/SystemInformation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,38 +106,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "dev.websocket",
-    "last.edited.regexp": "",
-    "last_opened_file_path": "C:/Users/Nitropc/SplinterRAT/jcServer",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev.websocket&quot;,
+    &quot;last.edited.regexp&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nitropc/SplinterRAT/jcServer&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="Connections" />
@@ -462,6 +465,9 @@
       <workItem from="1693649473467" duration="4066000" />
       <workItem from="1694075796117" duration="15000" />
       <workItem from="1694519413749" duration="7898000" />
+      <workItem from="1694581367473" duration="899000" />
+      <workItem from="1694582484461" duration="4363000" />
+      <workItem from="1694598801471" duration="3979000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>

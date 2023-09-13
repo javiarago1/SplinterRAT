@@ -10,6 +10,7 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -25,14 +26,18 @@ public class ServerV2 {
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
-        System.out.println("Received metadata: " + message);
-        //connectionsMap.get(session).processMessage(message);
+        System.out.println(message);
+        connectionsMap.get(session).processMessage(message);
     }
 
     @OnWebSocketConnect
     public void onConnect(Session session) throws IOException {
+        Client client = new Client(session);
+        connectionsMap.put(session, client);
         System.out.println("New connection from " + session.getRemoteAddress().getAddress().getHostAddress());
-
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("action", "sys_net_info");
+        session.getRemote().sendString(jsonObject.toString());
     }
 
     @OnWebSocketClose
@@ -48,6 +53,7 @@ public class ServerV2 {
         byte fileId = buf[offset];
         byte control = buf[offset + 1];
         Arrays.copyOfRange(buf, offset, offset + length);
+
 /*
         // Inicializar el mapa para la sesión actual si no existe
         sessionToFileStreams.putIfAbsent(session, new ConcurrentHashMap<>());

@@ -1,7 +1,7 @@
 #include "NetworkInformation.h"
 
 // extracts JSON from API containing network information such as IP, etc
-std::string NetworkInformation::getNetworkInformation() {
+nlohmann::json NetworkInformation::getNetworkInformation() {
 
     HINTERNET net = InternetOpen("IP retriever",
                                  INTERNET_OPEN_TYPE_PRECONFIG,
@@ -21,7 +21,7 @@ std::string NetworkInformation::getNetworkInformation() {
     InternetReadFile(conn, buffer, sizeof(buffer) / sizeof(buffer[0]), &read);
     InternetCloseHandle(net);
     std::string networkInformationJSON(buffer, read);
-    return networkInformationJSON;
+    return nlohmann::json::parse(networkInformationJSON);
 }
 
 

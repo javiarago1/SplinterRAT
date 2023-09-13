@@ -18,9 +18,7 @@ public:
 
     static std::string getUsername();
 
-    static std::vector<std::string> getSystemInformation();
-
-    static std::string vector2string (std::vector<std::string>);
+    static nlohmann::json getSystemInformation();
 
 
 };
