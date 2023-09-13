@@ -11,13 +11,14 @@
 #include "Converter.h"
 #include "Sender.h"
 #include "json.hpp"
+#include "Handler.h"
 #include <thread>
 
-class FileManager : public Sender {
+class FileManager : public Handler {
 
 public:
 
-    explicit FileManager(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    explicit FileManager(ClientSocket &clientSocket);
 
     static std::string getFilesAndFolders(nlohmann::json jsonObject);
 
@@ -37,7 +38,6 @@ public:
 
     void runFiles(const std::vector<std::string> &);
 
-    void send() override;
 
     void copyFilesThread(nlohmann::json jsonObject);
 
