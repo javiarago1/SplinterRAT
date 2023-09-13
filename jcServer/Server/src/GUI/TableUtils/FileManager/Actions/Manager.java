@@ -50,9 +50,6 @@ public abstract class Manager implements ActionListener {
     }
 
 
-    public Streams getStream() {
-        return fileManagerGUI.getStream();
-    }
 
     public FileManagerGUI getFileManagerGUI() {
         return fileManagerGUI;

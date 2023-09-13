@@ -6,16 +6,19 @@
 #include <mutex>
 #include "json.hpp"
 
+typedef std::unordered_map<std::string, std::function<void(nlohmann::json &)>>& ActionMap;
+
 class ClientSocket {
 private:
     nlohmann::json jsonObject;
-    std::unordered_map<std::string, std::function<void(nlohmann::json &)>>& actionMap;
+
     typedef websocketpp::client<websocketpp::config::asio_client> client;
     client c;
     client::connection_ptr con;
     std::mutex sendMutex;
+    ActionMap actionMap;
 public:
-    explicit ClientSocket(const std::string& host, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    explicit ClientSocket(const std::string& host, ActionMap);
     void on_message(websocketpp::connection_hdl hdl, client::message_ptr msg);
     void on_connection(websocketpp::connection_hdl hdl);
     void startConnection();

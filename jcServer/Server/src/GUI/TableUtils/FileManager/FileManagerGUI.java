@@ -1,9 +1,8 @@
 package GUI.TableUtils.FileManager;
 
 
+import Connections.Client;
 import Connections.ClientHandler;
-import Connections.Streams;
-import GUI.TableUtils.Configuration.SocketType;
 import GUI.TableUtils.Configuration.TablePopUpListener;
 import GUI.TableUtils.FileManager.Actions.*;
 import GUI.TableUtils.FileManager.Listener.MouseListener;
@@ -22,7 +21,6 @@ public class FileManagerGUI {
 
 
     private final Stack<String> stack = new Stack<>();
-    private final Streams stream;
 
     private final JComboBox<String> diskComboBox;
 
@@ -31,20 +29,31 @@ public class FileManagerGUI {
     private final JTextField pathField;
 
     private final JScrollPane scrollPane;
+    private final Client client;
 
-    public ClientHandler getClientHandler() {
-        return clientHandler;
-    }
 
-    private final ClientHandler clientHandler;
     private final JDialog fileManagerDialog;
 
     private JPopupMenu popupMenu;
 
-    public FileManagerGUI(ClientHandler clientHandler, JFrame mainGUI) {
-        this.stream = clientHandler.getStreamByName(SocketType.FILE_MANAGER);
-        this.clientHandler = clientHandler;
-        fileManagerDialog = new JDialog(mainGUI, "File Manager -" + clientHandler.getIdentifier());
+    public void addDisks(List<String> disks) {
+        SwingUtilities.invokeLater(() -> {
+            if (disks != null) {
+                JComboBox<String> diskBox = diskComboBox;
+                DefaultComboBoxModel<String> boxModel = (DefaultComboBoxModel<String>) diskBox.getModel();
+                for (String e : disks) {
+                    if (boxModel.getIndexOf(e) == -1) {
+                        diskBox.addItem(e);
+                    }
+                }
+            }
+        });
+    }
+
+
+    public FileManagerGUI(Client client, JFrame mainGUI) {
+        this.client = client;
+        fileManagerDialog = new JDialog(mainGUI, "File Manager -" + client.getIdentifier());
         fileManagerDialog.setSize(new Dimension(600, 340));
         fileManagerDialog.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -56,7 +65,7 @@ public class FileManagerGUI {
         constraints.gridheight = 1;
         fileManagerDialog.add(refreshCurrentFolder, constraints);
 
-        refreshCurrentFolder.addActionListener(e -> stream.getExecutor().submit(new RequestDirectory(this, Movement.REFRESH_DIRECTORY)));
+        refreshCurrentFolder.addActionListener(e -> client.sender.requestDirectory(stack.peek()));
 
 
         pathField = new JTextField();
@@ -85,7 +94,7 @@ public class FileManagerGUI {
                 Object item = e.getItem();
                 stack.clear();
                 stack.push((String) item);
-                requestDirectory(Movement.REFRESH_DIRECTORY);
+                client.sender.requestDirectory(stack.peek());
             }
         });
 
@@ -97,7 +106,7 @@ public class FileManagerGUI {
         constraints.gridheight = 1;
         constraints.weightx = 0;
         fileManagerDialog.add(refreshDiskButton, constraints);
-        refreshDiskButton.addActionListener(e -> requestDisk());
+        refreshDiskButton.addActionListener(e -> client.sender.requestDisks());
 
         table = new JTable(new TableModel());
         table.getTableHeader().setReorderingAllowed(false);
@@ -123,7 +132,7 @@ public class FileManagerGUI {
 
         //add disks
 
-        requestDisk();
+
 
         createPopUpMenu();
 
@@ -205,20 +214,7 @@ public class FileManagerGUI {
 
     }
 
-
-    private void requestDisk() {
-        stream.getExecutor().submit(new RequestDisk(this));
-    }
-
     private int divider;
-
-    public void requestDirectory(String directory, Movement movement) {
-        stream.getExecutor().submit(new RequestDirectory(this, directory, movement));
-    }
-
-    public void requestDirectory(Movement movement) {
-        stream.getExecutor().submit(new RequestDirectory(this, movement));
-    }
 
     public void setDivider(int divider) {
         this.divider = divider;
@@ -232,10 +228,6 @@ public class FileManagerGUI {
         return stack;
     }
 
-
-    public Streams getStream() {
-        return stream;
-    }
 
     public JTextField getPathField() {
         return pathField;
@@ -261,4 +253,7 @@ public class FileManagerGUI {
         return popupMenu;
     }
 
+    public Client getClient() {
+        return client;
+    }
 }

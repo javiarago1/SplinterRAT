@@ -1,5 +1,6 @@
 package GUI.TableUtils.Configuration;
 
+import Connections.Client;
 import Connections.ClientHandler;
 import GUI.SplinterGUI;
 import GUI.Main;
@@ -159,11 +160,11 @@ public class TablePopUpListener extends MouseAdapter {
             DefaultTableModel defaultTableModel = mainGUI.getConnectionsDefaultTableModel();
             if (defaultTableModel.getValueAt(row, defaultTableModel.getColumnCount() - 1).equals("Connected")) {
                 connectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
-                ClientHandler stream = GetSYS.getClientHandler();
-                assert stream != null;
-                webcamMenu.setVisible(stream.getTempSystemInformation().WEBCAM());
-                keyloggerMenuOptions.setVisible(stream.getTempSystemInformation().KEYLOGGER());
-                streamScreenMenu.setVisible(stream.getTempSystemInformation().WEBCAM());
+                Client client = GetSYS.getClientHandlerV2();
+                assert client != null;
+                webcamMenu.setVisible(client.getSysInfo().WEBCAM());
+                keyloggerMenuOptions.setVisible(client.getSysInfo().KEYLOGGER());
+                streamScreenMenu.setVisible(client.getSysInfo().WEBCAM());
             } else disconnectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
         }
     }

@@ -19,24 +19,32 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @WebSocket
 public class ServerV2 {
-    public static ConcurrentHashMap<Session, Client> connectionsMap = new ConcurrentHashMap<>();
+
+    ExecutorService executor = Executors.newFixedThreadPool(100); // 10 threads
+
+    public ConcurrentHashMap<Session, Client> connectionsMap = new ConcurrentHashMap<>();
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
         System.out.println(message);
+        System.out.println(Main.serverV2.connectionsMap.size());
         connectionsMap.get(session).processMessage(message);
+
     }
 
     @OnWebSocketConnect
     public void onConnect(Session session) throws IOException {
         Client client = new Client(session);
         connectionsMap.put(session, client);
+        System.out.println(connectionsMap.size());
         System.out.println("New connection from " + session.getRemoteAddress().getAddress().getHostAddress());
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("action", "sys_net_info");
+        jsonObject.put("action", "SYS_NET_INFO");
         session.getRemote().sendString(jsonObject.toString());
     }
 
@@ -113,5 +121,9 @@ public class ServerV2 {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public ConcurrentHashMap<Session, Client> getConnectionsMap() {
+        return connectionsMap;
     }
 }

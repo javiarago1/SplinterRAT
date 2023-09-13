@@ -15,7 +15,7 @@ public class PasteAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = getFileManagerGUI().getStream();
+      /*  Streams stream = getFileManagerGUI().getStream();
         if (getFileManagerGUI().isCopySelected()) {
             getFileManagerGUI().setCopySelected(false);
             getFileManagerGUI().getStream().getExecutor().submit(new PasteEvent(
@@ -25,7 +25,7 @@ public class PasteAction extends Manager {
             getFileManagerGUI().getStream().getExecutor().submit(new MoveEvent(
                     getFileManagerGUI().getStream(), getFileManagerGUI().getCMElements(),
                     getSelectedPaths().get(0), getFileManagerGUI().getFileManagerDialog()));
-        }
+        }*/
 
 
     }

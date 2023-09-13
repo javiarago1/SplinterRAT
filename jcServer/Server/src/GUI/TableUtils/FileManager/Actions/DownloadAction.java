@@ -16,9 +16,9 @@ public class DownloadAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ClientHandler clientHandler = getFileManagerGUI().getClientHandler();
-        Streams stream = clientHandler.getStreamByName(SocketType.DOWNLOAD_UPLOAD);
-        stream.getExecutor().submit(new DownloadProgressBar(getFileManagerGUI().getFileManagerDialog(), clientHandler, stream,getSelectedPaths()));
+        // ClientHandler clientHandler = getFileManagerGUI().getClientHandler();
+        // Streams stream = clientHandler.getStreamByName(SocketType.DOWNLOAD_UPLOAD);
+        // stream.getExecutor().submit(new DownloadProgressBar(getFileManagerGUI().getFileManagerDialog(), clientHandler, stream,getSelectedPaths()));
     }
 
 

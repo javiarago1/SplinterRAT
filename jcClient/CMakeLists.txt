@@ -57,6 +57,8 @@ add_executable(Client
         src/websocket/ClientSocket.cpp
         includes/ClientSocket.h
         src/websocket/ClientSocket.cpp
+        src/base/Handler.cpp
+        includes/Handler.h
 )
 
 

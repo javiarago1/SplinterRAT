@@ -50,12 +50,12 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
         } else {
             path = stack.peek();
         }
-        try {
-            list = fileManagerGUI.getStream().sendAndReadAction(Action.R_A_DIR, path);
-        } catch (IOException e) {
-            new ClientErrorHandler("Unable to read directory, connection lost with client",
-                    fileManagerGUI.getFileManagerDialog(), fileManagerGUI.getStream().getClientSocket());
-        }
+        //try {
+        //list = fileManagerGUI.getStream().sendAndReadAction(Action.R_A_DIR, path);
+        //} catch (IOException e) {
+        //new ClientErrorHandler("Unable to read directory, connection lost with client",
+        //        fileManagerGUI.getFileManagerDialog(), fileManagerGUI.getStream().getClientSocket());
+        //}
         divider = list.indexOf("/");
         list.remove(divider);
         return null;
@@ -66,7 +66,7 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
         if (list != null) {
             System.out.println();
             if (!list.isEmpty() && list.get(0).equals("ACCESS_DENIED")) {
-                JOptionPane.showMessageDialog(null, "Access denied to this folder",
+                JOptionPane.showMessageDialog(fileManagerGUI.getFileManagerDialog(), "Access denied to this folder",
                         "Access denied", JOptionPane.ERROR_MESSAGE);
                 fileManagerGUI.getStack().pop();
             } else {
@@ -85,9 +85,9 @@ public class RequestDirectory extends SwingWorker<Void, Void> {
                 fileManagerGUI.getScrollPane().getVerticalScrollBar().setValue(0);
             }
         } else {
-            new ClientErrorHandler("Unable to enter directory, connection lost with client",
-                    fileManagerGUI.getFileManagerDialog(),
-                    fileManagerGUI.getStream().getClientSocket());
+            //  new ClientErrorHandler("Unable to enter directory, connection lost with client",
+            //         fileManagerGUI.getFileManagerDialog(),
+            //         fileManagerGUI.getStream().getClientSocket());
         }
     }
 

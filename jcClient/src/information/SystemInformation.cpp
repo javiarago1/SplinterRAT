@@ -60,6 +60,7 @@ nlohmann::json SystemInformation::getSystemInformation() {
     json["username"] = getUsername();
     json["disks"] = FileManager::getDisks();
     json["tag_name"] = TAG_NAME;
+    json["mutex"] = MUTEX;
     // Add or not modules to server
 #ifdef WEBCAM
     json["webcam"] = true;

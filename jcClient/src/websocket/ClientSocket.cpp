@@ -1,6 +1,6 @@
 #include "ClientSocket.h"
 
-ClientSocket::ClientSocket(const std::string &host, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) :
+ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
     actionMap(actionMap) {
     //c.set_open_handler(std::bind(&ClientSocket::on_connection, this, std::placeholders::_1));
     c.set_message_handler(std::bind(&ClientSocket::on_message, this, std::placeholders::_1, std::placeholders::_2));

@@ -1,5 +1,6 @@
 package GUI.TableUtils.FileManager.Listener;
 
+import Connections.Client;
 import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.SplinterGUI;
@@ -9,6 +10,7 @@ import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Objects;
 
 public class FileManagerMenuListener implements ActionListener {
@@ -22,10 +24,10 @@ public class FileManagerMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ClientHandler clientHandler = GetSYS.getClientHandler();
-        assert clientHandler != null;
-        new FileManagerGUI(clientHandler, mainGUI.getMainGUI());
-
-
+        Client client = GetSYS.getClientHandlerV2();
+        assert client != null;
+        FileManagerGUI fileManagerGUI = new FileManagerGUI(client, mainGUI.getMainGUI());
+        client.setFileManagerGUI(fileManagerGUI);
+        client.sender.requestDisks();
     }
 }
