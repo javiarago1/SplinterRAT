@@ -28,6 +28,6 @@ public class FileManagerMenuListener implements ActionListener {
         assert client != null;
         FileManagerGUI fileManagerGUI = new FileManagerGUI(client, mainGUI.getMainGUI());
         client.setFileManagerGUI(fileManagerGUI);
-        client.sender.requestDisks();
+        fileManagerGUI.requestDisks();
     }
 }

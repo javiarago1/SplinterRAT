@@ -25,15 +25,11 @@ public class Client {
     private SystemInformation sysInfo;
     private NetworkInformation netInfo;
     ExecutorService executor = Executors.newCachedThreadPool();
-
-
-    public Sender sender;
     public Updater updater;
     Map<Response, Consumer<JSONObject>> mapOfResponses = new HashMap<>();
 
     public Client(Session session) {
         this.session = session;
-        sender = new Sender(session);
         updater = new Updater(this);
         setupMapOfResponses();
     }
@@ -58,7 +54,9 @@ public class Client {
     }
 
 
-
+    public void sendString(String message) throws IOException {
+        session.getRemote().sendString(message);
+    }
     public void processMessage(byte[] message) {
 
     }

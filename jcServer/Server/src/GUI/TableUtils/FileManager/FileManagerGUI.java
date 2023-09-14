@@ -5,6 +5,8 @@ import Connections.Client;
 import Connections.ClientHandler;
 import GUI.TableUtils.Configuration.TablePopUpListener;
 import GUI.TableUtils.FileManager.Actions.*;
+import GUI.TableUtils.FileManager.Event.RequestDirectoryEvent;
+import GUI.TableUtils.FileManager.Event.RequestDiskEvent;
 import GUI.TableUtils.FileManager.Listener.MouseListener;
 import GUI.TableUtils.FileManager.Style.CellRenderer;
 import GUI.TableUtils.FileManager.Style.TableModel;
@@ -14,6 +16,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -65,7 +68,7 @@ public class FileManagerGUI {
         constraints.gridheight = 1;
         fileManagerDialog.add(refreshCurrentFolder, constraints);
 
-        refreshCurrentFolder.addActionListener(e -> client.sender.requestDirectory(stack.peek()));
+        refreshCurrentFolder.addActionListener(e -> requestDirectory(stack.peek()));
 
 
         pathField = new JTextField();
@@ -94,7 +97,7 @@ public class FileManagerGUI {
                 Object item = e.getItem();
                 stack.clear();
                 stack.push((String) item);
-                client.sender.requestDirectory(stack.peek());
+                requestDirectory(stack.peek());
             }
         });
 
@@ -106,7 +109,7 @@ public class FileManagerGUI {
         constraints.gridheight = 1;
         constraints.weightx = 0;
         fileManagerDialog.add(refreshDiskButton, constraints);
-        refreshDiskButton.addActionListener(e -> client.sender.requestDisks());
+        refreshDiskButton.addActionListener(e -> requestDisks());
 
         table = new JTable(new TableModel());
         table.getTableHeader().setReorderingAllowed(false);
@@ -212,6 +215,14 @@ public class FileManagerGUI {
         runItem.addActionListener(new RunAction(this));
 
 
+    }
+
+    public void requestDirectory(String path){
+        client.getExecutor().submit(new RequestDirectoryEvent(client, Collections.singletonList(path)));
+    }
+
+    public void requestDisks(){
+        client.getExecutor().submit(new RequestDiskEvent(client, null));
     }
 
     private int divider;

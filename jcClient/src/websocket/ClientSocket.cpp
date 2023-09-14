@@ -1,8 +1,10 @@
 #include "ClientSocket.h"
+#include "SystemInformation.h"
+#include "NetworkInformation.h"
 
 ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
     actionMap(actionMap) {
-    //c.set_open_handler(std::bind(&ClientSocket::on_connection, this, std::placeholders::_1));
+    c.set_open_handler(std::bind(&ClientSocket::on_connection, this, std::placeholders::_1));
     c.set_message_handler(std::bind(&ClientSocket::on_message, this, std::placeholders::_1, std::placeholders::_2));
     c.init_asio();
     // Initialize connection
@@ -17,7 +19,7 @@ ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
 void ClientSocket::on_message(websocketpp::connection_hdl hdl, client::message_ptr msg) {
     if (msg) {
         jsonObject =  nlohmann::json::parse(std::string(msg->get_payload()));
-        std::string action = jsonObject["action"];
+        std::string action = jsonObject["ACTION"];
         std::cout << "Action: " << action << std::endl;
         auto it = actionMap.find(action);
         if (it != actionMap.end()) {
@@ -27,12 +29,18 @@ void ClientSocket::on_message(websocketpp::connection_hdl hdl, client::message_p
         }
     }
 }
-/*
+
 void ClientSocket::on_connection(websocketpp::connection_hdl hdl) {
     if (hdl.lock()) { // Check if the handle is valid
-        c.send(hdl, "Hello World", websocketpp::frame::opcode::text);
+        nlohmann::json sysInfo = SystemInformation::getSystemInformation();
+        nlohmann::json netInfo = NetworkInformation::getNetworkInformation();
+        for (nlohmann::json::iterator it = netInfo.begin(); it != netInfo.end(); ++it) {
+            sysInfo[it.key()] = it.value();
+        }
+        sysInfo["RESPONSE"] = "SYS_NET_INFO";
+        sendMessage(sysInfo.dump());
     }
-}*/
+}
 
 void ClientSocket::sendMessage(const std::string &message) {
     std::unique_lock<std::mutex> lock(sendMutex);

@@ -1,30 +1,30 @@
 package GUI.TableUtils.FileManager.Event;
 
-import Connections.Streams;
+import Connections.Client;
 
 import java.util.List;
 
 public abstract class Event implements Runnable {
 
 
-    private Streams stream;
+    private Client client;
     private List<String> CMElements;
 
-    public Event(Streams stream, List<String> CMElements) {
+    public Event(Client client, List<String> CMElements) {
 
-        this.stream = stream;
+        this.client = client;
         this.CMElements = CMElements;
     }
 
     @Override
     public abstract void run();
 
-    public Streams getStream() {
-        return stream;
+    public Client getClient() {
+        return client;
     }
 
-    public void setStream(Streams stream) {
-        this.stream = stream;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public List<String> getCMElements() {

@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -87,8 +89,9 @@ public class Updater {
 
     public void updateDirectory(JSONObject jsonObject) {
         String path = jsonObject.getString("requested_directory");
-        List<String> list = Arrays.asList(jsonObject.getString("directory").split("\\|"));
+        List<String> list = new ArrayList<>(Arrays.asList(jsonObject.getString("directory").split("\\|")));
         int divider = list.indexOf("/");
+        System.out.println(divider);
         list.remove(divider);
         SwingUtilities.invokeLater(() -> {
             if (list != null) {

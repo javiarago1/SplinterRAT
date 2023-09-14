@@ -2,6 +2,7 @@ package GUI.TableUtils.Configuration;
 
 import Connections.Client;
 import Connections.ClientHandler;
+import Connections.ConnectionStore;
 import Connections.Streams;
 import GUI.Main;
 import org.eclipse.jetty.websocket.api.Session;
@@ -38,7 +39,7 @@ public class GetSYS {
 
 
     public static Client getClientHandlerV2() {
-        Map<Session, Client> map = Main.serverV2.connectionsMap;
+        Map<Session, Client> map = ConnectionStore.connectionsMap;
         System.out.println(map.size());
         JTable table = Main.gui.getConnectionsTable();
         String address = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();

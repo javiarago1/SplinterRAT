@@ -27,30 +27,23 @@ public class ServerV2 {
 
     ExecutorService executor = Executors.newFixedThreadPool(100); // 10 threads
 
-    public ConcurrentHashMap<Session, Client> connectionsMap = new ConcurrentHashMap<>();
-
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
         System.out.println(message);
-        System.out.println(Main.serverV2.connectionsMap.size());
-        connectionsMap.get(session).processMessage(message);
+        ConnectionStore.getConnection(session).processMessage(message);
 
     }
 
     @OnWebSocketConnect
     public void onConnect(Session session) throws IOException {
         Client client = new Client(session);
-        connectionsMap.put(session, client);
-        System.out.println(connectionsMap.size());
+        ConnectionStore.addConnection(session, client);
         System.out.println("New connection from " + session.getRemoteAddress().getAddress().getHostAddress());
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("action", "SYS_NET_INFO");
-        session.getRemote().sendString(jsonObject.toString());
     }
 
     @OnWebSocketClose
     public void onClose(Session session, int statusCode, String reason) {
-        connectionsMap.remove(session);
+        ConnectionStore.removeConnection(session);
         System.out.println("Closed connection to " + session.getRemoteAddress().getAddress().getHostAddress());
     }
 
@@ -123,7 +116,5 @@ public class ServerV2 {
         }
     }
 
-    public ConcurrentHashMap<Session, Client> getConnectionsMap() {
-        return connectionsMap;
-    }
+
 }
