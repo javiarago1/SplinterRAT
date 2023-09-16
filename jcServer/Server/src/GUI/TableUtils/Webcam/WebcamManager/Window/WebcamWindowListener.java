@@ -24,7 +24,7 @@ public class WebcamWindowListener extends WindowAdapter {
         if (webcamGUI.getSaveRecordButton().isEnabled()) {
             webcamGUI.getStartButton().doClick();
             webcamGUI.getWebcamDialog().dispose();
-            webcamGUI.getStream().setWebcamDialogOpen(false);
+            //webcamGUI.getStream().setWebcamDialogOpen(false);
         } else if (webcamGUI.getRecordButton().isSelected()) { // Case where is currently recording
             JOptionPane.showMessageDialog(
                     webcamGUI.getWebcamDialog(),
@@ -34,10 +34,10 @@ public class WebcamWindowListener extends WindowAdapter {
         } else if (webcamGUI.getStartButton().isSelected()) { // Case where is currently streaming
             webcamGUI.getStartButton().doClick();
             webcamGUI.getWebcamDialog().dispose();
-            webcamGUI.getStream().setWebcamDialogOpen(false);
+            //webcamGUI.getStream().setWebcamDialogOpen(false);
         } else {  // Normal behaviour
             webcamGUI.getWebcamDialog().dispose();
-            webcamGUI.getStream().setWebcamDialogOpen(false);
+            //webcamGUI.getStream().setWebcamDialogOpen(false);
 
         }
 

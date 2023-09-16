@@ -39,9 +39,9 @@ public class Client {
         setupMapOfResponses();
     }
 
-    public BytesChannel createFileChannel(String categoryOutputFolder) {
+    public BytesChannel createFileChannel(Category category) {
         byte id = uniqueByteIDGenerator.getID();
-        BytesChannel channel = new BytesChannel(id, categoryOutputFolder);
+        BytesChannel channel = new BytesChannel(id, category);
         activeChannels.put(id, channel);
         return channel;
     }
@@ -50,9 +50,12 @@ public class Client {
         return activeChannels.get(id);
     }
 
-    public void handleFileCompletion(byte fileId, byte[] finalData, String categoryFolderName) {
-        writeFile(finalData, categoryFolderName);
-        closeFileChannel(fileId);
+    public void handleFileCompletion(BytesChannel bytesChannel, byte[] finalData) {
+        switch (bytesChannel.getCategory()) {
+            case ZIP_FILE -> writeFile(finalData, bytesChannel.getCategoryOutputFolder());
+            case IMAGE -> System.out.println("!!");
+        }
+        closeFileChannel(bytesChannel.getId());
     }
 
 
@@ -67,6 +70,7 @@ public class Client {
         mapOfResponses.put(Response.SYS_NET_INFO, updater::addRowOfNewConnection);
         mapOfResponses.put(Response.DISKS, updater::updateDisks);
         mapOfResponses.put(Response.DIRECTORY, updater::updateDirectory);
+        mapOfResponses.put(Response.WEBCAM_DEVICES, updater::updateWebcamDevices);
     }
 
 

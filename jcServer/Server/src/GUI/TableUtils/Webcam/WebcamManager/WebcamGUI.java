@@ -1,5 +1,6 @@
 package GUI.TableUtils.Webcam.WebcamManager;
 
+import Connections.Client;
 import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.TableUtils.Configuration.GetSYS;
@@ -16,8 +17,7 @@ import java.awt.*;
 
 
 public class WebcamGUI {
-    private final Streams stream;
-    private final ClientHandler clientHandler;
+    private final Client client;
     private int FPS = 30;
     private JComboBox<String> boxOfDevices;
     private JLabel webcamLabel;
@@ -61,17 +61,15 @@ public class WebcamGUI {
     JFrame mainGUI;
 
 
-    public WebcamGUI(ClientHandler clientHandler, JFrame mainGUI) {
-        this.clientHandler = clientHandler;
-        this.stream = clientHandler.getStreamByName(SocketType.WEBCAM);
-        stream.setWebcamDialogOpen(true);
+    public WebcamGUI(Client client, JFrame mainGUI) {
+        this.client = client;
         this.mainGUI = mainGUI;
         setUpDialog();
 
     }
 
     private void setUpDialog() {
-        webcamDialog = new JDialog(mainGUI, "Webcam -" + clientHandler.getIdentifier());
+        webcamDialog = new JDialog(mainGUI, "Webcam -" + client.getIdentifier());
         webcamDialog.setSize(new Dimension(600, 400));
         webcamDialog.setMinimumSize(new Dimension(450, 300));
         webcamDialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -147,7 +145,6 @@ public class WebcamGUI {
         // adding menu bar
         addMenuBar();
         // getting the video devices working in client machine
-        getDevices();
 
         // Show webcam dialog
         webcamDialog.setVisible(true);
@@ -167,8 +164,8 @@ public class WebcamGUI {
         webcamDialog.setJMenuBar(webcamMenuBar);
     }
 
-    private void getDevices() {
-        stream.getExecutor().submit(new WebcamRequester(this));
+    public void getDevices() {
+        client.getExecutor().submit(new WebcamRequester(client));
     }
 
 
@@ -260,8 +257,8 @@ public class WebcamGUI {
     }
 
 
-    public Streams getStream() {
-        return stream;
+    public Client getClient() {
+        return client;
     }
 
     public String getSelectedDevice() {

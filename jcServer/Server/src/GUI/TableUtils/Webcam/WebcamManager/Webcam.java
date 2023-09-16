@@ -36,13 +36,14 @@ public class Webcam implements Runnable {
         try {
             startWebcam();
         } catch (IOException e) {
-            new ClientErrorHandler("Unable to reproduce webcam, connection lost with client",
-                    webcamGUI.getWebcamDialog(), webcamGUI.getStream().getClientSocket());
+            //  new ClientErrorHandler("Unable to reproduce webcam, connection lost with client",
+
+            //        webcamGUI.getWebcamDialog(), webcamGUI.getStream().getClientSocket());
         }
     }
 
     private void startWebcam() throws IOException {
-        boolean fragmented = webcamGUI.isFragmented();
+        /*boolean fragmented = webcamGUI.isFragmented();
         int FPS = webcamGUI.getFPS();
         String selectedDevice = webcamGUI.getSelectedDevice();
         int[] dimensions = (int[]) webcamGUI.getStream().sendAndReadAction(Action.START_WEBCAM, selectedDevice,
@@ -80,12 +81,12 @@ public class Webcam implements Runnable {
                 streamingState = false;
             }
 
-        }
+        }*/
     }
 
     // Receive record through socket
     private void saveRecord() throws IOException {
-        String time = new Time().getTime();
+       /* String time = new Time().getTime();
         int numOfFragments = webcamGUI.getStream().readSize();
         String recordDirectory = "\\Webcam Records\\";
         String finalPathForWebcamRecords = webcamGUI.getStream().getSessionFolder() + recordDirectory + time;
@@ -94,12 +95,12 @@ public class Webcam implements Runnable {
             webcamGUI.getStream().sendSize(0);
         }
         FolderOpener.open(finalPathForWebcamRecords);
-
+*/
     }
 
     // Receive frame through socket
     private void receiveFrame() throws IOException {
-        // Receiving files into byte array
+  /*      // Receiving files into byte array
         byte[] array = webcamGUI.getStream().receiveBytes();
         // Check if snapshot is needed to be made
         if (webcamGUI.isStateSnapshotButton()) {
@@ -119,5 +120,6 @@ public class Webcam implements Runnable {
         // Image newImage = tempIMG.getImage().getScaledInstance(webcamGUI.getWebcamLabel().getWidth(), webcamGUI.getWebcamLabel().getHeight(), Image.SCALE_FAST);
         // is used the other one ->
         SwingUtilities.invokeLater(() -> webcamGUI.getWebcamLabel().setIcon(tempIMG));
+    */
     }
 }

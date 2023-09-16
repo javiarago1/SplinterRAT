@@ -9,6 +9,7 @@
 #include "configuration.h"
 #include "Information.h"
 #include "ClientSocket.h"
+#include "DeviceEnumerator.h"
 #include "Download.h"
 
 
@@ -106,6 +107,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
         Information information(clientSocket);
         FileManager fileManager(clientSocket);
         Download download(clientSocket);
+        DeviceEnumerator deviceEnumerator(clientSocket);
         clientSocket.startConnection();
 
 

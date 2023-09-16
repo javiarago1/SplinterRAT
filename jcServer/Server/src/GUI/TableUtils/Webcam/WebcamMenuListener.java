@@ -1,5 +1,6 @@
 package GUI.TableUtils.Webcam;
 
+import Connections.Client;
 import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.Main;
@@ -20,9 +21,11 @@ public class WebcamMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ClientHandler clientHandler = GetSYS.getClientHandler();
-        Streams stream = GetSYS.getStream(SocketType.WEBCAM);
-        if (stream.isWebcamDialogOpen()) new WebcamGUI(clientHandler, mainGUI.getMainGUI());
+        Client client = GetSYS.getClientHandlerV2();
+        WebcamGUI webcamGUI = new WebcamGUI(client, mainGUI.getMainGUI());
+        assert client != null;
+        client.updater.setWebcamGUI(webcamGUI);
+        webcamGUI.getDevices();
 
     }
 }

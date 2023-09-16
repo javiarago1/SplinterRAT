@@ -36,7 +36,7 @@ public class DownloadProgressBar extends Bar {
     }
 
     private void startDownload() throws IOException {
-        BytesChannel bytesChannel = client.createFileChannel("Downloaded files");
+        BytesChannel bytesChannel = client.createFileChannel(Category.ZIP_FILE);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("ACTION", "DOWNLOAD");
         jsonObject.put("from_path", downloadElement);

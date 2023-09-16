@@ -7,20 +7,39 @@ public class BytesChannel {
     private final byte id;
     private final ByteBuffer buffer;
 
+    private Category category;
+
     private String categoryOutputFolder;
 
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 1024;
 
-    public BytesChannel(byte id, String categoryOutputFolder) {
-        this.categoryOutputFolder = categoryOutputFolder;
+    public BytesChannel(byte id, Category category) {
+        this.category = category;
         this.id = id;
         this.buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
+        setOutputFolder(category);
     }
+
 
     public BytesChannel(byte id) {
         this.id = id;
         this.buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
     }
+
+    private void setOutputFolder(Category category) {
+        switch (category) {
+            case ZIP_FILE -> {
+                categoryOutputFolder = "Downloaded files";
+            }
+            case KEYLOGGER_LOGS -> {
+
+            }
+            case WEBCAM_LOGS -> {
+
+            }
+        }
+    }
+
 
     public byte getId() {
         return id;
@@ -50,6 +69,10 @@ public class BytesChannel {
 
     public String getCategoryOutputFolder() {
         return categoryOutputFolder;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 }
 

@@ -1,7 +1,9 @@
 package GUI.TableUtils.Webcam.WebcamManager;
 
+import Connections.Client;
 import Connections.ClientErrorHandler;
 import Information.Action;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -12,67 +14,22 @@ import java.util.List;
  * Requesting webcam devices through sockets and getting
  * a list containing them.
  */
-public class WebcamRequester extends SwingWorker<Void, Void> {
-    private final WebcamGUI webcamGUI;
 
-    public WebcamRequester(WebcamGUI webcamGUI) {
-        this.webcamGUI = webcamGUI;
+public class WebcamRequester implements Runnable {
+    private final Client client;
+
+    public WebcamRequester(Client client) {
+        this.client = client;
     }
-
-
-    private void disableButtons() {
-        webcamGUI.getBoxOfDevices().setEnabled(false);
-        webcamGUI.getStartButton().setEnabled(false);
-        webcamGUI.getRecordButton().setEnabled(false);
-        webcamGUI.getSnapshotButton().setEnabled(false);
-        webcamGUI.getSaveRecordButton().setEnabled(false);
-    }
-
-    private void enableBasicButtons() {
-        webcamGUI.getBoxOfDevices().setEnabled(true);
-        webcamGUI.getStartButton().setEnabled(true);
-        webcamGUI.getRecordButton().setEnabled(false);
-        webcamGUI.getSnapshotButton().setEnabled(false);
-        webcamGUI.getSaveRecordButton().setEnabled(false);
-    }
-
-    private void enableButtons() {
-        if (webcamGUI.getBoxOfDevices().getSelectedIndex() != -1) {
-            enableBasicButtons();
-        } else {
-            disableButtons();
-        }
-    }
-
-
-    private List<?> listOfWebcams;
 
     @Override
-    protected Void doInBackground() {
+    public void run() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("ACTION", "WEBCAM_DEVICES");
         try {
-            listOfWebcams = (List<?>) webcamGUI.getStream().sendAction(Action.REQUEST_WEBCAM);
-
+            client.sendString(jsonObject.toString());
         } catch (IOException e) {
-            new ClientErrorHandler("Unable to request devices, connection lost with client",
-                    webcamGUI.getWebcamDialog(), webcamGUI.getStream().getClientSocket());
+            throw new RuntimeException(e);
         }
-        return null;
-    }
-
-    @Override
-    protected void done() {
-        if (listOfWebcams != null) {
-            // Case where no devices are found -> all buttons are turned disabled (add no webcam found)
-            if (listOfWebcams.isEmpty()) {
-                disableButtons();
-                webcamGUI.getBoxOfDevices().addItem("No webcam found");
-            } else {
-                for (Object listOfWebcam : listOfWebcams) {
-                    webcamGUI.getBoxOfDevices().addItem((String) listOfWebcam);
-                }
-                enableButtons();
-            }
-        }
-
     }
 }

@@ -59,7 +59,7 @@ public class ServerV2 {
         byte[] finalData = bytesChannel.handleMessage(buf, offset, length, control);
 
         if (finalData != null) {
-            client.handleFileCompletion(fileId, finalData, bytesChannel.getCategoryOutputFolder());
+            client.handleFileCompletion(bytesChannel, finalData);
         }
     }
 
