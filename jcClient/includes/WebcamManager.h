@@ -14,7 +14,7 @@
 #include "DeviceEnumerator.h"
 
 
-class WebcamManager : public Sender {
+class WebcamManager : public Handler {
 private:
     // information related to recording
     int webcamID{};
@@ -26,6 +26,7 @@ private:
     std::vector<std::wstring> pathVector;
     std::wstring fileName;
     boolean initialized = false;
+    uchar channelID = 1;
 
     void sendRecord();
     void removeTempFiles();
@@ -33,11 +34,8 @@ private:
     void sendDimensions(int,int);
 
 public:
-    explicit WebcamManager(const Stream &, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    explicit WebcamManager(ClientSocket &clientSocket);
     void setConfiguration(nlohmann::json jsonObject);
     void startWebcam(nlohmann::json jsonObject);
-    void send() override;
-
-
 };
 #endif

