@@ -15,8 +15,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: download finished">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/FileWriterTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/FileWriterTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +35,8 @@
         <option value="JavaScript File" />
         <option value="Interface" />
         <option value="Record" />
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -454,7 +459,8 @@
       <workItem from="1694581367473" duration="899000" />
       <workItem from="1694582484461" duration="4363000" />
       <workItem from="1694598801471" duration="3979000" />
-      <workItem from="1694850800490" duration="9025000" />
+      <workItem from="1694850800490" duration="9627000" />
+      <workItem from="1694870161128" duration="2277000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -799,7 +805,7 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="166" />
+    <option name="localTasksCounter" value="167" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="net.lingala.zip4j" type="repository">
-    <properties maven-id="net.lingala.zip4j:zip4j:2.10.0" />
+    <properties maven-id="net.lingala.zip4j:zip4j:2.11.5" />
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/net/lingala/zip4j/zip4j/2.10.0/zip4j-2.10.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/lingala/zip4j/zip4j/2.11.5/zip4j-2.11.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

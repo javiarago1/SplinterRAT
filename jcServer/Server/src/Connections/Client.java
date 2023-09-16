@@ -4,10 +4,12 @@ import GUI.TableUtils.FileManager.FileManagerGUI;
 import Information.NetworkInformation;
 import Information.Response;
 import Information.SystemInformation;
+import Information.Time;
 import org.json.JSONObject;
 import org.eclipse.jetty.websocket.api.Session;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,9 +39,9 @@ public class Client {
         setupMapOfResponses();
     }
 
-    public BytesChannel createFileChannel() {
+    public BytesChannel createFileChannel(String categoryOutputFolder) {
         byte id = uniqueByteIDGenerator.getID();
-        BytesChannel channel = new BytesChannel(id);
+        BytesChannel channel = new BytesChannel(id, categoryOutputFolder);
         activeChannels.put(id, channel);
         return channel;
     }
@@ -48,9 +50,8 @@ public class Client {
         return activeChannels.get(id);
     }
 
-    public void handleFileCompletion(byte fileId, byte[] finalData) {
-        String outputPath = "output_" + fileId + ".zip";
-        writeFile(finalData, outputPath);
+    public void handleFileCompletion(byte fileId, byte[] finalData, String categoryFolderName) {
+        writeFile(finalData, categoryFolderName);
         closeFileChannel(fileId);
     }
 
@@ -80,10 +81,15 @@ public class Client {
         }
     }
 
+    public String getSessionFolder() {
+        return "Session - " + getIdentifier();
+    }
+
 
     public void sendString(String message) throws IOException {
         session.getRemote().sendString(message);
     }
+
     public void processMessage(byte[] message) {
 
     }
@@ -100,8 +106,10 @@ public class Client {
         session.getRemote().sendString(message);
     }
 
-    public void writeFile(byte[] data, String outputPath) {
-        FileWriterTask task = new FileWriterTask(data, outputPath);
+    public void writeFile(byte[] data, String category) {
+        String finalNameOfFolder = category + " - " + new Time().getTime();
+        Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
+        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
         executor.execute(task);
     }
 

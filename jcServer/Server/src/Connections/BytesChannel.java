@@ -7,7 +7,15 @@ public class BytesChannel {
     private final byte id;
     private final ByteBuffer buffer;
 
+    private String categoryOutputFolder;
+
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 1024;
+
+    public BytesChannel(byte id, String categoryOutputFolder) {
+        this.categoryOutputFolder = categoryOutputFolder;
+        this.id = id;
+        this.buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
+    }
 
     public BytesChannel(byte id) {
         this.id = id;
@@ -38,6 +46,10 @@ public class BytesChannel {
         byte[] finalData = new byte[buffer.remaining()];
         buffer.get(finalData);
         return finalData;
+    }
+
+    public String getCategoryOutputFolder() {
+        return categoryOutputFolder;
     }
 }
 
