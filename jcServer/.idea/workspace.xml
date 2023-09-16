@@ -15,31 +15,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: gg">
-      <change afterPath="$PROJECT_DIR$/Server/src/Connections/ConnectionStore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RequestDirectoryEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RequestDiskEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/includes/ZipCompressor.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/src/zip/ZipCompressor.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/Connections/FileWriterTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/Connections/UniqueByteIDGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ClientSocket.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ClientSocket.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Download.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Sender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ConnectionStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ConnectionStore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Updater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/GetSYS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/GetSYS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DeleteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DeleteAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/PasteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/PasteAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/RunAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/RunAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/DeleteEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/DeleteEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/MoveEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/MoveEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/PasteEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/PasteEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RunEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RunEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/FileManagerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/FileManagerMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/MouseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDirectory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/RequestDisk.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DownloadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DownloadAction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -477,6 +469,7 @@
       <workItem from="1694581367473" duration="899000" />
       <workItem from="1694582484461" duration="4363000" />
       <workItem from="1694598801471" duration="3979000" />
+      <workItem from="1694850800490" duration="8317000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -903,13 +896,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/Server/src/Connections/Updater.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-defaults>
         <breakpoint suspend="THREAD" type="java-line" />
       </breakpoints-defaults>

@@ -7,19 +7,21 @@
 #include "Converter.h"
 #include "Sender.h"
 #include "json.hpp"
+#include "ZipCompressor.h"
+#include "Handler.h"
 
 
-class Download : public Sender {
+class Download : public Handler {
 
 private:
     bool download=true;
-    void downloadFolder(const std::filesystem::path &, const wchar_t *relativePath);
-    void downloadFile(const std::wstring &filePath,const std::wstring &basePath);
+    //void downloadFolder(const std::filesystem::path &, const wchar_t *relativePath);
+    //void downloadFile(const std::wstring &filePath,const std::wstring &basePath);
 public:
-    explicit Download(const Stream&, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    explicit Download(ClientSocket &clientSocket);
     void downloadContent(nlohmann::json jsonObject);
-    void send() override;
-    void uploadFiles(nlohmann::json jsonObject);
+    //void send() override;
+    //void uploadFiles(nlohmann::json jsonObject);
 };
 
 

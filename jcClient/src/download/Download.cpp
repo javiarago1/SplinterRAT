@@ -1,15 +1,66 @@
 #include "Download.h"
+#include <fstream>
+#include <vector>
 
-
-Download::Download(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
-: Sender(stream, actionMap) {
+Download::Download(ClientSocket &clientSocket)
+: Handler(clientSocket) {
+    ActionMap& actionMap = clientSocket.getActionMap();
     actionMap["DOWNLOAD"]  = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &Download::downloadContent, json);
     };
     actionMap["UPLOAD"] = [&](nlohmann::json& json) {
-        threadGen.runInNewThread(this, &Download::uploadFiles, json);
+     //   threadGen.runInNewThread(this, &Download::uploadFiles, json);
     };
 }
+
+
+
+const int FRAGMENT_SIZE = 64 * 1024; // 64 KB
+const uint8_t LAST_FRAGMENT = 0x02;
+const uint8_t NOT_LAST_FRAGMENT = 0x01;
+
+void Download::downloadContent(nlohmann::json jsonObject) {
+    std::string outputPath = ZipCompressor::compressPath(jsonObject["from_path"]);
+    byte fileID = jsonObject["file_ID"];
+    std::cout << "Output path: " + outputPath << std::endl;
+
+    std::ifstream fileStream(outputPath, std::ios::in | std::ios::binary);
+
+    if (!fileStream) {
+        std::cout << "Could not open file for reading: " << outputPath << std::endl;
+        return;
+    }
+
+    std::vector<uint8_t> buffer(FRAGMENT_SIZE);
+
+    // Preparing header bytes: 1 byte for file ID, 1 byte for control code
+    buffer[0] = fileID;
+    buffer[1] = NOT_LAST_FRAGMENT;
+
+    while (fileStream) {
+        // Read the file chunk into the buffer, starting at offset 2 to leave space for control bytes
+        fileStream.read((char*)buffer.data() + 2, FRAGMENT_SIZE - 2);
+        std::streamsize bytesRead = fileStream.gcount();
+
+        if (bytesRead == 0) {
+            break;
+        }
+
+        if (!fileStream) {
+            // Last fragment
+            buffer[1] = LAST_FRAGMENT;
+        }
+
+        // Send the fragment
+        // Note: Sending bytesRead + 2 bytes to include the 2 control bytes
+        clientSocket.sendBytes(std::vector<uint8_t>(buffer.begin(), buffer.begin() + bytesRead + 2));
+    }
+
+    fileStream.close();
+}
+
+
+/*
 
 void Download::uploadFiles(nlohmann::json jsonObject){
     std::string destinationPath = jsonObject["path"];
@@ -20,6 +71,7 @@ void Download::uploadFiles(nlohmann::json jsonObject){
         if (result==RESULT::SR_ERROR) i=numOfFiles;
     }
 }
+
 
 void Download::downloadContent(nlohmann::json jsonObject) {
     std::vector<std::string> fileList = jsonObject["file_list"];
@@ -56,8 +108,9 @@ void Download::downloadFile(const std::wstring &filePath,const std::wstring &bas
 
 void Download::send() {
 
-}
 
+ }
+*/
 
 
 

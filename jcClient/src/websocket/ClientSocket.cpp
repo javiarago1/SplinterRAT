@@ -48,6 +48,13 @@ void ClientSocket::sendMessage(const std::string &message) {
     lock.unlock();
 }
 
+void ClientSocket::sendBytes(const std::vector<uint8_t> &bytes) {
+    std::unique_lock<std::mutex> lock(sendMutex);
+    c.send(con->get_handle(), bytes.data(), bytes.size(), websocketpp::frame::opcode::binary);
+    lock.unlock();
+}
+
+
 
 
 void ClientSocket::startConnection() {

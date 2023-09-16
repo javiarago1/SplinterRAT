@@ -1,7 +1,5 @@
 package Connections;
 
-import GUI.Main;
-import GUI.Server.ServerGUI;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -10,14 +8,8 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
-import org.json.JSONObject;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import java.awt.*;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -49,51 +41,27 @@ public class ServerV2 {
 
     // Java (Servidor)
 
+    // Global variable
+
     @OnWebSocketMessage
     public void onMessage(Session session, byte[] buf, int offset, int length) {
+        Client client = ConnectionStore.getConnection(session);
+        ConcurrentHashMap<Byte, BytesChannel> sessionToFileChannels = client.getFileChannels();
+
         byte fileId = buf[offset];
         byte control = buf[offset + 1];
-        Arrays.copyOfRange(buf, offset, offset + length);
 
-/*
-        // Inicializar el mapa para la sesión actual si no existe
-        sessionToFileStreams.putIfAbsent(session, new ConcurrentHashMap<>());
-        ConcurrentHashMap<Byte, FileOutputStream> fileStreams = sessionToFileStreams.get(session);
+        sessionToFileChannels.computeIfAbsent(fileId, k -> new BytesChannel(fileId));
+        BytesChannel bytesChannel = sessionToFileChannels.get(fileId);
 
-        // Continuar solo si fileStreams no es null
-        if (fileStreams != null) {
-            FileOutputStream fos;
-            if (!fileStreams.containsKey(fileId)) {
-                fos = createFileOutputStream(fileId);
-                if (fos != null) {
-                    fileStreams.put(fileId, fos);
-                } else {
-                    System.out.println("Could not create FileOutputStream for fileId: " + fileId);
-                    return;
-                }
-            } else {
-                fos = fileStreams.get(fileId);
-            }
+        byte[] finalData = bytesChannel.handleMessage(buf, offset, length, control);
 
-            if (fos != null) {
-                try {
-                    fos.write(buf, offset + 2, length - 2);
-                    System.out.println("Readed: " + buf.length);
-
-                    if (control == 0x02) {
-                        System.out.println("Finally created! Found control byte!");
-                        fos.flush();
-                        fos.close();
-                        fileStreams.remove(fileId);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("FileOutputStream not found for session and file id.");
-            }
-        } */
+        if (finalData != null) {
+            client.handleFileCompletion(fileId, finalData);
+        }
     }
+
+
 
     public void startServer() {
         org.eclipse.jetty.server.Server server = new Server(8080);

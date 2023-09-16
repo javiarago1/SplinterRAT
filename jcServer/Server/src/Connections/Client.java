@@ -1,21 +1,16 @@
 package Connections;
 
-import GUI.Main;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 import Information.NetworkInformation;
 import Information.Response;
 import Information.SystemInformation;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.eclipse.jetty.websocket.api.Session;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
@@ -26,12 +21,44 @@ public class Client {
     private NetworkInformation netInfo;
     ExecutorService executor = Executors.newCachedThreadPool();
     public Updater updater;
+
+    public UniqueByteIDGenerator uniqueByteIDGenerator = new UniqueByteIDGenerator();
     Map<Response, Consumer<JSONObject>> mapOfResponses = new HashMap<>();
+
+    ConcurrentHashMap<Byte, BytesChannel> activeChannels = new ConcurrentHashMap<>();
+
+    public ConcurrentHashMap<Byte, BytesChannel> getFileChannels() {
+        return activeChannels;
+    }
 
     public Client(Session session) {
         this.session = session;
         updater = new Updater(this);
         setupMapOfResponses();
+    }
+
+    public BytesChannel createFileChannel() {
+        byte id = uniqueByteIDGenerator.getID();
+        BytesChannel channel = new BytesChannel(id);
+        activeChannels.put(id, channel);
+        return channel;
+    }
+
+    public BytesChannel getChannelById(byte id) {
+        return activeChannels.get(id);
+    }
+
+    public void handleFileCompletion(byte fileId, byte[] finalData) {
+        String outputPath = "output_" + fileId + ".zip";
+        writeFile(finalData, outputPath);
+        closeFileChannel(fileId);
+    }
+
+
+    // Cierra un FileChannel y libera su ID
+    public void closeFileChannel(byte id) {
+        activeChannels.remove(id);
+        uniqueByteIDGenerator.finishTask(id);
     }
 
 
@@ -71,6 +98,11 @@ public class Client {
 
     public void sendMessage(String message) throws IOException {
         session.getRemote().sendString(message);
+    }
+
+    public void writeFile(byte[] data, String outputPath) {
+        FileWriterTask task = new FileWriterTask(data, outputPath);
+        executor.execute(task);
     }
 
     public void setFileManagerGUI(FileManagerGUI fileManagerGUI) {

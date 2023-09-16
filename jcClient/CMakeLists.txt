@@ -26,6 +26,21 @@ include_directories("C:/Program Files (x86)/websocketpp-0.8.2")
 
 # ---- Sockets ----
 
+
+# ----- ZIP -----
+
+link_directories("C:/Program Files (x86)/zlib/lib")
+include_directories("C:/Program Files (x86)/zlib/include")
+
+# Directorios de Zipper
+link_directories("C:/Program Files (x86)/zipper/lib")
+include_directories("C:/Program Files (x86)/zipper/include")
+
+# ------ ZIP ------
+
+
+
+
 include_directories(${CMAKE_SOURCE_DIR}/includes)
 
 add_executable(Client
@@ -59,7 +74,7 @@ add_executable(Client
         src/websocket/ClientSocket.cpp
         src/base/Handler.cpp
         includes/Handler.h
-)
+        src/zip/ZipCompressor.cpp includes/ZipCompressor.h)
 
 
 
@@ -72,6 +87,7 @@ target_link_libraries(Client
         strmiids
         gdiplus
         Crypt32
-
+        libZipper-static.a
+        libzlibstatic.a
 
 )

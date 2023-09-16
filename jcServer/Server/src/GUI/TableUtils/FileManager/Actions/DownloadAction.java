@@ -1,5 +1,6 @@
 package GUI.TableUtils.FileManager.Actions;
 
+import Connections.Client;
 import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.ProgressBar.DownloadProgressBar;
@@ -16,9 +17,8 @@ public class DownloadAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // ClientHandler clientHandler = getFileManagerGUI().getClientHandler();
-        // Streams stream = clientHandler.getStreamByName(SocketType.DOWNLOAD_UPLOAD);
-        // stream.getExecutor().submit(new DownloadProgressBar(getFileManagerGUI().getFileManagerDialog(), clientHandler, stream,getSelectedPaths()));
+        Client client = getFileManagerGUI().getClient();
+        client.getExecutor().submit(new DownloadProgressBar(getFileManagerGUI().getFileManagerDialog(), client, getSelectedPaths()));
     }
 
 

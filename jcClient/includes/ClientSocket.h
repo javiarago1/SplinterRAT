@@ -21,6 +21,7 @@ public:
     explicit ClientSocket(const std::string& host, ActionMap);
     void on_message(websocketpp::connection_hdl hdl, client::message_ptr msg);
     void on_connection(websocketpp::connection_hdl hdl);
+    void sendBytes(const std::vector<uint8_t> &bytes);
     void startConnection();
     void sendMessage(const std::string &message);
     std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &getActionMap() const;

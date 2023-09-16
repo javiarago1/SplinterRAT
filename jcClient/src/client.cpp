@@ -9,6 +9,7 @@
 #include "configuration.h"
 #include "Information.h"
 #include "ClientSocket.h"
+#include "Download.h"
 
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
@@ -104,6 +105,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
         ClientSocket clientSocket(uri, actionMap);
         Information information(clientSocket);
         FileManager fileManager(clientSocket);
+        Download download(clientSocket);
         clientSocket.startConnection();
 
 

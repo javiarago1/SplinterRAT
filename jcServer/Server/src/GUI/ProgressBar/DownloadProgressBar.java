@@ -1,12 +1,8 @@
 package GUI.ProgressBar;
 
-import Connections.ClientErrorHandler;
-import Connections.ClientHandler;
-import Connections.Streams;
-import Information.Action;
-import Information.FolderOpener;
+import Connections.*;
 import Information.Time;
-import org.apache.commons.io.FileUtils;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.io.*;
@@ -15,18 +11,16 @@ import java.util.List;
 
 public class DownloadProgressBar extends Bar {
 
-    private final ClientHandler clientHandler;
-    private final Streams stream;
-    private final List<String> downloadList;
+    private final Client client;
+    //private final List<String> downloadList;
     private final String time;
 
+    private final String downloadElement;
 
-
-    public DownloadProgressBar(JDialog parentDialog, ClientHandler clientHandler, Streams stream , List<String> downloadList) {
+    public DownloadProgressBar(JDialog parentDialog, Client client, List<String> downloadList) {
         super(parentDialog, "Downloading");
-        this.clientHandler = clientHandler;
-        this.stream = stream;
-        this.downloadList = downloadList;
+        this.client = client;
+        downloadElement = downloadList.get(0);
         time = new Time().getTime();
     }
 
@@ -36,16 +30,22 @@ public class DownloadProgressBar extends Bar {
         try {
             startDownload();
         } catch (IOException e) {
-            new ClientErrorHandler("Unable to download, connection lost with client", getDialog(), stream.getClientSocket());
+            //      new ClientErrorHandler("Unable to download, connection lost with client", getDialog(), stream.getClientSocket());
         }
         return null;
     }
 
     private void startDownload() throws IOException {
-        stream.sendAction(Action.DOWNLOAD, downloadList);
-        String tempPath;
+        BytesChannel bytesChannel = client.createFileChannel();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("ACTION", "DOWNLOAD");
+        jsonObject.put("from_path", downloadElement);
+        jsonObject.put("file_ID", bytesChannel.getId());
+        client.sendString(jsonObject.toString());
+        //stream.sendAction(Action.DOWNLOAD, downloadList);
+        //String tempPath;
         // receives files till string equals to "/". "/" = no more files to send
-        System.out.println("wtf"+clientHandler.getTempNetworkInformation());
+       /* System.out.println("wtf"+clientHandler.getTempNetworkInformation());
         System.out.println(clientHandler.getSessionFolder());
 
         String whereToDownload = clientHandler.getSessionFolder() + "\\Downloaded Files\\" + time;
@@ -63,11 +63,11 @@ public class DownloadProgressBar extends Bar {
 
         }
         FolderOpener.open(whereToDownload);
-
+*/
     }
 
     public byte[] receiveBytes(String fileName) throws IOException {
-        int fileSize = stream.readSize(); // get file size
+    /*    int fileSize = stream.readSize(); // get file size
         byte[] buffer = new byte[fileSize];
         DataInputStream dis = stream.getDis();
         int total = 0;
@@ -79,7 +79,8 @@ public class DownloadProgressBar extends Bar {
             System.out.println(total + " /" + fileSize);
         }
 
-        return buffer;
+        return buffer;*/
+        return null;
     }
 
 }
