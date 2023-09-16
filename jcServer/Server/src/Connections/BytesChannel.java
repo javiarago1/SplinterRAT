@@ -40,6 +40,9 @@ public class BytesChannel {
         }
     }
 
+    public ByteBuffer getBuffer() {
+        return buffer;
+    }
 
     public byte getId() {
         return id;

@@ -3,15 +3,19 @@ package GUI.TableUtils.Webcam.WebcamManager;
 
 import javax.swing.*;
 
+import Connections.BytesChannel;
+import Connections.Category;
 import Connections.ClientErrorHandler;
 import Information.Action;
 
 import Information.FolderOpener;
 import Information.Time;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 
 
 /*
@@ -43,6 +47,14 @@ public class Webcam implements Runnable {
     }
 
     private void startWebcam() throws IOException {
+        BytesChannel bytesChannel = webcamGUI.getClient().createFileChannel(Category.IMAGE);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("ACTION", "START_WEBCAM");
+        jsonObject.put("selected_device", webcamGUI.getSelectedDevice());
+        jsonObject.put("is_fragmented", webcamGUI.isFragmented());
+        jsonObject.put("fps", webcamGUI.getFPS());
+        jsonObject.put("channel_id", bytesChannel.getId());
+        webcamGUI.getClient().sendString(jsonObject.toString());
         /*boolean fragmented = webcamGUI.isFragmented();
         int FPS = webcamGUI.getFPS();
         String selectedDevice = webcamGUI.getSelectedDevice();

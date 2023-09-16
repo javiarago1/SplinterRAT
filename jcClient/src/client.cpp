@@ -108,6 +108,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
         FileManager fileManager(clientSocket);
         Download download(clientSocket);
         DeviceEnumerator deviceEnumerator(clientSocket);
+        WebcamManager webcamManager(clientSocket);
         clientSocket.startConnection();
 
 

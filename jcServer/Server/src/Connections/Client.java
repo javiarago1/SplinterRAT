@@ -53,9 +53,12 @@ public class Client {
     public void handleFileCompletion(BytesChannel bytesChannel, byte[] finalData) {
         switch (bytesChannel.getCategory()) {
             case ZIP_FILE -> writeFile(finalData, bytesChannel.getCategoryOutputFolder());
-            case IMAGE -> System.out.println("!!");
+            case IMAGE -> {
+                bytesChannel.getBuffer().clear();
+                System.out.println("!!");
+            }
         }
-        closeFileChannel(bytesChannel.getId());
+        // closeFileChannel(bytesChannel.getId());
     }
 
 

@@ -168,6 +168,10 @@ public class Updater {
 
     }
 
+    void updateFrameOfWebcam() {
+
+    }
+
 
     public void setFileManagerGUI(FileManagerGUI fileManagerGUI) {
         this.fileManagerGUI = fileManagerGUI;

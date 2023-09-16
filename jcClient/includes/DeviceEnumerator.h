@@ -2,6 +2,7 @@
 #define DEVICE_ENUMERATOR
 
 #include "Sender.h"
+#include "Handler.h"
 #include <windows.h>
 #include <initguid.h>
 #include <map>
@@ -17,12 +18,11 @@ struct Device  {
 	std::string deviceName; // This can be used to show the devices to the user
 };
 
-class DeviceEnumerator : public Sender {
+class DeviceEnumerator : public Handler {
 
 public:
-    void send() override;
     void sendWebcamDevices();
-    explicit DeviceEnumerator(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    explicit DeviceEnumerator(ClientSocket &clientSocket);
     static std::map<int, Device> getDevicesMap(GUID deviceClass);
 	static std::map<int, Device> getVideoDevicesMap();
     static int getIndexOfWebcamByName(const std::string&);

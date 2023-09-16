@@ -46,7 +46,7 @@ public class StartWebcamButton extends WebcamActions {
             getWebcamGUI().getRecordingMenu().setEnabled(false);
             getWebcamGUI().getStartButton().setText("Stop webcam");
             // Sending the information and starting the webcam
-            // getWebcamGUI().getStream().getExecutor().submit(new Webcam(getWebcamGUI()));
+             getWebcamGUI().getClient().getExecutor().submit(new Webcam(getWebcamGUI()));
         } else {
             // Check if there are recordings to be saved
             if (getWebcamGUI().getSaveRecordButton().isEnabled()) requestSave();

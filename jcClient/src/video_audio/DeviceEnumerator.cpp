@@ -128,9 +128,10 @@ std::string DeviceEnumerator::ConvertWCSToMBS(const wchar_t* pstr, long wslen)
 	return dblstr;
 }
 
-DeviceEnumerator::DeviceEnumerator(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
-        : Sender(stream, actionMap) {
-    actionMap["SEND_WEBCAM_DEVICES"] = [&](nlohmann::json& json) {
+DeviceEnumerator::DeviceEnumerator(ClientSocket &clientSocket)
+        : Handler(clientSocket) {
+    ActionMap& actionMap = clientSocket.getActionMap();
+    actionMap["WEBCAM_DEVICES"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &DeviceEnumerator::sendWebcamDevices);
     };
 }
@@ -147,10 +148,8 @@ int DeviceEnumerator::getIndexOfWebcamByName(const std::string& webcamName) {
 }
 
 void DeviceEnumerator::sendWebcamDevices(){
-    std::vector<std::string> vectorOfWebcams = getVectorDevicesNames();
-    stream.sendList(vectorOfWebcams);
-}
-
-void DeviceEnumerator::send() {
-
+    nlohmann::json jsonObject;
+    jsonObject["RESPONSE"] = "WEBCAM_DEVICES";
+    jsonObject["list_of_webcams"] = getVectorDevicesNames();
+    clientSocket.sendMessage(jsonObject.dump());
 }
