@@ -14,24 +14,9 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: gg">
-      <change afterPath="$PROJECT_DIR$/../jcClient/includes/ZipCompressor.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jcClient/src/zip/ZipCompressor.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/Connections/FileWriterTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/Connections/UniqueByteIDGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ClientSocket.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ClientSocket.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Download.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: download finished">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ConnectionStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ConnectionStore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DownloadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DownloadAction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -469,7 +454,7 @@
       <workItem from="1694581367473" duration="899000" />
       <workItem from="1694582484461" duration="4363000" />
       <workItem from="1694598801471" duration="3979000" />
-      <workItem from="1694850800490" duration="8317000" />
+      <workItem from="1694850800490" duration="9025000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -814,7 +799,7 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="165" />
+    <option name="localTasksCounter" value="166" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -866,7 +851,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: messagebox thread?" />
     <MESSAGE value="feat: messagebox with thread optimization" />
     <MESSAGE value="feat: server feature" />
     <MESSAGE value="feat: doc" />
@@ -891,7 +875,8 @@
     <MESSAGE value="feat: converted switch to maps (legibility)" />
     <MESSAGE value="feat: converted" />
     <MESSAGE value="feat: gg" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: gg" />
+    <MESSAGE value="feat: download finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: download finished" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

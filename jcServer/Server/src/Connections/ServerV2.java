@@ -51,8 +51,10 @@ public class ServerV2 {
         byte fileId = buf[offset];
         byte control = buf[offset + 1];
 
-        sessionToFileChannels.computeIfAbsent(fileId, k -> new BytesChannel(fileId));
         BytesChannel bytesChannel = sessionToFileChannels.get(fileId);
+        if (bytesChannel == null) {
+            return;
+        }
 
         byte[] finalData = bytesChannel.handleMessage(buf, offset, length, control);
 
