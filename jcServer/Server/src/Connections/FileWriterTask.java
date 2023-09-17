@@ -1,5 +1,6 @@
 package Connections;
 
+import Information.FolderOpener;
 import Information.Time;
 import net.lingala.zip4j.ZipFile;
 
@@ -46,6 +47,7 @@ public class FileWriterTask implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        FolderOpener.open(outputPath);
     }
 }
 

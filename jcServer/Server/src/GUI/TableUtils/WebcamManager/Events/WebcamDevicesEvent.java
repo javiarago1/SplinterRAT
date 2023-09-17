@@ -1,20 +1,27 @@
-package GUI.TableUtils.Webcam.WebcamManager.Events;
+package GUI.TableUtils.WebcamManager.Events;
 
-import Connections.Client;
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class StopWebcamEvent extends WebcamEvent {
-    public StopWebcamEvent(WebcamGUI webcamGUI) {
+
+/*
+ * Requesting webcam devices through sockets and getting
+ * a list containing them.
+ */
+
+public class WebcamDevicesEvent extends WebcamEvent {
+
+    public WebcamDevicesEvent(WebcamGUI webcamGUI) {
         super(webcamGUI);
+
     }
 
     @Override
     public void run() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("ACTION", "STOP_WEBCAM");
+        jsonObject.put("ACTION", "WEBCAM_DEVICES");
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {

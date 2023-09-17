@@ -1,7 +1,7 @@
-package GUI.TableUtils.Webcam.WebcamManager.Actions;
+package GUI.TableUtils.WebcamManager.Actions;
 
 
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

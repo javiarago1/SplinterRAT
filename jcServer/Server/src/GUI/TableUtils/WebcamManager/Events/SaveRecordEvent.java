@@ -1,8 +1,8 @@
-package GUI.TableUtils.Webcam.WebcamManager.Events;
+package GUI.TableUtils.WebcamManager.Events;
 
 import Connections.BytesChannel;
 import Connections.Category;
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

@@ -60,7 +60,6 @@ public class BytesChannel {
 
     private void write(byte[] data, int offset, int length) {
         if (buffer.remaining() < length) {
-
             ByteBuffer newBuffer = ByteBuffer.allocate(buffer.capacity() * 2);
             buffer.flip();
             newBuffer.put(buffer);

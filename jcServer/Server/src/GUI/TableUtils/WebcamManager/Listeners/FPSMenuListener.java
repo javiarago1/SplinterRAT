@@ -1,7 +1,7 @@
-package GUI.TableUtils.Webcam.WebcamManager.MenuBar;
+package GUI.TableUtils.WebcamManager.Listeners;
 
-import GUI.TableUtils.Webcam.WebcamManager.Actions.WebcamActions;
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.Actions.WebcamActions;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -1,7 +1,8 @@
-package GUI.TableUtils.Webcam.WebcamManager.Actions;
+package GUI.TableUtils.WebcamManager.Actions;
 
-import GUI.TableUtils.Webcam.WebcamManager.Actions.WebcamActions;
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.Events.RecordWebcamEvent;
+import GUI.TableUtils.WebcamManager.Events.StopRecordingEvent;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,16 +23,15 @@ public class RecordWebcamButton extends WebcamActions {
         AbstractButton abstractButton = (AbstractButton) e.getSource();
         boolean selected = abstractButton.getModel().isSelected();
         if (selected) {
-            getWebcamGUI().setStateStartRecordButton(true);
-            getWebcamGUI().getSaveRecordButton().setEnabled(false);
             getWebcamGUI().getStartButton().setEnabled(false);
             getWebcamGUI().getRecordButton().setText("Stop recording");
+            getWebcamGUI().getClient().getExecutor().submit(new RecordWebcamEvent(getWebcamGUI()));
         } else {
-            getWebcamGUI().setStateStartRecordButton(false);
-            getWebcamGUI().setStateStopRecordButton(true);
             getWebcamGUI().getSaveRecordButton().setEnabled(true);
             getWebcamGUI().getStartButton().setEnabled(true);
             getWebcamGUI().getRecordButton().setText("Record");
+            getWebcamGUI().getClient().getExecutor().submit(new StopRecordingEvent(getWebcamGUI()));
+
         }
     }
 }

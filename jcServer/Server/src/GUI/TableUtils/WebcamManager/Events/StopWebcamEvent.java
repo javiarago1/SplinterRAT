@@ -1,19 +1,19 @@
-package GUI.TableUtils.Webcam.WebcamManager.Events;
+package GUI.TableUtils.WebcamManager.Events;
 
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class StopRecordingEvent extends WebcamEvent {
-    public StopRecordingEvent(WebcamGUI webcamGUI) {
+public class StopWebcamEvent extends WebcamEvent {
+    public StopWebcamEvent(WebcamGUI webcamGUI) {
         super(webcamGUI);
     }
 
     @Override
     public void run() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("ACTION", "STOP_RECORDING_WEBCAM");
+        jsonObject.put("ACTION", "STOP_WEBCAM");
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {

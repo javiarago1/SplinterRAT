@@ -21,7 +21,7 @@ const uint8_t NOT_LAST_FRAGMENT = 0x01;
 
 void Download::downloadContent(nlohmann::json jsonObject) {
     std::string outputPath = ZipCompressor::compressPath(jsonObject["from_path"]);
-    byte fileID = jsonObject["file_ID"];
+    byte fileID = jsonObject["channel_id"];
     std::cout << "Output path: " + outputPath << std::endl;
 
     std::ifstream fileStream(outputPath, std::ios::in | std::ios::binary);

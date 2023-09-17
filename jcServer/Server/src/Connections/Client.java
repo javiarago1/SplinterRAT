@@ -18,18 +18,16 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 public class Client {
-    private Session session;
-
-
+    private final Session session;
     private SystemInformation sysInfo;
     private NetworkInformation netInfo;
-    ExecutorService executor = Executors.newCachedThreadPool();
+    private final ExecutorService executor = Executors.newCachedThreadPool();
     public Updater updater;
 
-    public UniqueByteIDGenerator uniqueByteIDGenerator = new UniqueByteIDGenerator();
-    Map<Response, Consumer<JSONObject>> mapOfResponses = new HashMap<>();
-
-    ConcurrentHashMap<Byte, BytesChannel> activeChannels = new ConcurrentHashMap<>();
+    private boolean isWebcamDialogOpen;
+    private final UniqueByteIDGenerator uniqueByteIDGenerator = new UniqueByteIDGenerator();
+    private final Map<Response, Consumer<JSONObject>> mapOfResponses = new HashMap<>();
+    private final ConcurrentHashMap<Byte, BytesChannel> activeChannels = new ConcurrentHashMap<>();
 
     public ConcurrentHashMap<Byte, BytesChannel> getFileChannels() {
         return activeChannels;
@@ -46,10 +44,6 @@ public class Client {
         BytesChannel channel = new BytesChannel(id, category);
         activeChannels.put(id, channel);
         return channel;
-    }
-
-    public BytesChannel getChannelById(byte id) {
-        return activeChannels.get(id);
     }
 
     public void handleFileCompletion(BytesChannel bytesChannel, byte[] finalData) {
@@ -149,4 +143,11 @@ public class Client {
     }
 
 
+    public boolean isWebcamDialogOpen() {
+        return isWebcamDialogOpen;
+    }
+
+    public void setWebcamDialogOpen(boolean webcamDialogOpen) {
+        isWebcamDialogOpen = webcamDialogOpen;
+    }
 }

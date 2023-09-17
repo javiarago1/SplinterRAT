@@ -40,7 +40,7 @@ public class DownloadProgressBar extends Bar {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("ACTION", "DOWNLOAD");
         jsonObject.put("from_path", downloadElement);
-        jsonObject.put("file_ID", bytesChannel.getId());
+        jsonObject.put("channel_id", bytesChannel.getId());
         System.out.println("File id de download: " + bytesChannel.getId());
         client.sendString(jsonObject.toString());
         //stream.sendAction(Action.DOWNLOAD, downloadList);

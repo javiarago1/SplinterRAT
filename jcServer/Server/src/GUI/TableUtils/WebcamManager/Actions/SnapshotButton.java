@@ -1,7 +1,7 @@
-package GUI.TableUtils.Webcam.WebcamManager.Actions;
+package GUI.TableUtils.WebcamManager.Actions;
 
-import GUI.TableUtils.Webcam.WebcamManager.Actions.WebcamActions;
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.Events.SnapshotWebcamEvent;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 
 import java.awt.event.ActionEvent;
 /*
@@ -16,6 +16,6 @@ public class SnapshotButton extends WebcamActions {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getWebcamGUI().setStateSnapshotButton(true);
+        getWebcamGUI().getClient().getExecutor().submit(new SnapshotWebcamEvent(getWebcamGUI()));
     }
 }

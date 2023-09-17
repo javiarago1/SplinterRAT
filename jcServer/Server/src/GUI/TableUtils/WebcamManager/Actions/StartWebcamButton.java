@@ -1,8 +1,9 @@
-package GUI.TableUtils.Webcam.WebcamManager.Actions;
+package GUI.TableUtils.WebcamManager.Actions;
 
-import GUI.TableUtils.Webcam.WebcamManager.Events.StopWebcamEvent;
-import GUI.TableUtils.Webcam.WebcamManager.Events.StartWebcamEvent;
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.Events.StartWebcamEvent;
+import GUI.TableUtils.WebcamManager.Events.SaveRecordEvent;
+import GUI.TableUtils.WebcamManager.Events.StopWebcamEvent;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +25,7 @@ public class StartWebcamButton extends WebcamActions {
                 "You have pending recordings to save. Do you want to save the recordings?",
                 "Warning: pending recordings to save",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            getWebcamGUI().setSaveAndStop(true);
+            getWebcamGUI().getClient().getExecutor().submit(new SaveRecordEvent(getWebcamGUI()));
         }
     }
 
@@ -39,7 +40,6 @@ public class StartWebcamButton extends WebcamActions {
         boolean selected = abstractButton.getModel().isSelected();
         // enabling/disabling buttons
         if (selected) {
-            getWebcamGUI().setStateStreamingButton(true);
             getWebcamGUI().getBoxOfDevices().setEnabled(false);
             getWebcamGUI().getRecordButton().setEnabled(true);
             getWebcamGUI().getSnapshotButton().setEnabled(true);
@@ -50,7 +50,6 @@ public class StartWebcamButton extends WebcamActions {
         } else {
             // Check if there are recordings to be saved
             if (getWebcamGUI().getSaveRecordButton().isEnabled()) requestSave();
-            getWebcamGUI().setStateStreamingButton(false);
             getWebcamGUI().getBoxOfDevices().setEnabled(true);
             getWebcamGUI().getRecordButton().setEnabled(false);
             getWebcamGUI().getSnapshotButton().setEnabled(false);

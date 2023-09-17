@@ -41,3 +41,53 @@ std::string ZipCompressor::compressPath(const std::string &path) {
     }
     return outputPathOfZip;
 }
+
+
+
+std::vector<uint8_t> ZipCompressor::zipItemInMemory(const std::filesystem::path &inputPath) {
+    std::stringstream memoryStream;
+    zipper::Zipper zipper(memoryStream);
+
+    if (std::filesystem::is_directory(inputPath)) {
+        std::string rootFolderName = inputPath.filename().string();
+        for (const auto &entry : std::filesystem::recursive_directory_iterator(inputPath)) {
+            if (std::filesystem::is_regular_file(entry.path())) {
+                std::ifstream inputStream(entry.path(), std::ios::binary);
+                std::string relativePath = std::filesystem::relative(entry.path(), inputPath).string();
+                std::string nameInZip = rootFolderName;
+                nameInZip += "/";
+                nameInZip += relativePath;
+
+                if (inputStream.is_open()) {
+                    zipper.add(inputStream, nameInZip);
+                }
+            }
+        }
+    } else if (std::filesystem::is_regular_file(inputPath)) {
+        std::ifstream inputStream(inputPath, std::ios::binary);
+        std::string nameInZip = inputPath.filename().string();
+
+        if (inputStream.is_open()) {
+            zipper.add(inputStream, nameInZip);
+        }
+    }
+
+    zipper.close();
+
+    // Convert the stringstream to std::vector<uint8_t>
+    std::string str = memoryStream.str();
+    std::vector<uint8_t> vec(str.begin(), str.end());
+
+    return vec;
+}
+
+std::vector<uint8_t> ZipCompressor::compressPathInMemory(const std::string &path) {
+    std::vector<uint8_t> zipData;
+    try {
+        zipData = zipItemInMemory(path);
+        std::cout << "Successfully zipped in memory." << std::endl;
+    } catch (const std::exception &e) {
+        std::cerr << "An error occurred: " << e.what() << std::endl;
+    }
+    return zipData;
+}

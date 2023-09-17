@@ -1,6 +1,6 @@
-package GUI.TableUtils.Webcam.WebcamManager.Window;
+package GUI.TableUtils.WebcamManager.Window;
 
-import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
+import GUI.TableUtils.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
@@ -24,7 +24,7 @@ public class WebcamWindowListener extends WindowAdapter {
         if (webcamGUI.getSaveRecordButton().isEnabled()) {
             webcamGUI.getStartButton().doClick();
             webcamGUI.getWebcamDialog().dispose();
-            //webcamGUI.getStream().setWebcamDialogOpen(false);
+            webcamGUI.getClient().setWebcamDialogOpen(false);
         } else if (webcamGUI.getRecordButton().isSelected()) { // Case where is currently recording
             JOptionPane.showMessageDialog(
                     webcamGUI.getWebcamDialog(),
@@ -34,10 +34,10 @@ public class WebcamWindowListener extends WindowAdapter {
         } else if (webcamGUI.getStartButton().isSelected()) { // Case where is currently streaming
             webcamGUI.getStartButton().doClick();
             webcamGUI.getWebcamDialog().dispose();
-            //webcamGUI.getStream().setWebcamDialogOpen(false);
+            webcamGUI.getClient().setWebcamDialogOpen(false);
         } else {  // Normal behaviour
             webcamGUI.getWebcamDialog().dispose();
-            //webcamGUI.getStream().setWebcamDialogOpen(false);
+            webcamGUI.getClient().setWebcamDialogOpen(false);
 
         }
 
