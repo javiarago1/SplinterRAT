@@ -14,28 +14,7 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: refactoring,webcam and screen development">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Events/SnapshotWebcamEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ZipCompressor.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ZipCompressor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/webcam/WebcamManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/webcam/WebcamManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/zip/ZipCompressor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/zip/ZipCompressor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/FileWriterTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/FileWriterTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Updater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/RecordWebcamButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/RecordWebcamButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/SaveRecordButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/SaveRecordButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/SnapshotButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/SnapshotButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/StartWebcamButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/StartWebcamButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Events/StartWebcamEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Events/StartWebcamEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/WebcamGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/WebcamGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/WebcamRequester.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/WebcamRequester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Window/WebcamWindowListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Window/WebcamWindowListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamMenuListener.java" afterDir="false" />
-    </list>
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: finished webcam streaming" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -472,7 +451,7 @@
       <workItem from="1694581367473" duration="899000" />
       <workItem from="1694582484461" duration="4363000" />
       <workItem from="1694598801471" duration="3979000" />
-      <workItem from="1694932106753" duration="19541000" />
+      <workItem from="1694932106753" duration="19928000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -817,7 +796,7 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="166" />
+    <option name="localTasksCounter" value="167" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -869,7 +848,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: messagebox with thread optimization" />
     <MESSAGE value="feat: server feature" />
     <MESSAGE value="feat: doc" />
     <MESSAGE value="fix: finished updating current page and disks file manager" />
@@ -894,7 +872,8 @@
     <MESSAGE value="feat: converted" />
     <MESSAGE value="feat: gg" />
     <MESSAGE value="feat: refactoring,webcam and screen development" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: refactoring,webcam and screen development" />
+    <MESSAGE value="feat: finished webcam streaming" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: finished webcam streaming" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
