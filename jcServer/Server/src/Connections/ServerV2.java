@@ -24,7 +24,6 @@ public class ServerV2 {
     public void onMessage(Session session, String message) {
         System.out.println(message);
         ConnectionStore.getConnection(session).processMessage(message);
-
     }
 
     @OnWebSocketConnect
@@ -60,6 +59,7 @@ public class ServerV2 {
         byte[] finalData = bytesChannel.handleMessage(buf, offset, length, control);
 
         if (finalData != null) {
+
             client.handleFileCompletion(bytesChannel, finalData);
         }
     }
@@ -75,6 +75,10 @@ public class ServerV2 {
         ServletHolder wsHolder = new ServletHolder("ws", new org.eclipse.jetty.websocket.servlet.WebSocketServlet() {
             @Override
             public void configure(org.eclipse.jetty.websocket.servlet.WebSocketServletFactory factory) {
+                // Configura el tamaño máximo del mensaje (en bytes).
+                factory.getPolicy().setMaxTextMessageSize(204800); // 200KB para mensajes de texto
+                factory.getPolicy().setMaxBinaryMessageSize(204800); // 200KB para mensajes binarios
+
                 factory.register(ServerV2.class);
             }
         });

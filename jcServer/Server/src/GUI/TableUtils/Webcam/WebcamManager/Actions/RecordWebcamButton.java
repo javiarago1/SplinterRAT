@@ -1,4 +1,4 @@
-package GUI.TableUtils.Webcam.WebcamManager.Actions.Record;
+package GUI.TableUtils.Webcam.WebcamManager.Actions;
 
 import GUI.TableUtils.Webcam.WebcamManager.Actions.WebcamActions;
 import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;

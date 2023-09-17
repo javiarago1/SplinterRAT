@@ -14,15 +14,49 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: device enumerator done!">
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/DeviceEnumerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/DeviceEnumerator.h" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: gg">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Events/RecordWebcamEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Events/SaveRecordEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Events/StopRecordingEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Events/StopWebcamEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Events/WebcamEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/Information/AbstractEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/Information/GUIManagerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ScreenStreamer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ScreenStreamer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/WebcamManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/WebcamManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/video_audio/DeviceEnumerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/video_audio/DeviceEnumerator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/webcam/WebcamManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/webcam/WebcamManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Updater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/Start/StartWebcamButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/Start/StartWebcamButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Webcam.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Webcam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DeleteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DeleteAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/PasteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/PasteAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/RunAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/RunAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/DeleteEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/DeleteFileManagerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/FileManagerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/MoveEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/MoveFileManagerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/PasteEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/PasteFileManagerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RequestDirectoryEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RequestDirectoryFileManagerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RequestDiskEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RequestDiskFileManagerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RunEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RunFileManagerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/EventStreamer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/EventStreamer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StartAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StartAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/Record/RecordWebcamButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/RecordWebcamButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/Save/SaveRecordButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/SaveRecordButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/Snapshot/SnapshotButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/SnapshotButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/Start/StartWebcamButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/StartWebcamButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Webcam.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/Events/StartWebcamEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/WebcamGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Webcam/WebcamManager/WebcamGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,10 +68,10 @@
       <list>
         <option value="UML Class" />
         <option value="JavaScript File" />
-        <option value="Interface" />
         <option value="Record" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -98,38 +132,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev.websocket&quot;,
-    &quot;last.edited.regexp&quot;: &quot;&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nitropc/SplinterRAT/jcServer&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "dev.websocket",
+    "last.edited.regexp": "",
+    "last_opened_file_path": "C:/Users/Nitropc/SplinterRAT/jcServer/Server/src/GUI/TableUtils/Webcam/WebcamManager/Actions/Start",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="Connections" />
@@ -137,11 +171,11 @@
       <recent name="Server.GUI.TreeInterpreter.TreeGUI" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Nitropc\SplinterRAT\jcServer\Server\src\GUI\TableUtils\Webcam\WebcamManager\Actions\Start" />
       <recent name="C:\Users\Nitropc\SplinterRAT\jcServer\Server\src\Connections" />
       <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src\GUI\Resources" />
       <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src" />
       <recent name="C:\Users\JAVIER\jcRAT\jcServer\Server\src\GUI\TableUtils\FileManager\Icons" />
-      <recent name="C:\Users\JAVIER\IdeaProjects\jRat\Server\src\Server\GUI\Compiler" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Nitropc\SplinterRAT\jcServer\Server\src\Connections" />
@@ -460,8 +494,7 @@
       <workItem from="1694581367473" duration="899000" />
       <workItem from="1694582484461" duration="4363000" />
       <workItem from="1694598801471" duration="3979000" />
-      <workItem from="1694850800490" duration="9627000" />
-      <workItem from="1694870161128" duration="12025000" />
+      <workItem from="1694932106753" duration="12943000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -806,18 +839,13 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="169" />
+    <option name="localTasksCounter" value="165" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="7732978a-5159-4ade-8616-5403e74399f5" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="RECENT_FILTERS">
       <map>
         <entry key="Branch">
@@ -835,11 +863,6 @@
     </option>
     <option name="TAB_STATES">
       <map>
-        <entry key="7732978a-5159-4ade-8616-5403e74399f5">
-          <value>
-            <State />
-          </value>
-        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -868,6 +891,9 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
+    <MESSAGE value="feat: messagebox thread?" />
+    <MESSAGE value="feat: messagebox with thread optimization" />
+    <MESSAGE value="feat: server feature" />
     <MESSAGE value="feat: doc" />
     <MESSAGE value="fix: finished updating current page and disks file manager" />
     <MESSAGE value="refactoring, fixing small problems" />
@@ -890,14 +916,17 @@
     <MESSAGE value="feat: converted switch to maps (legibility)" />
     <MESSAGE value="feat: converted" />
     <MESSAGE value="feat: gg" />
-    <MESSAGE value="feat: download finished" />
-    <MESSAGE value="feat: download folder completed..." />
-    <MESSAGE value="feat: device enumerator done!" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: device enumerator done!" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: gg" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.nio.BufferOverflowException" package="java.nio" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
       <breakpoints-defaults>
         <breakpoint suspend="THREAD" type="java-line" />
       </breakpoints-defaults>

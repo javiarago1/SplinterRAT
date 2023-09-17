@@ -1,5 +1,6 @@
 package GUI.TableUtils.ScreenStreaming;
 
+import Connections.Client;
 import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.Main;
@@ -14,9 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScreenStreamingGUI {
     private final JDialog dialog;
-    private final Streams auxEventStream;
-    private final ClientHandler clientHandler;
-    private final Streams stream;
+    private final Client client;
     private final AtomicBoolean isScreenshot = new AtomicBoolean(false);
     private final AtomicBoolean isRunning = new AtomicBoolean(false);
     private final ConcurrentLinkedQueue<String> queueOfEvents = new ConcurrentLinkedQueue<>();
@@ -24,11 +23,9 @@ public class ScreenStreamingGUI {
 
     private final AtomicBoolean computerControl = new AtomicBoolean(false);
 
-    public ScreenStreamingGUI(ClientHandler clientHandler) {
-        this.stream = clientHandler.getStreamByName(SocketType.SCREEN);
-        this.auxEventStream = clientHandler.getStreamByName(SocketType.SCREEN_EVENT);
-        dialog = new JDialog(Main.gui.getMainGUI(), "Screen controller - " + clientHandler.getIdentifier());
-        this.clientHandler = clientHandler;
+    public ScreenStreamingGUI(Client client) {
+        dialog = new JDialog(Main.gui.getMainGUI(), "Screen controller - " + client.getIdentifier());
+        this.client = client;
         dialog.setLayout(new GridBagLayout());
         dialog.setSize(600, 400);
         dialog.setResizable(false);
@@ -80,9 +77,6 @@ public class ScreenStreamingGUI {
         return dialog;
     }
 
-    public Streams getStream() {
-        return stream;
-    }
 
     public AtomicBoolean getIsScreenshot() {
         return isScreenshot;
@@ -108,10 +102,7 @@ public class ScreenStreamingGUI {
         return computerControl;
     }
 
-    public ClientHandler getClientHandler() {
-        return clientHandler;
-    }
-    public Streams getAuxEventStream() {
-        return auxEventStream;
+    public Client getClient() {
+        return client;
     }
 }

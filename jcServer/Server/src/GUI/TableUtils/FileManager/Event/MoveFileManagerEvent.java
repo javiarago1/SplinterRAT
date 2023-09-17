@@ -1,22 +1,18 @@
 package GUI.TableUtils.FileManager.Event;
 
 import Connections.Client;
-import Connections.ClientErrorHandler;
-import Connections.Streams;
-import Information.Action;
+import GUI.TableUtils.FileManager.FileManagerGUI;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import java.util.List;
 
-public class MoveEvent extends Event {
+public class MoveFileManagerEvent extends FileManagerEvent {
     private final String directoryToMove;
-    private final JDialog fileManagerDialog;
 
-    public MoveEvent(Client client, List<String> CMElements, String directoryToMove, JDialog fileManagerDialog) {
-        super(client, CMElements);
+    public MoveFileManagerEvent(FileManagerGUI filemanagerGUI, List<String> CMElements, String directoryToMove) {
+        super(filemanagerGUI, CMElements);
         this.directoryToMove = directoryToMove;
-        this.fileManagerDialog = fileManagerDialog;
     }
 
     @Override

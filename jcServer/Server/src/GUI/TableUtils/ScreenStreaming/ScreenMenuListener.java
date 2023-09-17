@@ -1,5 +1,6 @@
 package GUI.TableUtils.ScreenStreaming;
 
+import Connections.Client;
 import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.TableUtils.Configuration.GetSYS;
@@ -18,8 +19,9 @@ public class ScreenMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ClientHandler clientHandler = GetSYS.getClientHandler();
-        assert clientHandler != null;
-        new ScreenStreamingGUI(clientHandler);
+        Client client = GetSYS.getClientHandlerV2();
+        assert client != null;
+        ScreenStreamingGUI screenStreamingGUI = new ScreenStreamingGUI(client);
+        client.updater.setScreenStreamerGUI(screenStreamingGUI);
     }
 }

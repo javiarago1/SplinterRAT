@@ -1,14 +1,15 @@
 package GUI.TableUtils.FileManager.Event;
 
 import Connections.Client;
+import GUI.TableUtils.FileManager.FileManagerGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
 
-public class RequestDirectoryEvent extends Event{
-    public RequestDirectoryEvent(Client client, List<String> CMElements) {
-        super(client, CMElements);
+public class RequestDirectoryFileManagerEvent extends FileManagerEvent {
+    public RequestDirectoryFileManagerEvent(FileManagerGUI fileManagerGUI, List<String> CMElements) {
+        super(fileManagerGUI, CMElements);
     }
 
     @Override

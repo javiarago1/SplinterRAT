@@ -1,22 +1,19 @@
 package GUI.TableUtils.Webcam.WebcamManager;
 
 import Connections.Client;
-import Connections.ClientHandler;
-import Connections.Streams;
-import GUI.TableUtils.Configuration.GetSYS;
-import GUI.TableUtils.Configuration.SocketType;
 import GUI.TableUtils.Webcam.WebcamManager.MenuBar.FPSMenuListener;
-import GUI.TableUtils.Webcam.WebcamManager.Actions.Record.RecordWebcamButton;
-import GUI.TableUtils.Webcam.WebcamManager.Actions.Save.SaveRecordButton;
-import GUI.TableUtils.Webcam.WebcamManager.Actions.Snapshot.SnapshotButton;
-import GUI.TableUtils.Webcam.WebcamManager.Actions.Start.StartWebcamButton;
+import GUI.TableUtils.Webcam.WebcamManager.Actions.RecordWebcamButton;
+import GUI.TableUtils.Webcam.WebcamManager.Actions.SaveRecordButton;
+import GUI.TableUtils.Webcam.WebcamManager.Actions.SnapshotButton;
+import GUI.TableUtils.Webcam.WebcamManager.Actions.StartWebcamButton;
 import GUI.TableUtils.Webcam.WebcamManager.Window.WebcamWindowListener;
+import Information.GUIManagerInterface;
 
 import javax.swing.*;
 import java.awt.*;
 
 
-public class WebcamGUI {
+public class WebcamGUI implements GUIManagerInterface {
     private final Client client;
     private int FPS = 30;
     private JComboBox<String> boxOfDevices;
@@ -257,6 +254,7 @@ public class WebcamGUI {
     }
 
 
+    @Override
     public Client getClient() {
         return client;
     }

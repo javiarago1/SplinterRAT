@@ -5,23 +5,23 @@
 #include "KeyboardExecuter.h"
 #include "Sender.h"
 #include "Gdiplus.h"
+#include "ClientSocket.h"
+#include "Handler.h"
 
 
 
-class ScreenStreamer : public Sender {
+class ScreenStreamer : public Handler {
 
 public:
-    explicit ScreenStreamer(const Stream &stream, const Stream &auxEventStream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
-    void send() override;
+    explicit ScreenStreamer(ClientSocket &clientSocket);
     void startStreaming(nlohmann::json jsonObjet);
 private:
     static BITMAPINFOHEADER createBitmapHeader(int,int);
     std::string clickKeyWord = "click/";
     std::string keyKeyWord = "key/";
-    Stream auxEventStream;
     void screenTransmissionThread();
     void screenEventsThread();
-
+    byte channelID;
     static void takeScreenshot(std::vector<BYTE> &data);
 
     static HBITMAP GdiPlusScreenCapture(HWND hWnd);

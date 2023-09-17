@@ -1,8 +1,7 @@
 package GUI.TableUtils.FileManager.Actions;
 
 import Connections.Client;
-import GUI.TableUtils.FileManager.Event.DeleteEvent;
-import GUI.TableUtils.FileManager.Event.RunEvent;
+import GUI.TableUtils.FileManager.Event.RunFileManagerEvent;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import java.awt.event.ActionEvent;
@@ -15,6 +14,6 @@ public class RunAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = getFileManagerGUI().getClient();
-        getFileManagerGUI().getClient().getExecutor().submit(new RunEvent(client, getSelectedPaths(), getFileManagerGUI().getFileManagerDialog()));    }
+        getFileManagerGUI().getClient().getExecutor().submit(new RunFileManagerEvent(getFileManagerGUI(), getSelectedPaths()));
+    }
 }

@@ -1,21 +1,17 @@
 package GUI.TableUtils.FileManager.Event;
 
 import Connections.Client;
-import Connections.ClientErrorHandler;
-import Connections.Streams;
-import Information.Action;
+import GUI.TableUtils.FileManager.FileManagerGUI;
 import org.json.JSONObject;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.List;
 
-public class DeleteEvent extends Event {
+public class DeleteFileManagerEvent extends FileManagerEvent {
 
-    private final JDialog fileManagerDialog;
-
-    public DeleteEvent(Client client, List<String> CMElements, JDialog fileManagerDialog) {
-        super(client, CMElements);
-        this.fileManagerDialog = fileManagerDialog;
+    public DeleteFileManagerEvent(FileManagerGUI fileManagerGUI, List<String> CMElements) {
+        super(fileManagerGUI, CMElements);
     }
 
     @Override

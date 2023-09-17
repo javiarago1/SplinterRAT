@@ -2,14 +2,14 @@ package GUI.TableUtils.FileManager;
 
 
 import Connections.Client;
-import Connections.ClientHandler;
 import GUI.TableUtils.Configuration.TablePopUpListener;
 import GUI.TableUtils.FileManager.Actions.*;
-import GUI.TableUtils.FileManager.Event.RequestDirectoryEvent;
-import GUI.TableUtils.FileManager.Event.RequestDiskEvent;
+import GUI.TableUtils.FileManager.Event.RequestDirectoryFileManagerEvent;
+import GUI.TableUtils.FileManager.Event.RequestDiskFileManagerEvent;
 import GUI.TableUtils.FileManager.Listener.MouseListener;
 import GUI.TableUtils.FileManager.Style.CellRenderer;
 import GUI.TableUtils.FileManager.Style.TableModel;
+import Information.GUIManagerInterface;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class FileManagerGUI {
+public class FileManagerGUI implements GUIManagerInterface {
 
 
     private final Stack<String> stack = new Stack<>();
@@ -218,11 +218,11 @@ public class FileManagerGUI {
     }
 
     public void requestDirectory(String path){
-        client.getExecutor().submit(new RequestDirectoryEvent(client, Collections.singletonList(path)));
+        client.getExecutor().submit(new RequestDirectoryFileManagerEvent(this, Collections.singletonList(path)));
     }
 
     public void requestDisks(){
-        client.getExecutor().submit(new RequestDiskEvent(client, null));
+        client.getExecutor().submit(new RequestDiskFileManagerEvent(this, null));
     }
 
     private int divider;
@@ -264,6 +264,7 @@ public class FileManagerGUI {
         return popupMenu;
     }
 
+    @Override
     public Client getClient() {
         return client;
     }

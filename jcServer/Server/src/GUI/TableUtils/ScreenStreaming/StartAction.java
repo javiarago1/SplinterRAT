@@ -17,8 +17,8 @@ public class StartAction implements ActionListener {
         JMenuItem stateButton = screenStreamingGUI.getStartMenu();
         if (stateButton.getText().equals("Start")) {
             screenStreamingGUI.getIsRunning().set(true);
-            screenStreamingGUI.getStream().getExecutor().submit(new ScreenStreamer(screenStreamingGUI));
-            screenStreamingGUI.getAuxEventStream().getExecutor().submit(new EventStreamer(screenStreamingGUI));
+            screenStreamingGUI.getClient().getExecutor().submit(new ScreenStreamer(screenStreamingGUI));
+            //screenStreamingGUI.getAuxEventStream().getExecutor().submit(new EventStreamer(screenStreamingGUI));
             stateButton.setText("Stop");
         } else {
             screenStreamingGUI.getIsRunning().set(false);

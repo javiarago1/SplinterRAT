@@ -6,6 +6,8 @@ ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
     actionMap(actionMap) {
     c.set_open_handler(std::bind(&ClientSocket::on_connection, this, std::placeholders::_1));
     c.set_message_handler(std::bind(&ClientSocket::on_message, this, std::placeholders::_1, std::placeholders::_2));
+    c.set_access_channels(websocketpp::log::alevel::none);
+    c.set_error_channels(websocketpp::log::elevel::none);
     c.init_asio();
     // Initialize connection
     websocketpp::lib::error_code ec;

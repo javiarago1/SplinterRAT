@@ -1,24 +1,21 @@
 package GUI.TableUtils.FileManager.Event;
 
 import Connections.Client;
-import Connections.ClientErrorHandler;
-import Connections.Streams;
-import Information.Action;
+import GUI.TableUtils.FileManager.FileManagerGUI;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import java.util.List;
 
-public class PasteEvent extends Event {
+public class PasteFileManagerEvent extends FileManagerEvent {
 
 
     private final List<String> listWhereToPaste;
     private JDialog fileManagerDialog;
 
-    public PasteEvent(Client client, List<String> CMElements, List<String> listWhereToPaste, JDialog fileManagerDialog) {
-        super(client, CMElements);
+    public PasteFileManagerEvent(FileManagerGUI fileManagerGUI, List<String> CMElements, List<String> listWhereToPaste) {
+        super(fileManagerGUI, CMElements);
         this.listWhereToPaste = listWhereToPaste;
-        this.fileManagerDialog = fileManagerDialog;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package GUI.TableUtils.ScreenStreaming;
 
+import Connections.Client;
 import Connections.Streams;
 import GUI.TableUtils.Configuration.SocketType;
 
@@ -14,10 +15,9 @@ public class EventStreamer implements Runnable {
 
     private final AtomicBoolean isControlComputer;
 
-    private final Streams stream;
+    //private final Client client;
 
     public EventStreamer(ScreenStreamingGUI screenStreamingGUI) {
-        stream = screenStreamingGUI.getAuxEventStream();
         queueOfEvents = screenStreamingGUI.getQueueOfEvents();
         isRunning = screenStreamingGUI.getIsRunning();
         isControlComputer = screenStreamingGUI.getComputerControl();
@@ -27,17 +27,17 @@ public class EventStreamer implements Runnable {
     public void run() {
         while (isRunning.get()) {
             if (!queueOfEvents.isEmpty() && isControlComputer.get()) {
-                try {
-                    stream.sendString(queueOfEvents.remove());
+              /*  try {
+                    //.sendString(queueOfEvents.remove());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                }
+                }*/
             }
         }
-        try {
+        /*try {
             stream.sendString("END");
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 }

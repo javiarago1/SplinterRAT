@@ -21,7 +21,7 @@ void clickOnCoordinates(std::vector<int> infoOfClick) {
 }
 
 void ScreenStreamer::screenEventsThread() {
-    std::string whereTo;
+    /*std::string whereTo;
     while ((whereTo = auxEventStream.readString()) != "END") {
         if (whereTo.rfind(clickKeyWord) != -1) {
             std::string newString = whereTo.substr(clickKeyWord.length(), whereTo.length());
@@ -39,36 +39,58 @@ void ScreenStreamer::screenEventsThread() {
             char character = whereTo.at(keyKeyWord.length());
             KeyboardExecuter::pressKey(VkKeyScanA(character));
         }
-    }
+    }*/
 }
+
+const int FRAGMENT_SIZE = 204800; // 200 KB
+const uint8_t LAST_FRAGMENT = 0x02;
+const uint8_t NOT_LAST_FRAGMENT = 0x01;
 
 void ScreenStreamer::screenTransmissionThread() {
-    while (stream.readSize() != -1) {
+    while (true) {
+        std::vector<BYTE> screenBuff;
+        takeScreenshot(screenBuff);
 
-        // capture image
-       // HWND hwnd = GetDesktopWindow();
-       // cv::Mat src = captureScreenMat(hwnd);
+        std::vector<uint8_t> buffer(FRAGMENT_SIZE);
+        size_t bytesRead = 0;
+        size_t totalSize = screenBuff.size();
+        size_t offset = 0;
 
-        // encode result
-        //std::vector<uchar> buff;
-        // cv::imencode(".png", src, buff);
-        std::vector<BYTE> buff;
-        takeScreenshot(buff);
-        stream.sendSize((int) buff.size());
-        ::send(stream.getSock(), (char *) &buff[0], (int) buff.size(), 0);
-        // save img
-        buff.clear();
+        while (totalSize > 0) {
+            // Preparar los bytes de encabezado: 1 byte para el ID de archivo, 1 byte para el código de control
+            buffer[0] = channelID;
+            buffer[1] = NOT_LAST_FRAGMENT;
+
+            // Calcular cuántos bytes leer para este fragmento
+            if (totalSize >= FRAGMENT_SIZE - 2) {
+                bytesRead = FRAGMENT_SIZE - 2;
+            } else {
+                bytesRead = totalSize;
+                buffer[1] = LAST_FRAGMENT;
+            }
+
+            // Copiar los datos en el buffer, comenzando en el desplazamiento 2
+            std::copy(screenBuff.begin() + offset, screenBuff.begin() + offset + bytesRead, buffer.begin() + 2);
+
+            // Enviar el fragmento
+            clientSocket.sendBytes(std::vector<uint8_t>(buffer.begin(), buffer.begin() + bytesRead + 2));
+
+            // Actualizar el desplazamiento y el tamaño total restante
+            offset += bytesRead;
+            totalSize -= bytesRead;
+        }
+
+        // Limpiar el buffer
+        screenBuff.clear();
     }
 }
 
-void ScreenStreamer::send() {
-
-}
 
 
-ScreenStreamer::ScreenStreamer(const Stream &stream, const Stream &auxEventStream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) :
-        Sender(stream, actionMap), auxEventStream(auxEventStream) {
-    actionMap["START_STREAMING"] = [&](nlohmann::json& json) {
+ScreenStreamer::ScreenStreamer(ClientSocket &clientSocket) :
+        Handler(clientSocket) {
+    ActionMap actionMap = clientSocket.getActionMap();
+    actionMap["START_SCREEN_STREAMING"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &ScreenStreamer::startStreaming,json);
     };
 
@@ -78,7 +100,8 @@ void ScreenStreamer::startStreaming(nlohmann::json jsonObjet) {
     double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
     double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
     std::string screenDimensions(std::to_string((int) fScreenWidth) + "," + std::to_string((int) fScreenHeight));
-    stream.sendString(screenDimensions.c_str());
+   // stream.sendString(screenDimensions.c_str());
+    channelID = jsonObjet["channel_id"];
     std::thread transmissionThread(&ScreenStreamer::screenTransmissionThread, this);
     std::thread eventsThread(&ScreenStreamer::screenEventsThread, this);
 

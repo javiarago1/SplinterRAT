@@ -1,21 +1,13 @@
-package GUI.TableUtils.Webcam.WebcamManager;
+package GUI.TableUtils.Webcam.WebcamManager.Events;
 
-
-import javax.swing.*;
 
 import Connections.BytesChannel;
 import Connections.Category;
-import Connections.ClientErrorHandler;
-import Information.Action;
 
-import Information.FolderOpener;
-import Information.Time;
-import org.apache.commons.io.FileUtils;
+import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 
 
 /*
@@ -24,37 +16,33 @@ import java.nio.channels.FileChannel;
  * - Sending recording information to client
  */
 
-public class Webcam implements Runnable {
+public class StartWebcamEvent extends WebcamEvent {
 
-
-    private final WebcamGUI webcamGUI;
-
-    public Webcam(WebcamGUI webcamGUI) {
-        this.webcamGUI = webcamGUI;
+    public StartWebcamEvent(WebcamGUI webcamGUI) {
+        super(webcamGUI);
     }
 
 
     @Override
     public void run() {
         // Saving configuration to send it to client
+        BytesChannel bytesChannel = getClient().createFileChannel(Category.WEBCAM_STREAMING);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("ACTION", "START_WEBCAM");
+        jsonObject.put("selected_device", getGUIManager().getSelectedDevice());
+        jsonObject.put("is_fragmented", getGUIManager().isFragmented());
+        jsonObject.put("fps", getGUIManager().getFPS());
+        jsonObject.put("channel_id", bytesChannel.getId());
+        System.out.println("Channel de webcam " + bytesChannel.getId());
         try {
-            startWebcam();
+            getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
-            //  new ClientErrorHandler("Unable to reproduce webcam, connection lost with client",
-
-            //        webcamGUI.getWebcamDialog(), webcamGUI.getStream().getClientSocket());
+            throw new RuntimeException(e);
         }
     }
 
-    private void startWebcam() throws IOException {
-        BytesChannel bytesChannel = webcamGUI.getClient().createFileChannel(Category.IMAGE);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("ACTION", "START_WEBCAM");
-        jsonObject.put("selected_device", webcamGUI.getSelectedDevice());
-        jsonObject.put("is_fragmented", webcamGUI.isFragmented());
-        jsonObject.put("fps", webcamGUI.getFPS());
-        jsonObject.put("channel_id", bytesChannel.getId());
-        webcamGUI.getClient().sendString(jsonObject.toString());
+    private void startWebcam() {
+
         /*boolean fragmented = webcamGUI.isFragmented();
         int FPS = webcamGUI.getFPS();
         String selectedDevice = webcamGUI.getSelectedDevice();

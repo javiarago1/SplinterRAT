@@ -10,13 +10,14 @@
 #include "Install.h"
 #include "configuration.h"
 #include "json.hpp"
-
+#include "Download.h"
 #include "DeviceEnumerator.h"
 
 
 class WebcamManager : public Handler {
 private:
     // information related to recording
+    int frameWidth, frameHeight;
     int webcamID{};
     bool fragmented{};
     int FPS{};
@@ -25,17 +26,22 @@ private:
     cv::VideoWriter output;
     std::vector<std::wstring> pathVector;
     std::wstring fileName;
-    boolean initialized = false;
-    uchar channelID = 1;
+    byte channelID;
+    std::atomic<bool> initialized = false;
+    std::atomic<bool> streamingState = false;
+    Download &download;
 
-    void sendRecord();
+
+    void sendRecord(nlohmann::json);
     void removeTempFiles();
     void sendFrame(const cv::Mat&);
     void sendDimensions(int,int);
-
 public:
-    explicit WebcamManager(ClientSocket &clientSocket);
+    explicit WebcamManager(ClientSocket &clientSocket, Download &download);
     void setConfiguration(nlohmann::json jsonObject);
     void startWebcam(nlohmann::json jsonObject);
+    void stopWebcam();
+    void stopRecording();
+    void startRecording();
 };
 #endif

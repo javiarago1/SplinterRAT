@@ -1,22 +1,16 @@
 package GUI.TableUtils.FileManager.Event;
 
 import Connections.Client;
-import Connections.ClientErrorHandler;
-import Connections.Streams;
-import Information.Action;
-import org.eclipse.jetty.util.ajax.JSON;
+import GUI.TableUtils.FileManager.FileManagerGUI;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import java.util.List;
 
-public class RunEvent extends Event {
+public class RunFileManagerEvent extends FileManagerEvent {
 
-    private final JDialog fileManagerDialog;
-
-    public RunEvent(Client client, List<String> CMElements, JDialog fileManagerDialog) {
-        super(client, CMElements);
-        this.fileManagerDialog = fileManagerDialog;
+    public RunFileManagerEvent(FileManagerGUI fileManagerGUI, List<String> CMElements) {
+        super(fileManagerGUI, CMElements);
     }
 
 

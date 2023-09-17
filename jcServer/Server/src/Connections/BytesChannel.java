@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class BytesChannel {
     private final byte id;
-    private final ByteBuffer buffer;
+    private ByteBuffer buffer;
 
     private Category category;
 
@@ -35,7 +35,7 @@ public class BytesChannel {
 
             }
             case WEBCAM_LOGS -> {
-
+                categoryOutputFolder = "Webcam logs";
             }
         }
     }
@@ -59,6 +59,13 @@ public class BytesChannel {
 
 
     private void write(byte[] data, int offset, int length) {
+        if (buffer.remaining() < length) {
+
+            ByteBuffer newBuffer = ByteBuffer.allocate(buffer.capacity() * 2);
+            buffer.flip();
+            newBuffer.put(buffer);
+            buffer = newBuffer;
+        }
         buffer.put(Arrays.copyOfRange(data, offset, offset + length));
     }
 

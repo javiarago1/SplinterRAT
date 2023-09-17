@@ -1,9 +1,14 @@
 package GUI.TableUtils.ScreenStreaming;
 
+import Connections.BytesChannel;
+import Connections.Category;
+import Connections.Client;
 import Connections.Streams;
 import Information.FolderOpener;
 import Information.Time;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScreenStreamer implements Runnable {
 
-    private final Streams stream;
+    private final Client client;
     private final JLabel streamingScreenShower;
     private final AtomicBoolean isScreenshot;
     private final AtomicBoolean isRunning;
@@ -25,7 +30,7 @@ public class ScreenStreamer implements Runnable {
 
     public ScreenStreamer(ScreenStreamingGUI screenStreamingGUI) {
         this.screenStreamingGUI = screenStreamingGUI;
-        stream = screenStreamingGUI.getStream();
+        client = screenStreamingGUI.getClient();
         streamingScreenShower = screenStreamingGUI.getStreamingScreenShower();
         streamingScreenShower.setText("");
         isScreenshot = screenStreamingGUI.getIsScreenshot();
@@ -37,23 +42,32 @@ public class ScreenStreamer implements Runnable {
     public void run() {
         String[] dimensions;
         try {
-            stream.sendAction(Screen.STREAM);
-            String received = stream.readString();
-            dimensions = received.split(",");
-            SwingUtilities.invokeLater(() -> screenStreamerDialog.setSize(new Dimension(Integer.parseInt(dimensions[0]) / 2 + 15, Integer.parseInt(dimensions[1]) / 2 + 40)));
-            while (isRunning.get()) {
+            BytesChannel bytesChannel = client.createFileChannel(Category.SCREEN_STREAMING);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("ACTION", "START_SCREEN_STREAMING");
+            jsonObject.put("channel_id", bytesChannel.getId());
+            client.sendString(jsonObject.toString());
+            //stream.sendAction(Screen.STREAM);
+            //String received = stream.readString();
+            //dimensions = received.split(",");
+            // SwingUtilities.invokeLater(() -> screenStreamerDialog.setSize(new Dimension(Integer.parseInt(dimensions[0]) / 2 + 15, Integer.parseInt(dimensions[1]) / 2 + 40)));
+
+
+
+            /*while (isRunning.get()) {
                 byte[] array;
-                stream.sendSize(1);
-                array = stream.receiveBytes();
+                //stream.sendSize(1);
+               // array = stream.receiveBytes();
                 if (isScreenshot.get()) takeScreenshot(array);
-                ImageIcon tempIMG = new ImageIcon(array);
-                Image img = tempIMG.getImage();
+
                 SwingUtilities.invokeLater(() -> {
+                    ImageIcon tempIMG = new ImageIcon(array);
+                    Image img = tempIMG.getImage();
                     Image imgScale = img.getScaledInstance(streamingScreenShower.getWidth(), streamingScreenShower.getHeight(), Image.SCALE_SMOOTH);
                     streamingScreenShower.setIcon(new ImageIcon(imgScale));
                 });
             }
-            stream.sendSize(-1);
+            //stream.sendSize(-1);*/
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
@@ -63,7 +77,7 @@ public class ScreenStreamer implements Runnable {
 
 
     private void takeScreenshot(byte[] bytes) {
-        System.out.println("take!");
+       /* System.out.println("take!");
         isScreenshot.set(false);
         String snapshotDirectory = "\\Screen Snapshots\\";
         String path = screenStreamingGUI.getClientHandler().getSessionFolder() + snapshotDirectory +
@@ -73,7 +87,7 @@ public class ScreenStreamer implements Runnable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        FolderOpener.open(path);
+        FolderOpener.open(path);*/
     }
 
 }

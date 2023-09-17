@@ -1,7 +1,7 @@
-package GUI.TableUtils.Webcam.WebcamManager.Actions.Start;
+package GUI.TableUtils.Webcam.WebcamManager.Actions;
 
-import GUI.TableUtils.Webcam.WebcamManager.Webcam;
-import GUI.TableUtils.Webcam.WebcamManager.Actions.WebcamActions;
+import GUI.TableUtils.Webcam.WebcamManager.Events.StopWebcamEvent;
+import GUI.TableUtils.Webcam.WebcamManager.Events.StartWebcamEvent;
 import GUI.TableUtils.Webcam.WebcamManager.WebcamGUI;
 
 import javax.swing.*;
@@ -46,7 +46,7 @@ public class StartWebcamButton extends WebcamActions {
             getWebcamGUI().getRecordingMenu().setEnabled(false);
             getWebcamGUI().getStartButton().setText("Stop webcam");
             // Sending the information and starting the webcam
-             getWebcamGUI().getClient().getExecutor().submit(new Webcam(getWebcamGUI()));
+            getWebcamGUI().getClient().getExecutor().submit(new StartWebcamEvent(getWebcamGUI()));
         } else {
             // Check if there are recordings to be saved
             if (getWebcamGUI().getSaveRecordButton().isEnabled()) requestSave();
@@ -57,6 +57,7 @@ public class StartWebcamButton extends WebcamActions {
             getWebcamGUI().getRecordingMenu().setEnabled(true);
             getWebcamGUI().getSaveRecordButton().setEnabled(false);
             getWebcamGUI().getStartButton().setText("Start webcam");
+            getWebcamGUI().getClient().getExecutor().submit(new StopWebcamEvent(getWebcamGUI()));
         }
 
     }
