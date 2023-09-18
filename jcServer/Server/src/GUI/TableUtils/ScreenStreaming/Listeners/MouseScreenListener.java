@@ -1,13 +1,9 @@
 package GUI.TableUtils.ScreenStreaming.Listeners;
 
-import GUI.TableUtils.ScreenStreaming.Events.SendKeysEvent;
 import GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MouseScreenListener extends MouseAdapter {
 
@@ -22,7 +18,6 @@ public class MouseScreenListener extends MouseAdapter {
         int x = e.getX();
         int y = e.getY();
         screenStreamerGUI.getQueueOfEvents().add(typeOfClick(e) + "," + x * 2 + "," + y * 2);
-        screenStreamerGUI.getClient().getExecutor().submit(new SendKeysEvent(screenStreamerGUI));
     }
 
     private String typeOfClick(MouseEvent e) {

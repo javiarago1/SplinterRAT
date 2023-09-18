@@ -15,24 +15,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="deleted unused enum">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Actions/ControlComputerAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Actions/ScreenshotAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/SendKeysEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jcClient/includes/BlockingQueue.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/EventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ScreenStreamer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ScreenStreamer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/screen/ScreenStreamer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Updater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/EventStreamer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/KeyScreenListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/KeyScreenListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/MouseScreenListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/MouseScreenListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Screen.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/ScreenMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/StartStreamingEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StartAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Actions/StartStreamingAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StreamingWindowListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/StreamingWindowListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/WebcamGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/WebcamGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Window/WebcamWindowListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Listeners/WebcamWindowListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/SendKeysEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/KeyScreenListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/KeyScreenListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/MouseScreenListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/MouseScreenListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamerGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -471,6 +464,7 @@
       <workItem from="1694582484461" duration="4363000" />
       <workItem from="1694598801471" duration="3979000" />
       <workItem from="1694932106753" duration="20173000" />
+      <workItem from="1695035325510" duration="2806000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>
@@ -902,6 +896,11 @@
           <properties class="java.nio.BufferOverflowException" package="java.nio" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/EventListener.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>
         <breakpoint suspend="THREAD" type="java-line" />

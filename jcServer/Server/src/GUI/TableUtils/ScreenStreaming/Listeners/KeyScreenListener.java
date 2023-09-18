@@ -1,13 +1,9 @@
 package GUI.TableUtils.ScreenStreaming.Listeners;
 
-import GUI.TableUtils.FileManager.FileManagerGUI;
-import GUI.TableUtils.ScreenStreaming.Events.SendKeysEvent;
 import GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class KeyScreenListener extends KeyAdapter {
 
@@ -20,6 +16,5 @@ public class KeyScreenListener extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         screenStreamerGUI.getQueueOfEvents().add("key/" + e.getKeyChar());
-        screenStreamerGUI.getClient().getExecutor().submit(new SendKeysEvent(screenStreamerGUI));
     }
 }

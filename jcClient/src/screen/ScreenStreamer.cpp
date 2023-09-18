@@ -1,6 +1,27 @@
 #include "ScreenStreamer.h"
 
-void clickOnCoordinates(std::vector<int> infoOfClick) {
+ScreenStreamer::ScreenStreamer(ClientSocket &clientSocket) :
+        Handler(clientSocket) {
+    ActionMap actionMap = clientSocket.getActionMap();
+    actionMap["START_SCREEN_STREAMING"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &ScreenStreamer::startStreaming,json);
+        threadGen.runInNewThread(this, &ScreenStreamer::screenEventsThread);
+    };
+    actionMap["STOP_SCREEN_STREAMING"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &ScreenStreamer::stopStreaming);
+    };
+    actionMap["KEY_EXECUTION"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &ScreenStreamer::addKeyToQueue, json);
+    };
+
+}
+
+void ScreenStreamer::stopStreaming(){
+    streamingState.store(false);
+    blockingQueue.push("END");
+}
+
+void ScreenStreamer::clickOnCoordinates(std::vector<int> infoOfClick) {
     double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
     double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
     double fx = infoOfClick[2] * (65535.0f / fScreenWidth);
@@ -21,8 +42,8 @@ void clickOnCoordinates(std::vector<int> infoOfClick) {
 }
 
 void ScreenStreamer::screenEventsThread() {
-    /*std::string whereTo;
-    while ((whereTo = auxEventStream.readString()) != "END") {
+    std::string whereTo;
+    while ((whereTo = blockingQueue.pop()) != "END") {
         if (whereTo.rfind(clickKeyWord) != -1) {
             std::string newString = whereTo.substr(clickKeyWord.length(), whereTo.length());
             std::string segment;
@@ -39,7 +60,7 @@ void ScreenStreamer::screenEventsThread() {
             char character = whereTo.at(keyKeyWord.length());
             KeyboardExecuter::pressKey(VkKeyScanA(character));
         }
-    }*/
+    }
 }
 
 const int FRAGMENT_SIZE = 204800; // 200 KB
@@ -47,7 +68,8 @@ const uint8_t LAST_FRAGMENT = 0x02;
 const uint8_t NOT_LAST_FRAGMENT = 0x01;
 
 void ScreenStreamer::screenTransmissionThread() {
-    while (true) {
+    streamingState.store(true);
+    while (streamingState.load()) {
         std::vector<BYTE> screenBuff;
         takeScreenshot(screenBuff);
 
@@ -87,16 +109,10 @@ void ScreenStreamer::screenTransmissionThread() {
 
 
 
-ScreenStreamer::ScreenStreamer(ClientSocket &clientSocket) :
-        Handler(clientSocket) {
-    ActionMap actionMap = clientSocket.getActionMap();
-    actionMap["START_SCREEN_STREAMING"] = [&](nlohmann::json& json) {
-        threadGen.runInNewThread(this, &ScreenStreamer::startStreaming,json);
-    };
-    actionMap["EXECUTE_NEW"] = [&](nlohmann::json& json) {
-        threadGen.runInNewThread(this, &ScreenStreamer::startStreaming,json);
-    };
 
+
+void ScreenStreamer::addKeyToQueue(nlohmann::json jsonObject){
+    blockingQueue.push(jsonObject["key"]);
 }
 
 void ScreenStreamer::startStreaming(nlohmann::json jsonObjet) {
@@ -166,6 +182,8 @@ HBITMAP ScreenStreamer::GdiPlusScreenCapture(HWND hWnd)
     GetDIBits(hwindowCompatibleDC, hbwindow, 0, height, lpbitmap, (BITMAPINFO*)&bi, DIB_RGB_COLORS);
 
     // avoid memory leak
+    GlobalUnlock(hDIB);
+    GlobalFree(hDIB);
     DeleteDC(hwindowCompatibleDC);
     ReleaseDC(hWnd, hwindowDC);
 
@@ -209,8 +227,11 @@ void ScreenStreamer::takeScreenshot(std::vector<BYTE> &data){
     GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
     HWND hWnd = GetDesktopWindow();
     HBITMAP hBmp = GdiPlusScreenCapture(hWnd);
-
     // save as png to memory
     saveToMemory(&hBmp, data);
+
+    DeleteObject(hBmp); // Nueva línea para liberar el bitmap
+    Gdiplus::GdiplusShutdown(gdiplusToken); // Nueva línea para liberar recursos de GDI+
+    CoUninitialize(); // Nueva línea para liberar recursos de COM
 
 }

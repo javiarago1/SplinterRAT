@@ -74,7 +74,8 @@ add_executable(Client
         src/websocket/ClientSocket.cpp
         src/base/Handler.cpp
         includes/Handler.h
-        src/zip/ZipCompressor.cpp includes/ZipCompressor.h)
+        src/zip/ZipCompressor.cpp includes/ZipCompressor.h
+        includes/BlockingQueue.h)
 
 
 

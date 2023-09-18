@@ -1,6 +1,7 @@
 package GUI.TableUtils.ScreenStreaming.Actions;
 
 import GUI.TableUtils.ScreenStreaming.Events.StartStreamingEvent;
+import GUI.TableUtils.ScreenStreaming.Events.StopStreamingEvent;
 import GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI;
 
 import javax.swing.*;
@@ -19,10 +20,12 @@ public class StartStreamingAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JMenuItem stateButton = screenStreamerGUI.getStartMenu();
         if (stateButton.getText().equals("Start")) {
-            screenStreamerGUI.getClient().getExecutor().submit(new StartStreamingEvent(screenStreamerGUI));
             stateButton.setText("Stop");
+            screenStreamerGUI.getClient().getExecutor().submit(new StartStreamingEvent(screenStreamerGUI));
+
         } else {
             stateButton.setText("Start");
+            screenStreamerGUI.getClient().getExecutor().submit(new StopStreamingEvent(screenStreamerGUI));
         }
     }
 }

@@ -5,6 +5,7 @@ import GUI.Main;
 import GUI.TableUtils.ScreenStreaming.Actions.ScreenshotAction;
 import GUI.TableUtils.ScreenStreaming.Actions.StartStreamingAction;
 import GUI.TableUtils.ScreenStreaming.Actions.ControlComputerAction;
+import GUI.TableUtils.ScreenStreaming.Events.EventListener;
 import GUI.TableUtils.ScreenStreaming.Listeners.KeyScreenListener;
 import GUI.TableUtils.ScreenStreaming.Listeners.MouseScreenListener;
 import Information.GUIManagerInterface;
@@ -13,12 +14,14 @@ import Information.GUIManagerInterface;
 import javax.swing.*;
 import java.awt.*;
 
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class ScreenStreamerGUI implements GUIManagerInterface {
     private final JDialog dialog;
     private final Client client;
-    private final ConcurrentLinkedQueue<String> queueOfEvents = new ConcurrentLinkedQueue<>();
+    private final BlockingQueue<String> queueOfEvents = new LinkedBlockingQueue<>();
     private JMenuItem startMenu;
     private MouseScreenListener mouseScreenListener;
     private KeyScreenListener keyScreenListener;
@@ -68,12 +71,12 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         bar.add(menu);
         dialog.setJMenuBar(bar);
         startMenu.addActionListener(new StartStreamingAction(this));
-        addControlComputerListeners();
     }
 
     public void removeControlComputerListeners() {
         streamingScreenShower.removeMouseListener(mouseScreenListener);
         streamingScreenShower.removeKeyListener(keyScreenListener);
+        queueOfEvents.add("END");
     }
 
     public void addControlComputerListeners() {
@@ -81,13 +84,14 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         streamingScreenShower.addMouseListener(mouseScreenListener);
         keyScreenListener = new KeyScreenListener(this);
         streamingScreenShower.addKeyListener(keyScreenListener);
+        client.getExecutor().submit(new EventListener(this));
     }
 
     public JDialog getDialog() {
         return dialog;
     }
 
-    public ConcurrentLinkedQueue<String> getQueueOfEvents() {
+    public BlockingQueue<String> getQueueOfEvents() {
         return queueOfEvents;
     }
 
