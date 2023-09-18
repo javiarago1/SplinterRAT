@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -79,6 +80,7 @@ public class Client {
         mapOfResponses.put(Response.DIRECTORY, updater::updateDirectory);
         mapOfResponses.put(Response.WEBCAM_DEVICES, updater::updateWebcamDevices);
         mapOfResponses.put(Response.SCREEN_DIMENSIONS, updater::setScreenDimensions);
+        mapOfResponses.put(Response.MONITORS, updater::updateMonitors);
     }
 
 
@@ -119,6 +121,7 @@ public class Client {
         FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
         executor.execute(task);
     }
+
 
     public void setFileManagerGUI(FileManagerGUI fileManagerGUI) {
         updater.setFileManagerGUI(fileManagerGUI);

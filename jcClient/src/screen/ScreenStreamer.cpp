@@ -13,7 +13,9 @@ ScreenStreamer::ScreenStreamer(ClientSocket &clientSocket) :
     actionMap["KEY_EXECUTION"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &ScreenStreamer::addKeyToQueue, json);
     };
-
+    actionMap["MONITORS"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &ScreenStreamer::sendMonitors);
+    };
 }
 
 void ScreenStreamer::stopStreaming(){
@@ -115,17 +117,17 @@ void ScreenStreamer::addKeyToQueue(nlohmann::json jsonObject){
     blockingQueue.push(jsonObject["key"]);
 }
 
-void ScreenStreamer::startStreaming(nlohmann::json jsonObjet) {
+void ScreenStreamer::startStreaming(nlohmann::json jsonObject) {
 
-    int fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN);
-    int fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN);
-
+    int fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
+    int fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
     std::vector<int> dimensions = {fScreenWidth, fScreenHeight};
     nlohmann::json json;
     json["RESPONSE"] = "SCREEN_DIMENSIONS";
     json["dimensions"] = dimensions;
-    channelID = jsonObjet["channel_id"];
+    channelID = jsonObject["channel_id"];
     clientSocket.sendMessage(json.dump());
+    selectedMonitor = monitorMap[jsonObject["monitor_id"]];
 
     std::thread transmissionThread(&ScreenStreamer::screenTransmissionThread, this);
     std::thread eventsThread(&ScreenStreamer::screenEventsThread, this);
@@ -157,7 +159,7 @@ BITMAPINFOHEADER ScreenStreamer::createBitmapHeader(int width, int height)
     return bi;
 }
 
-HBITMAP ScreenStreamer::GdiPlusScreenCapture(HWND hWnd)
+HBITMAP ScreenStreamer::GdiPlusScreenCapture(HWND hWnd, RECT targetMonitorRect)
 {
     // get handles to a device context (DC)
     HDC hwindowDC = GetDC(hWnd);
@@ -165,10 +167,10 @@ HBITMAP ScreenStreamer::GdiPlusScreenCapture(HWND hWnd)
     SetStretchBltMode(hwindowCompatibleDC, COLORONCOLOR);
 
     // define scale, height and width
-    int screenx = GetSystemMetrics(SM_XVIRTUALSCREEN);
-    int screeny = GetSystemMetrics(SM_YVIRTUALSCREEN);
-    int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-    int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+    int width = targetMonitorRect.right - targetMonitorRect.left;
+    int height = targetMonitorRect.bottom - targetMonitorRect.top;
+    int screenx = targetMonitorRect.left;
+    int screeny = targetMonitorRect.top;
 
     // create a bitmap
     HBITMAP hbwindow = CreateCompatibleBitmap(hwindowDC, width, height);
@@ -227,17 +229,43 @@ bool ScreenStreamer::saveToMemory(HBITMAP* hbitmap, std::vector<BYTE>& data)
     return true;
 }
 
+
+void ScreenStreamer::sendMonitors(){
+    monitorMap.clear();
+    EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, 0);
+    std::vector<std::string> vectorOfMonitors;
+    for (const auto& element : monitorMap) {
+        vectorOfMonitors.push_back(element.first);
+    }
+    nlohmann::json json;
+    json["RESPONSE"] = "MONITORS";
+    json["list_of_monitors"] = vectorOfMonitors;
+    clientSocket.sendMessage(json.dump());
+}
+
+std::map<std::string, RECT> ScreenStreamer::monitorMap;
+RECT ScreenStreamer::selectedMonitor;
+
+BOOL CALLBACK ScreenStreamer::MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData) {
+    MONITORINFOEX mi;
+    mi.cbSize = sizeof(MONITORINFOEX);
+    GetMonitorInfo(hMonitor, &mi);
+    monitorMap[mi.szDevice] = mi.rcMonitor;
+    return true;
+}
+
+
 void ScreenStreamer::takeScreenshot(std::vector<BYTE> &data){
     Gdiplus::GdiplusStartupInput gdiplusStartupInput;
     ULONG_PTR gdiplusToken;
     GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
     HWND hWnd = GetDesktopWindow();
-    HBITMAP hBmp = GdiPlusScreenCapture(hWnd);
+    HBITMAP hBmp = GdiPlusScreenCapture(hWnd, selectedMonitor);
     // save as png to memory
     saveToMemory(&hBmp, data);
 
-    DeleteObject(hBmp); // Nueva línea para liberar el bitmap
-    Gdiplus::GdiplusShutdown(gdiplusToken); // Nueva línea para liberar recursos de GDI+
-    CoUninitialize(); // Nueva línea para liberar recursos de COM
+    DeleteObject(hBmp);
+    Gdiplus::GdiplusShutdown(gdiplusToken);
+    CoUninitialize();
 
 }

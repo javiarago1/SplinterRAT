@@ -7,6 +7,7 @@ import Information.AbstractEvent;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class StartStreamingEvent extends AbstractEvent<ScreenStreamerGUI> {
     public StartStreamingEvent(ScreenStreamerGUI screenStreamerGUI) {
@@ -18,6 +19,7 @@ public class StartStreamingEvent extends AbstractEvent<ScreenStreamerGUI> {
         BytesChannel bytesChannel = getClient().createFileChannel(Category.SCREEN_STREAMING);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("ACTION", "START_SCREEN_STREAMING");
+        jsonObject.put("monitor_id", Objects.requireNonNull(getGUIManager().getScreenSelector().getSelectedItem()).toString());
         jsonObject.put("channel_id", bytesChannel.getId());
         try {
             getClient().sendString(jsonObject.toString());

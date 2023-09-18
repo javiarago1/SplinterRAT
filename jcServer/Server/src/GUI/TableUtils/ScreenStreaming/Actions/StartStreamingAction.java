@@ -17,13 +17,20 @@ public class StartStreamingAction extends AbstractAction<ScreenStreamerGUI> {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JMenuItem stateButton = getGUIManager().getStartMenu();
-        if (stateButton.getText().equals("Start")) {
-            stateButton.setText("Stop");
+        JToggleButton toggleButton = (JToggleButton) e.getSource();
+        boolean isSelected = toggleButton.isSelected();
+        if (isSelected) {
+            toggleButton.setText("Stop");
             getClient().getExecutor().submit(new StartStreamingEvent(getGUIManager()));
+            getGUIManager().getControlCheckBox().setEnabled(true);
+            getGUIManager().getScreenshotButton().setEnabled(true);
+            getGUIManager().getScreenSelector().setEnabled(false);
             getGUIManager().getVirtualScreen().setText("");
         } else {
-            stateButton.setText("Start");
+            toggleButton.setText("Start");
+            getGUIManager().getControlCheckBox().setEnabled(false);
+            getGUIManager().getScreenshotButton().setEnabled(false);
+            getGUIManager().getScreenSelector().setEnabled(true);
             getClient().getExecutor().submit(new StopStreamingEvent(getGUIManager()));
             getGUIManager().getVirtualScreen().setText("Press start to stream screen");
         }

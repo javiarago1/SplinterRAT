@@ -196,6 +196,16 @@ public class Updater {
         );
     }
 
+    public void updateMonitors(JSONObject jsonObject) {
+        List<Object> listOfMonitors = jsonObject.getJSONArray("list_of_monitors").toList();
+        SwingUtilities.invokeLater(() -> {
+            JComboBox<String> comboBox = screenStreamerGUI.getScreenSelector();
+            for (Object e : listOfMonitors) {
+                comboBox.addItem(e.toString());
+            }
+        });
+    }
+
 
     public void setFileManagerGUI(FileManagerGUI fileManagerGUI) {
         this.fileManagerGUI = fileManagerGUI;
