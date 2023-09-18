@@ -38,6 +38,8 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
 
     private JButton screenshotButton;
 
+    private byte[] lastData;
+
     public ScreenStreamerGUI(Client client) {
         dialog = new JDialog(Main.gui.getMainGUI(), "Screen controller - " + client.getIdentifier());
         this.client = client;
@@ -159,4 +161,13 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
     public JToggleButton getStartStopToggle() {
         return startStopToggle;
     }
+
+    public byte[] getLastData(){
+        return lastData;
+    }
+
+    public void setLastData(byte []data){
+        lastData = data;
+    }
+
 }

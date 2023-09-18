@@ -2,3 +2,6 @@
 /cmake-build-debug/
 /includes/json.hpp
 /opencv_static/
+/zipper/
+/zlib/
+/websocketpp-0.8.2/
