@@ -76,8 +76,8 @@ public class ServerV2 {
             @Override
             public void configure(org.eclipse.jetty.websocket.servlet.WebSocketServletFactory factory) {
                 // Configura el tamaño máximo del mensaje (en bytes).
-                factory.getPolicy().setMaxTextMessageSize(204800); // 200KB para mensajes de texto
-                factory.getPolicy().setMaxBinaryMessageSize(204800); // 200KB para mensajes binarios
+                factory.getPolicy().setMaxTextMessageSize(204800);
+                factory.getPolicy().setMaxBinaryMessageSize(204800);
 
                 factory.register(ServerV2.class);
             }

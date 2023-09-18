@@ -1,12 +1,11 @@
 package GUI.TableUtils.FileManager.Actions;
 
-import Connections.Client;
-import GUI.TableUtils.FileManager.Event.DeleteFileManagerEvent;
+import GUI.TableUtils.FileManager.Events.DeleteFileManagerEvent;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import java.awt.event.ActionEvent;
 
-public class DeleteAction extends Manager {
+public class DeleteAction extends FileManagerAbstractAction {
 
     public DeleteAction(FileManagerGUI fileManagerGUI) {
         super(fileManagerGUI);
@@ -14,7 +13,6 @@ public class DeleteAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = getFileManagerGUI().getClient();
-        getFileManagerGUI().getClient().getExecutor().submit(new DeleteFileManagerEvent(getFileManagerGUI(), getSelectedPaths()));
+        getClient().getExecutor().submit(new DeleteFileManagerEvent(getGUIManager(), getSelectedPaths()));
     }
 }

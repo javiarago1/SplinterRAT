@@ -1,4 +1,4 @@
-package GUI.TableUtils.FileManager.Listener;
+package GUI.TableUtils.FileManager.Listeners;
 
 import GUI.TableUtils.FileManager.FileManagerGUI;
 

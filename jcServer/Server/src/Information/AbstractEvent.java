@@ -2,19 +2,10 @@ package Information;
 
 import Connections.Client;
 
-public abstract class AbstractEvent<T extends GUIManagerInterface> implements Runnable {
-    private final T guiManager;
+public abstract class AbstractEvent<T extends GUIManagerInterface> extends AbstractGUIManager<T> implements Runnable {
 
     public AbstractEvent(T guiManager) {
-        this.guiManager = guiManager;
-    }
-
-    public Client getClient() {
-        return guiManager.getClient();
-    }
-
-    public T getGUIManager() {
-        return guiManager;
+        super(guiManager);
     }
 
     @Override

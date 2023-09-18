@@ -1,10 +1,10 @@
 package GUI.TableUtils.WebcamManager;
 
 import Connections.Client;
-import GUI.TableUtils.WebcamManager.Actions.RecordWebcamButton;
-import GUI.TableUtils.WebcamManager.Actions.SaveRecordButton;
-import GUI.TableUtils.WebcamManager.Actions.SnapshotButton;
-import GUI.TableUtils.WebcamManager.Actions.StartWebcamButton;
+import GUI.TableUtils.WebcamManager.Actions.RecordWebcamAction;
+import GUI.TableUtils.WebcamManager.Actions.SaveRecordAction;
+import GUI.TableUtils.WebcamManager.Actions.SnapshotAction;
+import GUI.TableUtils.WebcamManager.Actions.StartWebcamAction;
 import GUI.TableUtils.WebcamManager.Listeners.FPSMenuListener;
 import GUI.TableUtils.WebcamManager.Events.WebcamDevicesEvent;
 import GUI.TableUtils.WebcamManager.Window.WebcamWindowListener;
@@ -120,10 +120,10 @@ public class WebcamGUI implements GUIManagerInterface {
         webcamDialog.getContentPane().add(boxOfDevices, constraints);
 
         // adding listeners
-        startButton.addActionListener(new StartWebcamButton(this));
-        recordButton.addActionListener(new RecordWebcamButton(this));
-        saveRecordButton.addActionListener(new SaveRecordButton(this));
-        snapshotButton.addActionListener(new SnapshotButton(this));
+        startButton.addActionListener(new StartWebcamAction(this));
+        recordButton.addActionListener(new RecordWebcamAction(this));
+        saveRecordButton.addActionListener(new SaveRecordAction(this));
+        snapshotButton.addActionListener(new SnapshotAction(this));
 
 
         // adding menu bar

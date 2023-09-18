@@ -1,13 +1,13 @@
 package GUI.TableUtils.FileManager.Actions;
 
 import Connections.Client;
-import GUI.TableUtils.FileManager.Event.MoveFileManagerEvent;
-import GUI.TableUtils.FileManager.Event.PasteFileManagerEvent;
+import GUI.TableUtils.FileManager.Events.MoveFileManagerEvent;
+import GUI.TableUtils.FileManager.Events.PasteFileManagerEvent;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import java.awt.event.ActionEvent;
 
-public class PasteAction extends Manager {
+public class PasteAction extends FileManagerAbstractAction {
 
     public PasteAction(FileManagerGUI fileManagerGUI) {
         super(fileManagerGUI);
@@ -15,14 +15,14 @@ public class PasteAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = getFileManagerGUI().getClient();
-        if (getFileManagerGUI().isCopySelected()) {
-            getFileManagerGUI().setCopySelected(false);
+        Client client = getGUIManager().getClient();
+        if (getGUIManager().isCopySelected()) {
+            getGUIManager().setCopySelected(false);
             client.getExecutor().submit(new PasteFileManagerEvent(
-                    getFileManagerGUI(), getFileManagerGUI().getCMElements(), getSelectedPaths()));
+                    getGUIManager(), getGUIManager().getCMElements(), getSelectedPaths()));
         } else {
-            getFileManagerGUI().setCutSelected(false);
-            client.getExecutor().submit(new MoveFileManagerEvent(getFileManagerGUI(), getFileManagerGUI().getCMElements(),
+            getGUIManager().setCutSelected(false);
+            client.getExecutor().submit(new MoveFileManagerEvent(getGUIManager(), getGUIManager().getCMElements(),
                     getSelectedPaths().get(0)));
         }
 

@@ -4,7 +4,7 @@ import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import java.awt.event.ActionEvent;
 
-public class CopyAction extends Manager {
+public class CopyAction extends FileManagerAbstractAction {
 
     public CopyAction(FileManagerGUI fileManagerGUI) {
         super(fileManagerGUI);
@@ -12,8 +12,8 @@ public class CopyAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getFileManagerGUI().setCopySelected(true);
-        getFileManagerGUI().setCutSelected(false);
-        getFileManagerGUI().setCMElements(getSelectedPaths());
+        getGUIManager().setCopySelected(true);
+        getGUIManager().setCutSelected(false);
+        getGUIManager().setCMElements(getSelectedPaths());
     }
 }

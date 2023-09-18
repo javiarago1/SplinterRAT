@@ -1,12 +1,12 @@
 package GUI.TableUtils.WebcamManager.Listeners;
 
-import GUI.TableUtils.WebcamManager.Actions.WebcamActions;
 import GUI.TableUtils.WebcamManager.WebcamGUI;
+import Information.AbstractAction;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class FPSMenuListener extends WebcamActions {
+public class FPSMenuListener extends AbstractAction<WebcamGUI> {
 
 
     public FPSMenuListener(WebcamGUI webcamGUI) {
@@ -20,16 +20,16 @@ public class FPSMenuListener extends WebcamActions {
         int transformedResult = 0;
         boolean validNumber = false;
         do {
-            input = JOptionPane.showInputDialog(getWebcamGUI().getWebcamDialog(),
+            input = JOptionPane.showInputDialog(getGUIManager().getWebcamDialog(),
                     "Set the fps to record. It is recommended not to exceed 30 FPS (Not recommended to be changed):",
-                    getWebcamGUI().getFPS());
+                    getGUIManager().getFPS());
             if (input == null || input.isEmpty()) {
                 showErrorWindow();
             } else {
                 try {
                     transformedResult = Integer.parseInt(input);
                     if (input.matches("\\d+") && transformedResult > min && transformedResult <= max) {
-                        getWebcamGUI().setFPS(transformedResult);
+                        getGUIManager().setFPS(transformedResult);
                         validNumber = true;
                     } else {
                         validNumber = false;
@@ -43,7 +43,7 @@ public class FPSMenuListener extends WebcamActions {
     }
 
     private void showErrorWindow() {
-        JOptionPane.showMessageDialog(getWebcamGUI().getWebcamDialog(), "Enter proper FPS values (0-120 FPS). Only numbers.",
+        JOptionPane.showMessageDialog(getGUIManager().getWebcamDialog(), "Enter proper FPS values (0-120 FPS). Only numbers.",
                 "Inadequate FPS", JOptionPane.ERROR_MESSAGE);
     }
 }

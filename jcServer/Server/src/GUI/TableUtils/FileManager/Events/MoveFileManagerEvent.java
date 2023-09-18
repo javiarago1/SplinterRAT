@@ -1,10 +1,8 @@
-package GUI.TableUtils.FileManager.Event;
+package GUI.TableUtils.FileManager.Events;
 
-import Connections.Client;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 import org.json.JSONObject;
 
-import javax.swing.*;
 import java.util.List;
 
 public class MoveFileManagerEvent extends FileManagerEvent {

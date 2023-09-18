@@ -8,7 +8,7 @@ import GUI.TableUtils.Connection.DisconnectAction;
 import GUI.TableUtils.Connection.RestartAction;
 import GUI.TableUtils.Connection.UninstallAction;
 import GUI.TableUtils.Credentials.CredentialsMenuListener;
-import GUI.TableUtils.FileManager.Listener.FileManagerMenuListener;
+import GUI.TableUtils.FileManager.Listeners.FileManagerMenuListener;
 
 import GUI.TableUtils.KeyLogger.KeyLoggerEventsListener;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;

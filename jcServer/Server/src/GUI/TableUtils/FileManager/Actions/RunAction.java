@@ -1,12 +1,11 @@
 package GUI.TableUtils.FileManager.Actions;
 
-import Connections.Client;
-import GUI.TableUtils.FileManager.Event.RunFileManagerEvent;
+import GUI.TableUtils.FileManager.Events.RunFileManagerEvent;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import java.awt.event.ActionEvent;
 
-public class RunAction extends Manager {
+public class RunAction extends FileManagerAbstractAction {
 
     public RunAction(FileManagerGUI fileManagerGUI) {
         super(fileManagerGUI);
@@ -14,6 +13,6 @@ public class RunAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getFileManagerGUI().getClient().getExecutor().submit(new RunFileManagerEvent(getFileManagerGUI(), getSelectedPaths()));
+        getClient().getExecutor().submit(new RunFileManagerEvent(getGUIManager(), getSelectedPaths()));
     }
 }

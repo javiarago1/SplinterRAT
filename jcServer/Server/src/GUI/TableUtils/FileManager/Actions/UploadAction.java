@@ -1,6 +1,5 @@
 package GUI.TableUtils.FileManager.Actions;
 
-import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.ProgressBar.UploadProgressBar;
 import GUI.TableUtils.Configuration.GetSYS;
@@ -12,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Arrays;
 
-public class UploadAction extends Manager {
+public class UploadAction extends FileManagerAbstractAction {
 
 
     private final JFileChooser fileChooser = new JFileChooser();
@@ -27,7 +26,7 @@ public class UploadAction extends Manager {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int returnVal = fileChooser.showOpenDialog(getFileManagerGUI().getFileManagerDialog());
+        int returnVal = fileChooser.showOpenDialog(getGUIManager().getFileManagerDialog());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File[] selectedFiles = fileChooser.getSelectedFiles();
             if ((selectedFiles == null)) {
@@ -37,7 +36,7 @@ public class UploadAction extends Manager {
                 Streams stream = GetSYS.getStream(SocketType.DOWNLOAD_UPLOAD);
                 assert stream != null;
                 stream.getExecutor().submit(new UploadProgressBar(
-                        getFileManagerGUI().getFileManagerDialog(),
+                        getGUIManager().getFileManagerDialog(),
                         stream, selectedFiles, getSelectedPath()));
             }
         }

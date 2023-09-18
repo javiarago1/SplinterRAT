@@ -1,6 +1,5 @@
-package GUI.TableUtils.FileManager.Event;
+package GUI.TableUtils.FileManager.Events;
 
-import Connections.Client;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 import Information.AbstractEvent;
 
