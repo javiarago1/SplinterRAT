@@ -7,7 +7,7 @@ import GUI.TableUtils.WebcamManager.Actions.SnapshotAction;
 import GUI.TableUtils.WebcamManager.Actions.StartWebcamAction;
 import GUI.TableUtils.WebcamManager.Listeners.FPSMenuListener;
 import GUI.TableUtils.WebcamManager.Events.WebcamDevicesEvent;
-import GUI.TableUtils.WebcamManager.Window.WebcamWindowListener;
+import GUI.TableUtils.WebcamManager.Listeners.WebcamWindowListener;
 import Information.GUIManagerInterface;
 
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package GUI.TableUtils.WebcamManager.Window;
+package GUI.TableUtils.WebcamManager.Listeners;
 
 import GUI.TableUtils.WebcamManager.WebcamGUI;
 

@@ -1,29 +1,29 @@
 package GUI.TableUtils.ScreenStreaming;
 
 import Connections.Client;
-import Connections.ClientHandler;
-import Connections.Streams;
 import GUI.Main;
-import GUI.TableUtils.Configuration.SocketType;
+import GUI.TableUtils.ScreenStreaming.Actions.ScreenshotAction;
+import GUI.TableUtils.ScreenStreaming.Actions.StartStreamingAction;
+import GUI.TableUtils.ScreenStreaming.Actions.ControlComputerAction;
+import GUI.TableUtils.ScreenStreaming.Listeners.KeyScreenListener;
+import GUI.TableUtils.ScreenStreaming.Listeners.MouseScreenListener;
+import Information.GUIManagerInterface;
 
 
 import javax.swing.*;
 import java.awt.*;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ScreenStreamingGUI {
+public class ScreenStreamerGUI implements GUIManagerInterface {
     private final JDialog dialog;
     private final Client client;
-    private final AtomicBoolean isScreenshot = new AtomicBoolean(false);
-    private final AtomicBoolean isRunning = new AtomicBoolean(false);
     private final ConcurrentLinkedQueue<String> queueOfEvents = new ConcurrentLinkedQueue<>();
     private JMenuItem startMenu;
+    private MouseScreenListener mouseScreenListener;
+    private KeyScreenListener keyScreenListener;
 
-    private final AtomicBoolean computerControl = new AtomicBoolean(false);
-
-    public ScreenStreamingGUI(Client client) {
+    public ScreenStreamerGUI(Client client) {
         dialog = new JDialog(Main.gui.getMainGUI(), "Screen controller - " + client.getIdentifier());
         this.client = client;
         dialog.setLayout(new GridBagLayout());
@@ -43,8 +43,7 @@ public class ScreenStreamingGUI {
         streamingScreenShower = new JLabel("Press start to stream screen", SwingConstants.CENTER);
         streamingScreenShower.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         streamingScreenShower.setOpaque(true);
-        streamingScreenShower.addMouseListener(new MouseScreenListener(queueOfEvents, computerControl));
-        dialog.addKeyListener(new KeyScreenListener(queueOfEvents, computerControl));
+
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 2;
@@ -53,33 +52,39 @@ public class ScreenStreamingGUI {
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
         dialog.add(streamingScreenShower, constraints);
-        dialog.addWindowListener(new StreamingWindowListener(isRunning));
+        //dialog.addWindowListener(new StreamingWindowListener(isRunning));
         constraints.weighty = 0.0;
 
         JMenuBar bar = new JMenuBar();
         JMenu menu = new JMenu("Options");
         startMenu = new JMenuItem("Start");
         JCheckBoxMenuItem controlComputerMenu = new JCheckBoxMenuItem("Control computer");
-        controlComputerMenu.addActionListener(e -> computerControl.set(((AbstractButton) e.getSource()).getModel().isSelected()));
+        controlComputerMenu.addActionListener(new ControlComputerAction(this));
         JMenuItem screenshotMenu = new JMenuItem("Take screenshot");
-        screenshotMenu.addActionListener(e -> isScreenshot.set(true));
+        screenshotMenu.addActionListener(e -> new ScreenshotAction(this));
         menu.add(startMenu);
         menu.add(controlComputerMenu);
         menu.add(screenshotMenu);
         bar.add(menu);
-
         dialog.setJMenuBar(bar);
-        startMenu.addActionListener(new StartAction(this));
+        startMenu.addActionListener(new StartStreamingAction(this));
+        addControlComputerListeners();
+    }
 
+    public void removeControlComputerListeners() {
+        streamingScreenShower.removeMouseListener(mouseScreenListener);
+        streamingScreenShower.removeKeyListener(keyScreenListener);
+    }
+
+    public void addControlComputerListeners() {
+        mouseScreenListener = new MouseScreenListener(this);
+        streamingScreenShower.addMouseListener(mouseScreenListener);
+        keyScreenListener = new KeyScreenListener(this);
+        streamingScreenShower.addKeyListener(keyScreenListener);
     }
 
     public JDialog getDialog() {
         return dialog;
-    }
-
-
-    public AtomicBoolean getIsScreenshot() {
-        return isScreenshot;
     }
 
     public ConcurrentLinkedQueue<String> getQueueOfEvents() {
@@ -90,16 +95,8 @@ public class ScreenStreamingGUI {
         return streamingScreenShower;
     }
 
-    public AtomicBoolean getIsRunning() {
-        return isRunning;
-    }
-
     public JMenuItem getStartMenu() {
         return startMenu;
-    }
-
-    public AtomicBoolean getComputerControl() {
-        return computerControl;
     }
 
     public Client getClient() {

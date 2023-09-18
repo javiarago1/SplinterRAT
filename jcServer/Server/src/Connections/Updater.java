@@ -2,7 +2,7 @@ package Connections;
 
 import GUI.Main;
 import GUI.TableUtils.FileManager.FileManagerGUI;
-import GUI.TableUtils.ScreenStreaming.ScreenStreamingGUI;
+import GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI;
 import GUI.TableUtils.WebcamManager.WebcamGUI;
 import Information.NetworkInformation;
 import Information.SystemInformation;
@@ -28,7 +28,7 @@ public class Updater {
 
     private WebcamGUI webcamGUI;
 
-    private ScreenStreamingGUI screenStreamerGUI;
+    private ScreenStreamerGUI screenStreamerGUI;
 
     private void convertJSON2NetAndSysInfo(JSONObject jsonObject) {
         String operatingSystem = jsonObject.getString("win_ver");
@@ -197,7 +197,7 @@ public class Updater {
         this.webcamGUI = webcamGUI;
     }
 
-    public void setScreenStreamerGUI(ScreenStreamingGUI screenStreamerGUI) {
+    public void setScreenStreamerGUI(ScreenStreamerGUI screenStreamerGUI) {
         this.screenStreamerGUI = screenStreamerGUI;
     }
 

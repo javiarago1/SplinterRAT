@@ -14,39 +14,25 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: finished webcam streaming">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Actions/StartWebcamAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/Information/AbstractAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/Information/AbstractGUIManager.java" afterDir="false" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="deleted unused enum">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Actions/ControlComputerAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Actions/ScreenshotAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/SendKeysEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Updater.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CopyAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CopyAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CutAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CutAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DeleteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DeleteAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DownloadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DownloadAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/FileManagerAbstractAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/PasteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/PasteAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/RunAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/RunAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/DeleteFileManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/DeleteFileManagerEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/FileManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/FileManagerEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/MoveFileManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/MoveFileManagerEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/PasteFileManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/PasteFileManagerEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RequestDirectoryFileManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/RequestDirectoryFileManagerEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RequestDiskFileManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/RequestDiskFileManagerEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Event/RunFileManagerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/RunFileManagerEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/FileManagerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listeners/FileManagerMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listener/MouseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listeners/MouseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Actions/RecordWebcamButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Actions/RecordWebcamAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Actions/SaveRecordButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Actions/SaveRecordAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Actions/SnapshotButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Actions/SnapshotAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Actions/StartWebcamButton.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Actions/WebcamActions.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Listeners/FPSMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Listeners/FPSMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/EventStreamer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/KeyScreenListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/KeyScreenListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/MouseScreenListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/MouseScreenListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Screen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/ScreenMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/StartStreamingEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamingGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StartAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Actions/StartStreamingAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/StreamingWindowListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/StreamingWindowListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/WebcamGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/WebcamGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Information/AbstractEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/AbstractEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Window/WebcamWindowListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Listeners/WebcamWindowListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,12 +207,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ScreenStreamingGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GUI.TableUtils.ScreenStreaming.ScreenStreamingGUI" />
+    <configuration name="ScreenStreamerGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI" />
       <module name="Server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="GUI.TableUtils.ScreenStreaming.*" />
+          <option name="PATTERN" value="GUI.TableUtils.ScreenStreaming.Events.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -266,7 +252,7 @@
         <item itemvalue="Application.CompilingAnimation" />
         <item itemvalue="Application.CompilerGUI" />
         <item itemvalue="Application.ServerGUI" />
-        <item itemvalue="Application.ScreenStreamingGUI" />
+        <item itemvalue="Application.ScreenStreamerGUI" />
       </list>
     </recent_temporary>
   </component>
@@ -829,7 +815,7 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="168" />
+    <option name="localTasksCounter" value="170" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -881,8 +867,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="feat: server feature" />
-    <MESSAGE value="feat: doc" />
     <MESSAGE value="fix: finished updating current page and disks file manager" />
     <MESSAGE value="refactoring, fixing small problems" />
     <MESSAGE value="refactoring: optimization and refactoring names" />
@@ -906,7 +890,9 @@
     <MESSAGE value="feat: gg" />
     <MESSAGE value="feat: refactoring,webcam and screen development" />
     <MESSAGE value="feat: finished webcam streaming" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: finished webcam streaming" />
+    <MESSAGE value="refactoring: file manager and webcam actions to abstract class" />
+    <MESSAGE value="deleted unused enum" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted unused enum" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
