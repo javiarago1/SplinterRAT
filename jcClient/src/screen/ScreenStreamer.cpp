@@ -93,6 +93,9 @@ ScreenStreamer::ScreenStreamer(ClientSocket &clientSocket) :
     actionMap["START_SCREEN_STREAMING"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &ScreenStreamer::startStreaming,json);
     };
+    actionMap["EXECUTE_NEW"] = [&](nlohmann::json& json) {
+        threadGen.runInNewThread(this, &ScreenStreamer::startStreaming,json);
+    };
 
 }
 
