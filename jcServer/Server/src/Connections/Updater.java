@@ -182,10 +182,18 @@ public class Updater {
     public void updateFrameOfScreenStreamer(byte[] finalData) {
         ImageIcon tempIMG = new ImageIcon(finalData);
         Image img = tempIMG.getImage();
-        Image imgScale = img.getScaledInstance(screenStreamerGUI.getDialog().getWidth(), screenStreamerGUI.getDialog().getHeight(), Image.SCALE_SMOOTH);
+        Image imgScale = img.getScaledInstance(screenStreamerGUI.getVirtualScreen().getWidth(), screenStreamerGUI.getVirtualScreen().getHeight(), Image.SCALE_SMOOTH);
         SwingUtilities.invokeLater(() -> {
-            screenStreamerGUI.getStreamingScreenShower().setIcon(new ImageIcon(imgScale));
+            screenStreamerGUI.getVirtualScreen().setIcon(new ImageIcon(imgScale));
         });
+    }
+
+    public void setScreenDimensions(JSONObject jsonObject) {
+        List<Object> dimensions = jsonObject.getJSONArray("dimensions").toList();
+        screenStreamerGUI.setOriginalScreenDimensions(
+                Integer.parseInt(dimensions.get(0).toString()),
+                Integer.parseInt(dimensions.get(1).toString())
+        );
     }
 
 

@@ -8,6 +8,7 @@ import Information.Time;
 import org.json.JSONObject;
 import org.eclipse.jetty.websocket.api.Session;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -77,6 +78,7 @@ public class Client {
         mapOfResponses.put(Response.DISKS, updater::updateDisks);
         mapOfResponses.put(Response.DIRECTORY, updater::updateDirectory);
         mapOfResponses.put(Response.WEBCAM_DEVICES, updater::updateWebcamDevices);
+        mapOfResponses.put(Response.SCREEN_DIMENSIONS, updater::setScreenDimensions);
     }
 
 

@@ -116,11 +116,17 @@ void ScreenStreamer::addKeyToQueue(nlohmann::json jsonObject){
 }
 
 void ScreenStreamer::startStreaming(nlohmann::json jsonObjet) {
-    double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
-    double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
-    std::string screenDimensions(std::to_string((int) fScreenWidth) + "," + std::to_string((int) fScreenHeight));
-   // stream.sendString(screenDimensions.c_str());
+
+    int fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN);
+    int fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN);
+
+    std::vector<int> dimensions = {fScreenWidth, fScreenHeight};
+    nlohmann::json json;
+    json["RESPONSE"] = "SCREEN_DIMENSIONS";
+    json["dimensions"] = dimensions;
     channelID = jsonObjet["channel_id"];
+    clientSocket.sendMessage(json.dump());
+
     std::thread transmissionThread(&ScreenStreamer::screenTransmissionThread, this);
     std::thread eventsThread(&ScreenStreamer::screenEventsThread, this);
 

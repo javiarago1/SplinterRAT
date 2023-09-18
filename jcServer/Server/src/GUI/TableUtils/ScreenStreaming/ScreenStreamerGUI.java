@@ -15,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ScreenStreamerGUI implements GUIManagerInterface {
@@ -26,35 +25,35 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
     private MouseScreenListener mouseScreenListener;
     private KeyScreenListener keyScreenListener;
 
+    private Dimension originalScreenDimensions;
+
     public ScreenStreamerGUI(Client client) {
         dialog = new JDialog(Main.gui.getMainGUI(), "Screen controller - " + client.getIdentifier());
         this.client = client;
         dialog.setLayout(new GridBagLayout());
         dialog.setSize(600, 400);
-        dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
         addComponents();
         dialog.setVisible(true);
     }
 
+    private JLabel virtualScreen;
 
-
-    private JLabel streamingScreenShower;
 
     public void addComponents() {
         GridBagConstraints constraints = new GridBagConstraints();
-        streamingScreenShower = new JLabel("Press start to stream screen", SwingConstants.CENTER);
-        streamingScreenShower.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-        streamingScreenShower.setOpaque(true);
+        virtualScreen = new JLabel("Press start to stream screen", SwingConstants.CENTER);
+        virtualScreen.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        virtualScreen.setOpaque(true);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.gridwidth = 2;
-        constraints.gridheight = 2;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
-        dialog.add(streamingScreenShower, constraints);
+        dialog.add(virtualScreen, constraints);
         //dialog.addWindowListener(new StreamingWindowListener(isRunning));
         constraints.weighty = 0.0;
 
@@ -71,21 +70,23 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         bar.add(menu);
         dialog.setJMenuBar(bar);
         startMenu.addActionListener(new StartStreamingAction(this));
+        addControlComputerListeners();
     }
 
     public void removeControlComputerListeners() {
-        streamingScreenShower.removeMouseListener(mouseScreenListener);
-        streamingScreenShower.removeKeyListener(keyScreenListener);
+        virtualScreen.removeMouseListener(mouseScreenListener);
+        virtualScreen.removeKeyListener(keyScreenListener);
         queueOfEvents.add("END");
     }
 
     public void addControlComputerListeners() {
         mouseScreenListener = new MouseScreenListener(this);
-        streamingScreenShower.addMouseListener(mouseScreenListener);
+        virtualScreen.addMouseListener(mouseScreenListener);
         keyScreenListener = new KeyScreenListener(this);
-        streamingScreenShower.addKeyListener(keyScreenListener);
+        virtualScreen.addKeyListener(keyScreenListener);
         client.getExecutor().submit(new EventListener(this));
     }
+
 
     public JDialog getDialog() {
         return dialog;
@@ -95,8 +96,8 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         return queueOfEvents;
     }
 
-    public JLabel getStreamingScreenShower() {
-        return streamingScreenShower;
+    public JLabel getVirtualScreen() {
+        return virtualScreen;
     }
 
     public JMenuItem getStartMenu() {
@@ -105,5 +106,17 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
 
     public Client getClient() {
         return client;
+    }
+
+    public Dimension getDimensionsOfVirtualScreen() {
+        return new Dimension(virtualScreen.getWidth(), virtualScreen.getHeight());
+    }
+
+    public Dimension getOriginalScreenDimensions() {
+        return originalScreenDimensions;
+    }
+
+    public void setOriginalScreenDimensions(int a, int b) {
+        this.originalScreenDimensions = new Dimension(a, b);
     }
 }
