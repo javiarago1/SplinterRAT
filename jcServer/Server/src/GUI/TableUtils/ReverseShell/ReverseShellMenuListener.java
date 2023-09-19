@@ -1,5 +1,6 @@
 package GUI.TableUtils.ReverseShell;
 
+import Connections.Client;
 import Connections.ClientHandler;
 import Connections.Streams;
 import GUI.Main;
@@ -20,9 +21,8 @@ public class ReverseShellMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Streams stream = Objects.requireNonNull(GetSYS.getStream(SocketType.REVERSE_SHELL));
-        ClientHandler clientHandler = GetSYS.getClientHandler();
-        assert clientHandler != null;
-        new ReverseShellGUI(stream,clientHandler,  mainGUI.getMainGUI());
+        Client client = GetSYS.getClientHandlerV2();
+        assert client != null;
+        new ReverseShellGUI(client);
     }
 }

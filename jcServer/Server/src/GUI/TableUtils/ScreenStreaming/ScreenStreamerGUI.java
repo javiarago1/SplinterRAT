@@ -58,6 +58,7 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         virtualScreen.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         virtualScreen.setOpaque(true);
         dialog.add(virtualScreen, BorderLayout.CENTER);
+        virtualScreen.setFocusable(true);
 
         JPanel toolbar = new JPanel();
         toolbar.setBackground(new Color(47, 50, 51));
@@ -71,11 +72,13 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         gbc.gridx = 0;
         gbc.weightx = 1.0;
         toolbar.add(startStopToggle, gbc);
+        startStopToggle.setFocusable(false);
 
         screenSelector = new JComboBox<>();
         gbc.gridx = 1;
         gbc.weightx = 1.0;
         toolbar.add(screenSelector, gbc);
+        screenSelector.setFocusable(false);
 
         screenshotButton = new JButton("Screenshot");
         gbc.gridx = 2;
@@ -83,6 +86,7 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         toolbar.add(screenshotButton, gbc);
         screenshotButton.setEnabled(false);
         screenshotButton.addActionListener(new ScreenshotAction(this));
+        screenshotButton.setFocusable(false);
 
         controlCheckBox = new JCheckBox("Control");
         gbc.gridx = 3;
@@ -90,10 +94,10 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         toolbar.add(controlCheckBox, gbc);
         controlCheckBox.setEnabled(false);
         controlCheckBox.addActionListener(new ControlComputerAction(this));
+        controlCheckBox.setFocusable(false);
 
         dialog.add(toolbar, BorderLayout.SOUTH);
         startStopToggle.addActionListener(new StartStreamingAction(this));
-
         dialog.addWindowListener(new ScreenWindowAdapter(this));
     }
 

