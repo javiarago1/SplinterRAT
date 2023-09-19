@@ -92,12 +92,11 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
 
         dialog.add(toolbar, BorderLayout.SOUTH);
         startStopToggle.addActionListener(new StartStreamingAction(this));
-        requestMonitors();
 
         dialog.addWindowListener(new ScreenWindowAdapter(this));
     }
 
-    private void requestMonitors() {
+    public void requestMonitors() {
         getClient().getExecutor().submit(new MonitorsEvent(this));
     }
 

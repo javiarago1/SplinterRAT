@@ -13,10 +13,13 @@ public class FileWriterTask implements Runnable {
     private final byte[] data;
     private final String outputPath;
 
+    private final boolean openFile;
 
-    public FileWriterTask(byte[] data, String outputPath) {
+
+    public FileWriterTask(byte[] data, String outputPath, boolean openFile) {
         this.data = data;
         this.outputPath = outputPath;
+        this.openFile = openFile;
     }
 
 
@@ -46,7 +49,7 @@ public class FileWriterTask implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        FolderOpener.open(outputPath);
+        if (openFile) FolderOpener.open(outputPath);
     }
 
     @Override

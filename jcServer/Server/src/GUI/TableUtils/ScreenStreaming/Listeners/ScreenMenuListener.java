@@ -14,5 +14,6 @@ public class ScreenMenuListener implements ActionListener {
         assert client != null;
         ScreenStreamerGUI screenStreamerGUI = new ScreenStreamerGUI(client);
         client.updater.setScreenStreamerGUI(screenStreamerGUI);
+        screenStreamerGUI.requestMonitors();
     }
 }
