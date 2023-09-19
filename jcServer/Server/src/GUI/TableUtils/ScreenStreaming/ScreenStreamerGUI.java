@@ -89,6 +89,7 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         gbc.weightx = 1.0;
         toolbar.add(controlCheckBox, gbc);
         controlCheckBox.setEnabled(false);
+        controlCheckBox.addActionListener(new ControlComputerAction(this));
 
         dialog.add(toolbar, BorderLayout.SOUTH);
         startStopToggle.addActionListener(new StartStreamingAction(this));
