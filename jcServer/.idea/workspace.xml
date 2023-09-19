@@ -15,6 +15,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: controlling closing while streaming">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/ScreenShotEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/CredentialsExtractor.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/CredentialsExtractor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Download.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ZipCompressor.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ZipCompressor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/credentials/CredentialsExtractor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/credentials/CredentialsExtractor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/zip/ZipCompressor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/zip/ZipCompressor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/FileWriterTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/FileWriterTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Updater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/CredentialsDumper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Dumper/CredentialsDumper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/CredentialsManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/CredentialsManagerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/CredentialsMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Listeners/CredentialsMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/DumpAllAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Actions/DumpAllAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/DumpAllSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Events/DumpAllEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Actions/ScreenshotAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Actions/ScreenshotAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamerGUI.java" afterDir="false" />
     </list>
@@ -457,6 +478,7 @@
       <workItem from="1694598801471" duration="3979000" />
       <workItem from="1694932106753" duration="20173000" />
       <workItem from="1695035325510" duration="15386000" />
+      <workItem from="1695105474810" duration="7828000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>

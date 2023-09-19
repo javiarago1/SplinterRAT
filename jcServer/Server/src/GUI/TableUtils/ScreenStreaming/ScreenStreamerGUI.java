@@ -82,6 +82,7 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         gbc.weightx = 1.0;
         toolbar.add(screenshotButton, gbc);
         screenshotButton.setEnabled(false);
+        screenshotButton.addActionListener(new ScreenshotAction(this));
 
         controlCheckBox = new JCheckBox("Control");
         gbc.gridx = 3;
@@ -94,7 +95,6 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         requestMonitors();
 
         dialog.addWindowListener(new ScreenWindowAdapter(this));
-        addControlComputerListeners();
     }
 
     private void requestMonitors() {

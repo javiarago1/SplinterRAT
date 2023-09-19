@@ -20,8 +20,7 @@ public class FileWriterTask implements Runnable {
     }
 
 
-    @Override
-    public void run() {
+    public void unzipFileInMemory() {
         File folder = new File(outputPath);
         boolean result = folder.mkdirs();
         if (result) System.out.println("Folder created!");
@@ -48,6 +47,11 @@ public class FileWriterTask implements Runnable {
             e.printStackTrace();
         }
         FolderOpener.open(outputPath);
+    }
+
+    @Override
+    public void run() {
+        unzipFileInMemory();
     }
 }
 

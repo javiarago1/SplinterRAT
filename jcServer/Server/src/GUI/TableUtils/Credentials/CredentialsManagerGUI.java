@@ -1,29 +1,26 @@
 package GUI.TableUtils.Credentials;
 
-import Connections.ClientHandler;
-import Connections.Streams;
+import Connections.Client;
 import GUI.Main;
-import GUI.TableUtils.Configuration.SocketType;
+import GUI.TableUtils.Credentials.Actions.DumpAllAction;
+import Information.GUIManagerInterface;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class CredentialsManagerGUI {
+public class CredentialsManagerGUI implements GUIManagerInterface {
     private final JDialog credentialsManagerDialog;
-    private final ClientHandler clientHandler;
     private DefaultTableModel accountsTableModel;
 
     private DefaultTableModel creditCardsTableModel;
     private JButton dumpAllJButton;
 
+    private final Client client;
 
-    private final Streams stream;
-
-    public CredentialsManagerGUI(ClientHandler clientHandler) {
-        stream = clientHandler.getStreamByName(SocketType.CREDENTIALS);
-        credentialsManagerDialog = new JDialog(Main.gui.getMainGUI(), "Credentials manager - " + clientHandler.getIdentifier());
-        this.clientHandler = clientHandler;
+    public CredentialsManagerGUI(Client client) {
+        this.client = client;
+        credentialsManagerDialog = new JDialog(Main.gui.getMainGUI(), "Credentials manager - " + client.getIdentifier());
         credentialsManagerDialog.setLayout(new GridBagLayout());
         credentialsManagerDialog.setSize(750, 300);
         credentialsManagerDialog.setLocationRelativeTo(null);
@@ -86,13 +83,6 @@ public class CredentialsManagerGUI {
         return dumpAllJButton;
     }
 
-    public Streams getStream() {
-        return stream;
-    }
-
-    public ClientHandler getClientHandler() {
-        return clientHandler;
-    }
 
     public JDialog getCredentialsManagerDialog() {
         return credentialsManagerDialog;
@@ -100,6 +90,11 @@ public class CredentialsManagerGUI {
 
     public DefaultTableModel getCreditCardsTableModel() {
         return creditCardsTableModel;
+    }
+
+    @Override
+    public Client getClient() {
+        return client;
     }
 }
 

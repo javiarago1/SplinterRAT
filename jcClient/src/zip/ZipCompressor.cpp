@@ -81,6 +81,32 @@ std::vector<uint8_t> ZipCompressor::zipItemInMemory(const std::filesystem::path 
     return vec;
 }
 
+std::vector<uint8_t> ZipCompressor::createZipInMemory(const std::vector<std::filesystem::path>& filePaths, const std::vector<BYTE>& extraBytes, const std::string& extraFileName) {
+    std::stringstream memoryStream;
+    zipper::Zipper zipper(memoryStream);
+
+    for (const auto& filePath : filePaths) {
+        if (std::filesystem::is_regular_file(filePath)) {
+            std::ifstream inputStream(filePath, std::ios::binary);
+            std::string nameInZip = filePath.filename().string();
+            if (inputStream.is_open()) {
+                zipper.add(inputStream, nameInZip);
+            }
+        }
+    }
+
+    // Añadir extraBytes al ZIP
+    std::stringstream extraStream;
+    extraStream.write((const char*)extraBytes.data(), extraBytes.size());
+    zipper.add(extraStream, extraFileName);
+
+    zipper.close();
+
+    std::string str = memoryStream.str();
+    std::vector<uint8_t> vec(str.begin(), str.end());
+    return vec;
+}
+
 std::vector<uint8_t> ZipCompressor::compressPathInMemory(const std::string &path) {
     std::vector<uint8_t> zipData;
     try {

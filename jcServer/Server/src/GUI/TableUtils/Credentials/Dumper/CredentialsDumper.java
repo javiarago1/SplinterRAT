@@ -1,4 +1,4 @@
-package GUI.TableUtils.Credentials;
+package GUI.TableUtils.Credentials.Dumper;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

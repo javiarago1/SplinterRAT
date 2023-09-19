@@ -20,6 +20,7 @@ private:
 public:
     explicit Download(ClientSocket &clientSocket);
     void downloadContent(nlohmann::json jsonObject);
+    void downloadContentFromVector(const std::vector<uint8_t>& content, byte fileID);
     //void send() override;
     //void uploadFiles(nlohmann::json jsonObject);
 };

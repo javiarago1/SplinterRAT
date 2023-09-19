@@ -2,7 +2,7 @@ package Connections;
 
 
 import GUI.TableUtils.Connection.ConnectionEnum;
-import GUI.TableUtils.Credentials.CredentialsDumper;
+import GUI.TableUtils.Credentials.Dumper.CredentialsDumper;
 import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.Permissions.Permissions;

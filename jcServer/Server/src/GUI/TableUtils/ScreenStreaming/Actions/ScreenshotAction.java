@@ -1,5 +1,6 @@
 package GUI.TableUtils.ScreenStreaming.Actions;
 
+import GUI.TableUtils.ScreenStreaming.Events.ScreenShotEvent;
 import GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI;
 import Information.AbstractAction;
 
@@ -12,6 +13,6 @@ public class ScreenshotAction extends AbstractAction<ScreenStreamerGUI> {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        getClient().getExecutor().submit(new ScreenShotEvent(getGUIManager()));
     }
 }

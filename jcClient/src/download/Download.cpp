@@ -1,6 +1,7 @@
 #include "Download.h"
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 Download::Download(ClientSocket &clientSocket)
 : Handler(clientSocket) {
@@ -58,6 +59,45 @@ void Download::downloadContent(nlohmann::json jsonObject) {
 
     fileStream.close();
 }
+
+void Download::downloadContentFromVector(const std::vector<uint8_t>& content, byte fileID) {
+    std::vector<uint8_t> buffer(FRAGMENT_SIZE);
+
+    // Preparing header bytes: 1 byte for file ID, 1 byte for control code
+    buffer[0] = fileID;
+    buffer[1] = NOT_LAST_FRAGMENT;
+
+    size_t contentSize = content.size();
+    size_t offset = 0;
+
+    while (offset < contentSize) {
+        // Calculate how many bytes we will send in this fragment
+        size_t remainingBytes = contentSize - offset;
+        size_t bytesToSend;
+        if (remainingBytes < (FRAGMENT_SIZE - 2)) {
+            bytesToSend = remainingBytes;
+        } else {
+            bytesToSend = FRAGMENT_SIZE - 2;
+        }
+
+        // Copy the content to the buffer, starting at offset 2 to leave space for control bytes
+        std::copy(content.begin() + offset, content.begin() + offset + bytesToSend, buffer.begin() + 2);
+
+        // Check if this is the last fragment
+        if (offset + bytesToSend >= contentSize) {
+            buffer[1] = LAST_FRAGMENT;
+        }
+
+        // Send the fragment
+        // Note: Sending bytesToSend + 2 bytes to include the 2 control bytes
+        clientSocket.sendBytes(std::vector<uint8_t>(buffer.begin(), buffer.begin() + bytesToSend + 2));
+
+        // Update the offset
+        offset += bytesToSend;
+    }
+}
+
+
 
 
 /*

