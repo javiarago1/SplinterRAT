@@ -21,6 +21,7 @@ public:
     explicit ScreenStreamer(ClientSocket &clientSocket);
     void startStreaming(nlohmann::json jsonObjet);
     static std::map<std::string, RECT> monitorMap;
+    ~ScreenStreamer();
 private:
     static RECT selectedMonitor;
     static BOOL CALLBACK MonitorEnumProc(HMONITOR, HDC, LPRECT, LPARAM);
@@ -39,6 +40,7 @@ private:
     static HBITMAP GdiPlusScreenCapture(HWND hWnd, RECT targetMonitorRect);
     void sendMonitors();
     static bool saveToMemory(HBITMAP *hbitmap, std::vector<BYTE> &data);
+    ULONG_PTR gdiplusToken;
 };
 
 

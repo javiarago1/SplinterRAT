@@ -16,6 +16,8 @@ ScreenStreamer::ScreenStreamer(ClientSocket &clientSocket) :
     actionMap["MONITORS"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &ScreenStreamer::sendMonitors);
     };
+    Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+    GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
 }
 
 void ScreenStreamer::stopStreaming(){
@@ -71,8 +73,11 @@ const uint8_t NOT_LAST_FRAGMENT = 0x01;
 
 void ScreenStreamer::screenTransmissionThread() {
     streamingState.store(true);
+
+    std::vector<BYTE> screenBuff;
+    screenBuff.reserve(5 * 1024 * 1024);
+
     while (streamingState.load()) {
-        std::vector<BYTE> screenBuff;
         takeScreenshot(screenBuff);
 
         std::vector<uint8_t> buffer(FRAGMENT_SIZE);
@@ -256,16 +261,15 @@ BOOL CALLBACK ScreenStreamer::MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor,
 
 
 void ScreenStreamer::takeScreenshot(std::vector<BYTE> &data){
-    Gdiplus::GdiplusStartupInput gdiplusStartupInput;
-    ULONG_PTR gdiplusToken;
-    GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
     HWND hWnd = GetDesktopWindow();
     HBITMAP hBmp = GdiPlusScreenCapture(hWnd, selectedMonitor);
     // save as png to memory
     saveToMemory(&hBmp, data);
-
     DeleteObject(hBmp);
+}
+
+
+ScreenStreamer::~ScreenStreamer() {
     Gdiplus::GdiplusShutdown(gdiplusToken);
     CoUninitialize();
-
 }
