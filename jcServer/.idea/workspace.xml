@@ -15,22 +15,62 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: controlling closing while streaming">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Events/CloseShellEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Events/StartShellEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Listeners/ScreenWindowAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ReverseShell.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ReverseShell.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/reverse_shell/ReverseShell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/reverse_shell/ReverseShell.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/Actions/ConnectionAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/Events/ConnectionEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/Actions/KeyLoggerAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/Constants/KeyLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/Events/KeyloggerEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/Actions/KeyboardAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/Events/KeyboardEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/Actions/MessageBoxAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/Events/MessageBoxEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/Events/PrivilegesElevatorEvents.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/SystemState/Events/SystemStateEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ConnectionState.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ConnectionState.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/KeyboardExecuter.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/KeyboardExecuter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/MessageBoxGUI.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/MessageBoxGUI.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Permission.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Permission.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/box_message/MessageBoxGUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/box_message/MessageBoxGUI.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/connection/ConnectionState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/connection/ConnectionState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/keyboard/KeyboardExecuter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/keyboard/KeyboardExecuter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/permission/Permission.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/permission/Permission.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/state/SystemState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/state/SystemState.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Connections/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Updater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/GetSYS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/GetSYS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Events/CommadEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/FieldDocumentListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Listeners/ReverseShellMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/SendCommandAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Actions/SendCommandAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Shell.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/ConnectionEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/Constants/ConnStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/DisconnectAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/RestartAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/UninstallAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Listeners/CredentialsMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Listeners/CredentialsMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listeners/FileManagerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listeners/FileManagerMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyLoggerEventsListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/KeyloggerEvents.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/InstructionsSenderAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/JCodeCompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/Compiler/JCodeCompiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/KeyboardControllerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/KeyboardControllerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/KeyboardControllerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/Listeners/KeyboardControllerMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/ListListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/Listeners/ListListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/MoveEvent/Movement.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/Constants/Movement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/MoveEvent/Mover.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/Actions/MoverAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/Listeners/MessageBoxMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/MessageBoxSender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/ElevatePermission/ElevatePermissionAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/ElevatePermission/PrivilegesElevator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/Permissions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Listeners/ReverseShellMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Listeners/ReverseShellMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/ScreenMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/ScreenMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/SystemState/State.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/SystemState/Constants/SystemStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/SystemState/SystemStateListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/SystemState/Actions/SystemStateAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Listeners/WebcamMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Listeners/WebcamMenuListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/Information/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/Response.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -164,6 +204,7 @@
       <recent name="GUI.TableUtils.FileManager" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="GUI.TableUtils.KeyLogger.Actions" />
       <recent name="Server.Information" />
     </key>
   </component>
@@ -474,7 +515,8 @@
       <workItem from="1695035325510" duration="15386000" />
       <workItem from="1695105474810" duration="7828000" />
       <workItem from="1695313010348" duration="250000" />
-      <workItem from="1695368529869" duration="10726000" />
+      <workItem from="1695368529869" duration="11264000" />
+      <workItem from="1695387957748" duration="10392000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>

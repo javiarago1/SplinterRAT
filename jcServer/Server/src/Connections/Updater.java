@@ -251,6 +251,26 @@ public class Updater {
         });
     }
 
+    public void showPermissionStatus(JSONObject jsonObject) {
+        int result = jsonObject.getInt("result");
+        SwingUtilities.invokeLater(() -> {
+            switch (result) {
+                case 1 -> System.out.println("Permissions acepted!");
+                //new ClientErrorHandler(
+                //"The client accepted admin privileges, restarting client with privileges.",
+                //stream.getClientSocket(),
+                //JOptionPane.INFORMATION_MESSAGE);
+                case 0 -> JOptionPane.showMessageDialog(Main.gui.getMainGUI(),
+                        "The client rejected the UAC prompt, no admin privileges where achieved.",
+                        "Exception with client", JOptionPane.ERROR_MESSAGE);
+                default -> JOptionPane.showMessageDialog(Main.gui.getMainGUI(),
+                        "The client has admin privileges, no need to elevate.",
+                        "Exception with client", JOptionPane.WARNING_MESSAGE);
+            }
+            ;
+        });
+    }
+
 
     public void setFileManagerGUI(FileManagerGUI fileManagerGUI) {
         this.fileManagerGUI = fileManagerGUI;

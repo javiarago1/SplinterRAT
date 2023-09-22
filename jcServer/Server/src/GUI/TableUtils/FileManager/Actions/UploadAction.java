@@ -2,7 +2,7 @@ package GUI.TableUtils.FileManager.Actions;
 
 import Connections.Streams;
 import GUI.ProgressBar.UploadProgressBar;
-import GUI.TableUtils.Configuration.GetSYS;
+import Connections.GetSYS;
 import GUI.TableUtils.Configuration.SocketType;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 

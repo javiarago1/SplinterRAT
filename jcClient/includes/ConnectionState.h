@@ -4,12 +4,11 @@
 #include "Sender.h"
 #include "Install.h"
 
-class ConnectionState : public Sender{
+class ConnectionState : public Handler{
 private:
 
 public:
-    void send() override;
-    explicit ConnectionState(const Stream &stream,std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap,
+    explicit ConnectionState(ClientSocket &clientSocket,
                              bool &connectionState,
                              bool &streamListening);
 };

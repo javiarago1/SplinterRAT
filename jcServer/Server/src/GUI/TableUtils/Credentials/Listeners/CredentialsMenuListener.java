@@ -1,8 +1,7 @@
 package GUI.TableUtils.Credentials.Listeners;
 
 import Connections.Client;
-import Connections.ClientHandler;
-import GUI.TableUtils.Configuration.GetSYS;
+import Connections.GetSYS;
 import GUI.TableUtils.Credentials.CredentialsManagerGUI;
 
 import java.awt.event.ActionEvent;

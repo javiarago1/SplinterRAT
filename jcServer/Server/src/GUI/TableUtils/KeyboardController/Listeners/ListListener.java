@@ -1,4 +1,4 @@
-package GUI.TableUtils.KeyboardController;
+package GUI.TableUtils.KeyboardController.Listeners;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -10,7 +10,7 @@ public class ListListener implements ListSelectionListener {
     private final JButton removeEventButton;
     private final JList<String> listOfEvents;
 
-    ListListener(JList<String> listOfEvents, JButton[] listButtons) {
+    public ListListener(JList<String> listOfEvents, JButton[] listButtons) {
         this.listOfEvents = listOfEvents;
         moveUpButton = listButtons[0];
         moveDownButton = listButtons[1];
@@ -21,27 +21,26 @@ public class ListListener implements ListSelectionListener {
     @Override
     public void valueChanged(ListSelectionEvent e) {
         DefaultListModel<String> listModel = (DefaultListModel<String>) listOfEvents.getModel();
-        boolean hasSelections = listOfEvents.getSelectedIndices().length > 0;
+        int selectedIndex = listOfEvents.getSelectedIndex();
+        int listSize = listModel.getSize();
+        boolean hasSelections = selectedIndex != -1;
+
         if (!hasSelections) {
             moveUpButton.setEnabled(false);
             moveDownButton.setEnabled(false);
             removeEventButton.setEnabled(false);
-        } else if (listModel.getSize() < 2) {
-            moveUpButton.setEnabled(false);
-            moveDownButton.setEnabled(false);
-            removeEventButton.setEnabled(true);
-        } else if (listOfEvents.getSelectedIndex() == 0) {
-            moveUpButton.setEnabled(false);
-            moveDownButton.setEnabled(true);
-            removeEventButton.setEnabled(true);
-        } else if (listOfEvents.getSelectedIndex() >= listModel.getSize() - 1) {
-            moveDownButton.setEnabled(false);
-            moveUpButton.setEnabled(true);
-            removeEventButton.setEnabled(true);
-        } else {
-            moveUpButton.setEnabled(true);
-            moveDownButton.setEnabled(true);
-            removeEventButton.setEnabled(true);
+            return;
         }
+
+        removeEventButton.setEnabled(true);
+
+        if (listSize < 2) {
+            moveUpButton.setEnabled(false);
+            moveDownButton.setEnabled(false);
+            return;
+        }
+
+        moveUpButton.setEnabled(selectedIndex != 0);
+        moveDownButton.setEnabled(selectedIndex != listSize - 1);
     }
 }

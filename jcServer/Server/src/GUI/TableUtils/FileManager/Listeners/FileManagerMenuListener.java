@@ -2,7 +2,7 @@ package GUI.TableUtils.FileManager.Listeners;
 
 import Connections.Client;
 import GUI.SplinterGUI;
-import GUI.TableUtils.Configuration.GetSYS;
+import Connections.GetSYS;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import java.awt.event.ActionEvent;

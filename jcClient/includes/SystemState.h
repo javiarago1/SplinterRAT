@@ -4,12 +4,12 @@
 #include <windows.h>
 #include "json.hpp"
 #include "Sender.h"
+#include "Handler.h"
 
-class SystemState : public Sender {
+class SystemState : public Handler {
 public:
-    void send() override;
     void setState(nlohmann::json json);
-    explicit SystemState(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    explicit SystemState(ClientSocket &clientSocket);
 };
 
 

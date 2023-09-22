@@ -1,20 +1,20 @@
 package GUI.TableUtils.MessageBox;
 
-import Connections.ClientHandler;
-import Connections.Streams;
+import Connections.Client;
 import GUI.Main;
-import GUI.TableUtils.Configuration.SocketType;
+import GUI.TableUtils.MessageBox.Actions.MessageBoxAction;
+import Information.GUIManagerInterface;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MessageBoxGUI {
-    private final Streams stream;
-    JDialog messageBoxDialog;
+public class MessageBoxGUI implements GUIManagerInterface {
+    private final Client client;
+    private final JDialog messageBoxDialog;
 
-    public MessageBoxGUI(ClientHandler clientHandler) {
-        this.stream = clientHandler.getStreamByName(SocketType.MAIN);
-        messageBoxDialog = new JDialog(Main.gui.getMainGUI(), "Message box - " + clientHandler.getIdentifier());
+    public MessageBoxGUI(Client client) {
+        this.client = client;
+        messageBoxDialog = new JDialog(Main.gui.getMainGUI(), "Message box - " + client.getIdentifier());
         messageBoxDialog.setLayout(new GridBagLayout());
         messageBoxDialog.setSize(250, 350);
         messageBoxDialog.setLocationRelativeTo(null);
@@ -112,8 +112,8 @@ public class MessageBoxGUI {
         return iconOfBox;
     }
 
-    public Streams getStream() {
-        return stream;
+    @Override
+    public Client getClient() {
+        return client;
     }
-
 }

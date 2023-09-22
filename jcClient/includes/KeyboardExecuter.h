@@ -9,16 +9,15 @@
 #include <thread>
 #include "json.hpp"
 #include "Sender.h"
+#include "Handler.h"
 
 
-class KeyboardExecuter : public Sender {
+class KeyboardExecuter : public Handler {
 public:
-    KeyboardExecuter(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    explicit KeyboardExecuter(ClientSocket &clientSocket);
     void executeSequence(const std::string&);
     static void pressKey(UCHAR virtualKey);
     void executeCommand(nlohmann::json);
-
-    void send() override;
 
 private:
     static std::vector<std::string> getVectorDividedByRegex(const std::string &,const std::regex&);

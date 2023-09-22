@@ -2,13 +2,12 @@
 #define CLIENT_PERMISSION_H
 #include "Sender.h"
 #include <windows.h>
+#include "Handler.h"
 
 
-class Permission : public Sender {
+class Permission : public Handler {
 public:
-    void send() override;
-
-    explicit Permission(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
+    explicit Permission(ClientSocket& clientSocket);
     static BOOL hasAdminPermission();
     static BOOL elevatePermissions();
     void sendElevatedPermissions();

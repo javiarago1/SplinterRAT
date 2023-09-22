@@ -50,13 +50,11 @@ void KeyboardExecuter::executeCommand(nlohmann::json jsonObject) {
 }
 
 
-KeyboardExecuter::KeyboardExecuter(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
-        : Sender(stream, actionMap) {
-    actionMap["EXECUTE_SEQUENCE"] = [&](nlohmann::json& json) {
+KeyboardExecuter::KeyboardExecuter(ClientSocket &clientSocket)
+        : Handler(clientSocket) {
+    ActionMap& actionMap = clientSocket.getActionMap();
+    actionMap["KEYBOARD_CONTROLLER"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &KeyboardExecuter::executeCommand, json);
     };
 }
 
-void KeyboardExecuter::send() {
-
-}

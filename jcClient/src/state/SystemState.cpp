@@ -2,7 +2,7 @@
 
 
 void SystemState::setState(nlohmann::json json) {
-    UINT nSDType = json["SUB_ACTION"];
+    UINT nSDType = json["type"];
     HANDLE hToken;
     TOKEN_PRIVILEGES tkp;
     ::OpenProcessToken(::GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken);
@@ -27,13 +27,10 @@ void SystemState::setState(nlohmann::json json) {
     }
 }
 
-SystemState::SystemState(const Stream &stream, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap)
-        : Sender(stream, actionMap){
+SystemState::SystemState(ClientSocket &clientSocket)
+        : Handler(clientSocket){
+    ActionMap& actionMap = clientSocket.getActionMap();
     actionMap["SYSTEM_STATE"] = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &SystemState::setState, json);
     };
-}
-
-void SystemState::send() {
-
 }

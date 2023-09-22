@@ -1,10 +1,11 @@
-package GUI.TableUtils.Configuration;
+package Connections;
 
 import Connections.Client;
 import Connections.ClientHandler;
 import Connections.ConnectionStore;
 import Connections.Streams;
 import GUI.Main;
+import GUI.TableUtils.Configuration.SocketType;
 import org.eclipse.jetty.websocket.api.Session;
 
 import javax.swing.*;

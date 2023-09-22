@@ -1,7 +1,7 @@
 package GUI.TableUtils.ScreenStreaming.Listeners;
 
 import Connections.Client;
-import GUI.TableUtils.Configuration.GetSYS;
+import Connections.GetSYS;
 import GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI;
 
 import java.awt.event.ActionEvent;

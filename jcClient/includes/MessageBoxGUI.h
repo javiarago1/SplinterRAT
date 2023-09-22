@@ -4,6 +4,8 @@
 #include <string>
 #include "Sender.h"
 #include "json.hpp"
+#include "ClientSocket.h"
+#include "Handler.h"
 #include <windows.h>
 #include <cstring>
 #include <vector>
@@ -12,17 +14,14 @@
 
 
 
-class MessageBoxGUI : public Sender {
+class MessageBoxGUI : public Handler {
 private:
     static UINT getIconFromItem(int);
     std::string boxInformation;
-    std::vector<std::string> generateVectorByDelimiter();
     static UINT getTypeFromItem(int selectedType);
 public:
-    explicit MessageBoxGUI(const Stream&, std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &actionMap);
-    void generateMessageBox(nlohmann::json jsonObject);
-    void showMessageGUI();
-    void send() override;
+    explicit MessageBoxGUI(ClientSocket &clientSocket);
+    void showMessageGUI(nlohmann::json json);
 
 
 };

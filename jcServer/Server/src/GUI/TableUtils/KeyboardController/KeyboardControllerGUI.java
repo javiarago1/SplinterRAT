@@ -1,11 +1,12 @@
 package GUI.TableUtils.KeyboardController;
 
-import Connections.ClientHandler;
-import Connections.Streams;
-import GUI.TableUtils.Configuration.GetSYS;
-import GUI.TableUtils.Configuration.SocketType;
-import GUI.TableUtils.KeyboardController.MoveEvent.Movement;
-import GUI.TableUtils.KeyboardController.MoveEvent.Mover;
+import Connections.Client;
+import GUI.Main;
+import GUI.TableUtils.KeyboardController.Actions.KeyboardAction;
+import GUI.TableUtils.KeyboardController.Constants.Movement;
+import GUI.TableUtils.KeyboardController.Actions.MoverAction;
+import GUI.TableUtils.KeyboardController.Listeners.ListListener;
+import Information.GUIManagerInterface;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
@@ -14,15 +15,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-public class KeyboardControllerGUI {
+public class KeyboardControllerGUI implements GUIManagerInterface {
     private final JDialog dialog;
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
     private JList<String> listOfEvents;
-    private final Streams stream;
+    private final Client client;
 
-    public KeyboardControllerGUI(JFrame mainGUI, ClientHandler clientHandler) {
-        this.stream = GetSYS.getStream(SocketType.MAIN);
-        dialog = new JDialog(mainGUI, "Keyboard controller - " + clientHandler.getIdentifier());
+    public KeyboardControllerGUI(Client client) {
+        this.client = client;
+        dialog = new JDialog(Main.gui.getMainGUI(), "Keyboard controller - " + client.getIdentifier());
         dialog.setSize(new Dimension(650, 400));
         dialog.setLayout(new GridLayout(1, 2));
         dialog.setLocationRelativeTo(null);
@@ -66,14 +67,14 @@ public class KeyboardControllerGUI {
         constraints.gridheight = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1.0;
-        moveUpButton.addActionListener(new Mover(listOfEvents, Movement.UP));
+        moveUpButton.addActionListener(new MoverAction(listOfEvents, Movement.UP));
         leftPanel.add(moveUpButton, constraints);
 
 
         JButton moveDownButton = new JButton("Down");
         moveDownButton.setEnabled(false);
         constraints.gridx = 1;
-        moveDownButton.addActionListener(new Mover(listOfEvents, Movement.DOWN));
+        moveDownButton.addActionListener(new MoverAction(listOfEvents, Movement.DOWN));
         leftPanel.add(moveDownButton, constraints);
 
 
@@ -208,7 +209,7 @@ public class KeyboardControllerGUI {
 
         constraints.gridy = 13;
         JButton submitSequenceToClient = new JButton("Submit request to client");
-        submitSequenceToClient.addActionListener(new InstructionsSenderAction(this));
+        submitSequenceToClient.addActionListener(new KeyboardAction(this));
         rightPanel.add(submitSequenceToClient, constraints);
 
 
@@ -219,10 +220,6 @@ public class KeyboardControllerGUI {
         return dialog;
     }
 
-    public Streams getStream() {
-        return stream;
-    }
-
     public DefaultListModel<String> getListModel() {
         return listModel;
     }
@@ -231,4 +228,8 @@ public class KeyboardControllerGUI {
         listOfEvents.setSelectedIndex(listModel.getSize() - 1);
     }
 
+    @Override
+    public Client getClient() {
+        return client;
+    }
 }

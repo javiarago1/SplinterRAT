@@ -32,7 +32,7 @@ public class BytesChannel {
                 categoryOutputFolder = "Downloaded files";
             }
             case KEYLOGGER_LOGS -> {
-
+                categoryOutputFolder = "Keylogger logs";
             }
             case WEBCAM_LOGS -> {
                 categoryOutputFolder = "Webcam logs";

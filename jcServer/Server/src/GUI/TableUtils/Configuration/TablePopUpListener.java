@@ -2,23 +2,23 @@ package GUI.TableUtils.Configuration;
 
 import Connections.Client;
 import Connections.ClientHandler;
+import Connections.GetSYS;
 import GUI.SplinterGUI;
 import GUI.Main;
-import GUI.TableUtils.Connection.DisconnectAction;
-import GUI.TableUtils.Connection.RestartAction;
-import GUI.TableUtils.Connection.UninstallAction;
+import GUI.TableUtils.Connection.Actions.ConnectionAction;
+import GUI.TableUtils.Connection.Constants.ConnStatus;
 import GUI.TableUtils.Credentials.Listeners.CredentialsMenuListener;
 import GUI.TableUtils.FileManager.Listeners.FileManagerMenuListener;
 
-import GUI.TableUtils.KeyLogger.KeyLoggerEventsListener;
-import GUI.TableUtils.KeyLogger.KeyloggerEvents;
-import GUI.TableUtils.KeyboardController.KeyboardControllerMenuListener;
-import GUI.TableUtils.MessageBox.MessageBoxMenuListener;
-import GUI.TableUtils.Permissions.ElevatePermission.ElevatePermissionAction;
+import GUI.TableUtils.KeyLogger.Actions.KeyLoggerAction;
+import GUI.TableUtils.KeyLogger.Constants.KeyLog;
+import GUI.TableUtils.KeyboardController.Listeners.KeyboardControllerMenuListener;
+import GUI.TableUtils.MessageBox.Listeners.MessageBoxMenuListener;
+import GUI.TableUtils.Permissions.Actions.ElevatePermissionAction;
 import GUI.TableUtils.ReverseShell.Listeners.ReverseShellMenuListener;
 import GUI.TableUtils.ScreenStreaming.Listeners.ScreenMenuListener;
-import GUI.TableUtils.SystemState.State;
-import GUI.TableUtils.SystemState.SystemStateListener;
+import GUI.TableUtils.SystemState.Constants.SystemStatus;
+import GUI.TableUtils.SystemState.Actions.SystemStateAction;
 import GUI.TableUtils.WebcamManager.Listeners.WebcamMenuListener;
 
 import javax.swing.*;
@@ -135,18 +135,18 @@ public class TablePopUpListener extends MouseAdapter {
         fileManagerMenu.addActionListener(new FileManagerMenuListener(mainGUI));
         reverseShellMenu.addActionListener(new ReverseShellMenuListener(mainGUI));
         credentialsManagerMenu.addActionListener(new CredentialsMenuListener());
-        dumpLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_LAST));
-        dumpAllLogsMenu.addActionListener(new KeyLoggerEventsListener(KeyloggerEvents.DUMP_ALL));
+        dumpLogsMenu.addActionListener(new KeyLoggerAction(KeyLog.DUMP_LAST));
+        dumpAllLogsMenu.addActionListener(new KeyLoggerAction(KeyLog.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(mainGUI));
         elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction());
         messageBoxMenu.addActionListener(new MessageBoxMenuListener());
         streamScreenMenu.addActionListener(new ScreenMenuListener());
-        restartMenu.addActionListener(new RestartAction());
-        disconnectMenu.addActionListener(new DisconnectAction());
-        uninstallMenu.addActionListener(new UninstallAction());
-        logOffAction.addActionListener(new SystemStateListener(State.LOG_OFF));
-        shutdownAction.addActionListener(new SystemStateListener(State.SHUTDOWN));
-        rebootAction.addActionListener(new SystemStateListener(State.REBOOT));
+        restartMenu.addActionListener(new ConnectionAction(ConnStatus.RESTART));
+        disconnectMenu.addActionListener(new ConnectionAction(ConnStatus.DISCONNECT));
+        uninstallMenu.addActionListener(new ConnectionAction(ConnStatus.UNINSTALL));
+        logOffAction.addActionListener(new SystemStateAction(SystemStatus.LOG_OFF));
+        shutdownAction.addActionListener(new SystemStateAction(SystemStatus.SHUTDOWN));
+        rebootAction.addActionListener(new SystemStateAction(SystemStatus.REBOOT));
 
     }
 

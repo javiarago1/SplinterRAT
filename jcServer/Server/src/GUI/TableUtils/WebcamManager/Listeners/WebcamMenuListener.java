@@ -2,7 +2,7 @@ package GUI.TableUtils.WebcamManager.Listeners;
 
 import Connections.Client;
 import GUI.SplinterGUI;
-import GUI.TableUtils.Configuration.GetSYS;
+import Connections.GetSYS;
 import GUI.TableUtils.WebcamManager.WebcamGUI;
 
 import java.awt.event.ActionEvent;

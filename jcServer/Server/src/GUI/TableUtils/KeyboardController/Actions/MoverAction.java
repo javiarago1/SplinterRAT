@@ -1,15 +1,17 @@
-package GUI.TableUtils.KeyboardController.MoveEvent;
+package GUI.TableUtils.KeyboardController.Actions;
+
+import GUI.TableUtils.KeyboardController.Constants.Movement;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Mover implements ActionListener {
+public class MoverAction implements ActionListener {
 
     private final JList<String> listOfEvents;
     private final int operation;
 
-    public Mover(JList<String> listOfEvents, Movement movement) {
+    public MoverAction(JList<String> listOfEvents, Movement movement) {
         operation = movement == Movement.UP ? -1 : 1;
         this.listOfEvents = listOfEvents;
     }

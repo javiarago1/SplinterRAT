@@ -1,4 +1,4 @@
-package GUI.TableUtils.KeyboardController;
+package GUI.TableUtils.KeyboardController.Compiler;
 
 
 import javax.swing.*;
