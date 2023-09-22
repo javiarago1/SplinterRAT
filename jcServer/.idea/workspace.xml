@@ -15,13 +15,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: controlling closing while streaming">
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/client.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Events/CloseShellEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Events/StartShellEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Listeners/ScreenWindowAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ReverseShell.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ReverseShell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jcClient/src/reverse_shell/ReverseShell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/reverse_shell/ReverseShell.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Streams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Updater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/CommandSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Events/CommadEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/FieldDocumentListener.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/SendCommandAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/SendCommandAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/ScreenStreamerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/ReverseShellMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Listeners/ReverseShellMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/SendCommandAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Actions/SendCommandAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Shell.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Information/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/Response.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -463,6 +473,8 @@
       <workItem from="1694932106753" duration="20173000" />
       <workItem from="1695035325510" duration="15386000" />
       <workItem from="1695105474810" duration="7828000" />
+      <workItem from="1695313010348" duration="250000" />
+      <workItem from="1695368529869" duration="10726000" />
     </task>
     <task id="LOCAL-00106" summary="feat: server feature">
       <created>1669808955619</created>

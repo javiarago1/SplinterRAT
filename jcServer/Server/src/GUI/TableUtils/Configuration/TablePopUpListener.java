@@ -15,7 +15,7 @@ import GUI.TableUtils.KeyLogger.KeyloggerEvents;
 import GUI.TableUtils.KeyboardController.KeyboardControllerMenuListener;
 import GUI.TableUtils.MessageBox.MessageBoxMenuListener;
 import GUI.TableUtils.Permissions.ElevatePermission.ElevatePermissionAction;
-import GUI.TableUtils.ReverseShell.ReverseShellMenuListener;
+import GUI.TableUtils.ReverseShell.Listeners.ReverseShellMenuListener;
 import GUI.TableUtils.ScreenStreaming.Listeners.ScreenMenuListener;
 import GUI.TableUtils.SystemState.State;
 import GUI.TableUtils.SystemState.SystemStateListener;

@@ -1,105 +1,73 @@
 package GUI.TableUtils.ReverseShell;
 
 import Connections.Client;
-import Connections.ClientHandler;
-import Connections.Streams;
 import GUI.Main;
+import GUI.TableUtils.ReverseShell.Actions.SendCommandAction;
+import GUI.TableUtils.ReverseShell.Events.StartShellEvent;
+import GUI.TableUtils.ReverseShell.Listeners.ScreenWindowAdapter;
 import Information.GUIManagerInterface;
 
 import javax.swing.*;
-
 import java.awt.*;
-
-
-/*
-   In this GUI I make the user believe that he is writing directly to the console,
-   it really consists of a textarea and a text field that are responsible for updating the state
- */
-
 
 public class ReverseShellGUI implements GUIManagerInterface {
     private final JDialog reverseShellDialog;
     private JTextField fieldOfCommands;
     private JTextArea textAreaOfResult;
-    private boolean pressedEnter = false;
-    private String lastPath;
-
     private final Client client;
 
     public ReverseShellGUI(Client client) {
         this.client = client;
         reverseShellDialog = new JDialog(Main.gui.getMainGUI(), "Reverse shell -" + client.getIdentifier());
-        reverseShellDialog.setSize(new Dimension(500, 300));
+        reverseShellDialog.setSize(new Dimension(600, 400));
         reverseShellDialog.setLocationRelativeTo(null);
         reverseShellDialog.setLayout(new GridBagLayout());
-        addStyle();
-        getCurrentPathAtStart();
+        reverseShellDialog.addWindowListener(new ScreenWindowAdapter(this));
+        setupComponents();
+
         reverseShellDialog.setVisible(true);
     }
 
+    public void initializeShell(){
+        getClient().getExecutor().submit(new StartShellEvent(this));
+    }
 
-    // style of text area and field text
-
-    private void addStyle() {
+    private void setupComponents() {
         GridBagConstraints constraints = new GridBagConstraints();
+
+        // TextArea Configuration
         textAreaOfResult = new JTextArea();
         textAreaOfResult.setFocusable(false);
-        textAreaOfResult.getCaret().setVisible(true);
+        textAreaOfResult.getCaret().setVisible(false);
         textAreaOfResult.setEditable(false);
         textAreaOfResult.setForeground(new Color(24, 177, 0));
         textAreaOfResult.setBackground(Color.BLACK);
+
+        Font currentFont = textAreaOfResult.getFont();
+        Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 14);
+        textAreaOfResult.setFont(newFont);
+
+        constraints.insets = new Insets(5, 5,0,5);
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 2;
-        constraints.gridheight = 2;
         constraints.fill = GridBagConstraints.BOTH;
-        constraints.weighty = 1.0;
+        constraints.weightx = 1.0;
+        constraints.weighty = 0.95;
         JScrollPane textAreaScrollPane = new JScrollPane(textAreaOfResult);
         textAreaScrollPane.setBorder(null);
         reverseShellDialog.add(textAreaScrollPane, constraints);
-        constraints.weighty = 0.0;
 
-
+        // TextField Configuration
         fieldOfCommands = new JTextField();
-        fieldOfCommands.setForeground(Color.BLACK);
-        fieldOfCommands.setBackground(Color.BLACK);
-        fieldOfCommands.setBorder(null);
-        fieldOfCommands.setCaretColor(Color.BLACK);
-        fieldOfCommands.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        constraints.gridheight = 1;
-        constraints.weightx = 1.0;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        fieldOfCommands.addCaretListener(e -> textAreaOfResult.setCaretPosition(
-                textAreaOfResult.getText().length()
-                        - fieldOfCommands.getText().length()
-                        + fieldOfCommands.getCaretPosition()));
+        fieldOfCommands.setForeground(Color.WHITE);
+        fieldOfCommands.setCaretColor(Color.WHITE);
+        constraints.gridy = 1;
+        constraints.weighty = 0.05;  // TextField occupies less
+
+        constraints.insets = new Insets(5, 5,5,5);
         fieldOfCommands.addActionListener(new SendCommandAction(this));
-        fieldOfCommands.getDocument().addDocumentListener(new FieldDocumentListener(this));
         reverseShellDialog.add(fieldOfCommands, constraints);
-
-    }
-
-    public String getLastPath() {
-        return lastPath;
-    }
-
-    public void setLastPath(String lastPath) {
-        this.lastPath = lastPath;
-    }
-
-    public boolean isPressedEnter() {
-        return pressedEnter;
-    }
-
-    public void setPressedEnter(boolean pressedEnter) {
-        this.pressedEnter = pressedEnter;
-    }
-
-    private void getCurrentPathAtStart() {
-        client.getExecutor().submit(new CommandSender(this, "ver"));
     }
 
     public JTextField getFieldOfCommands() {
