@@ -1,87 +1,42 @@
 package GUI.ProgressBar;
 
-import Connections.*;
-import Information.Time;
-import org.json.JSONObject;
+import Connections.Client;
+import GUI.TableUtils.FileManager.Actions.CancelDownloadAction;
+import GUI.TableUtils.FileManager.FileManagerGUI;
+import Information.AbstractDialogCreator;
+import Information.GUIManagerInterface;
 
 import javax.swing.*;
-import java.io.*;
-import java.util.List;
 
 
-public class DownloadProgressBar extends Bar {
+public class DownloadProgressBar<T extends AbstractDialogCreator> extends Bar<T> implements GUIManagerInterface {
 
-    private final Client client;
-    //private final List<String> downloadList;
-    private final String time;
+    private final String ACTION = "Downloading";
 
-    private final String downloadElement;
+    private final T gui;
 
-    public DownloadProgressBar(JDialog parentDialog, Client client, List<String> downloadList) {
-        super(parentDialog, "Downloading");
-        this.client = client;
-        downloadElement = downloadList.get(0);
-        time = new Time().getTime();
+    public DownloadProgressBar(T gui) {
+        super(gui);
+        this.gui = gui;
+        getCancelOperation().addActionListener(new CancelDownloadAction(this));
+        setProgressBarVisible();
+    }
+
+    @Override
+    public void updateProgress(int read, boolean isLastPacket) {
+        SwingUtilities.invokeLater(() -> {
+            if (totalRead == 0) {
+                getFileState().set(ACTION);
+            }
+            totalRead += read;
+            getFileStateLabel().setText("KB read: " + totalRead);
+            if (isLastPacket) close();
+        });
     }
 
 
     @Override
-    protected Void doInBackground() {
-        try {
-            startDownload();
-        } catch (IOException e) {
-            //      new ClientErrorHandler("Unable to download, connection lost with client", getDialog(), stream.getClientSocket());
-        }
-        return null;
+    public Client getClient() {
+        return gui.getClient();
     }
-
-    private void startDownload() throws IOException {
-        BytesChannel bytesChannel = client.createFileChannel(Category.ZIP_FILE);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("ACTION", "DOWNLOAD");
-        jsonObject.put("from_path", downloadElement);
-        jsonObject.put("channel_id", bytesChannel.getId());
-        System.out.println("File id de download: " + bytesChannel.getId());
-        client.sendString(jsonObject.toString());
-        //stream.sendAction(Action.DOWNLOAD, downloadList);
-        //String tempPath;
-        // receives files till string equals to "/". "/" = no more files to send
-       /* System.out.println("wtf"+clientHandler.getTempNetworkInformation());
-        System.out.println(clientHandler.getSessionFolder());
-
-        String whereToDownload = clientHandler.getSessionFolder() + "\\Downloaded Files\\" + time;
-        while (!(tempPath = stream.readString()).equals("/")) {
-            System.out.println("Route -> " + tempPath);
-            // where to save the file
-            String formedPath = whereToDownload + "\\" + tempPath;
-            if (isOperating()) {
-                stream.sendSize(0); // start sending bytes
-                // Receive and create file if it doesn't exist (Relative folders created too)
-                FileUtils.writeByteArrayToFile(new File(formedPath), receiveBytes(tempPath));
-            } else {
-                stream.sendSize(-1); // start sending bytes
-            }
-
-        }
-        FolderOpener.open(whereToDownload);
-*/
-    }
-
-    public byte[] receiveBytes(String fileName) throws IOException {
-    /*    int fileSize = stream.readSize(); // get file size
-        byte[] buffer = new byte[fileSize];
-        DataInputStream dis = stream.getDis();
-        int total = 0;
-
-        while (total < fileSize) {
-            int read = dis.read(buffer, total, fileSize - total); // read to buffer
-            total += read; // total readed
-            publish((int) Math.floor((float) total * 100 / fileSize), fileName);     // publish % and file name
-            System.out.println(total + " /" + fileSize);
-        }
-
-        return buffer;*/
-        return null;
-    }
-
 }

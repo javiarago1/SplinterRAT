@@ -2,6 +2,7 @@ package GUI.TableUtils.FileManager;
 
 
 import Connections.Client;
+import GUI.Main;
 import GUI.TableUtils.Configuration.TablePopUpListener;
 import GUI.TableUtils.FileManager.Actions.*;
 import GUI.TableUtils.FileManager.Events.RequestDirectoryFileManagerEvent;
@@ -9,7 +10,7 @@ import GUI.TableUtils.FileManager.Events.RequestDiskFileManagerEvent;
 import GUI.TableUtils.FileManager.Listeners.MouseListener;
 import GUI.TableUtils.FileManager.Style.CellRenderer;
 import GUI.TableUtils.FileManager.Style.TableModel;
-import Information.GUIManagerInterface;
+import Information.AbstractDialogCreator;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -20,9 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class FileManagerGUI implements GUIManagerInterface {
-
-
+public class FileManagerGUI extends AbstractDialogCreator {
     private final Stack<String> stack = new Stack<>();
 
     private final JComboBox<String> diskComboBox;
@@ -32,10 +31,6 @@ public class FileManagerGUI implements GUIManagerInterface {
     private final JTextField pathField;
 
     private final JScrollPane scrollPane;
-    private final Client client;
-
-
-    private final JDialog fileManagerDialog;
 
     private JPopupMenu popupMenu;
 
@@ -54,11 +49,10 @@ public class FileManagerGUI implements GUIManagerInterface {
     }
 
 
-    public FileManagerGUI(Client client, JFrame mainGUI) {
-        this.client = client;
-        fileManagerDialog = new JDialog(mainGUI, "File Manager -" + client.getIdentifier());
-        fileManagerDialog.setSize(new Dimension(600, 340));
-        fileManagerDialog.getContentPane().setLayout(new GridBagLayout());
+    public FileManagerGUI(Client client) {
+        super(Main.gui.getMainGUI(), "File Manager -", client);
+        this.setSize(new Dimension(600, 340));
+        this.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
         JButton refreshCurrentFolder = new JButton("↻");
@@ -66,7 +60,7 @@ public class FileManagerGUI implements GUIManagerInterface {
         constraints.gridy = 0;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        fileManagerDialog.add(refreshCurrentFolder, constraints);
+        this.add(refreshCurrentFolder, constraints);
 
         refreshCurrentFolder.addActionListener(e -> requestDirectory(stack.peek()));
 
@@ -81,7 +75,7 @@ public class FileManagerGUI implements GUIManagerInterface {
         constraints.weighty = 0.0;
         constraints.weightx = 1;
         constraints.insets = new Insets(5, 5, 5, 5);
-        fileManagerDialog.add(pathField, constraints);
+        this.add(pathField, constraints);
 
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -91,7 +85,7 @@ public class FileManagerGUI implements GUIManagerInterface {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         constraints.weightx = 0.25;
-        fileManagerDialog.add(diskComboBox, constraints);
+        this.add(diskComboBox, constraints);
         diskComboBox.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 Object item = e.getItem();
@@ -108,7 +102,7 @@ public class FileManagerGUI implements GUIManagerInterface {
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         constraints.weightx = 0;
-        fileManagerDialog.add(refreshDiskButton, constraints);
+        this.add(refreshDiskButton, constraints);
         refreshDiskButton.addActionListener(e -> requestDisks());
 
         table = new JTable(new TableModel());
@@ -131,7 +125,7 @@ public class FileManagerGUI implements GUIManagerInterface {
 
 
         scrollPane = new JScrollPane(table);
-        fileManagerDialog.add(scrollPane, constraints);
+        this.add(scrollPane, constraints);
 
         //add disks
 
@@ -142,8 +136,8 @@ public class FileManagerGUI implements GUIManagerInterface {
 
         table.addMouseListener(new MouseListener(this));
 
-        fileManagerDialog.setLocationRelativeTo(null);
-        fileManagerDialog.setVisible(true);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
     }
 
@@ -218,11 +212,11 @@ public class FileManagerGUI implements GUIManagerInterface {
     }
 
     public void requestDirectory(String path){
-        client.getExecutor().submit(new RequestDirectoryFileManagerEvent(this, Collections.singletonList(path)));
+        getClient().getExecutor().submit(new RequestDirectoryFileManagerEvent(this, Collections.singletonList(path)));
     }
 
     public void requestDisks(){
-        client.getExecutor().submit(new RequestDiskFileManagerEvent(this, null));
+        getClient().getExecutor().submit(new RequestDiskFileManagerEvent(this, null));
     }
 
     private int divider;
@@ -257,15 +251,12 @@ public class FileManagerGUI implements GUIManagerInterface {
     }
 
     public JDialog getFileManagerDialog() {
-        return fileManagerDialog;
+        return this;
     }
 
     public JPopupMenu getPopupMenu() {
         return popupMenu;
     }
 
-    @Override
-    public Client getClient() {
-        return client;
-    }
+
 }

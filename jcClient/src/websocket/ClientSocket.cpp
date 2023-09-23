@@ -6,8 +6,8 @@ ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
     actionMap(actionMap) {
     c.set_open_handler(std::bind(&ClientSocket::on_connection, this, std::placeholders::_1));
     c.set_message_handler(std::bind(&ClientSocket::on_message, this, std::placeholders::_1, std::placeholders::_2));
-    c.set_access_channels(websocketpp::log::alevel::none);
-    c.set_error_channels(websocketpp::log::elevel::none);
+   // c.set_access_channels(websocketpp::log::alevel::none);
+   // c.set_error_channels(websocketpp::log::elevel::none);
     c.init_asio();
     // Initialize connection
     websocketpp::lib::error_code ec;
@@ -20,17 +20,55 @@ ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
 
 void ClientSocket::on_message(websocketpp::connection_hdl hdl, client::message_ptr msg) {
     if (msg) {
-        jsonObject =  nlohmann::json::parse(std::string(msg->get_payload()));
-        std::string action = jsonObject["ACTION"];
-        std::cout << "Action: " << action << std::endl;
-        auto it = actionMap.find(action);
-        if (it != actionMap.end()) {
-            it->second(jsonObject);
-        } else {
-            std::cout << "ACTION NOT FOUND :(" << std::endl;
+        if (msg->get_opcode() == websocketpp::frame::opcode::text) {
+            // Handle text message
+            jsonObject =  nlohmann::json::parse(std::string(msg->get_payload()));
+            std::string action = jsonObject["ACTION"];
+            std::cout << "Action: " << action << std::endl;
+            auto it = actionMap.find(action);
+            if (it != actionMap.end()) {
+                it->second(jsonObject);
+            } else {
+                std::cout << "ACTION NOT FOUND :(" << std::endl;
+            }
+        } else if (msg->get_opcode() == websocketpp::frame::opcode::binary) {
+            // Handle binary message
+            std::string str_payload = msg->get_raw_payload();
+            std::cout << "Length" << str_payload.length() << std::endl;
+            std::vector<uint8_t> payload(str_payload.begin(), str_payload.end());
+            on_byte_message(payload);
         }
     }
 }
+
+void ClientSocket::on_byte_message(const std::vector<uint8_t>& payload) {
+    if (payload.size() < 2) {
+
+        return;
+    }
+
+    uint8_t id = payload[0];
+    uint8_t isLast = payload[1];
+
+    tempBuffers[id].buffer.insert(tempBuffers[id].buffer.end(), payload.begin() + 2, payload.end());
+
+    if (isLast) {
+        writeFileFromBuffer(id);
+        tempBuffers.erase(id);
+    }
+}
+
+
+void ClientSocket::writeFileFromBuffer(uint8_t id) {
+    std::cout << "Writing file for ID " << (int)id << std::endl;
+   // std::cout << tempBuffers[id].destinationPath + "\\file.zip" << std::endl;
+   // std::ofstream outFile(tempBuffers[id].destinationPath + "\\file.zip", std::ios::binary);
+   // outFile.write((char *)tempBuffers[id].buffer.data(), tempBuffers[id].buffer.size());
+   // outFile.close();
+   ZipCompressor::decompressFromMemory(tempBuffers[id].buffer, tempBuffers[id].destinationPath);
+
+}
+
 
 void ClientSocket::on_connection(websocketpp::connection_hdl hdl) {
     if (hdl.lock()) { // Check if the handle is valid

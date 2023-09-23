@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 @WebSocket
 public class ServerV2 {
 
-    ExecutorService executor = Executors.newFixedThreadPool(100); // 10 threads
+    ExecutorService executor = Executors.newFixedThreadPool(100);
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {

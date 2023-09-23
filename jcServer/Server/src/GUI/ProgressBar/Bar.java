@@ -1,32 +1,42 @@
 package GUI.ProgressBar;
 
 
+import Connections.Client;
+import GUI.TableUtils.FileManager.Actions.CancelDownloadAction;
+import Information.AbstractDialogCreator;
+import Information.GUIManagerInterface;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
-public abstract class Bar extends SwingWorker<Void, Object> {
+public abstract class Bar<T extends AbstractDialogCreator> {
+    private T fatherDialog;
     private final JDialog dialog;
     private final JLabel fileStateLabel;
     private final JProgressBar progressBar;
     private final JLabel actionAnimationLabel;
+    // private final Client client;
     private Timer timer;
-    private final String action;
+    private final AtomicReference<String> fileState;
 
-    private final AtomicBoolean operating = new AtomicBoolean(true);
+    private final JButton cancelOperation;
 
-    public Bar(JDialog parentDialog, String action) {
-        this.action = action;
-        dialog = new JDialog(parentDialog, action + " progress bar");
+    private byte id;
+
+    public Bar(T fatherDialog) {
+        this.fileState = new AtomicReference<>("Zipping");
+        dialog = new JDialog(fatherDialog, "Progress");
         dialog.setSize(400, 150);
         dialog.setResizable(false);
         dialog.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         // Adding components & style
 
-        progressBar = new JProgressBar(0, 100);
-        progressBar.setStringPainted(true);
+        progressBar = new JProgressBar();
+        progressBar.setIndeterminate(true);
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
@@ -43,7 +53,7 @@ public abstract class Bar extends SwingWorker<Void, Object> {
         c.gridy = 1;
         c.gridwidth = 2;
         c.gridheight = 1;
-        fileStateLabel = new JLabel("File");
+        fileStateLabel = new JLabel("");
         dialog.add(fileStateLabel, c);
 
 
@@ -56,50 +66,36 @@ public abstract class Bar extends SwingWorker<Void, Object> {
         dialog.add(actionAnimationLabel, c);
 
 
-        startAnimation();
+
         dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
 
         c.gridwidth = 1;
         c.gridx = 1;
         c.gridy = 2;
-        JButton cancelOperation = new JButton("Cancel");
-        cancelOperation.addActionListener(e -> operating.set(false));
+        cancelOperation = new JButton("Cancel");
         dialog.add(cancelOperation, c);
-
-
+        startAnimation();
     }
 
+    protected int totalRead;
 
-    abstract protected Void doInBackground();
 
-    protected void process(List<Object> chunks) {
-        getProgressBar().setValue((Integer) chunks.get(chunks.size() - 2));   // case of integer for %
-        getFileStateLabel().setText(extractFilename(String.valueOf(chunks.get(chunks.size() - 1))));  // case of string for current file
-    }
+    public abstract void updateProgress(int read, boolean isLastPacket);
 
-    private String extractFilename(String path) {
-        String result = path.substring(path.lastIndexOf('/') + 1);
-        return result.substring(result.lastIndexOf('\\') + 1);
-    }
-
-    protected void done() {
-        close();
-    }
 
     public void startAnimation() {
-        timer = new Timer(0, new Animation(action, actionAnimationLabel));
+        timer = new Timer(0, new Animation(fileState, actionAnimationLabel));
         timer.setRepeats(true);
         timer.setDelay(500);
         timer.start();
     }
 
-    public JLabel getFileStateLabel() {
-        return fileStateLabel;
+    public byte getId() {
+        return id;
     }
 
-    public JProgressBar getProgressBar() {
-        return progressBar;
+    public void setProgressBarVisible() {
+        dialog.setVisible(true);
     }
 
     public JDialog getDialog() {
@@ -107,12 +103,26 @@ public abstract class Bar extends SwingWorker<Void, Object> {
     }
 
 
-    public void close() {
-        timer.stop(); // stop animation
-        dialog.dispose();   // close dialog
+    public JLabel getFileStateLabel() {
+        return fileStateLabel;
     }
 
-    public boolean isOperating() {
-        return operating.get();
+    public AtomicReference<String> getFileState() {
+        return fileState;
+    }
+
+
+
+    public void close() {
+        timer.stop();
+        dialog.dispose();
+    }
+
+    public JButton getCancelOperation() {
+        return cancelOperation;
+    }
+
+    public void setId(byte id) {
+        this.id = id;
     }
 }

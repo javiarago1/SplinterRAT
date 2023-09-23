@@ -4,6 +4,7 @@ import Connections.Streams;
 import GUI.ProgressBar.UploadProgressBar;
 import Connections.GetSYS;
 import GUI.TableUtils.Configuration.SocketType;
+import GUI.TableUtils.FileManager.Events.UploadEvent;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import javax.swing.*;
@@ -21,7 +22,6 @@ public class UploadAction extends FileManagerAbstractAction {
         fileChooser.setDialogTitle("Select files");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setMultiSelectionEnabled(true);
-
     }
 
     @Override
@@ -35,9 +35,7 @@ public class UploadAction extends FileManagerAbstractAction {
                 System.out.println("Selection list -> " + Arrays.toString(selectedFiles));
                 Streams stream = GetSYS.getStream(SocketType.DOWNLOAD_UPLOAD);
                 assert stream != null;
-                stream.getExecutor().submit(new UploadProgressBar(
-                        getGUIManager().getFileManagerDialog(),
-                        stream, selectedFiles, getSelectedPath()));
+                getClient().getExecutor().submit(new UploadEvent(getGUIManager(), selectedFiles, getSelectedPath()));
             }
         }
     }

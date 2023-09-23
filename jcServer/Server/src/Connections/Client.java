@@ -1,5 +1,6 @@
 package Connections;
 
+import GUI.ProgressBar.Bar;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 import Information.NetworkInformation;
 import Information.Response;
@@ -8,16 +9,14 @@ import Information.Time;
 import org.json.JSONObject;
 import org.eclipse.jetty.websocket.api.Session;
 
-import javax.swing.*;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.function.Consumer;
 
 public class Client {
@@ -28,7 +27,8 @@ public class Client {
     public Updater updater;
 
     private boolean isWebcamDialogOpen;
-    private final UniqueByteIDGenerator uniqueByteIDGenerator = new UniqueByteIDGenerator();
+    private final UniqueByteIDGenerator uniqueByteIDGeneratorIn = new UniqueByteIDGenerator();
+    private final UniqueByteIDGenerator uniqueByteIDGeneratorOut = new UniqueByteIDGenerator();
     private final Map<Response, Consumer<JSONObject>> mapOfResponses = new HashMap<>();
     private final ConcurrentHashMap<Byte, BytesChannel> activeChannels = new ConcurrentHashMap<>();
 
@@ -43,8 +43,16 @@ public class Client {
     }
 
     public BytesChannel createFileChannel(Category category) {
-        byte id = uniqueByteIDGenerator.getID();
+        byte id = uniqueByteIDGeneratorIn.getID();
         BytesChannel channel = new BytesChannel(id, category);
+        activeChannels.put(id, channel);
+        return channel;
+    }
+
+    public BytesChannel createFileChannel(Category category, Bar<?> progressBar) {
+        byte id = uniqueByteIDGeneratorIn.getID();
+        BytesChannel channel = new BytesChannel(id, category, progressBar);
+        progressBar.setId(id);
         activeChannels.put(id, channel);
         return channel;
     }
@@ -73,10 +81,12 @@ public class Client {
     }
 
 
+
     // Cierra un FileChannel y libera su ID
     public void closeFileChannel(byte id) {
+        BytesChannel bytesChannel = activeChannels.get(id);
         activeChannels.remove(id);
-        uniqueByteIDGenerator.finishTask(id);
+        uniqueByteIDGeneratorIn.finishTask(id);
     }
 
 
@@ -111,8 +121,8 @@ public class Client {
         session.getRemote().sendString(message);
     }
 
-    public void processMessage(byte[] message) {
-
+    public void sendBytes(ByteBuffer byteBuffer) throws IOException {
+        session.getRemote().sendBytes(byteBuffer);
     }
 
     public String getUUID() {
@@ -138,6 +148,9 @@ public class Client {
         return pathOfDownload.toString();
     }
 
+    public UniqueByteIDGenerator getUniqueByteIDGeneratorOut() {
+        return uniqueByteIDGeneratorOut;
+    }
 
     public void setFileManagerGUI(FileManagerGUI fileManagerGUI) {
         updater.setFileManagerGUI(fileManagerGUI);

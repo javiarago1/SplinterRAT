@@ -21,7 +21,7 @@ public class FileManagerMenuListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Client client = GetSYS.getClientHandlerV2();
         assert client != null;
-        FileManagerGUI fileManagerGUI = new FileManagerGUI(client, mainGUI.getMainGUI());
+        FileManagerGUI fileManagerGUI = new FileManagerGUI(client);
         client.setFileManagerGUI(fileManagerGUI);
         fileManagerGUI.requestDisks();
     }

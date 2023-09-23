@@ -1,6 +1,8 @@
 package GUI.TableUtils.FileManager.Actions;
 
 import GUI.ProgressBar.DownloadProgressBar;
+import GUI.TableUtils.FileManager.Events.CancelDownloadEvent;
+import GUI.TableUtils.FileManager.Events.DownloadFileManagerEvent;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 
 import java.awt.event.ActionEvent;
@@ -13,8 +15,8 @@ public class DownloadAction extends FileManagerAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        getClient().getExecutor().submit(new DownloadProgressBar(getGUIManager().getFileManagerDialog(),
-                getGUIManager().getClient(), getSelectedPaths()));
+        DownloadProgressBar<FileManagerGUI> downloadProgressBar = new DownloadProgressBar<>(getGUIManager());
+        getClient().getExecutor().submit(new DownloadFileManagerEvent(getGUIManager(), downloadProgressBar, getSelectedPaths()));
     }
 
 

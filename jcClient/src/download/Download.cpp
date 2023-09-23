@@ -9,9 +9,22 @@ Download::Download(ClientSocket &clientSocket)
     actionMap["DOWNLOAD"]  = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &Download::downloadContent, json);
     };
+    actionMap["CANCEL_DOWNLOAD"] = [&](nlohmann::json& json) {
+        //   threadGen.runInNewThread(this, &Download::uploadFiles, json);
+    };
     actionMap["UPLOAD"] = [&](nlohmann::json& json) {
      //   threadGen.runInNewThread(this, &Download::uploadFiles, json);
     };
+    actionMap["CANCEL_DOWNLOAD"] = [&](nlohmann::json& json) {
+        download.store(false);
+        //   threadGen.runInNewThread(this, &Download::uploadFiles, json);
+    };
+    actionMap["PREPARE_UPLOAD"] = [&](nlohmann::json& json) {
+        BufferedData bufferedData;
+        bufferedData.destinationPath = json["to_path"];
+        clientSocket.tempBuffers[json["channel_id"]] = bufferedData;
+    };
+
 }
 
 
@@ -21,7 +34,8 @@ const uint8_t LAST_FRAGMENT = 0x02;
 const uint8_t NOT_LAST_FRAGMENT = 0x01;
 
 void Download::downloadContent(nlohmann::json jsonObject) {
-    std::string outputPath = ZipCompressor::compressPath(jsonObject["from_path"]);
+    download.store(true);
+    std::string outputPath = ZipCompressor::compressPaths(jsonObject["from_path"]);
     byte fileID = jsonObject["channel_id"];
     std::cout << "Output path: " + outputPath << std::endl;
 
@@ -38,7 +52,7 @@ void Download::downloadContent(nlohmann::json jsonObject) {
     buffer[0] = fileID;
     buffer[1] = NOT_LAST_FRAGMENT;
 
-    while (fileStream) {
+    while (fileStream && download.load()) {
         // Read the file chunk into the buffer, starting at offset 2 to leave space for control bytes
         fileStream.read((char*)buffer.data() + 2, FRAGMENT_SIZE - 2);
         std::streamsize bytesRead = fileStream.gcount();
@@ -56,8 +70,8 @@ void Download::downloadContent(nlohmann::json jsonObject) {
         // Note: Sending bytesRead + 2 bytes to include the 2 control bytes
         clientSocket.sendBytes(std::vector<uint8_t>(buffer.begin(), buffer.begin() + bytesRead + 2));
     }
-
     fileStream.close();
+    std::filesystem::remove(outputPath);
 }
 
 void Download::downloadContentFromVector(const std::vector<uint8_t>& content, byte fileID) {

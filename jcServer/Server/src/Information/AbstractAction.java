@@ -10,4 +10,6 @@ public abstract class AbstractAction<T extends GUIManagerInterface> extends Abst
 
     @Override
     public abstract void actionPerformed(ActionEvent e);
+
+
 }

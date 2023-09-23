@@ -1,5 +1,7 @@
 package Connections;
 
+import GUI.ProgressBar.Bar;
+
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
@@ -11,12 +13,22 @@ public class BytesChannel {
 
     private String categoryOutputFolder;
 
+    private Bar progressBar;
+
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 1024;
 
     public BytesChannel(byte id, Category category) {
         this.category = category;
         this.id = id;
         this.buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
+        setOutputFolder(category);
+    }
+
+    public BytesChannel(byte id, Category category, Bar progressBar) {
+        this.category = category;
+        this.id = id;
+        this.buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
+        this.progressBar = progressBar;
         setOutputFolder(category);
     }
 
@@ -43,6 +55,7 @@ public class BytesChannel {
         }
     }
 
+
     public ByteBuffer getBuffer() {
         return buffer;
     }
@@ -51,10 +64,18 @@ public class BytesChannel {
         return id;
     }
 
+    private void updateProgress(int read, boolean isLastPacket) {
+        if (progressBar != null) {
+            progressBar.updateProgress(read, isLastPacket);
+        }
+    }
+
 
     public byte[] handleMessage(byte[] buf, int offset, int length, byte control) {
+        boolean isLastPacket = control == 0x02;
+        updateProgress(length - offset, isLastPacket);
         write(buf, offset + 2, length - 2);
-        if (control == 0x02) {
+        if (isLastPacket) {
             return flipAndGet();
         }
         return null;
