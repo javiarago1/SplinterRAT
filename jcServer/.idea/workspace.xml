@@ -14,38 +14,7 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="fix: controlling closing while streaming">
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CancelDownloadAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CancelUploadAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/CancelDownloadEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/DownloadFileManagerEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/UploadEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/Events/PermissionsAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/Information/AbstractDialogCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ClientSocket.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ClientSocket.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/Download.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/Download.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/includes/ZipCompressor.h" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/includes/ZipCompressor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/download/Download.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/websocket/ClientSocket.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../jcClient/src/zip/ZipCompressor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../jcClient/src/zip/ZipCompressor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/BytesChannel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Animation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Bar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Bar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/DownloadProgressBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DownloadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/DownloadAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/FileManagerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listeners/FileManagerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listeners/FileManagerMenuListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Information/AbstractAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/AbstractAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Information/AbstractGUIManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/AbstractGUIManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Information/GUIManagerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Information/GUIManagerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/Information/NullStream.java" beforeDir="false" />
-    </list>
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: file uploading/memory extracting" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -834,7 +803,7 @@
       <option name="project" value="LOCAL" />
       <updated>1671568914327</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -886,7 +855,6 @@
       <path value="$PROJECT_DIR$/temp/OK/vcpkg" />
       <path value="$PROJECT_DIR$/Server" />
     </ignored-roots>
-    <MESSAGE value="refactoring: optimization and refactoring names" />
     <MESSAGE value="feature: extracting outside and compiling" />
     <MESSAGE value="added icons to modules" />
     <MESSAGE value="fix: bugs&#10;feature: cancel operation of upload and download&#10;to-do: threads for move,copy etc" />
@@ -911,7 +879,8 @@
     <MESSAGE value="deleted unused enum" />
     <MESSAGE value="feat: precise mouse screen controlling" />
     <MESSAGE value="fix: controlling closing while streaming" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: controlling closing while streaming" />
+    <MESSAGE value="feat: file uploading/memory extracting" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: file uploading/memory extracting" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
