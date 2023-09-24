@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class ScreenMenuListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandlerV2();
+        Client client = GetSYS.getClientHandler();
         assert client != null;
         ScreenStreamerGUI screenStreamerGUI = new ScreenStreamerGUI(client);
         client.updater.setScreenStreamerGUI(screenStreamerGUI);

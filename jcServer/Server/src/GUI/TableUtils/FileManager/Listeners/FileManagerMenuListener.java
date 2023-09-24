@@ -19,7 +19,7 @@ public class FileManagerMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandlerV2();
+        Client client = GetSYS.getClientHandler();
         assert client != null;
         FileManagerGUI fileManagerGUI = new FileManagerGUI(client);
         client.setFileManagerGUI(fileManagerGUI);

@@ -18,7 +18,7 @@ public class ConnectionStore {
         connectionsMap.remove(session);
     }
 
-    public static int getSize() {
+    public static int getNumOfConnectedUsers() {
         return connectionsMap.size();
     }
 

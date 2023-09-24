@@ -11,7 +11,7 @@ public class CredentialsMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandlerV2();
+        Client client = GetSYS.getClientHandler();
         assert client != null;
         CredentialsManagerGUI credentialsManagerGUI = new CredentialsManagerGUI(client);
         client.updater.setCredentialsManagerGUI(credentialsManagerGUI);

@@ -1,32 +1,25 @@
 package GUI.ProgressBar;
 
 import Connections.Client;
-import Connections.ClientErrorHandler;
-import Connections.ClientHandler;
-import Connections.Streams;
-import GUI.TableUtils.FileManager.Actions.CancelDownloadAction;
 import GUI.TableUtils.FileManager.Actions.CancelUploadAction;
 import Information.AbstractDialogCreator;
-import Information.Action;
 import Information.GUIManagerInterface;
 
 import javax.swing.*;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class UploadProgressBar<T extends AbstractDialogCreator> extends Bar<T> implements GUIManagerInterface {
     ;
-    private final String ACTION = "Downloading";
+    private final String ACTION = "Uploading";
     private final T gui;
+    private final AtomicBoolean cancellationAtomic;
 
-    public UploadProgressBar(T gui) {
+    public UploadProgressBar(T gui, AtomicBoolean cancellationAtomic) {
         super(gui);
         this.gui = gui;
-        getCancelOperation().addActionListener(new CancelUploadAction(this));
+        this.cancellationAtomic = cancellationAtomic;
+        getCancelOperation().addActionListener(new CancelUploadAction(this, cancellationAtomic));
         setProgressBarVisible();
     }
 

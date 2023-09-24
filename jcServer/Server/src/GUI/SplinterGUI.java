@@ -1,8 +1,8 @@
 package GUI;
 
 
-import Connections.Server;
-import GUI.Compiler.CompilerGUI;
+import Connections.ConnectionStore;
+import GUI.Builder.CompilerGUI;
 import GUI.Server.ServerGUI;
 import GUI.TableUtils.Configuration.StateColumnRenderer;
 import GUI.TableUtils.Configuration.TableModel;
@@ -17,7 +17,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.Socket;
 import java.util.Objects;
 
 
@@ -175,7 +174,7 @@ public class SplinterGUI {
     }
 
     public void updateNumOfConnectedClients() {
-        clientsConnected.setText("Connected: " + Main.server.getNumOfConnectedDevices());
+        clientsConnected.setText("Connected: " + ConnectionStore.getNumOfConnectedUsers());
         //for (Socket key : Main.server.getMap().keySet()) {
         //    System.out.println(key);
         //}

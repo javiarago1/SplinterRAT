@@ -1,6 +1,4 @@
-package GUI.Compiler;
-
-import org.apache.commons.lang3.SystemUtils;
+package GUI.Builder;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;

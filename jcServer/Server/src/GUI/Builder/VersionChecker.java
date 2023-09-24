@@ -1,4 +1,4 @@
-package GUI.Compiler;
+package GUI.Builder;
 
 import org.apache.commons.lang3.SystemUtils;
 
@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLOutput;
-import java.util.Arrays;
 
 public class VersionChecker implements ActionListener {
     private final JTextField pathField;

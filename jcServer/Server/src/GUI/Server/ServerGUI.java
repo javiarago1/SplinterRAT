@@ -22,6 +22,7 @@ public class ServerGUI {
 
     private static boolean notifications;
 
+
     public ServerGUI(JFrame mainGUI) {
         serverDialog = new JDialog(mainGUI, "Server settings");
         serverDialog.setResizable(false);
@@ -46,8 +47,9 @@ public class ServerGUI {
 
         serverDialog.add(portNumberLabel, constraints);
 
-
-        JTextField portNumber = new JTextField(String.valueOf(Main.server.getPort()));
+        // TODO set port form server class configuration
+        // Server.getPort()
+        JTextField portNumber = new JTextField(String.valueOf("8080"));
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.gridwidth = 1;
@@ -65,6 +67,7 @@ public class ServerGUI {
 
 
         JButton stopListeningButton = new JButton("Stop listening");
+        // is running?
         stopListeningButton.setEnabled(Main.server.isRunning());
         constraints.gridx = 0;
         constraints.gridy = 3;
@@ -92,20 +95,13 @@ public class ServerGUI {
                 if (matcher.matches()) {
                     int integerPortNumber = Integer.parseInt(portNumber.getText());
                     if (integerPortNumber != Main.server.getPort()) {
-                        try {
-                            Main.server.definePort(integerPortNumber);
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(serverDialog, "Error defining port, try again.", "Server error",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
+                        Main.server.definePort(integerPortNumber);
                     }
                     // Open new thread for handling new connections, this creates the server itself (thread pool, etc)
 
                     try {
                         if (Main.server.isRunning()) Main.server.stopServer();
                         Main.server.startServer();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
                     } finally {
                         changeColorAndStateOfPortInformation(Main.gui.getListeningPort());
                     }
@@ -133,8 +129,6 @@ public class ServerGUI {
                     JOptionPane.showMessageDialog(serverDialog, "Server is already stopped!", "Server error",
                             JOptionPane.WARNING_MESSAGE);
                 }
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
             } finally {
                 changeColorAndStateOfPortInformation(Main.gui.getListeningPort());
             }

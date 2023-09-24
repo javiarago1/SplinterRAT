@@ -17,7 +17,7 @@ public class WebcamMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandlerV2();
+        Client client = GetSYS.getClientHandler();
         assert client != null;
         if (!client.isWebcamDialogOpen()) {
             WebcamGUI webcamGUI = new WebcamGUI(client, mainGUI.getMainGUI());

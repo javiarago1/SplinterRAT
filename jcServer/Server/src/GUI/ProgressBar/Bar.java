@@ -82,7 +82,6 @@ public abstract class Bar<T extends AbstractDialogCreator> {
 
     public abstract void updateProgress(int read, boolean isLastPacket);
 
-
     public void startAnimation() {
         timer = new Timer(0, new Animation(fileState, actionAnimationLabel));
         timer.setRepeats(true);

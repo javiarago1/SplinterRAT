@@ -14,7 +14,50 @@
     </loaded-modules>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: file uploading/memory extracting" />
+    <list default="true" id="3c0bef37-d513-42af-805b-c819576d9a58" name="Changes" comment="feat: file uploading/memory extracting">
+      <change afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/CancelUploadEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ClientErrorHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ClientHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Connection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ConnectionStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/ConnectionStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/GetSYS.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/GetSYS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Identifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/Connections/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ServerV2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/Streams.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/Connections/ThreadPool.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Builder/CPPExtractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CPPModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Builder/CPPModifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Builder/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Builder/CompilerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/CompilingAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Builder/CompilingAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/FieldListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Builder/FieldListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/Mutex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Builder/Mutex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Compiler/VersionChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Builder/VersionChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Bar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/Bar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/ProgressBar/UploadProgressBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/Server/ServerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/SplinterGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Configuration/TablePopUpListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/Actions/ConnectionAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Connection/Actions/ConnectionAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Listeners/CredentialsMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Credentials/Listeners/CredentialsMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CancelDownloadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CancelDownloadAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CancelUploadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/CancelUploadAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Actions/UploadAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/UploadEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Events/UploadEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listeners/FileManagerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/FileManager/Listeners/FileManagerMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/Actions/KeyLoggerAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyLogger/Actions/KeyLoggerAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/Listeners/KeyboardControllerMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/KeyboardController/Listeners/KeyboardControllerMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/Listeners/MessageBoxMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/MessageBox/Listeners/MessageBoxMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/Events/PermissionsAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/Permissions/Events/PermissionsAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Listeners/ReverseShellMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ReverseShell/Listeners/ReverseShellMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/ScreenShotEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Events/ScreenShotEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/ScreenMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/ScreenStreaming/Listeners/ScreenMenuListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/SystemState/Actions/SystemStateAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/SystemState/Actions/SystemStateAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Listeners/WebcamMenuListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/GUI/TableUtils/WebcamManager/Listeners/WebcamMenuListener.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,11 +195,11 @@
   </component>
   <component name="RunManager" selected="Application.Server">
     <configuration name="CompilerGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GUI.Compiler.CompilerGUI" />
+      <option name="MAIN_CLASS_NAME" value="GUI.Builder.CompilerGUI" />
       <module name="Server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="GUI.Compiler.*" />
+          <option name="PATTERN" value="GUI.Builder.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -165,11 +208,11 @@
       </method>
     </configuration>
     <configuration name="CompilingAnimation" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GUI.Compiler.CompilingAnimation" />
+      <option name="MAIN_CLASS_NAME" value="GUI.Builder.CompilingAnimation" />
       <module name="Server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="GUI.Compiler.*" />
+          <option name="PATTERN" value="GUI.Builder.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>

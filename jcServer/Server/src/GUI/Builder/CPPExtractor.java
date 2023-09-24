@@ -1,4 +1,4 @@
-package GUI.Compiler;
+package GUI.Builder;
 
 import GUI.Main;
 

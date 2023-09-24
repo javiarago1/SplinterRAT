@@ -15,7 +15,7 @@ public class ReverseShellMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandlerV2();
+        Client client = GetSYS.getClientHandler();
         assert client != null;
         ReverseShellGUI reverseShellGUI = new ReverseShellGUI(client);
         client.updater.setReverseShellGUI(reverseShellGUI);

@@ -1,7 +1,6 @@
 package GUI.TableUtils.KeyboardController.Listeners;
 
 import Connections.Client;
-import Connections.ClientHandler;
 import GUI.SplinterGUI;
 import Connections.GetSYS;
 import GUI.TableUtils.KeyboardController.KeyboardControllerGUI;
@@ -19,7 +18,7 @@ public class KeyboardControllerMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandlerV2();
+        Client client = GetSYS.getClientHandler();
         new KeyboardControllerGUI(client);
     }
 }

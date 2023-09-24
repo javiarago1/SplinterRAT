@@ -1,4 +1,4 @@
-package GUI.Compiler;
+package GUI.Builder;
 
 import javax.swing.*;
 import java.awt.event.FocusEvent;

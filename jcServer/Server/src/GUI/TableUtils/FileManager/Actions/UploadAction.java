@@ -1,6 +1,5 @@
 package GUI.TableUtils.FileManager.Actions;
 
-import Connections.Streams;
 import GUI.ProgressBar.UploadProgressBar;
 import Connections.GetSYS;
 import GUI.TableUtils.Configuration.SocketType;
@@ -11,6 +10,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UploadAction extends FileManagerAbstractAction {
 
@@ -33,9 +33,10 @@ public class UploadAction extends FileManagerAbstractAction {
                 System.out.println("File exception");
             } else {
                 System.out.println("Selection list -> " + Arrays.toString(selectedFiles));
-                Streams stream = GetSYS.getStream(SocketType.DOWNLOAD_UPLOAD);
-                assert stream != null;
-                getClient().getExecutor().submit(new UploadEvent(getGUIManager(), selectedFiles, getSelectedPath()));
+                AtomicBoolean cancellationAtomic = new AtomicBoolean(true);
+                UploadProgressBar<FileManagerGUI> uploadProgressBar = new UploadProgressBar<>(getGUIManager(), cancellationAtomic);
+                uploadProgressBar.setProgressBarVisible();
+                getClient().getExecutor().submit(new UploadEvent(getGUIManager(), uploadProgressBar, selectedFiles, getSelectedPath(), cancellationAtomic));
             }
         }
     }

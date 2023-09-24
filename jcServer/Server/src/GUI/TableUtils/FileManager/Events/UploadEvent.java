@@ -2,28 +2,35 @@ package GUI.TableUtils.FileManager.Events;
 
 import Connections.BytesChannel;
 import Connections.UniqueByteIDGenerator;
+import GUI.ProgressBar.Bar;
 import GUI.TableUtils.FileManager.FileManagerGUI;
 import Information.AbstractEvent;
 import net.lingala.zip4j.ZipFile;
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class UploadEvent extends AbstractEvent<FileManagerGUI> {
     private final File[] selectedFiles;
+    private final Bar<?> progressBar;
     private final String selectedPath;
+    private final AtomicBoolean cancellationAtomic;
 
-    public UploadEvent(FileManagerGUI guiManager, File[] selectedFiles, String selectedPath) {
+    public UploadEvent(FileManagerGUI guiManager, Bar<?> progressBar, File[] selectedFiles, String selectedPath, AtomicBoolean cancellationAtomic) {
         super(guiManager);
         this.selectedFiles = selectedFiles;
+        this.progressBar = progressBar;
         this.selectedPath = selectedPath;
+        this.cancellationAtomic = cancellationAtomic;
     }
 
     @Override
@@ -52,14 +59,16 @@ public class UploadEvent extends AbstractEvent<FileManagerGUI> {
             FileInputStream fis = new FileInputStream(tempZipPath);
 
             boolean isLastPacket;
-            while ((read = fis.read(buffer)) != -1) {
+            while ((read = fis.read(buffer)) != -1 && cancellationAtomic.get()) {
                 isLastPacket = (read < buffer.length);
                 ByteBuffer byteBuffer = ByteBuffer.allocate(read + 2);
                 byteBuffer.put(id);
                 byteBuffer.put((byte) (isLastPacket ? 1 : 0));
                 byteBuffer.put(buffer, 0, read);
                 byteBuffer.flip();
-                System.out.println(read);
+                int finalRead = read;
+                boolean finalIsLastPacket = isLastPacket;
+                SwingUtilities.invokeLater(() -> progressBar.updateProgress(finalRead, finalIsLastPacket));
                 getClient().sendBytes(byteBuffer);
 
             }
