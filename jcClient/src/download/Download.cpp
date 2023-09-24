@@ -9,15 +9,15 @@ Download::Download(ClientSocket &clientSocket)
     actionMap["DOWNLOAD"]  = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &Download::downloadContent, json);
     };
-    actionMap["CANCEL_DOWNLOAD"] = [&](nlohmann::json& json) {
-        //   threadGen.runInNewThread(this, &Download::uploadFiles, json);
-    };
     actionMap["UPLOAD"] = [&](nlohmann::json& json) {
      //   threadGen.runInNewThread(this, &Download::uploadFiles, json);
     };
     actionMap["CANCEL_DOWNLOAD"] = [&](nlohmann::json& json) {
         download.store(false);
         //   threadGen.runInNewThread(this, &Download::uploadFiles, json);
+    };
+    actionMap["CANCEL_UPLOAD"] = [&](nlohmann::json& json) {
+        clientSocket.tempBuffers.erase(json["channel_id"]);cd
     };
     actionMap["PREPARE_UPLOAD"] = [&](nlohmann::json& json) {
         BufferedData bufferedData;
