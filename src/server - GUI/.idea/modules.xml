@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ServerCore/ServerCore.iml" filepath="$PROJECT_DIR$/ServerCore/ServerCore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwingApp/SwingApp.iml" filepath="$PROJECT_DIR$/SwingApp/SwingApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server - GUI.iml" filepath="$PROJECT_DIR$/server - GUI.iml" />
+    </modules>
+  </component>
+</project>

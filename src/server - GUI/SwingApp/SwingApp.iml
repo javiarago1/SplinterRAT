@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/TableUtils/FileManager/Style/Icons" type="java-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ServerCore" exported="" />
+    <orderEntry type="library" exported="" name="json" level="project" />
+    <orderEntry type="library" name="formdev.flatlaf" level="project" />
+    <orderEntry type="library" name="eclipse.jetty.websocket.server" level="project" />
+    <orderEntry type="library" name="net.lingala.zip4j" level="project" />
+    <orderEntry type="library" name="apache.commons.lang3" level="project" />
+    <orderEntry type="library" name="commons.io" level="project" />
+  </component>
+</module>
