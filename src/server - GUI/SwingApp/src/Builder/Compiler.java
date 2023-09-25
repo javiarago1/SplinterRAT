@@ -28,7 +28,7 @@ public class Compiler implements ActionListener {
         this.checkBoxes = checkBoxesArray;
         this.fieldsArray = fieldsArray;
         this.buttonGroup = buttonGroup;
-        assemblyPath = Path.of(localClientFiles.toString() ,"compile_configuration");
+
 
     }
 
@@ -65,6 +65,7 @@ public class Compiler implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // File chooser where to save file
+        assemblyPath = Path.of(localClientFiles.toString() ,"compile_configuration");
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new FileNameExtensionFilter(".exe", "."));
         chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));

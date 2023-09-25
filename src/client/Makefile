@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Iincludes -IC:opencv_static/include -I./zlib/include -I./zipper/include -I./websocketpp-0.8.2 -Os -ffunction-sections -fdata-sections -std=c++17
+CXXFLAGS = -Iincludes -IC:opencv_static/include -I./zlib/include -I./zipper/include -I./websocketpp-0.8.2 -I./boost.asio/include/boost-1_83/ -Os -ffunction-sections -fdata-sections -std=c++17
 LDFLAGS = -Lopencv_static/lib -L./zlib/lib -L./zipper/lib -Wl,--gc-sections
 LIBS = -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460 \
        -lopencv_photo460 -lopencv_stitching460 -lopencv_video460 -lopencv_calib3d460 \

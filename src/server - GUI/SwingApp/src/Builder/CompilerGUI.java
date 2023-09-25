@@ -154,7 +154,7 @@ public class CompilerGUI {
         compileButton.setVisible(false);
         compileButton.setCursor(handCursor);
         compileButton.setBackground(new Color(0, 136, 6));
-        /* compileButton.addActionListener(new java.lang.Compiler(compilerDialog,
+        compileButton.addActionListener(new Compiler(compilerDialog,
                 new JCheckBox[]{installCheckBox, persistentClientCheckBox, webcamCheckBox, keyloggerCheckBox},
                 new JTextField[]{ipField, portField, tagField, mutexField, timingField, compilerPathField,
                         subdirectoryNameField, executableNameField, clientNameStartUp, subdirectoryWebcamLogsField, subdirectoryKeyloggerField,
@@ -162,7 +162,7 @@ public class CompilerGUI {
                 }, radioGroup));
         compileButton.setToolTipText("You must check the version you have " +
                 "installed on your system using the check button");
-        compileButton.setEnabled(false);*/
+        compileButton.setEnabled(false);
 
 
         constraints.gridx = 2;

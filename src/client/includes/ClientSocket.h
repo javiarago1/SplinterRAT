@@ -5,6 +5,7 @@
 #include <iostream>
 #include <mutex>
 #include "json.hpp"
+#include "ZipCompressor.h"
 
 typedef std::unordered_map<std::string, std::function<void(nlohmann::json &)>>& ActionMap;
 
