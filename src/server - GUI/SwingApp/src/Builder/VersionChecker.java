@@ -25,7 +25,7 @@ public class VersionChecker implements ActionListener {
         String typeOfOpening = "";
         if (SystemUtils.IS_OS_WINDOWS) {
             shell = "cmd.exe";
-            typeOfOpening = "/c";
+            typeOfOpening = "/c"; // /c
         } else if (SystemUtils.IS_OS_LINUX) {
             shell = "/bin/bash";
             typeOfOpening = "-c";

