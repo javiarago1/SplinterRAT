@@ -269,7 +269,6 @@ public class SwingUpdater implements UpdaterInterface {
                         "The client has admin privileges, no need to elevate.",
                         "Exception with client", JOptionPane.WARNING_MESSAGE);
             }
-            ;
         });
     }
 
@@ -282,38 +281,6 @@ public class SwingUpdater implements UpdaterInterface {
     public void updateDownloadState(byte id, int read, boolean isLastPacket) {
         Bar<?> bar = mapOfProgressBars.get(id);
         if (bar != null) bar.updateProgress(read, isLastPacket);
-    }
-
-    @Override
-    public void showResultOfCompilation(int result) {
-        switch (result){
-            case -1 -> SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null,
-                    "Error assembling client, check for windres and try again.",
-                    "Error assembling", JOptionPane.ERROR_MESSAGE));
-            case -2 -> SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null,
-                    "Error compiling client, check your compiler and try again.",
-                    "Error compiling", JOptionPane.ERROR_MESSAGE));
-            case 0 -> SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(
-                    null,
-                    "Client compiled successfully!",
-                    "Compiler information",
-                    JOptionPane.INFORMATION_MESSAGE));
-        }
-
-    }
-
-    @Override
-    public void showResultOfUnZippingClientFiles(boolean result) {
-        if (result) {
-            SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "Files have been successfully extracted! ",
-                    "Operation completed", JOptionPane.INFORMATION_MESSAGE));
-
-        } else {
-            SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "JAR files might be corrupted or JAR " +
-                            "doesn't have enough permissions to extract files!",
-                    "Error extracting files", JOptionPane.ERROR_MESSAGE));
-        }
-
     }
 
     @Override

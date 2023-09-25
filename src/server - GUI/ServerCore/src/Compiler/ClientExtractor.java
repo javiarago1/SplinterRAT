@@ -13,14 +13,15 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.Callable;
 
 
-public class ClientExtractor implements Runnable {
+public class ClientExtractor implements Callable<Boolean> {
 
     public static Path localClientFiles;
 
     @Override
-    public void run() {
+    public Boolean call() {
         try {
             String folderDestination = "";
             if (SystemUtils.IS_OS_WINDOWS) {
@@ -29,9 +30,7 @@ public class ClientExtractor implements Runnable {
             } else if (SystemUtils.IS_OS_LINUX) {
                 folderDestination = System.getProperty("user.home");
             }
-
-            boolean result = extractClientFilesFromJAR(folderDestination);
-          //  ConnectionStore.updaterInterface.showResultOfUnZippingClientFiles(result);
+            return extractClientFilesFromJAR(folderDestination);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -68,5 +67,6 @@ public class ClientExtractor implements Runnable {
         return true;
 
     }
+
 
 }

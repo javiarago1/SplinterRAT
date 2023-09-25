@@ -1,4 +1,4 @@
-package Builder;
+package Builder.Animations;
 
 
 import ProgressBar.Animation;

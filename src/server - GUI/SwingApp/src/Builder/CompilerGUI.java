@@ -1,5 +1,9 @@
 package Builder;
 
+import Builder.Actions.CompileAction;
+import Builder.Actions.VersionCheckerAction;
+import Builder.Listeners.FieldListener;
+import Builder.Workers.UnzippingWorker;
 import Utils.Mutex;
 
 import javax.swing.*;
@@ -14,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import Compiler.ClientExtractor;
 
 
 public class CompilerGUI extends JDialog{
@@ -25,13 +28,14 @@ public class CompilerGUI extends JDialog{
     private JCheckBox webcamCheckBox;
     private JCheckBox keyloggerCheckBox;
 
+    private JButton checkButton;
+
     private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
 
     public CompilerGUI(JFrame parentFrame) {
         super(parentFrame, "Compiler");
-        UnzippingDialog unzippingDialog = new UnzippingDialog(parentFrame);
-        new Thread(new ClientExtractor()).start();
+        executor.execute(new UnzippingWorker(this));
         this.setModal(true);
         this.setResizable(false);
         this.setSize(450, 350);
@@ -172,7 +176,7 @@ public class CompilerGUI extends JDialog{
 
 
         constraints.gridx = 2;
-        JButton checkButton = new JButton("Check");
+        checkButton = new JButton("Check");
         checkButton.addActionListener(new VersionCheckerAction(compilerPathField, this, compileButton));
         compilePanel.add(checkButton, constraints);
         checkButton.setBackground(new Color(0, 83, 102));
@@ -596,8 +600,17 @@ public class CompilerGUI extends JDialog{
         constraints.insets = new Insets(0, 2, 0, 0);
         JLabel unite = new JLabel("ms");
         identificationPanel.add(unite, constraints);
-
         tabPane.addTab("Identification", identificationPanel);
+    }
+
+
+
+    public JButton getCompileButton() {
+        return compileButton;
+    }
+
+    public JButton getCheckButton() {
+        return checkButton;
     }
 
     public ExecutorService getExecutor() {

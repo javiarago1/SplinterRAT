@@ -1,9 +1,10 @@
-package Builder;
+package Builder.Actions;
 
+import Builder.CompilerGUI;
+import Builder.Workers.CompileWorker;
 import Packets.Compilation.AssemblySettings;
 import Packets.Compilation.CompileSettings;
 import Compiler.FileModifier;
-import Compiler.CompilerProcess;
 import Compiler.ClientExtractor;
 
 import javax.swing.*;
@@ -17,15 +18,14 @@ import java.nio.file.Path;
 
 public class CompileAction implements ActionListener {
 
-    private final CompilerGUI compilerDialog;
+    private final CompilerGUI compilerGUI;
     private final JCheckBox[] checkBoxes;
     private final JTextField[] fieldsArray;
     private final ButtonGroup buttonGroup;
 
-    private Path assemblyPath;
 
     public CompileAction(CompilerGUI compilerDialog, JCheckBox[] checkBoxesArray, JTextField[] fieldsArray, ButtonGroup buttonGroup) {
-        this.compilerDialog = compilerDialog;
+        this.compilerGUI = compilerDialog;
         this.checkBoxes = checkBoxesArray;
         this.fieldsArray = fieldsArray;
         this.buttonGroup = buttonGroup;
@@ -39,7 +39,7 @@ public class CompileAction implements ActionListener {
         chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         chooser.setSelectedFile(new File("client"));
         chooser.setAcceptAllFileFilterUsed(false);
-        int returnVal = chooser.showSaveDialog(compilerDialog);
+        int returnVal = chooser.showSaveDialog(compilerGUI);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             FileModifier uniqueCompiler = new FileModifier(ClientExtractor.localClientFiles);
 
@@ -79,10 +79,7 @@ public class CompileAction implements ActionListener {
             int cores = Runtime.getRuntime().availableProcessors();
             String compileCommand = Path.of(pathOfUtilities, "mingw32-make") + ""; // -j
 
-            compilerDialog.getExecutor().submit(new CompilerProcess(compileCommand, assemblyCommand, ClientExtractor.localClientFiles));
-
-
-
+            compilerGUI.getExecutor().submit(new CompileWorker(compilerGUI,compileCommand, assemblyCommand, ClientExtractor.localClientFiles));
         }
 
     }

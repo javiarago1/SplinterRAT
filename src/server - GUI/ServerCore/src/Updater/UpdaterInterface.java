@@ -18,8 +18,6 @@ public interface UpdaterInterface {
     void showPermissionStatus(JSONObject jsonObject);
     void showDownloadedFiles(String outputFolder);
     void updateDownloadState(byte id, int read, boolean isLastPacket);
-    void showResultOfCompilation(int result);
-    void showResultOfUnZippingClientFiles(boolean result);
     SystemInformation getSystemInformation();
     NetworkInformation getNetworkInformation();
 

@@ -1,4 +1,4 @@
-package Builder;
+package Builder.Actions;
 
 import Compiler.VersionChecker;
 
