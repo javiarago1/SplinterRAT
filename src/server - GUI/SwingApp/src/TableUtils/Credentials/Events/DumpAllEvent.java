@@ -1,7 +1,7 @@
 package TableUtils.Credentials.Events;
 
 import Server.BytesChannel;
-import Information.Category;
+import Packets.Identificators.Category;
 import TableUtils.Credentials.CredentialsManagerGUI;
 import Utilities.AbstractEvent;
 import org.json.JSONObject;

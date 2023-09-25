@@ -1,5 +1,6 @@
 package Server;
 
+import Updater.UpdaterFactory;
 import Updater.UpdaterInterface;
 import org.eclipse.jetty.websocket.api.Session;
 
@@ -7,11 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ConnectionStore {
 
-    public static UpdaterInterface updaterInterface;
-
-    public static void setUpdaterInterface(UpdaterInterface updaterInterface) {
-        ConnectionStore.updaterInterface = updaterInterface;
-    }
+    public static UpdaterFactory updaterFactory;
 
     public static final ConcurrentHashMap<Session, Client> connectionsMap = new ConcurrentHashMap<>();
 

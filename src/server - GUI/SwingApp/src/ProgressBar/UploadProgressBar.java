@@ -2,6 +2,7 @@ package ProgressBar;
 
 import Utilities.AbstractDialogCreator;
 import Utilities.GUIManagerInterface;
+import TableUtils.FileManager.Actions.CancelUploadAction;
 
 import javax.swing.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,13 +14,11 @@ public class UploadProgressBar<T extends AbstractDialogCreator> extends Bar<T> i
     ;
     private final String ACTION = "Uploading";
     private final T gui;
-    private final AtomicBoolean cancellationAtomic;
 
     public UploadProgressBar(T gui, AtomicBoolean cancellationAtomic) {
         super(gui);
         this.gui = gui;
-        this.cancellationAtomic = cancellationAtomic;
-      //  getCancelOperation().addActionListener(new CancelUploadAction(this, cancellationAtomic));
+        getCancelOperation().addActionListener(new CancelUploadAction(this, cancellationAtomic));
         setProgressBarVisible();
     }
 

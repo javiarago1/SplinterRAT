@@ -1,6 +1,7 @@
 package ProgressBar;
 import Server.Client;
 
+import TableUtils.FileManager.Actions.CancelDownloadAction;
 import Utilities.AbstractDialogCreator;
 import Utilities.GUIManagerInterface;
 
@@ -13,10 +14,10 @@ public class DownloadProgressBar<T extends AbstractDialogCreator> extends Bar<T>
 
     private final T gui;
 
+
     public DownloadProgressBar(T gui) {
         super(gui);
         this.gui = gui;
-       // getCancelOperation().addActionListener(new CancelDownloadAction(this));
         setProgressBarVisible();
     }
 

@@ -1,6 +1,8 @@
-package Builder;
+package Compiler;
 
-import Main.Main;
+
+
+import Server.ConnectionStore;
 
 import net.lingala.zip4j.ZipFile;
 import org.apache.commons.lang3.SystemUtils;
@@ -13,8 +15,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
-public class CPPExtractor implements Runnable {
+public class ClientExtractor implements Runnable {
 
+    public static Path localClientFiles;
 
     @Override
     public void run() {
@@ -26,14 +29,16 @@ public class CPPExtractor implements Runnable {
             } else if (SystemUtils.IS_OS_LINUX) {
                 folderDestination = System.getProperty("user.home");
             }
-            extractClientFilesFromJAR(folderDestination);
+
+            boolean result = extractClientFilesFromJAR(folderDestination);
+          //  ConnectionStore.updaterInterface.showResultOfUnZippingClientFiles(result);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    public void extractClientFilesFromJAR(String folderDestination) throws IOException {
+    public boolean extractClientFilesFromJAR(String folderDestination) throws IOException {
         InputStream stream;
         String finalFolderName = "/jcClient";
         String fileName = finalFolderName + ".zip";
@@ -44,7 +49,7 @@ public class CPPExtractor implements Runnable {
         Path fileLocation = Paths.get(folderOfTempFiles.toString(), fileName);
         try (OutputStream resStreamOut = new FileOutputStream(fileLocation.toFile());
              ZipFile zipFile = new ZipFile(fileLocation.toFile())) {
-            stream = Main.class.getResourceAsStream(fileName);
+            stream = ClientExtractor.class.getResourceAsStream(fileName);
             int readBytes;
             byte[] buffer = new byte[4096];
             if (stream != null) {
@@ -52,15 +57,15 @@ public class CPPExtractor implements Runnable {
                     resStreamOut.write(buffer, 0, readBytes);
                 }
             } else {
-                SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "JAR files might be corrupted or JAR " +
-                                "doesn't have enough permissions to extract files!",
-                        "Error extracting files", JOptionPane.ERROR_MESSAGE));
+                return false;
             }
             zipFile.extractAll(folderOfTempFiles.toString());
-            Compiler.localClientFiles = Path.of(folderOfTempFiles.toString());
+            localClientFiles = Path.of(folderOfTempFiles.toString());
+            System.out.println(localClientFiles);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return true;
 
     }
 

@@ -1,10 +1,11 @@
 package TableUtils.FileManager.Events;
 
 import Server.BytesChannel;
-import Information.Category;
+import Packets.Identificators.Category;
 import ProgressBar.DownloadProgressBar;
 import TableUtils.FileManager.FileManagerGUI;
 import Utilities.AbstractEvent;
+import Utilities.SwingUpdater;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -24,6 +25,8 @@ public class DownloadFileManagerEvent extends AbstractEvent<FileManagerGUI> {
     @Override
     public void run() {
         BytesChannel bytesChannel = getClient().createFileChannel(Category.ZIP_FILE);
+        SwingUpdater swingUpdater = (SwingUpdater) getClient().updater;
+        swingUpdater.addProgressBar(bytesChannel.getId(), downloadProgressBar);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("ACTION", "DOWNLOAD");
         jsonObject.put("from_path", downloadList);

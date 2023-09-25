@@ -12,17 +12,15 @@ set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)
 
 # ---- Sockets ----
 
-set(BOOST_ROOT "C:/Program Files (x86)/boost.asio")
 
 # Buscar el paquete de Boost
-find_package(Boost 1.71 REQUIRED COMPONENTS system)
 
 # Agregar el directorio de incluye de Boost
-include_directories(${Boost_INCLUDE_DIRS})
-
-message("Boost include dirs: ${Boost_INCLUDE_DIRS}")
-message("Boost libraries: ${Boost_LIBRARIES}")
+include_directories("C:/Users/Nitropc/Downloads/asio-1.28.0/asio-1.28.0/include")
+add_definitions(-DASIO_STANDALONE)
 include_directories("C:/Program Files (x86)/websocketpp-0.8.2")
+
+
 
 # ---- Sockets ----
 
@@ -81,7 +79,6 @@ add_executable(Client
 
 target_link_libraries(Client
         ${OpenCV_LIBS}
-        ${Boost_LIBRARIES}
         ws2_32
         wininet
         stdc++fs

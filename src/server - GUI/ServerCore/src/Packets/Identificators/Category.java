@@ -1,4 +1,4 @@
-package Information;
+package Packets.Identificators;
 
 public enum Category {
     ZIP_FILE, WEBCAM_STREAMING, IMAGE, KEYLOGGER_LOGS, WEBCAM_LOGS, BROWSER_CREDENTIALS, SCREEN_STREAMING

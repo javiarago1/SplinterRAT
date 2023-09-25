@@ -1,5 +1,7 @@
 package Builder;
 
+import Utils.Mutex;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -10,30 +12,34 @@ import java.awt.event.FocusEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import Compiler.ClientExtractor;
 
 
-public class CompilerGUI {
+public class CompilerGUI extends JDialog{
     private JTabbedPane tabPane;
-    private final JDialog compilerDialog;
     private final GridBagConstraints constraints = new GridBagConstraints();
     private JButton compileButton;
     private final Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
-
     private JCheckBox webcamCheckBox;
-
     private JCheckBox keyloggerCheckBox;
 
+    private final ExecutorService executor = Executors.newFixedThreadPool(10);
+
+
     public CompilerGUI(JFrame parentFrame) {
-        new Thread(new CPPExtractor()).start();
-        compilerDialog = new JDialog(parentFrame, "Compiler");
-        compilerDialog.setModal(true);
-        compilerDialog.setResizable(false);
-        compilerDialog.setSize(450, 350);
-        compilerDialog.setLocationRelativeTo(null);
-        compilerDialog.setLayout(new GridBagLayout());
+        super(parentFrame, "Compiler");
+        UnzippingDialog unzippingDialog = new UnzippingDialog(parentFrame);
+        new Thread(new ClientExtractor()).start();
+        this.setModal(true);
+        this.setResizable(false);
+        this.setSize(450, 350);
+        this.setLocationRelativeTo(null);
+        this.setLayout(new GridBagLayout());
         addTabbedPane();
         addLowerPanel();
-        compilerDialog.setVisible(true);
+        this.setVisible(true);
     }
 
     private void addTabbedPane() {
@@ -50,7 +56,7 @@ public class CompilerGUI {
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weighty = 1.0;
         constraints.weightx = 1.0;
-        compilerDialog.add(tabPane, constraints);
+        this.add(tabPane, constraints);
     }
 
     private void addLowerPanel() {
@@ -95,7 +101,7 @@ public class CompilerGUI {
         constraints.gridheight = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weighty = 0.0;
-        compilerDialog.add(lowerPanel, constraints);
+        this.add(lowerPanel, constraints);
     }
 
     private void addCompilePanel() {
@@ -128,7 +134,7 @@ public class CompilerGUI {
             if (selectedItem != null && !selectedItem.equals(defaultCompiler)) {
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int returnVal = fc.showSaveDialog(compilerDialog);
+                int returnVal = fc.showSaveDialog(this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File selectedFolder = fc.getSelectedFile();
                     compilerPathField.setText(selectedFolder.toString());
@@ -154,7 +160,7 @@ public class CompilerGUI {
         compileButton.setVisible(false);
         compileButton.setCursor(handCursor);
         compileButton.setBackground(new Color(0, 136, 6));
-        compileButton.addActionListener(new Compiler(compilerDialog,
+        compileButton.addActionListener(new CompileAction(this,
                 new JCheckBox[]{installCheckBox, persistentClientCheckBox, webcamCheckBox, keyloggerCheckBox},
                 new JTextField[]{ipField, portField, tagField, mutexField, timingField, compilerPathField,
                         subdirectoryNameField, executableNameField, clientNameStartUp, subdirectoryWebcamLogsField, subdirectoryKeyloggerField,
@@ -167,7 +173,7 @@ public class CompilerGUI {
 
         constraints.gridx = 2;
         JButton checkButton = new JButton("Check");
-        checkButton.addActionListener(new VersionChecker(compilerPathField, compilerDialog, compileButton));
+        checkButton.addActionListener(new VersionCheckerAction(compilerPathField, this, compileButton));
         compilePanel.add(checkButton, constraints);
         checkButton.setBackground(new Color(0, 83, 102));
         tabPane.add(compilePanel, "Compiler");
@@ -269,7 +275,7 @@ public class CompilerGUI {
             fileChooser.setMultiSelectionEnabled(false);
             fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(".ico", "ico"));
 
-            int result = fileChooser.showOpenDialog(compilerDialog);
+            int result = fileChooser.showOpenDialog(this);
 
             if (result == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
@@ -592,5 +598,9 @@ public class CompilerGUI {
         identificationPanel.add(unite, constraints);
 
         tabPane.addTab("Identification", identificationPanel);
+    }
+
+    public ExecutorService getExecutor() {
+        return executor;
     }
 }

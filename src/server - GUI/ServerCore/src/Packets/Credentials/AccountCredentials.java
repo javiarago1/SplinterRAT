@@ -1,4 +1,4 @@
-package Information.Packets;
+package Packets.Credentials;
 
 import java.util.Date;
 

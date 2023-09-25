@@ -1,7 +1,7 @@
 package TableUtils.ScreenStreaming.Events;
 
 import Server.BytesChannel;
-import Information.Category;
+import Packets.Identificators.Category;
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
 import Utilities.AbstractEvent;
 import org.json.JSONObject;

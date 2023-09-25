@@ -1,7 +1,7 @@
 package Updater;
 
-import Information.NetworkInformation;
-import Information.SystemInformation;
+import Packets.SysNetInfo.NetworkInformation;
+import Packets.SysNetInfo.SystemInformation;
 import org.json.JSONObject;
 
 public interface UpdaterInterface {
@@ -16,6 +16,10 @@ public interface UpdaterInterface {
     void updateMonitors(JSONObject jsonObject);
     void updateCredentialsDumper(String path);
     void showPermissionStatus(JSONObject jsonObject);
+    void showDownloadedFiles(String outputFolder);
+    void updateDownloadState(byte id, int read, boolean isLastPacket);
+    void showResultOfCompilation(int result);
+    void showResultOfUnZippingClientFiles(boolean result);
     SystemInformation getSystemInformation();
     NetworkInformation getNetworkInformation();
 

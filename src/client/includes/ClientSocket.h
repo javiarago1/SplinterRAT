@@ -1,5 +1,6 @@
 #ifndef CLIENT_SOCKET
 #define CLIENT_SOCKET
+#define _WEBSOCKETPP_CPP11_THREAD_
 #include <websocketpp/config/asio_no_tls_client.hpp>
 #include <websocketpp/client.hpp>
 #include <iostream>

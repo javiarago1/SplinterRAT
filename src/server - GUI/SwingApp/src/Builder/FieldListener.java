@@ -5,8 +5,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 public class FieldListener implements FocusListener {
-
-
     private final JTextField field;
     private final String defaultText;
 
@@ -24,7 +22,7 @@ public class FieldListener implements FocusListener {
 
     @Override
     public void focusLost(FocusEvent e) {
-        if (field.getText().equals("")) {
+        if (field.getText().isEmpty()) {
             field.setText(defaultText);
         }
     }

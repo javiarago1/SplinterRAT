@@ -1,4 +1,4 @@
-package Information;
+package Packets.Identificators;
 
 public enum Response {
     SYS_NET_INFO, DISKS, DIRECTORY, SCREEN_DIMENSIONS, MONITORS, SHELL, PERMISSIONS, WEBCAM_DEVICES

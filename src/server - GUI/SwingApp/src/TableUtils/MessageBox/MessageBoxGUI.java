@@ -80,7 +80,7 @@ public class MessageBoxGUI implements GUIManagerInterface {
         iconOfBox.addItem("Error");
         iconOfBox.addItem("Question");
         iconOfBox.addItem("Warning");
-        iconOfBox.addItem("Information");
+        iconOfBox.addItem("Packets");
 
         messageBoxDialog.add(iconOfBox, constraints);
         JButton sendBoxButton = new JButton("Send box");

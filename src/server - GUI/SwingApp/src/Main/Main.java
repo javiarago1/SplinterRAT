@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import Server.ConnectionStore;
 import Server.Server;
-import Utilities.SwingUpdater;
+import Utilities.SwingUpdaterFactory;
 
 public class Main {
 
@@ -12,11 +12,8 @@ public class Main {
 
     public static Server server;
     private static final int defaultPort = 3055;
-    public static SwingUpdater updater;
-
     public static void main(String[] args) {
-        updater = new SwingUpdater();
-        ConnectionStore.setUpdaterInterface(updater);
+        ConnectionStore.updaterFactory = new SwingUpdaterFactory();
         try {
             server = new Server(defaultPort);
             server.startServer();

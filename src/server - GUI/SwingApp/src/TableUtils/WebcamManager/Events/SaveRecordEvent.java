@@ -1,7 +1,7 @@
 package TableUtils.WebcamManager.Events;
 
 import Server.BytesChannel;
-import Information.Category;
+import Packets.Identificators.Category;
 import TableUtils.WebcamManager.WebcamGUI;
 import org.json.JSONObject;
 

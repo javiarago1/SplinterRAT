@@ -1,7 +1,7 @@
 package TableUtils.KeyLogger.Events;
 
 import Server.BytesChannel;
-import Information.Category;
+import Packets.Identificators.Category;
 import Server.Client;
 import TableUtils.KeyLogger.Constants.KeyLog;
 import org.json.JSONObject;

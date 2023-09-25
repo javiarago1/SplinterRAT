@@ -1,29 +1,30 @@
 package Server;
 
-import Information.Category;
+import Packets.Identificators.Category;
+import Updater.UpdaterInterface;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 public class BytesChannel {
     private final byte id;
+    private final UpdaterInterface updaterInterface;
     private ByteBuffer buffer;
-
     private Category category;
-
     private String categoryOutputFolder;
-
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 1024;
 
-    public BytesChannel(byte id, Category category) {
+    public BytesChannel(byte id, Category category, UpdaterInterface updaterInterface) {
         this.category = category;
         this.id = id;
+        this.updaterInterface = updaterInterface;
         this.buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
         setOutputFolder(category);
     }
 
-    public BytesChannel(byte id) {
+    public BytesChannel(byte id, UpdaterInterface updaterInterface) {
         this.id = id;
+        this.updaterInterface = updaterInterface;
         this.buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
     }
 
@@ -56,6 +57,7 @@ public class BytesChannel {
 
     public byte[] handleMessage(byte[] buf, int offset, int length, byte control) {
         boolean isLastPacket = control == 0x02;
+        updaterInterface.updateDownloadState(id,length - offset, isLastPacket);
         write(buf, offset + 2, length - 2);
         if (isLastPacket) {
             return flipAndGet();

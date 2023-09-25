@@ -1,12 +1,14 @@
 package Builder;
 
 
+import ProgressBar.Animation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class CompilingAnimation extends JDialog {
-    public CompilingAnimation(JDialog parentDialog) {
+public class CompilingAnimationDialog extends JDialog {
+    public CompilingAnimationDialog(JDialog parentDialog) {
         super(parentDialog, "Compiling client");
         this.setLocationRelativeTo(null);
         this.setSize(350, 180);
@@ -22,10 +24,10 @@ public class CompilingAnimation extends JDialog {
         this.add(information);
         JLabel animationLabel = new JLabel();
         this.add(animationLabel);
-        /*  Timer timer = new Timer(0, new Animation("Compiling client", animationLabel));
+        Timer timer = new Timer(0, new Animation("Compiling client", animationLabel));
         timer.setRepeats(true);
         timer.setDelay(500);
-        timer.start();*/
+        timer.start();
         this.setVisible(true);
     }
 

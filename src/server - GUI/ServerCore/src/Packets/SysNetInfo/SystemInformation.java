@@ -1,4 +1,4 @@
-package Information;
+package Packets.SysNetInfo;
 
 import java.util.List;
 

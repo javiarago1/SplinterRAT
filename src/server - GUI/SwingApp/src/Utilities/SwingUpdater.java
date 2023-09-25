@@ -1,11 +1,14 @@
 package Utilities;
 
 import Main.Main;
+import Packets.SysNetInfo.NetworkInformation;
+import Packets.SysNetInfo.SystemInformation;
+import ProgressBar.Bar;
 import TableUtils.Credentials.CredentialsManagerGUI;
-import Utils.Dumper.CredentialsDumper;
-import Information.Packets.AccountCredentials;
-import Information.Packets.CombinedCredentials;
-import Information.Packets.CreditCardCredentials;
+import Utils.CredentialsDumper;
+import Packets.Credentials.AccountCredentials;
+import Packets.Credentials.CombinedCredentials;
+import Packets.Credentials.CreditCardCredentials;
 import TableUtils.FileManager.FileManagerGUI;
 import TableUtils.ReverseShell.ReverseShellGUI;
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
@@ -24,12 +27,11 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import Information.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SwingUpdater implements UpdaterInterface {
 
-    private  SystemInformation systemInformation;
+    private SystemInformation systemInformation;
 
     private NetworkInformation networkInformation;
 
@@ -42,6 +44,8 @@ public class SwingUpdater implements UpdaterInterface {
     private CredentialsManagerGUI credentialsManagerGUI;
 
     private ReverseShellGUI reverseShellGUI;
+
+    private final ConcurrentHashMap<Byte, Bar<?>> mapOfProgressBars = new ConcurrentHashMap<>();
 
     private void convertJSON2NetAndSysInfo(JSONObject jsonObject) {
         String operatingSystem = jsonObject.getString("win_ver");
@@ -270,6 +274,49 @@ public class SwingUpdater implements UpdaterInterface {
     }
 
     @Override
+    public void showDownloadedFiles(String outputFolder) {
+        FolderOpener.open(outputFolder);
+    }
+
+    @Override
+    public void updateDownloadState(byte id, int read, boolean isLastPacket) {
+        Bar<?> bar = mapOfProgressBars.get(id);
+        if (bar != null) bar.updateProgress(read, isLastPacket);
+    }
+
+    @Override
+    public void showResultOfCompilation(int result) {
+        switch (result){
+            case -1 -> SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null,
+                    "Error assembling client, check for windres and try again.",
+                    "Error assembling", JOptionPane.ERROR_MESSAGE));
+            case -2 -> SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null,
+                    "Error compiling client, check your compiler and try again.",
+                    "Error compiling", JOptionPane.ERROR_MESSAGE));
+            case 0 -> SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(
+                    null,
+                    "Client compiled successfully!",
+                    "Compiler information",
+                    JOptionPane.INFORMATION_MESSAGE));
+        }
+
+    }
+
+    @Override
+    public void showResultOfUnZippingClientFiles(boolean result) {
+        if (result) {
+            SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "Files have been successfully extracted! ",
+                    "Operation completed", JOptionPane.INFORMATION_MESSAGE));
+
+        } else {
+            SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "JAR files might be corrupted or JAR " +
+                            "doesn't have enough permissions to extract files!",
+                    "Error extracting files", JOptionPane.ERROR_MESSAGE));
+        }
+
+    }
+
+    @Override
     public SystemInformation getSystemInformation() {
         return systemInformation;
     }
@@ -278,7 +325,6 @@ public class SwingUpdater implements UpdaterInterface {
     public NetworkInformation getNetworkInformation() {
         return networkInformation;
     }
-
 
     public void setFileManagerGUI(FileManagerGUI fileManagerGUI) {
         this.fileManagerGUI = fileManagerGUI;
@@ -292,6 +338,9 @@ public class SwingUpdater implements UpdaterInterface {
         this.screenStreamerGUI = screenStreamerGUI;
     }
 
+    public void addProgressBar(byte id, Bar<?> progressBar){
+        mapOfProgressBars.put(id, progressBar);
+    }
 
     public void setCredentialsManagerGUI(CredentialsManagerGUI credentialsManagerGUI) {
         this.credentialsManagerGUI = credentialsManagerGUI;
