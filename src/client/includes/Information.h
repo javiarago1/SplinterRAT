@@ -2,7 +2,7 @@
 #define CLIENT_INFORMATION_H
 
 
-#include "Sender.h"
+
 #include "SystemInformation.h"
 #include "NetworkInformation.h"
 #include "Handler.h"

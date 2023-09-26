@@ -4,7 +4,7 @@
 #include <string>
 #include <windows.h>
 #include <wininet.h>
-#include "Sender.h"
+
 #include "json.hpp"
 
 

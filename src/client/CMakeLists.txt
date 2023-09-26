@@ -58,7 +58,6 @@ add_executable(Client
         src/box_message/MessageBoxGUI.cpp
         src/state/SystemState.cpp
         src/install/Install.cpp
-        src/sender/Sender.cpp
         src/webcam/WebcamManager.cpp
         src/screen/ScreenStreamer.cpp
         src/credentials/CredentialsExtractor.cpp

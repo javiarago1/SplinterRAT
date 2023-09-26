@@ -2,7 +2,7 @@
 #define TESTS_MESSAGEBOXGUI_H
 #include <iostream>
 #include <string>
-#include "Sender.h"
+
 #include "json.hpp"
 #include "ClientSocket.h"
 #include "Handler.h"

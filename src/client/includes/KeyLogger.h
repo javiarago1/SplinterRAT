@@ -12,7 +12,7 @@
 #include "TimeCS.h"
 #include "Install.h"
 #include "Converter.h"
-#include "Sender.h"
+
 #include "configuration.h"
 #include "Handler.h"
 #include "Download.h"

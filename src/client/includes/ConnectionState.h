@@ -1,7 +1,7 @@
 #ifndef CLIENT_CONNECTIONSTATE_H
 #define CLIENT_CONNECTIONSTATE_H
 
-#include "Sender.h"
+
 #include "Install.h"
 #include "Handler.h"
 

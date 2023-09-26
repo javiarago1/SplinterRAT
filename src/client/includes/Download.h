@@ -5,7 +5,7 @@
 #include <thread>
 #include "Stream.h"
 #include "Converter.h"
-#include "Sender.h"
+
 #include "json.hpp"
 #include "ZipCompressor.h"
 #include "Handler.h"

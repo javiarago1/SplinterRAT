@@ -9,7 +9,7 @@
 #include <windows.h>
 #include <iterator>
 #include "Converter.h"
-#include "Sender.h"
+
 #include "json.hpp"
 #include "Handler.h"
 #include <thread>

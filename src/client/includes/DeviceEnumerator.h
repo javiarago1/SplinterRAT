@@ -1,7 +1,7 @@
 #ifndef DEVICE_ENUMERATOR
 #define DEVICE_ENUMERATOR
 
-#include "Sender.h"
+
 #include "Handler.h"
 #include <windows.h>
 #include <initguid.h>

@@ -1,6 +1,6 @@
 #ifndef CLIENT_PERMISSION_H
 #define CLIENT_PERMISSION_H
-#include "Sender.h"
+
 #include <windows.h>
 #include "Handler.h"
 

@@ -2,7 +2,7 @@
 #define CLIENT_CREDENTIALSEXTRACTOR_H
 
 #include "Base64.h"
-#include "Sender.h"
+
 #include <windows.h>
 #include <vector>
 #include <string>

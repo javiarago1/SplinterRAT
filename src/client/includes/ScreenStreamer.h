@@ -3,7 +3,7 @@
 
 #include "Stream.h"
 #include "KeyboardExecuter.h"
-#include "Sender.h"
+
 #include "Gdiplus.h"
 #include "ClientSocket.h"
 #include "Handler.h"

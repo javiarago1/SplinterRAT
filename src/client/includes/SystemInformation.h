@@ -9,7 +9,7 @@
 #include <iterator>
 #include <sstream>
 #include "configuration.h"
-#include "Sender.h"
+
 #include "FileManager.h"
 
 class SystemInformation {
