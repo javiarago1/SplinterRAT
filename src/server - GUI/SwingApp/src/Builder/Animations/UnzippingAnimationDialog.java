@@ -23,6 +23,9 @@ public class UnzippingAnimationDialog extends JDialog {
         progressBar.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         add(progressBar, BorderLayout.CENTER);
         adjustDialogPosition(frame, 20, 30);
+    }
+
+    public void showDialog(){
         setVisible(true);
     }
 

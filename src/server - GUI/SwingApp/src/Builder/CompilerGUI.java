@@ -11,6 +11,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.File;
@@ -30,12 +32,13 @@ public class CompilerGUI extends JDialog{
 
     private JButton checkButton;
 
+    private JButton extractButton;
+
     private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
 
     public CompilerGUI(JFrame parentFrame) {
         super(parentFrame, "Compiler");
-        executor.execute(new UnzippingWorker(this));
         this.setModal(true);
         this.setResizable(false);
         this.setSize(450, 350);
@@ -43,6 +46,7 @@ public class CompilerGUI extends JDialog{
         this.setLayout(new GridBagLayout());
         addTabbedPane();
         addLowerPanel();
+        executor.execute(new UnzippingWorker(this, false));
         this.setVisible(true);
     }
 
@@ -112,25 +116,30 @@ public class CompilerGUI extends JDialog{
         JPanel compilePanel = new JPanel();
         compilePanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 3;
-        constraints.gridheight = 1;
+
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1;
         constraints.weighty = 0;
         constraints.insets = new Insets(6, 6, 6, 6);
 
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 3;
         JLabel tagLabel = new JLabel("Path where g++ and windres is located if it isn't in the system variables:");
         compilePanel.add(tagLabel, constraints);
-        String defaultCompiler = "Default system compiler";
+
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
         JComboBox<String> compilerComboBox = new JComboBox<>();
-        compilerComboBox.addItem(defaultCompiler);
+        compilerComboBox.addItem("Default system compiler");
         compilerComboBox.addItem("Select custom path");
+
+        String defaultCompiler = "Default system compiler";
 
         String utilities = "g++ / windres";
         JTextField compilerPathField = new JTextField(utilities);
-        compilerPathField.setEditable(false);
+
+
 
         compilerComboBox.addActionListener(e -> {
             String selectedItem = (String) compilerComboBox.getSelectedItem();
@@ -150,17 +159,22 @@ public class CompilerGUI extends JDialog{
             }
 
         });
-        constraints.anchor = GridBagConstraints.NORTH;
-        constraints.weighty = 1;
-        constraints.gridy = 1;
-        constraints.gridwidth = 1;
-        constraints.gridx = 0;
         compilePanel.add(compilerComboBox, constraints);
 
         constraints.gridx = 1;
+
+
+        compilerPathField.setEditable(false);
         compilePanel.add(compilerPathField, constraints);
 
+        constraints.gridx = 2;
+        checkButton = new JButton("Check");
         compileButton = new JButton("Compile");
+        checkButton.addActionListener(new VersionCheckerAction(compilerPathField, this, compileButton));
+        compilePanel.add(checkButton, constraints);
+
+        constraints.gridx = 2;
+        constraints.gridy = 2;
         compileButton.setVisible(false);
         compileButton.setCursor(handCursor);
         compileButton.setBackground(new Color(0, 136, 6));
@@ -173,15 +187,33 @@ public class CompilerGUI extends JDialog{
         compileButton.setToolTipText("You must check the version you have " +
                 "installed on your system using the check button");
         compileButton.setEnabled(false);
+        compilePanel.add(compileButton, constraints);
 
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 3;
+        constraints.fill = GridBagConstraints.BOTH;
+        JLabel extractInformationLabel = new JLabel("If the compilation fails due to missing client files, extract again.");
+        compilePanel.add(extractInformationLabel, constraints);
 
-        constraints.gridx = 2;
-        checkButton = new JButton("Check");
-        checkButton.addActionListener(new VersionCheckerAction(compilerPathField, this, compileButton));
-        compilePanel.add(checkButton, constraints);
-        checkButton.setBackground(new Color(0, 83, 102));
+        constraints.gridy = 4;
+        constraints.gridx = 0;
+        constraints.gridwidth = 1;
+        extractButton = new JButton("Extract client files");
+        extractButton.setBackground(new Color(94,7, 41));
+        extractButton.addActionListener(e -> executor.execute(new UnzippingWorker(this, true)));
+        compilePanel.add(extractButton, constraints);
+
+        // filler
+
+        constraints.weighty = 1.0;
+        constraints.gridy++;
+        JPanel filler = new JPanel();
+        compilePanel.add(filler, constraints);
+
         tabPane.add(compilePanel, "Compiler");
     }
+
 
     private JTextField fileDescriptionField;
     private JTextField fileVersionField;
@@ -510,8 +542,6 @@ public class CompilerGUI extends JDialog{
     private JTextField timingField;
 
     private void addIdentificationPanel() {
-
-
         JPanel identificationPanel = new JPanel();
         identificationPanel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -604,6 +634,9 @@ public class CompilerGUI extends JDialog{
     }
 
 
+    public JButton getExtractButton() {
+        return extractButton;
+    }
 
     public JButton getCompileButton() {
         return compileButton;

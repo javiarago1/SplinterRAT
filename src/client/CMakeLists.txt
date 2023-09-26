@@ -16,7 +16,7 @@ set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)
 # Buscar el paquete de Boost
 
 # Agregar el directorio de incluye de Boost
-include_directories("C:/Users/Nitropc/Downloads/asio-1.28.0/asio-1.28.0/include")
+include_directories("C:/Program Files (x86)/asio/include")
 add_definitions(-DASIO_STANDALONE)
 include_directories("C:/Program Files (x86)/websocketpp-0.8.2")
 

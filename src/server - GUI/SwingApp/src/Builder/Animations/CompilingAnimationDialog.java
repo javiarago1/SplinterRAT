@@ -8,6 +8,8 @@ import java.awt.*;
 import java.util.Objects;
 
 public class CompilingAnimationDialog extends JDialog {
+
+    private final Timer timer;
     public CompilingAnimationDialog(JDialog parentDialog) {
         super(parentDialog, "Compiling client");
         this.setLocationRelativeTo(null);
@@ -24,11 +26,20 @@ public class CompilingAnimationDialog extends JDialog {
         this.add(information);
         JLabel animationLabel = new JLabel();
         this.add(animationLabel);
-        Timer timer = new Timer(0, new Animation("Compiling client", animationLabel));
+        timer = new Timer(0, new Animation("Compiling client", animationLabel));
         timer.setRepeats(true);
         timer.setDelay(500);
+
+    }
+
+     public void startDialog(){
         timer.start();
         this.setVisible(true);
+    }
+
+    public void closeDialog(){
+        timer.stop();
+        dispose();
     }
 
 

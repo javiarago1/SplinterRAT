@@ -2,8 +2,6 @@ package Compiler;
 
 
 
-import Server.ConnectionStore;
-
 import net.lingala.zip4j.ZipFile;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -20,32 +18,44 @@ public class ClientExtractor implements Callable<Boolean> {
 
     public static Path localClientFiles;
 
-    @Override
-    public Boolean call() {
-        try {
-            String folderDestination = "";
-            if (SystemUtils.IS_OS_WINDOWS) {
-                folderDestination = System.getenv("APPDATA");
-
-            } else if (SystemUtils.IS_OS_LINUX) {
-                folderDestination = System.getProperty("user.home");
-            }
-            return extractClientFilesFromJAR(folderDestination);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public ClientExtractor(){
+        generateDestinationFolder();
     }
 
 
-    public boolean extractClientFilesFromJAR(String folderDestination) throws IOException {
-        InputStream stream;
-        String finalFolderName = "/jcClient";
-        String fileName = finalFolderName + ".zip";
-        Path folderOfTempFiles = Path.of(folderDestination, "SplinterRAT", "Client Files");
-        if (!Files.exists(folderOfTempFiles)) {
-            Files.createDirectories(folderOfTempFiles);
+    private void generateDestinationFolder(){
+        String folderDestination = "";
+        if (SystemUtils.IS_OS_WINDOWS) {
+            folderDestination = System.getenv("APPDATA");
+
+        } else if (SystemUtils.IS_OS_LINUX) {
+            folderDestination = System.getProperty("user.home");
         }
-        Path fileLocation = Paths.get(folderOfTempFiles.toString(), fileName);
+        localClientFiles = Path.of(folderDestination, "SplinterRAT", "Client Files");
+    }
+
+    public boolean checkIfClientFilesAlreadyExists(){
+        return localClientFiles.toFile().exists();
+    }
+
+
+    @Override
+    public Boolean call() {
+        return extractClientFilesFromJAR();
+    }
+
+
+    public boolean extractClientFilesFromJAR() {
+        InputStream stream;
+        String fileName = "/jcClient.zip";
+        if (!Files.exists(localClientFiles)) {
+            try {
+                Files.createDirectories(localClientFiles);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Path fileLocation = Paths.get(localClientFiles.toString(), fileName);
         try (OutputStream resStreamOut = new FileOutputStream(fileLocation.toFile());
              ZipFile zipFile = new ZipFile(fileLocation.toFile())) {
             stream = ClientExtractor.class.getResourceAsStream(fileName);
@@ -58,8 +68,7 @@ public class ClientExtractor implements Callable<Boolean> {
             } else {
                 return false;
             }
-            zipFile.extractAll(folderOfTempFiles.toString());
-            localClientFiles = Path.of(folderOfTempFiles.toString());
+            zipFile.extractAll(localClientFiles.toString());
             System.out.println(localClientFiles);
         } catch (Exception ex) {
             ex.printStackTrace();

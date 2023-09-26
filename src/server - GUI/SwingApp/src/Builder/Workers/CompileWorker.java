@@ -3,6 +3,7 @@ package Builder.Workers;
 import javax.swing.*;
 import java.nio.file.Path;
 
+import Builder.Animations.CompilingAnimationDialog;
 import Builder.CompilerGUI;
 import Compiler.CompilerProcess;
 
@@ -12,6 +13,8 @@ public class CompileWorker extends SwingWorker<Void,Void> {
     private final String compileCommand;
     private final String assemblyCommand;
     private final Path pathOfClientFiles;
+
+    private final CompilingAnimationDialog compilingAnimationDialog;
     private int result;
 
     public CompileWorker(CompilerGUI compilerGUI, String compileCommand, String assemblyCommand, Path pathOfClientFiles){
@@ -19,6 +22,8 @@ public class CompileWorker extends SwingWorker<Void,Void> {
         this.compileCommand = compileCommand;
         this.assemblyCommand = assemblyCommand;
         this.pathOfClientFiles = pathOfClientFiles;
+        compilingAnimationDialog = new CompilingAnimationDialog(compilerGUI);
+        compilingAnimationDialog.startDialog();
     }
 
     @Override
@@ -30,6 +35,7 @@ public class CompileWorker extends SwingWorker<Void,Void> {
 
     @Override
     protected void done() {
+        compilingAnimationDialog.closeDialog();
         switch (result){
             case -1 -> JOptionPane.showMessageDialog(compilerGUI,
                     "Error assembling client, check for windres and try again.",
