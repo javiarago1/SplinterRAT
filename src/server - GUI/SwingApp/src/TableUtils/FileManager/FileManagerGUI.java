@@ -51,7 +51,7 @@ public class FileManagerGUI extends AbstractDialogCreator {
 
 
     public FileManagerGUI(Client client) {
-        super(Main.gui.getMainGUI(), "File Manager -", client);
+        super(Main.gui, client, "File Manager");
         this.setSize(new Dimension(600, 340));
         this.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();

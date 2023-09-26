@@ -1,17 +1,17 @@
-package TableUtils.Permissions;
+package TableUtils.Permissions.Events;
 
 import Server.Client;
+import Utilities.AbstractEventNoGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
 
-public class PrivilegesElevatorEvents implements Runnable {
-
-
+public class PrivilegesElevatorEvent extends AbstractEventNoGUI {
     private final Client client;
 
-    public PrivilegesElevatorEvents(Client client) {
+    public PrivilegesElevatorEvent(Client client) {
+        super(null);
         this.client = client;
     }
 
@@ -22,8 +22,7 @@ public class PrivilegesElevatorEvents implements Runnable {
         try {
             client.sendString(jsonObject.toString());
         } catch (IOException e) {
-            //new ClientErrorHandler("Unable to get privileges, connection lost with client.",
-            //        stream.getClientSocket());
+            handleGuiError();
         }
     }
 }

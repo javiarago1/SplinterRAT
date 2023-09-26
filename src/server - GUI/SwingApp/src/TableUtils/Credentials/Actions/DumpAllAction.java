@@ -3,11 +3,11 @@ package TableUtils.Credentials.Actions;
 
 import TableUtils.Credentials.CredentialsManagerGUI;
 import TableUtils.Credentials.Events.DumpAllEvent;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 import java.awt.event.ActionEvent;
 
-public class DumpAllAction extends AbstractAction<CredentialsManagerGUI> {
+public class DumpAllAction extends AbstractActionGUI<CredentialsManagerGUI> {
     public DumpAllAction(CredentialsManagerGUI credentialsManagerGUI) {
         super(credentialsManagerGUI);
     }

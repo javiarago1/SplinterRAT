@@ -1,7 +1,7 @@
 package TableUtils.ScreenStreaming.Events;
 
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import Utilities.FolderOpener;
 import Utilities.Time;
 import org.apache.commons.io.FileUtils;
@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 
-public class ScreenShotEvent extends AbstractEvent<ScreenStreamerGUI> {
+public class ScreenShotEvent extends AbstractEventGUI<ScreenStreamerGUI> {
     public ScreenShotEvent(ScreenStreamerGUI guiManager) {
         super(guiManager);
     }

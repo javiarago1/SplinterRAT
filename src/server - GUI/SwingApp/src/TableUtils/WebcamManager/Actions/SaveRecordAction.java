@@ -2,15 +2,13 @@ package TableUtils.WebcamManager.Actions;
 
 import TableUtils.WebcamManager.Events.SaveRecordEvent;
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 import java.awt.event.ActionEvent;
 
-public class SaveRecordAction extends AbstractAction<WebcamGUI> {
-
-
-    public SaveRecordAction(WebcamGUI webcamGUI) {
-        super(webcamGUI);
+public class SaveRecordAction extends AbstractActionGUI<WebcamGUI> {
+    public SaveRecordAction(WebcamGUI guiManager) {
+        super(guiManager);
     }
 
     @Override

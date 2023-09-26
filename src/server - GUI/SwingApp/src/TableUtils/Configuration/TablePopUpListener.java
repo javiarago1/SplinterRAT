@@ -15,7 +15,7 @@ import Main.SplinterGUI;
 import TableUtils.Credentials.Listeners.CredentialsMenuListener;
 import TableUtils.FileManager.Listeners.FileManagerMenuListener;
 
-import TableUtils.Permissions.PermissionsAction;
+import TableUtils.Permissions.Actions.PermissionsAction;
 import TableUtils.ReverseShell.Listeners.ReverseShellMenuListener;
 import TableUtils.SystemState.Constants.SystemStatus;
 import TableUtils.SystemState.Actions.SystemStateAction;

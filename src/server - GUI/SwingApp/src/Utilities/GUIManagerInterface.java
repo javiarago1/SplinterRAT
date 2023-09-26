@@ -1,9 +1,6 @@
 package Utilities;
 
-import Server.Client;
-
-public interface GUIManagerInterface {
-    Client getClient();
+public interface GUIManagerInterface extends ManagerInterface {
+    void closeDialog();
 
 }
-

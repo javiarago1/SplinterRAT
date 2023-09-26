@@ -15,7 +15,6 @@ public class GetSYS {
     public static Client getClientHandler() {
         Map<Session, Client> map = ConnectionStore.connectionsMap;
         System.out.println(map.size());
-
         JTable table = Main.gui.getConnectionsTable();
         String address = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
         for (Session a : map.keySet()) {

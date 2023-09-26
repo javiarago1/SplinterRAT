@@ -4,6 +4,7 @@ import Main.Main;
 import Packets.SysNetInfo.NetworkInformation;
 import Packets.SysNetInfo.SystemInformation;
 import ProgressBar.Bar;
+import Server.ServerGUI;
 import TableUtils.Credentials.CredentialsManagerGUI;
 import Utils.CredentialsDumper;
 import Packets.Credentials.AccountCredentials;
@@ -27,6 +28,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SwingUpdater implements UpdaterInterface {
@@ -74,29 +76,57 @@ public class SwingUpdater implements UpdaterInterface {
         networkInformation = new NetworkInformation(ip, internetCompanyName, userContinent, userCountry, userRegion, userCity, userZone, userCurrency, userProxy);
     }
 
+    public int getPositionOfExisting(String identifier, TableModel tableModel) {
+        int rows = tableModel.getRowCount();
+        for (int i  = 0; i < rows; i++){
+            String value = String.valueOf(tableModel.getValueAt(i, 0));
+            if (value.equals(identifier)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void displayTray(String ip, String operativeSystem) {
+        SystemTray tray = SystemTray.getSystemTray();
+        Image image = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("splinter_icon_250x250.png"))).getImage();
+        TrayIcon trayIcon = new TrayIcon(image, "SplinterRAT connection!");
+        trayIcon.setImageAutoSize(true);
+        trayIcon.setToolTip("New connection!");
+        try {
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
+        }
+
+        trayIcon.displayMessage("SplinterRAT has a new connection!", "New connection from " + ip + " - " + operativeSystem, TrayIcon.MessageType.INFO);
+    }
+
     public void addRowOfNewConnection(JSONObject jsonObject) {
         convertJSON2NetAndSysInfo(jsonObject);
         SwingUtilities.invokeLater(() -> {
+            String identifier = systemInformation.UUID();
             TableModel tableModel = Main.gui.getConnectionsTable().getModel();
-            /*int existingClientRow = getPositionOfExisting(identifier, tableModel); // position if exists in JTable
+            int existingClientRow = getPositionOfExisting(identifier, tableModel); // position if exists in JTable
             if (existingClientRow != -1) {  // change state of connection
                 tableModel.setValueAt("Connected", existingClientRow, tableModel.getColumnCount() - 1);
-            } else { // new connection*/
-            String[] tableRow = new String[]{
-                    systemInformation.UUID(),
-                    networkInformation.IP(),
-                    networkInformation.USER_COUNTRY(),
-                    systemInformation.TAG_NAME(),
-                    systemInformation.USER_NAME(),
-                    systemInformation.OPERATING_SYSTEM(),
-                    "Connected"
-            };
-            DefaultTableModel defaultTableModel = (DefaultTableModel) tableModel;
-            defaultTableModel.addRow(tableRow);
-            // }
-            //if (ServerGUI.isNotifications() && SystemTray.isSupported())
-            //  displayTray(netInfo.IP(), sysInfo.OPERATING_SYSTEM());
-            Main.gui.updateNumOfConnectedClients();
+            } else { // new connection
+                String[] tableRow = new String[]{
+                        systemInformation.UUID(),
+                        networkInformation.IP(),
+                        networkInformation.USER_COUNTRY(),
+                        systemInformation.TAG_NAME(),
+                        systemInformation.USER_NAME(),
+                        systemInformation.OPERATING_SYSTEM(),
+                        "Connected"
+                };
+                DefaultTableModel defaultTableModel = (DefaultTableModel) tableModel;
+                defaultTableModel.addRow(tableRow);
+                Main.gui.updateNumOfConnectedClients();
+            }
+            if (ServerGUI.isNotifications() && SystemTray.isSupported()) {
+                displayTray(networkInformation.IP(), systemInformation.OPERATING_SYSTEM());
+            }
         });
     }
 
@@ -194,7 +224,7 @@ public class SwingUpdater implements UpdaterInterface {
         });
     }
 
-    public void updateReverseShell(JSONObject jsonObject){
+    public void updateReverseShell(JSONObject jsonObject) {
         JTextArea textArea = reverseShellGUI.getTextAreaOfResult();
         textArea.append(jsonObject.getString("result"));
         textArea.setCaretPosition(textArea.getDocument().getLength());
@@ -305,7 +335,7 @@ public class SwingUpdater implements UpdaterInterface {
         this.screenStreamerGUI = screenStreamerGUI;
     }
 
-    public void addProgressBar(byte id, Bar<?> progressBar){
+    public void addProgressBar(byte id, Bar<?> progressBar) {
         mapOfProgressBars.put(id, progressBar);
     }
 

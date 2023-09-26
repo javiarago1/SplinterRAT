@@ -1,12 +1,12 @@
 package TableUtils.MessageBox.Events;
 
 import TableUtils.MessageBox.MessageBoxGUI;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class MessageBoxEvent extends AbstractEvent<MessageBoxGUI> {
+public class MessageBoxEvent extends AbstractEventGUI<MessageBoxGUI> {
 
     private final JSONObject messageBoxInformation;
 
@@ -21,9 +21,7 @@ public class MessageBoxEvent extends AbstractEvent<MessageBoxGUI> {
             messageBoxInformation.put("ACTION", "SHOW_MESSAGE_BOX");
             getClient().sendString(messageBoxInformation.toString());
         } catch (IOException e) {
-            //new ClientErrorHandler("Unable to open message box, connection lost with client",
-            //        messageBoxGUI.getMessageBoxDialog(),
-            //        messageBoxGUI.getStream().getClientSocket());
+            handleGuiError();
         }
     }
 }

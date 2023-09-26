@@ -2,18 +2,18 @@ package TableUtils.WebcamManager.Actions;
 
 import TableUtils.WebcamManager.Events.SnapshotWebcamEvent;
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 import java.awt.event.ActionEvent;
 
 /*
  * Class for snapshot button actions
  */
-public class SnapshotAction extends AbstractAction<WebcamGUI> {
+public class SnapshotAction extends AbstractActionGUI<WebcamGUI> {
 
 
-    public SnapshotAction(WebcamGUI webcamGUI) {
-        super(webcamGUI);
+    public SnapshotAction(WebcamGUI guiManager) {
+        super(guiManager);
     }
 
     @Override

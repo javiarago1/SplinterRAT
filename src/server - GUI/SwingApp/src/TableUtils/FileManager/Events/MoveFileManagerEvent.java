@@ -22,8 +22,7 @@ public class MoveFileManagerEvent extends FileManagerEvent {
             jsonObject.put("to_path", directoryToMove);
             getClient().sendString(jsonObject.toString());
         } catch (Exception ex) {
-            //new ClientErrorHandler("Unable to move, connection lost with client", fileManagerDialog,
-                    //getClient().getClientSocket());
+            handleGuiError();
         }
     }
 }

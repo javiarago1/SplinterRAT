@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <filesystem>
-#include "Stream.h"
+
 #include <windows.h>
 #include <iterator>
 #include "Converter.h"

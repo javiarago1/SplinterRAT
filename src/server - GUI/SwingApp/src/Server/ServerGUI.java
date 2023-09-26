@@ -19,7 +19,7 @@ public class ServerGUI {
 
 
     public ServerGUI(JFrame mainGUI) {
-        serverDialog = new JDialog(mainGUI, "Server.Server settings");
+        serverDialog = new JDialog(mainGUI, "Server settings");
         serverDialog.setResizable(false);
         serverDialog.setModal(true);
         serverDialog.setSize(300, 140);
@@ -43,8 +43,8 @@ public class ServerGUI {
         serverDialog.add(portNumberLabel, constraints);
 
         // TODO set port form server class configuration
-        // Server.Server.getPort()
-        JTextField portNumber = new JTextField(String.valueOf("8080"));
+        // Server.getPort()
+        JTextField portNumber = new JTextField(String.valueOf(Main.server.getPort()));
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.gridwidth = 1;
@@ -82,7 +82,7 @@ public class ServerGUI {
         serverDialog.add(startListeningButton, constraints);
         startListeningButton.addActionListener(e -> {
             if (Main.server.isRunning()) {
-                JOptionPane.showMessageDialog(serverDialog, "Server.Server is already running!", "Server.Server error",
+                JOptionPane.showMessageDialog(serverDialog, "Server is already running!", "Server error",
                         JOptionPane.WARNING_MESSAGE);
             } else { // checking for valid port
                 Pattern pattern = Pattern.compile("([0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])");
@@ -92,8 +92,6 @@ public class ServerGUI {
                     if (integerPortNumber != Main.server.getPort()) {
                         Main.server.definePort(integerPortNumber);
                     }
-                    // Open new thread for handling new connections, this creates the server itself (thread pool, etc)
-
                     try {
                         if (Main.server.isRunning()) Main.server.stopServer();
                         Main.server.startServer();
@@ -103,7 +101,7 @@ public class ServerGUI {
 
                     serverDialog.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(serverDialog, "Wrong port try again (1 - 65.536)", "Server.Server error",
+                    JOptionPane.showMessageDialog(serverDialog, "Wrong port try again (1 - 65.536)", "Server error",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -121,7 +119,7 @@ public class ServerGUI {
                     stopListeningButton.setEnabled(Main.server.isRunning());
                     startListeningButton.setEnabled(!Main.server.isRunning());
                 } else {
-                    JOptionPane.showMessageDialog(serverDialog, "Server.Server is already stopped!", "Server.Server error",
+                    JOptionPane.showMessageDialog(serverDialog, "Server is already stopped!", "Server error",
                             JOptionPane.WARNING_MESSAGE);
                 }
             } finally {
@@ -135,7 +133,7 @@ public class ServerGUI {
         if (Main.server.isRunning()) {
             labelOfState.setText("Listening on port: " + Main.server.getPort());
         } else {
-            labelOfState.setText("Server.Server not listening on any port");
+            labelOfState.setText("Server not listening on any port");
         }
 
     }

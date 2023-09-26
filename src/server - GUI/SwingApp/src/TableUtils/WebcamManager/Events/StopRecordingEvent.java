@@ -1,11 +1,12 @@
 package TableUtils.WebcamManager.Events;
 
 import TableUtils.WebcamManager.WebcamGUI;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class StopRecordingEvent extends WebcamEvent {
+public class StopRecordingEvent extends AbstractEventGUI<WebcamGUI> {
     public StopRecordingEvent(WebcamGUI webcamGUI) {
         super(webcamGUI);
     }

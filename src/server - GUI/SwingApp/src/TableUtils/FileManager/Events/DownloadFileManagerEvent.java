@@ -4,14 +4,14 @@ import Server.BytesChannel;
 import Packets.Identificators.Category;
 import ProgressBar.DownloadProgressBar;
 import TableUtils.FileManager.FileManagerGUI;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import Utilities.SwingUpdater;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
 
-public class DownloadFileManagerEvent extends AbstractEvent<FileManagerGUI> {
+public class DownloadFileManagerEvent extends AbstractEventGUI<FileManagerGUI> {
     private final DownloadProgressBar<FileManagerGUI> downloadProgressBar;
     private final List<String> downloadList;
 
@@ -35,7 +35,7 @@ public class DownloadFileManagerEvent extends AbstractEvent<FileManagerGUI> {
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            handleGuiError();
         }
     }
 }

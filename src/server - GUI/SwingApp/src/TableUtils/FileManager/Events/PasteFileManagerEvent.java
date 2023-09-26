@@ -26,8 +26,7 @@ public class PasteFileManagerEvent extends FileManagerEvent {
             jsonObject.put("to_paths", listWhereToPaste);
             getClient().sendString(jsonObject.toString());
         } catch (Exception ex) {
-         //   new ClientErrorHandler("Unable to paste, connection lost with client",
-           //         fileManagerDialog, getClient().getClientSocket());
+            handleGuiError();
         }
     }
 }

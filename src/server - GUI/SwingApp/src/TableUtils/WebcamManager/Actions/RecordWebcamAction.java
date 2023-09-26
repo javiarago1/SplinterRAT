@@ -3,7 +3,7 @@ package TableUtils.WebcamManager.Actions;
 import TableUtils.WebcamManager.Events.RecordWebcamEvent;
 import TableUtils.WebcamManager.Events.StopRecordingEvent;
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,11 +12,10 @@ import java.awt.event.ActionEvent;
  * Class for record or stop recording button actions
  */
 
-public class RecordWebcamAction extends AbstractAction<WebcamGUI> {
+public class RecordWebcamAction extends AbstractActionGUI<WebcamGUI> {
 
-
-    public RecordWebcamAction(WebcamGUI webcamGUI) {
-        super(webcamGUI);
+    public RecordWebcamAction(WebcamGUI guiManager) {
+        super(guiManager);
     }
 
     @Override

@@ -3,12 +3,12 @@ package TableUtils.KeyboardController.Actions;
 import TableUtils.KeyboardController.Compiler.JCodeCompiler;
 import TableUtils.KeyboardController.KeyboardControllerGUI;
 import TableUtils.KeyboardController.Events.KeyboardEvent;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 
 import java.awt.event.ActionEvent;
 
-public class KeyboardAction extends AbstractAction<KeyboardControllerGUI> {
+public class KeyboardAction extends AbstractActionGUI<KeyboardControllerGUI> {
     public KeyboardAction(KeyboardControllerGUI keyboardControllerGUI) {
         super(keyboardControllerGUI);
     }

@@ -1,15 +1,15 @@
 package TableUtils.SystemState.Actions;
 
 import Server.Client;
+import Utilities.AbstractActionNoGUI;
 import Utilities.GetSYS;
 import TableUtils.SystemState.Constants.SystemStatus;
 import TableUtils.SystemState.Events.SystemStateEvent;
 
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class SystemStateAction implements ActionListener {
+public class SystemStateAction extends AbstractActionNoGUI {
     private final SystemStatus systemStatus;
 
     public SystemStateAction(SystemStatus systemStatus) {

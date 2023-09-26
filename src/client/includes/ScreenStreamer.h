@@ -1,7 +1,7 @@
 #ifndef CLIENT_SCREENSTREAMER_H
 #define CLIENT_SCREENSTREAMER_H
 
-#include "Stream.h"
+
 #include "KeyboardExecuter.h"
 
 #include "Gdiplus.h"

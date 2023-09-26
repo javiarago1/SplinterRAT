@@ -1,17 +1,17 @@
 package TableUtils.FileManager.Events;
 
 import ProgressBar.UploadProgressBar;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class CancelUploadEvent extends AbstractEvent<UploadProgressBar<?>> {
+public class CancelUploadEvent extends AbstractEventGUI<UploadProgressBar<?>> {
     private final AtomicBoolean cancellationAtomic;
 
-    public CancelUploadEvent(UploadProgressBar<?> guiManager, AtomicBoolean cancellationAtomic) {
-        super(guiManager);
+    public CancelUploadEvent(UploadProgressBar<?> uploadProgressBar, AtomicBoolean cancellationAtomic) {
+        super(uploadProgressBar);
         this.cancellationAtomic = cancellationAtomic;
     }
 
@@ -24,7 +24,7 @@ public class CancelUploadEvent extends AbstractEvent<UploadProgressBar<?>> {
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+           handleGuiError();
         }
     }
 }

@@ -5,19 +5,20 @@ import Server.Client;
 import TableUtils.WebcamManager.Actions.RecordWebcamAction;
 import TableUtils.WebcamManager.Actions.SaveRecordAction;
 import TableUtils.WebcamManager.Actions.SnapshotAction;
+
 import TableUtils.WebcamManager.Actions.StartWebcamAction;
-import TableUtils.WebcamManager.Listeners.FPSMenuListener;
 import TableUtils.WebcamManager.Events.WebcamDevicesEvent;
+import TableUtils.WebcamManager.Listeners.FPSMenuListener;
 import TableUtils.WebcamManager.Listeners.WebcamWindowListener;
-import Utilities.GUIManagerInterface;
+import Utilities.AbstractDialogCreator;
 
 import javax.swing.*;
 import java.awt.*;
+import Main.Main;
 
 
-public class WebcamGUI implements GUIManagerInterface {
+public class WebcamGUI extends AbstractDialogCreator {
 
-    private final Client client;
     private int FPS = 30;
     private JComboBox<String> boxOfDevices;
     private JLabel webcamLabel;
@@ -41,27 +42,25 @@ public class WebcamGUI implements GUIManagerInterface {
      * - Not fragmented: videos will be concatenated with each other while we press stop recording
      */
     private boolean fragmented;
-    private JDialog webcamDialog;
     JMenuBar webcamMenuBar;
-    JFrame mainGUI;
+
 
 
     public WebcamGUI(Client client, JFrame mainGUI) {
-        this.client = client;
-        this.mainGUI = mainGUI;
+        super(Main.gui, client, "Webcam manager");
+
         client.setWebcamDialogOpen(true);
         setUpDialog();
 
     }
 
     private void setUpDialog() {
-        webcamDialog = new JDialog(mainGUI, "Webcam -" + client.getIdentifier());
-        webcamDialog.setSize(new Dimension(600, 400));
-        webcamDialog.setMinimumSize(new Dimension(450, 300));
-        webcamDialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        webcamDialog.addWindowListener(new WebcamWindowListener(this));
-        webcamDialog.setLocationRelativeTo(null);
-        webcamDialog.getContentPane().setLayout(new GridBagLayout());
+        this.setSize(new Dimension(600, 400));
+        this.setMinimumSize(new Dimension(450, 300));
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WebcamWindowListener(this));
+        this.setLocationRelativeTo(null);
+        this.getContentPane().setLayout(new GridBagLayout());
 
         // Setting up constraints
         GridBagConstraints constraints = new GridBagConstraints();
@@ -80,7 +79,7 @@ public class WebcamGUI implements GUIManagerInterface {
         constraints.anchor = GridBagConstraints.WEST;
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weighty = 1.0;
-        webcamDialog.getContentPane().add(webcamLabel, constraints);
+        this.getContentPane().add(webcamLabel, constraints);
         constraints.weighty = 0.0;
 
         startButton = new JToggleButton("Start");
@@ -88,28 +87,28 @@ public class WebcamGUI implements GUIManagerInterface {
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        webcamDialog.getContentPane().add(startButton, constraints);
+        this.getContentPane().add(startButton, constraints);
 
         recordButton = new JToggleButton("Record");
         constraints.gridx = 2;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        webcamDialog.getContentPane().add(recordButton, constraints);
+        this.getContentPane().add(recordButton, constraints);
 
         saveRecordButton = new JButton("Save records");
         constraints.gridx = 3;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        webcamDialog.getContentPane().add(saveRecordButton, constraints);
+        this.getContentPane().add(saveRecordButton, constraints);
 
         snapshotButton = new JButton("Snapshot");
         constraints.gridx = 4;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
-        webcamDialog.getContentPane().add(snapshotButton, constraints);
+        this.getContentPane().add(snapshotButton, constraints);
 
         boxOfDevices = new JComboBox<>();
         constraints.gridx = 1;
@@ -119,7 +118,7 @@ public class WebcamGUI implements GUIManagerInterface {
         constraints.weightx = 1.0;
         // component only resizes horizontally
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        webcamDialog.getContentPane().add(boxOfDevices, constraints);
+        this.getContentPane().add(boxOfDevices, constraints);
 
         // adding listeners
         startButton.addActionListener(new StartWebcamAction(this));
@@ -133,7 +132,7 @@ public class WebcamGUI implements GUIManagerInterface {
         // getting the video devices working in client machine
 
         // Show webcam dialog
-        webcamDialog.setVisible(true);
+        this.setVisible(true);
     }
 
 
@@ -147,11 +146,11 @@ public class WebcamGUI implements GUIManagerInterface {
         recordingMenu.add(videoFragmentedCheckBox);
         webcamMenuBar.add(recordingMenu);
         fpsLimit.addActionListener(new FPSMenuListener(this));
-        webcamDialog.setJMenuBar(webcamMenuBar);
+        this.setJMenuBar(webcamMenuBar);
     }
 
     public void getDevices() {
-        client.getExecutor().submit(new WebcamDevicesEvent(this));
+        getClient().getExecutor().submit(new WebcamDevicesEvent(this));
     }
 
 
@@ -186,7 +185,7 @@ public class WebcamGUI implements GUIManagerInterface {
 
 
     public void setFrameDimensions(int width, int height) {
-        webcamDialog.setSize(new Dimension(width, height));
+        this.setSize(new Dimension(width, height));
     }
 
 
@@ -200,10 +199,6 @@ public class WebcamGUI implements GUIManagerInterface {
         return recordingMenu;
     }
 
-    @Override
-    public Client getClient() {
-        return client;
-    }
 
     public String getSelectedDevice() {
         return selectedDevice;
@@ -222,7 +217,7 @@ public class WebcamGUI implements GUIManagerInterface {
     }
 
     public JDialog getWebcamDialog() {
-        return webcamDialog;
+        return this;
     }
 
     public int getFPS() {

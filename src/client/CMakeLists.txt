@@ -44,7 +44,6 @@ include_directories(${CMAKE_SOURCE_DIR}/includes)
 add_executable(Client
         src/client.cpp
         src/video_audio/DeviceEnumerator.cpp
-        src/stream/Stream.cpp
         src/time/TimeCS.cpp
         src/converter/Converter.cpp
         src/download/Download.cpp
@@ -86,5 +85,5 @@ target_link_libraries(Client
         Crypt32
         libZipper-static.a
         libzlibstatic.a
-
+        Iphlpapi
 )

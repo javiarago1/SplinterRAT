@@ -3,12 +3,12 @@ package TableUtils.ScreenStreaming.Actions;
 import TableUtils.ScreenStreaming.Events.StartStreamingEvent;
 import TableUtils.ScreenStreaming.Events.StopStreamingEvent;
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class StartStreamingAction extends AbstractAction<ScreenStreamerGUI> {
+public class StartStreamingAction extends AbstractActionGUI<ScreenStreamerGUI> {
 
     public StartStreamingAction(ScreenStreamerGUI screenStreamerGUI) {
         super(screenStreamerGUI);

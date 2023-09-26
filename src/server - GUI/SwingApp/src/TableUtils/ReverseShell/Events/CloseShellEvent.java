@@ -1,12 +1,12 @@
 package TableUtils.ReverseShell.Events;
 
 import TableUtils.ReverseShell.ReverseShellGUI;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class CloseShellEvent extends AbstractEvent<ReverseShellGUI> {
+public class CloseShellEvent extends AbstractEventGUI<ReverseShellGUI> {
     public CloseShellEvent(ReverseShellGUI guiManager) {
         super(guiManager);
     }
@@ -18,7 +18,7 @@ public class CloseShellEvent extends AbstractEvent<ReverseShellGUI> {
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            handleGuiError();
         }
     }
 }

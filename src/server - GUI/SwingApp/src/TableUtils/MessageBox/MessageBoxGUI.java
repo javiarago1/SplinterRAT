@@ -3,23 +3,20 @@ package TableUtils.MessageBox;
 import Server.Client;
 import Main.Main;
 import TableUtils.MessageBox.Actions.MessageBoxAction;
-import Utilities.GUIManagerInterface;
+import Utilities.AbstractDialogCreator;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class MessageBoxGUI implements GUIManagerInterface {
-    private final Client client;
-    private final JDialog messageBoxDialog;
+public class MessageBoxGUI extends AbstractDialogCreator {
 
     public MessageBoxGUI(Client client) {
-        this.client = client;
-        messageBoxDialog = new JDialog(Main.gui.getMainGUI(), "Message box - " + client.getIdentifier());
-        messageBoxDialog.setLayout(new GridBagLayout());
-        messageBoxDialog.setSize(250, 350);
-        messageBoxDialog.setLocationRelativeTo(null);
+        super(Main.gui, client ,"Message box");
+        this.setLayout(new GridBagLayout());
+        this.setSize(250, 350);
+        this.setLocationRelativeTo(null);
         addComponents();
-        messageBoxDialog.setVisible(true);
+        this.setVisible(true);
     }
 
     private JTextArea contentTextArea;
@@ -39,27 +36,27 @@ public class MessageBoxGUI implements GUIManagerInterface {
         constraints.fill = GridBagConstraints.BOTH;
 
         JLabel labelTitle = new JLabel("Title for message box:");
-        messageBoxDialog.add(labelTitle, constraints);
+        this.add(labelTitle, constraints);
 
 
         constraints.gridy = 1;
         titleTextField = new JTextField();
-        messageBoxDialog.add(titleTextField, constraints);
+        this.add(titleTextField, constraints);
 
         constraints.gridy = 2;
         JLabel labelContent = new JLabel("Content for message box:");
-        messageBoxDialog.add(labelContent, constraints);
+        this.add(labelContent, constraints);
 
         constraints.weighty = 1;
         constraints.gridy = 3;
         contentTextArea = new JTextArea();
         contentTextArea.setLineWrap(true);
-        messageBoxDialog.add(new JScrollPane(contentTextArea), constraints);
+        this.add(new JScrollPane(contentTextArea), constraints);
 
         constraints.weighty = 0;
         constraints.gridy = 4;
         JLabel labelOfType = new JLabel("Select button of box:");
-        messageBoxDialog.add(labelOfType, constraints);
+        this.add(labelOfType, constraints);
 
         constraints.gridy = 5;
         typeOfBox = new JComboBox<>();
@@ -68,12 +65,12 @@ public class MessageBoxGUI implements GUIManagerInterface {
         typeOfBox.addItem("Yes, no");
         typeOfBox.addItem("Yes, no, cancel");
 
-        messageBoxDialog.add(typeOfBox, constraints);
+        this.add(typeOfBox, constraints);
 
 
         constraints.gridy = 6;
         JLabel labelOfIcon = new JLabel("Select icon of box:");
-        messageBoxDialog.add(labelOfIcon, constraints);
+        this.add(labelOfIcon, constraints);
 
         constraints.gridy = 7;
         iconOfBox = new JComboBox<>();
@@ -82,18 +79,14 @@ public class MessageBoxGUI implements GUIManagerInterface {
         iconOfBox.addItem("Warning");
         iconOfBox.addItem("Packets");
 
-        messageBoxDialog.add(iconOfBox, constraints);
+        this.add(iconOfBox, constraints);
         JButton sendBoxButton = new JButton("Send box");
         sendBoxButton.addActionListener(new MessageBoxAction(this));
 
 
         constraints.gridy = 8;
-        messageBoxDialog.add(sendBoxButton, constraints);
+        this.add(sendBoxButton, constraints);
 
-    }
-
-    public JDialog getMessageBoxDialog() {
-        return messageBoxDialog;
     }
 
     public JTextArea getContentTextArea() {
@@ -112,8 +105,5 @@ public class MessageBoxGUI implements GUIManagerInterface {
         return iconOfBox;
     }
 
-    @Override
-    public Client getClient() {
-        return client;
-    }
+
 }

@@ -5,6 +5,9 @@ import javax.swing.*;
 import Server.ConnectionStore;
 import Server.Server;
 import Utilities.SwingUpdaterFactory;
+import com.formdev.flatlaf.FlatDarkLaf;
+
+import java.awt.*;
 
 public class Main {
 
@@ -13,6 +16,8 @@ public class Main {
     public static Server server;
     private static final int defaultPort = 3055;
     public static void main(String[] args) {
+        FlatDarkLaf.setup();
+        UIManager.put("Component.focusedBorderColor", new Color(55, 55, 55));
         ConnectionStore.updaterFactory = new SwingUpdaterFactory();
         try {
             server = new Server(defaultPort);

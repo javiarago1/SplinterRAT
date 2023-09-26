@@ -6,7 +6,7 @@ import TableUtils.KeyboardController.Actions.KeyboardAction;
 import TableUtils.KeyboardController.Constants.Movement;
 import TableUtils.KeyboardController.Actions.MoverAction;
 import TableUtils.KeyboardController.Listeners.ListListener;
-import Utilities.GUIManagerInterface;
+import Utilities.AbstractDialogCreator;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
@@ -15,21 +15,18 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-public class KeyboardControllerGUI implements GUIManagerInterface {
-    private final JDialog dialog;
+public class KeyboardControllerGUI extends AbstractDialogCreator {
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
     private JList<String> listOfEvents;
-    private final Client client;
 
     public KeyboardControllerGUI(Client client) {
-        this.client = client;
-        dialog = new JDialog(Main.gui.getMainGUI(), "Keyboard controller - " + client.getIdentifier());
-        dialog.setSize(new Dimension(650, 400));
-        dialog.setLayout(new GridLayout(1, 2));
-        dialog.setLocationRelativeTo(null);
+        super(Main.gui, client, "Keyboard controller");
+        this.setSize(new Dimension(650, 400));
+        this.setLayout(new GridLayout(1, 2));
+        this.setLocationRelativeTo(null);
         leftPanel();
         rightPanel();
-        dialog.setVisible(true);
+        this.setVisible(true);
     }
 
 
@@ -103,7 +100,7 @@ public class KeyboardControllerGUI implements GUIManagerInterface {
                 removeEventButton
         }));
 
-        dialog.add(leftPanel);
+        this.add(leftPanel);
 
     }
 
@@ -213,11 +210,7 @@ public class KeyboardControllerGUI implements GUIManagerInterface {
         rightPanel.add(submitSequenceToClient, constraints);
 
 
-        dialog.add(rightPanel);
-    }
-
-    public JDialog getDialog() {
-        return dialog;
+        this.add(rightPanel);
     }
 
     public DefaultListModel<String> getListModel() {
@@ -228,8 +221,4 @@ public class KeyboardControllerGUI implements GUIManagerInterface {
         listOfEvents.setSelectedIndex(listModel.getSize() - 1);
     }
 
-    @Override
-    public Client getClient() {
-        return client;
-    }
 }

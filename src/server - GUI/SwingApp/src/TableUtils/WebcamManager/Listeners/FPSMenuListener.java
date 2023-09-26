@@ -1,12 +1,12 @@
 package TableUtils.WebcamManager.Listeners;
 
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class FPSMenuListener extends AbstractAction<WebcamGUI> {
+public class FPSMenuListener extends AbstractActionGUI<WebcamGUI> {
 
 
     public FPSMenuListener(WebcamGUI webcamGUI) {

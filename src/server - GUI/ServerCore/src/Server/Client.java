@@ -23,8 +23,6 @@ import Utils.UniqueByteIDGenerator;
 
 public class Client {
     private final Session session;
-    private SystemInformation sysInfo;
-    private NetworkInformation netInfo;
     private final ExecutorService executor = Executors.newCachedThreadPool();
 
     public UpdaterInterface updater;
@@ -143,19 +141,14 @@ public class Client {
         return updater.getNetworkInformation().IP() + " - " + updater.getSystemInformation().USER_NAME();
     }
 
+    public Session getSession() {
+        return session;
+    }
 
     public UniqueByteIDGenerator getUniqueByteIDGeneratorOut() {
         return uniqueByteIDGeneratorOut;
     }
 
-
-    public void setSysInfo(SystemInformation sysInfo) {
-        this.sysInfo = sysInfo;
-    }
-
-    public void setNetInfo(NetworkInformation netInfo) {
-        this.netInfo = netInfo;
-    }
 
     public SystemInformation getSysInfo() {
         return updater.getSystemInformation();

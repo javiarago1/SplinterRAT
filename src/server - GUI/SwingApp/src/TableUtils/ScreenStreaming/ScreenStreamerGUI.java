@@ -9,7 +9,7 @@ import TableUtils.ScreenStreaming.Events.MonitorsEvent;
 import TableUtils.ScreenStreaming.Listeners.KeyScreenListener;
 import TableUtils.ScreenStreaming.Listeners.MouseScreenListener;
 import TableUtils.ScreenStreaming.Listeners.ScreenWindowAdapter;
-import Utilities.GUIManagerInterface;
+import Utilities.AbstractDialogCreator;
 
 
 import javax.swing.*;
@@ -20,9 +20,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import Main.Main;
 
-public class ScreenStreamerGUI implements GUIManagerInterface {
-    private final JDialog dialog;
-    private final Client client;
+public class ScreenStreamerGUI extends AbstractDialogCreator {
     private final BlockingQueue<String> queueOfEvents = new LinkedBlockingQueue<>();
     private MouseScreenListener mouseScreenListener;
     private KeyScreenListener keyScreenListener;
@@ -40,13 +38,12 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
     private byte[] lastData;
 
     public ScreenStreamerGUI(Client client) {
-        dialog = new JDialog(Main.gui.getMainGUI(), "Screen controller - " + client.getIdentifier());
-        this.client = client;
-        dialog.setLayout(new BorderLayout());
-        dialog.setSize(1000, 600);
-        dialog.setLocationRelativeTo(null);
+        super(Main.gui, client, "Screen controller");
+        this.setLayout(new BorderLayout());
+        this.setSize(1000, 600);
+        this.setLocationRelativeTo(null);
         addComponents();
-        dialog.setVisible(true);
+        this.setVisible(true);
     }
 
     private JLabel virtualScreen;
@@ -56,7 +53,7 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         virtualScreen = new JLabel("Press start to stream screen", SwingConstants.CENTER);
         virtualScreen.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         virtualScreen.setOpaque(true);
-        dialog.add(virtualScreen, BorderLayout.CENTER);
+        this.add(virtualScreen, BorderLayout.CENTER);
         virtualScreen.setFocusable(true);
 
         JPanel toolbar = new JPanel();
@@ -95,9 +92,9 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         controlCheckBox.addActionListener(new ControlComputerAction(this));
         controlCheckBox.setFocusable(false);
 
-        dialog.add(toolbar, BorderLayout.SOUTH);
+        this.add(toolbar, BorderLayout.SOUTH);
         startStopToggle.addActionListener(new StartStreamingAction(this));
-        dialog.addWindowListener(new ScreenWindowAdapter(this));
+        this.addWindowListener(new ScreenWindowAdapter(this));
     }
 
     public void requestMonitors() {
@@ -115,12 +112,7 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
         virtualScreen.addMouseListener(mouseScreenListener);
         keyScreenListener = new KeyScreenListener(this);
         virtualScreen.addKeyListener(keyScreenListener);
-        client.getExecutor().submit(new EventListener(this));
-    }
-
-
-    public JDialog getDialog() {
-        return dialog;
+        getClient().getExecutor().submit(new EventListener(this));
     }
 
     public BlockingQueue<String> getQueueOfEvents() {
@@ -129,11 +121,6 @@ public class ScreenStreamerGUI implements GUIManagerInterface {
 
     public JLabel getVirtualScreen() {
         return virtualScreen;
-    }
-
-
-    public Client getClient() {
-        return client;
     }
 
     public Dimension getDimensionsOfVirtualScreen() {

@@ -5,27 +5,25 @@ import Main.Main;
 import TableUtils.ReverseShell.Actions.SendCommandAction;
 import TableUtils.ReverseShell.Events.StartShellEvent;
 import TableUtils.ReverseShell.Listeners.ScreenWindowAdapter;
-import Utilities.GUIManagerInterface;
+import Utilities.AbstractDialogCreator;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ReverseShellGUI implements GUIManagerInterface {
-    private final JDialog reverseShellDialog;
+public class ReverseShellGUI extends AbstractDialogCreator {
     private JTextField fieldOfCommands;
     private JTextArea textAreaOfResult;
-    private final Client client;
+
 
     public ReverseShellGUI(Client client) {
-        this.client = client;
-        reverseShellDialog = new JDialog(Main.gui.getMainGUI(), "Reverse shell -" + client.getIdentifier());
-        reverseShellDialog.setSize(new Dimension(600, 400));
-        reverseShellDialog.setLocationRelativeTo(null);
-        reverseShellDialog.setLayout(new GridBagLayout());
-        reverseShellDialog.addWindowListener(new ScreenWindowAdapter(this));
+        super(Main.gui, client, "Reverse shell");
+        this.setSize(new Dimension(600, 400));
+        this.setLocationRelativeTo(null);
+        this.setLayout(new GridBagLayout());
+        this.addWindowListener(new ScreenWindowAdapter(this));
         setupComponents();
 
-        reverseShellDialog.setVisible(true);
+        this.setVisible(true);
     }
 
     public void initializeShell(){
@@ -56,7 +54,7 @@ public class ReverseShellGUI implements GUIManagerInterface {
         constraints.weighty = 0.95;
         JScrollPane textAreaScrollPane = new JScrollPane(textAreaOfResult);
         textAreaScrollPane.setBorder(null);
-        reverseShellDialog.add(textAreaScrollPane, constraints);
+        this.add(textAreaScrollPane, constraints);
 
         // TextField Configuration
         fieldOfCommands = new JTextField();
@@ -67,7 +65,7 @@ public class ReverseShellGUI implements GUIManagerInterface {
 
         constraints.insets = new Insets(5, 5,5,5);
         fieldOfCommands.addActionListener(new SendCommandAction(this));
-        reverseShellDialog.add(fieldOfCommands, constraints);
+        this.add(fieldOfCommands, constraints);
     }
 
     public JTextField getFieldOfCommands() {
@@ -76,9 +74,5 @@ public class ReverseShellGUI implements GUIManagerInterface {
 
     public JTextArea getTextAreaOfResult() {
         return textAreaOfResult;
-    }
-
-    public Client getClient() {
-        return client;
     }
 }

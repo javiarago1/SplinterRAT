@@ -19,9 +19,7 @@ public class DeleteFileManagerEvent extends FileManagerEvent {
             jsonObject.put("from_paths", getCMElements());
             getClient().sendString(jsonObject.toString());
         } catch (Exception e) {
-           // new ClientErrorHandler("Unable to delete, connection lost with client",
-           //         fileManagerDialog,
-           //         getClient().getClientSocket());
+           handleGuiError();
         }
     }
 }

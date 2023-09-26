@@ -3,13 +3,13 @@ package TableUtils.ScreenStreaming.Events;
 import Server.BytesChannel;
 import Packets.Identificators.Category;
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class StartStreamingEvent extends AbstractEvent<ScreenStreamerGUI> {
+public class StartStreamingEvent extends AbstractEventGUI<ScreenStreamerGUI> {
     public StartStreamingEvent(ScreenStreamerGUI screenStreamerGUI) {
         super(screenStreamerGUI);
     }
@@ -24,7 +24,7 @@ public class StartStreamingEvent extends AbstractEvent<ScreenStreamerGUI> {
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            handleGuiError();
         }
 
 

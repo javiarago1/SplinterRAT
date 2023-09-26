@@ -19,38 +19,31 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 
-public class SplinterGUI {
-
-
+public class SplinterGUI extends JFrame {
+    
     private final String[] column = {"UUID", "IP", "Country", "Tag", "Username", "Operating System", "Status"};
     private JPanel mainPanel;
     private JTable connectionsTable;
-    private JFrame mainGUI;
     private final JLabel listeningPort = new JLabel();
 
     private final JLabel clientsConnected = new JLabel();
     private final GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
     public SplinterGUI() {
-        loadStyle();
+        super("SplinterRAT");
         setUpFrame();
         addComps();
     }
 
 
     private void setUpFrame() {
-        mainGUI = new JFrame("SplinterRAT Interface");
-        mainGUI.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("splinter_icon_250x250.png"))).getImage());
-        mainGUI.setSize(new Dimension(800, 400));
-        mainGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainGUI.setLocationRelativeTo(null);
+        this.setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("splinter_icon_250x250.png"))).getImage());
+        this.setSize(new Dimension(800, 400));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
 
     }
 
-    private void loadStyle() {
-        FlatDarkLaf.setup();
-        UIManager.put("Component.focusedBorderColor", new Color(55, 55, 55));
-    }
 
 
     private void addJMenu(){
@@ -60,7 +53,7 @@ public class SplinterGUI {
         builderMenu.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new CompilerGUI(mainGUI);
+                new CompilerGUI(getMainGUI());
             }
         });
         menuBar.add(builderMenu);
@@ -69,7 +62,7 @@ public class SplinterGUI {
         serverBar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new ServerGUI(mainGUI);
+                new ServerGUI(getMainGUI());
             }
         });
         menuBar.add(serverBar);
@@ -89,7 +82,7 @@ public class SplinterGUI {
                         "• This program can only be installed on machines with legal permission. <br>" +
                         "• This program can only be used for ethical hacking purposes.<br>" +
                         "</html>";
-                JOptionPane.showMessageDialog(mainGUI, aboutMessage, "About SplinterRAT",
+                JOptionPane.showMessageDialog(getMainGUI(), aboutMessage, "About SplinterRAT",
                         JOptionPane.INFORMATION_MESSAGE,
                         new ImageIcon(imageIcon.getImage()));
 
@@ -98,7 +91,7 @@ public class SplinterGUI {
         menuBar.add(Box.createHorizontalGlue());
         menuBar.add(aboutMenu);
 
-        mainGUI.setJMenuBar(menuBar);
+        this.setJMenuBar(menuBar);
     }
 
     private void addJPanel() {
@@ -117,7 +110,7 @@ public class SplinterGUI {
         setupTable();
         //
 
-        mainGUI.setVisible(true);
+        this.setVisible(true);
     }
 
 
@@ -139,7 +132,7 @@ public class SplinterGUI {
         connectionsTable.getTableHeader().setReorderingAllowed(false);
         connectionsTable.addMouseListener(new TablePopUpListener(this));
         mainPanel.add(tableScroll, gridBagConstraints);
-        mainGUI.add(mainPanel);
+        this.add(mainPanel);
 
     }
 
@@ -171,14 +164,19 @@ public class SplinterGUI {
         bottomInformationPanel.add(clientsConnected, BorderLayout.LINE_START);
         mainPanel.add(bottomInformationPanel, gridBagConstraints);
 
+    }
 
+    public void updateUserStateToDisconnected(String identifier){
+        DefaultTableModel tableModel = (DefaultTableModel) connectionsTable.getModel();
+        for (int i = 0; i < tableModel.getRowCount(); i++){
+            if (tableModel.getValueAt(i,0).equals(identifier)){
+                tableModel.setValueAt("Disconnected", i, tableModel.getColumnCount() - 1);
+            }
+        }
     }
 
     public void updateNumOfConnectedClients() {
         clientsConnected.setText("Connected: " + ConnectionStore.getNumOfConnectedUsers());
-        //for (Socket key : Main.Main.server.getMap().keySet()) {
-        //    System.out.println(key);
-        //}
     }
 
     private void setupTable() {
@@ -204,8 +202,8 @@ public class SplinterGUI {
     }
 
 
-    public JFrame getMainGUI() {
-        return mainGUI;
+    public SplinterGUI getMainGUI() {
+        return this;
     }
 
     public JTable getConnectionsTable() {

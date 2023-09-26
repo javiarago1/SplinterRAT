@@ -3,7 +3,7 @@ package TableUtils.FileManager.Events;
 import TableUtils.FileManager.FileManagerGUI;
 import ProgressBar.Bar;
 import Utils.UniqueByteIDGenerator;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import net.lingala.zip4j.ZipFile;
 import org.json.JSONObject;
 
@@ -14,7 +14,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class UploadEvent extends AbstractEvent<FileManagerGUI> {
+public class UploadEvent extends AbstractEventGUI<FileManagerGUI> {
     private final File[] selectedFiles;
     private final Bar<?> progressBar;
     private final String selectedPath;
@@ -39,7 +39,7 @@ public class UploadEvent extends AbstractEvent<FileManagerGUI> {
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            handleGuiError();
         }
         try {
             // 1. Comprimir usando zip4j
@@ -76,8 +76,8 @@ public class UploadEvent extends AbstractEvent<FileManagerGUI> {
             // 3. Libera el ID único
             uniqueByteIDGeneratorOut.finishTask(id);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            handleGuiError();
         }
     }
 

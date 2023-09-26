@@ -1,14 +1,14 @@
 package TableUtils.Connection.Actions;
 
 import Server.Client;
+import Utilities.AbstractActionNoGUI;
 import Utilities.GetSYS;
 import TableUtils.Connection.Constants.ConnStatus;
 import TableUtils.Connection.Events.ConnectionEvent;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ConnectionAction implements ActionListener {
+public class ConnectionAction extends AbstractActionNoGUI {
 
     private final ConnStatus connStatus;
 

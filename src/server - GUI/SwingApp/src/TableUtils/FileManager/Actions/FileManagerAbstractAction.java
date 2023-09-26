@@ -1,14 +1,14 @@
 package TableUtils.FileManager.Actions;
 
 import TableUtils.FileManager.FileManagerGUI;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FileManagerAbstractAction extends AbstractAction<FileManagerGUI> {
+public abstract class FileManagerAbstractAction extends AbstractActionGUI<FileManagerGUI> {
 
     public FileManagerAbstractAction(FileManagerGUI fileManagerGUI) {
         super(fileManagerGUI);

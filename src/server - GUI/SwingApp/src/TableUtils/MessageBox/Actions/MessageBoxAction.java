@@ -2,12 +2,12 @@ package TableUtils.MessageBox.Actions;
 
 import TableUtils.MessageBox.Events.MessageBoxEvent;
 import TableUtils.MessageBox.MessageBoxGUI;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 import org.json.JSONObject;
 
 import java.awt.event.ActionEvent;
 
-public class MessageBoxAction extends AbstractAction<MessageBoxGUI> {
+public class MessageBoxAction extends AbstractActionGUI<MessageBoxGUI> {
 
 
     public MessageBoxAction(MessageBoxGUI guiManager) {

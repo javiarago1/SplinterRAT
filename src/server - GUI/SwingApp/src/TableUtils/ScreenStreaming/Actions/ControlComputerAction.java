@@ -1,12 +1,12 @@
 package TableUtils.ScreenStreaming.Actions;
 
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 import javax.swing.AbstractButton;
 import java.awt.event.ActionEvent;
 
-public class ControlComputerAction extends AbstractAction<ScreenStreamerGUI> {
+public class ControlComputerAction extends AbstractActionGUI<ScreenStreamerGUI> {
 
     public ControlComputerAction(ScreenStreamerGUI screenStreamerGUI) {
         super(screenStreamerGUI);

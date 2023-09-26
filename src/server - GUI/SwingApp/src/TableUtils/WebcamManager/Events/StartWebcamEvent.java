@@ -5,6 +5,7 @@ import Server.BytesChannel;
 import Packets.Identificators.Category;
 
 import TableUtils.WebcamManager.WebcamGUI;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.io.IOException;
  * - Sending recording information to client
  */
 
-public class StartWebcamEvent extends WebcamEvent {
+public class StartWebcamEvent extends AbstractEventGUI<WebcamGUI> {
 
     public StartWebcamEvent(WebcamGUI webcamGUI) {
         super(webcamGUI);

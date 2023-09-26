@@ -1,11 +1,11 @@
 package TableUtils.FileManager.Events;
 
 import TableUtils.FileManager.FileManagerGUI;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 
 import java.util.List;
 
-public abstract class FileManagerEvent extends AbstractEvent<FileManagerGUI> {
+public abstract class FileManagerEvent extends AbstractEventGUI<FileManagerGUI> {
     private final List<String> CMElements;
 
     public FileManagerEvent(FileManagerGUI fileManagerGUI, List<String> CMElements) {

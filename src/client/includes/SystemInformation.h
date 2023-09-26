@@ -1,6 +1,6 @@
 #ifndef CLIENT_CLIENTINFORMATION_H
 #define CLIENT_CLIENTINFORMATION_H
-#include "Stream.h"
+
 #include <windows.h>
 #include <string>
 #include <lmcons.h>
@@ -20,6 +20,7 @@ public:
 
     static nlohmann::json getSystemInformation();
 
+    static std::string getPrimaryMACAddress();
 
 };
 

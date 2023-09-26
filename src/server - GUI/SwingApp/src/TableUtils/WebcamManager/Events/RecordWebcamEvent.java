@@ -1,13 +1,14 @@
 package TableUtils.WebcamManager.Events;
 
 import TableUtils.WebcamManager.WebcamGUI;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class RecordWebcamEvent extends WebcamEvent {
-    public RecordWebcamEvent(WebcamGUI webcamGUI) {
-        super(webcamGUI);
+public class RecordWebcamEvent extends AbstractEventGUI<WebcamGUI> {
+    public RecordWebcamEvent(WebcamGUI guiManager) {
+        super(guiManager);
     }
 
     @Override

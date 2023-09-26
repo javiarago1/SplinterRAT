@@ -1,6 +1,7 @@
 package TableUtils.WebcamManager.Events;
 
 import TableUtils.WebcamManager.WebcamGUI;
+import Utilities.AbstractEventGUI;
 import Utilities.FolderOpener;
 import Utilities.Time;
 import org.apache.commons.io.FileUtils;
@@ -8,9 +9,10 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 
-public class SnapshotWebcamEvent extends WebcamEvent {
-    public SnapshotWebcamEvent(WebcamGUI webcamGUI) {
-        super(webcamGUI);
+public class SnapshotWebcamEvent extends AbstractEventGUI<WebcamGUI> {
+
+    public SnapshotWebcamEvent(WebcamGUI guiManager) {
+        super(guiManager);
     }
 
     @Override

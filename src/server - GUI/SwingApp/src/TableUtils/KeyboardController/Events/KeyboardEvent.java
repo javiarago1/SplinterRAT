@@ -1,12 +1,12 @@
 package TableUtils.KeyboardController.Events;
 
 import TableUtils.KeyboardController.KeyboardControllerGUI;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class KeyboardEvent extends AbstractEvent<KeyboardControllerGUI> {
+public class KeyboardEvent extends AbstractEventGUI<KeyboardControllerGUI> {
     private final String command;
 
     public KeyboardEvent(KeyboardControllerGUI guiManager, String command) {
@@ -22,7 +22,7 @@ public class KeyboardEvent extends AbstractEvent<KeyboardControllerGUI> {
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            handleGuiError();
         }
     }
 }

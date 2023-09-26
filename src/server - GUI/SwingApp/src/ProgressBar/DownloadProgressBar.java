@@ -1,14 +1,12 @@
 package ProgressBar;
 import Server.Client;
 
-import TableUtils.FileManager.Actions.CancelDownloadAction;
 import Utilities.AbstractDialogCreator;
-import Utilities.GUIManagerInterface;
 
 import javax.swing.*;
 
 
-public class DownloadProgressBar<T extends AbstractDialogCreator> extends Bar<T> implements GUIManagerInterface {
+public class DownloadProgressBar<T extends AbstractDialogCreator> extends Bar<T> {
 
     private final String ACTION = "Downloading";
 
@@ -29,7 +27,7 @@ public class DownloadProgressBar<T extends AbstractDialogCreator> extends Bar<T>
             }
             totalRead += read;
             getFileStateLabel().setText("KB read: " + totalRead);
-            if (isLastPacket) close();
+            if (isLastPacket) closeDialog();
         });
     }
 
@@ -38,4 +36,6 @@ public class DownloadProgressBar<T extends AbstractDialogCreator> extends Bar<T>
     public Client getClient() {
         return gui.getClient();
     }
+
+
 }

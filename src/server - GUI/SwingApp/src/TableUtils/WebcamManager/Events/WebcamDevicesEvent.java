@@ -1,6 +1,7 @@
 package TableUtils.WebcamManager.Events;
 
 import TableUtils.WebcamManager.WebcamGUI;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -11,11 +12,11 @@ import java.io.IOException;
  * a list containing them.
  */
 
-public class WebcamDevicesEvent extends WebcamEvent {
+public class WebcamDevicesEvent extends AbstractEventGUI<WebcamGUI> {
 
-    public WebcamDevicesEvent(WebcamGUI webcamGUI) {
-        super(webcamGUI);
 
+    public WebcamDevicesEvent(WebcamGUI guiManager) {
+        super(guiManager);
     }
 
     @Override

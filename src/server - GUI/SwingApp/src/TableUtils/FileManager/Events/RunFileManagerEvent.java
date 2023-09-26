@@ -21,9 +21,7 @@ public class RunFileManagerEvent extends FileManagerEvent {
             jsonObject.put("from_paths", getCMElements());
             getClient().sendString(jsonObject.toString());
         } catch (Exception ex) {
-            //new ClientErrorHandler("Unable to run, connection lost with client",
-            //        fileManagerDialog,
-            //        getClient().getClientSocket());
+            handleGuiError();
         }
     }
 }

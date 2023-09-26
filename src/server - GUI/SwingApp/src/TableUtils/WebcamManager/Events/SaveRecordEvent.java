@@ -3,11 +3,12 @@ package TableUtils.WebcamManager.Events;
 import Server.BytesChannel;
 import Packets.Identificators.Category;
 import TableUtils.WebcamManager.WebcamGUI;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class SaveRecordEvent extends WebcamEvent {
+public class SaveRecordEvent extends AbstractEventGUI<WebcamGUI> {
     public SaveRecordEvent(WebcamGUI webcamGUI) {
         super(webcamGUI);
     }

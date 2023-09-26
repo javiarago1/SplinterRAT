@@ -1,7 +1,7 @@
 #ifndef CLIENT_KEYBOARDEXECUTER_H
 #define CLIENT_KEYBOARDEXECUTER_H
 #include <string>
-#include "Stream.h"
+
 #include <windows.h>
 #include <sstream>
 #include <iostream>

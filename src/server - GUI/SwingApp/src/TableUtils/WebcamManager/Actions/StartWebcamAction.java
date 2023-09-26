@@ -4,7 +4,7 @@ import TableUtils.WebcamManager.Events.StartWebcamEvent;
 import TableUtils.WebcamManager.Events.SaveRecordEvent;
 import TableUtils.WebcamManager.Events.StopWebcamEvent;
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractAction;
+import Utilities.AbstractActionGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,11 +12,10 @@ import java.awt.event.ActionEvent;
 /*
  * Class for start or stop webcam actions
  */
-public class StartWebcamAction extends AbstractAction<WebcamGUI> {
+public class StartWebcamAction extends AbstractActionGUI<WebcamGUI> {
 
-
-    public StartWebcamAction(WebcamGUI webcamGUI) {
-        super(webcamGUI);
+    public StartWebcamAction(WebcamGUI guiManager) {
+        super(guiManager);
     }
 
 

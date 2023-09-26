@@ -1,12 +1,12 @@
 package TableUtils.ScreenStreaming.Events;
 
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class MonitorsEvent extends AbstractEvent<ScreenStreamerGUI> {
+public class MonitorsEvent extends AbstractEventGUI<ScreenStreamerGUI> {
     public MonitorsEvent(ScreenStreamerGUI screenStreamerGUI) {
         super(screenStreamerGUI);
     }
@@ -18,7 +18,7 @@ public class MonitorsEvent extends AbstractEvent<ScreenStreamerGUI> {
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            handleGuiError();
         }
     }
 }

@@ -1,12 +1,12 @@
 package TableUtils.FileManager.Events;
 
 import ProgressBar.DownloadProgressBar;
-import Utilities.AbstractEvent;
+import Utilities.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class CancelDownloadEvent extends AbstractEvent<DownloadProgressBar<?>> {
+public class CancelDownloadEvent extends AbstractEventGUI<DownloadProgressBar<?>> {
     public CancelDownloadEvent(DownloadProgressBar<?> downloadProgressBar) {
         super(downloadProgressBar);
     }
@@ -19,7 +19,7 @@ public class CancelDownloadEvent extends AbstractEvent<DownloadProgressBar<?>> {
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            handleGuiError();
         }
     }
 }

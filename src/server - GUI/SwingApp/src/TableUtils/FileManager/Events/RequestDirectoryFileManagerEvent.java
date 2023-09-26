@@ -19,7 +19,7 @@ public class RequestDirectoryFileManagerEvent extends FileManagerEvent {
         try {
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            handleGuiError();
         }
     }
 }
