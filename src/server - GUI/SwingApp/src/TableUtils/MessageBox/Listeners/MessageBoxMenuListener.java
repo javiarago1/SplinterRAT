@@ -1,17 +1,16 @@
 package TableUtils.MessageBox.Listeners;
 
 import Server.Client;
+import Utilities.GUIFactory;
 import Utilities.GetSYS;
 import TableUtils.MessageBox.MessageBoxGUI;
+import Utilities.MenuListenerClientAssigner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MessageBoxMenuListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandler();
-        assert client != null;
-        new MessageBoxGUI(client);
+public class MessageBoxMenuListener extends MenuListenerClientAssigner<MessageBoxGUI> {
+    public MessageBoxMenuListener(GUIFactory<MessageBoxGUI> guiFactory) {
+        super(guiFactory);
     }
 }

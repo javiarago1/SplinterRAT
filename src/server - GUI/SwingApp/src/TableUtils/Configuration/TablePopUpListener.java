@@ -154,7 +154,7 @@ public class TablePopUpListener extends MouseAdapter {
         dumpAllLogsMenu.addActionListener(new KeyLoggerAction(KeyLog.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(KeyboardControllerGUI::new));
         elevatePrivilegesMenu.addActionListener(new PermissionsAction());
-        messageBoxMenu.addActionListener(new MessageBoxMenuListener());
+        messageBoxMenu.addActionListener(new MessageBoxMenuListener(ReverseShellGUI::new));
         streamScreenMenu.addActionListener(new ScreenMenuListener(ScreenStreamerGUI::new));
         restartMenu.addActionListener(new ConnectionAction(ConnStatus.RESTART));
         disconnectMenu.addActionListener(new ConnectionAction(ConnStatus.DISCONNECT));
