@@ -6,7 +6,7 @@ ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
     actionMap(actionMap) {
     c.set_open_handler(std::bind(&ClientSocket::on_connection, this, std::placeholders::_1));
     c.set_message_handler(std::bind(&ClientSocket::on_message, this, std::placeholders::_1, std::placeholders::_2));
-   // c.set_close_handler(std::bind(&ClientSocket::on_close, this, std::placeholders::_1));
+    c.set_close_handler(std::bind(&ClientSocket::on_close, this, std::placeholders::_1));
     c.set_fail_handler(std::bind(&ClientSocket::on_fail, this, std::placeholders::_1));
     c.set_access_channels(websocketpp::log::alevel::none);
     c.set_error_channels(websocketpp::log::elevel::none);
@@ -18,6 +18,10 @@ ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
         std::cout << "Error: " << ec.message() << std::endl;
         // Consider terminating here if the initialization fails
     }
+}
+
+void ClientSocket::on_close(const websocketpp::connection_hdl hdl) {
+    //c.close();
 }
 
 void ClientSocket::on_message(websocketpp::connection_hdl hdl, client::message_ptr msg) {
