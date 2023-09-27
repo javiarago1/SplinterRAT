@@ -2,8 +2,7 @@
 
 
 ConnectionState::ConnectionState(ClientSocket &clientSocket,
-                                 bool &connectionState,
-                                 bool &streamListening) :
+                                 bool &connectionState) :
                                  Handler(clientSocket)
                                  {
     ActionMap& actionMap = clientSocket.getActionMap();
@@ -11,10 +10,10 @@ ConnectionState::ConnectionState(ClientSocket &clientSocket,
         Install::uninstall();
     };
     actionMap["DISCONNECT"] = [&](nlohmann::json& json) {
+        clientSocket.closeConnection();
         connectionState = false;
-        streamListening = false;
     };
-    actionMap["RECONNECT"] = [&](nlohmann::json& json) {
-        streamListening = false;
+    actionMap["RESTART"] = [&](nlohmann::json& json) {
+        clientSocket.closeConnection();
     };
 }

@@ -4,7 +4,7 @@ import Server.BytesChannel;
 import Packets.Identificators.Category;
 import ProgressBar.DownloadProgressBar;
 import TableUtils.FileManager.FileManagerGUI;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import Utilities.SwingUpdater;
 import org.json.JSONObject;
 

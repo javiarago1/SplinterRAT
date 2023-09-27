@@ -1,7 +1,7 @@
 package TableUtils.WebcamManager.Events;
 
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import Utilities.FolderOpener;
 import Utilities.Time;
 import org.apache.commons.io.FileUtils;

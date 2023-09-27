@@ -10,8 +10,8 @@ private:
 
 public:
     explicit ConnectionState(ClientSocket &clientSocket,
-                             bool &connectionState,
-                             bool &streamListening);
+                             bool &isConnecting);
+
 };
 
 

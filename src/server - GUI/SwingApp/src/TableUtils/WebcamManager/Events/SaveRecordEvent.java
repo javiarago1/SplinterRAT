@@ -3,7 +3,7 @@ package TableUtils.WebcamManager.Events;
 import Server.BytesChannel;
 import Packets.Identificators.Category;
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

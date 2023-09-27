@@ -1,7 +1,7 @@
 package TableUtils.ReverseShell.Events;
 
 import TableUtils.ReverseShell.ReverseShellGUI;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

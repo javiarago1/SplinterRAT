@@ -8,10 +8,12 @@ import Main.Main;
 import Server.ConnectionStore;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.util.Map;
 
 
 public class GetSYS {
+
     public static Client getClientHandler() {
         Map<Session, Client> map = ConnectionStore.connectionsMap;
         System.out.println(map.size());
@@ -24,6 +26,7 @@ public class GetSYS {
                 return client;
             }
         }
+        Main.gui.updateUserStateToDisconnected();
         return null;
     }
 

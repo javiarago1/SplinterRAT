@@ -1,7 +1,7 @@
 package TableUtils.Permissions.Events;
 
 import Server.Client;
-import Utilities.AbstractEventNoGUI;
+import Utilities.Event.AbstractEventNoGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

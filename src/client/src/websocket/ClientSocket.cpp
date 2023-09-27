@@ -6,6 +6,8 @@ ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
     actionMap(actionMap) {
     c.set_open_handler(std::bind(&ClientSocket::on_connection, this, std::placeholders::_1));
     c.set_message_handler(std::bind(&ClientSocket::on_message, this, std::placeholders::_1, std::placeholders::_2));
+   // c.set_close_handler(std::bind(&ClientSocket::on_close, this, std::placeholders::_1));
+    c.set_fail_handler(std::bind(&ClientSocket::on_fail, this, std::placeholders::_1));
     c.set_access_channels(websocketpp::log::alevel::none);
     c.set_error_channels(websocketpp::log::elevel::none);
     c.init_asio();
@@ -69,6 +71,12 @@ void ClientSocket::writeFileFromBuffer(uint8_t id) {
 
 }
 
+void ClientSocket::on_fail(websocketpp::connection_hdl hdl) {
+    std::cout << "Failed to establish connection." << std::endl;
+
+}
+
+
 
 void ClientSocket::on_connection(websocketpp::connection_hdl hdl) {
     if (hdl.lock()) { // Check if the handle is valid
@@ -97,8 +105,20 @@ void ClientSocket::sendBytes(const std::vector<uint8_t> &bytes) {
 
 
 
+void ClientSocket::closeConnection() {
+    if (con) {
+        websocketpp::lib::error_code ec;
+        c.close(con->get_handle(), websocketpp::close::status::normal, "Client closing connection", ec);
+        if (ec) {
+            std::cout << "Error on close: " << ec.message() << std::endl;
+        }
+    }
+}
+
+
 void ClientSocket::startConnection() {
     if (con) {
+        websocketpp::lib::error_code ec;
         c.connect(con);
         c.run();
     }

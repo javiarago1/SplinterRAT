@@ -1,7 +1,7 @@
 package TableUtils.ScreenStreaming.Events;
 
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

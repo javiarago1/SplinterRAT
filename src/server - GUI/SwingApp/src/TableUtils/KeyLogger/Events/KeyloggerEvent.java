@@ -5,7 +5,7 @@ import Packets.Identificators.Category;
 import Server.Client;
 import TableUtils.KeyLogger.Constants.KeyLog;
 import Utilities.AbstractDialogCreator;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

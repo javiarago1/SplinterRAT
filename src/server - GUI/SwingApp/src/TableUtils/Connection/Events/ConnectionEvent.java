@@ -2,7 +2,7 @@ package TableUtils.Connection.Events;
 
 import Server.Client;
 import TableUtils.Connection.Constants.ConnStatus;
-import Utilities.AbstractEventNoGUI;
+import Utilities.Event.AbstractEventNoGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

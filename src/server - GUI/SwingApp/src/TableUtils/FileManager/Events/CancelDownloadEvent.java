@@ -1,7 +1,7 @@
 package TableUtils.FileManager.Events;
 
 import ProgressBar.DownloadProgressBar;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

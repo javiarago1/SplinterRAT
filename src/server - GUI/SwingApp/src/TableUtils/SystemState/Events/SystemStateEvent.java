@@ -2,8 +2,7 @@ package TableUtils.SystemState.Events;
 
 import Server.Client;
 import TableUtils.SystemState.Constants.SystemStatus;
-import Utilities.AbstractEvent;
-import Utilities.AbstractEventNoGUI;
+import Utilities.Event.AbstractEventNoGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package Utilities;
+package Utilities.Event;
 
 import Main.Main;
 import Server.Client;
@@ -17,7 +17,7 @@ public abstract class AbstractEventNoGUI implements AbstractEvent{
     @Override
     public void handleGuiError(){
         SwingUtilities.invokeLater(() -> {
-            Main.gui.updateUserStateToDisconnected(getClient().getUUID());
+            Main.gui.updateUserStateToDisconnected();
             JOptionPane.showMessageDialog(null, "Connection with the client has been lost.", "Error", JOptionPane.ERROR_MESSAGE);
         });
         ConnectionStore.removeConnection(getClient().getSession());

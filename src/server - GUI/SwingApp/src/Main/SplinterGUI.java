@@ -166,13 +166,10 @@ public class SplinterGUI extends JFrame {
 
     }
 
-    public void updateUserStateToDisconnected(String identifier){
+    public void updateUserStateToDisconnected(){
         DefaultTableModel tableModel = (DefaultTableModel) connectionsTable.getModel();
-        for (int i = 0; i < tableModel.getRowCount(); i++){
-            if (tableModel.getValueAt(i,0).equals(identifier)){
-                tableModel.setValueAt("Disconnected", i, tableModel.getColumnCount() - 1);
-            }
-        }
+        tableModel.setValueAt("Disconnected", connectionsTable.getSelectedRow(), tableModel.getColumnCount() - 1);
+
     }
 
     public void updateNumOfConnectedClients() {

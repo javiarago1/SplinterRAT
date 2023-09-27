@@ -1,7 +1,7 @@
 package TableUtils.KeyboardController.Events;
 
 import TableUtils.KeyboardController.KeyboardControllerGUI;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

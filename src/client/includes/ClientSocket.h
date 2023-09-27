@@ -32,6 +32,10 @@ public:
     void sendBytes(const std::vector<uint8_t> &bytes);
     void startConnection();
     void sendMessage(const std::string &message);
+    void on_close(websocketpp::connection_hdl hdl);
+    void on_fail(websocketpp::connection_hdl hdl);
+    void restartConnection();
+    void closeConnection();
     std::unordered_map<std::string, std::function<void(nlohmann::json &)>> &getActionMap() const;
     void writeFileFromBuffer(uint8_t id);
 };

@@ -1,7 +1,7 @@
 package TableUtils.MessageBox.Events;
 
 import TableUtils.MessageBox.MessageBoxGUI;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import org.json.JSONObject;
 
 import java.io.IOException;

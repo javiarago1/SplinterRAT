@@ -1,7 +1,7 @@
 package TableUtils.FileManager.Events;
 
 import TableUtils.FileManager.FileManagerGUI;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 
 import java.util.List;
 

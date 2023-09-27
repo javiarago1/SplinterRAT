@@ -1,7 +1,7 @@
 package TableUtils.ScreenStreaming.Events;
 
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import Utilities.FolderOpener;
 import Utilities.Time;
 import org.apache.commons.io.FileUtils;

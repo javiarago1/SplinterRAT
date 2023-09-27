@@ -3,7 +3,7 @@ package TableUtils.FileManager.Events;
 import TableUtils.FileManager.FileManagerGUI;
 import ProgressBar.Bar;
 import Utils.UniqueByteIDGenerator;
-import Utilities.AbstractEventGUI;
+import Utilities.Event.AbstractEventGUI;
 import net.lingala.zip4j.ZipFile;
 import org.json.JSONObject;
 
