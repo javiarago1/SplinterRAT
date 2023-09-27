@@ -1,4 +1,7 @@
-package Utilities;
+package Utilities.Action;
+
+import Utilities.AbstractDialogCreator;
+import Utilities.AbstractGUIManager;
 
 import java.awt.event.ActionEvent;
 

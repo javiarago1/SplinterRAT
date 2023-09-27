@@ -2,7 +2,7 @@ package TableUtils.FileManager.Actions;
 
 import ProgressBar.DownloadProgressBar;
 import TableUtils.FileManager.Events.CancelDownloadEvent;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import java.awt.event.ActionEvent;
 

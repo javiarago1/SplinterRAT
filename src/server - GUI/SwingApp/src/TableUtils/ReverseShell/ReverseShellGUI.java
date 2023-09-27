@@ -6,11 +6,12 @@ import TableUtils.ReverseShell.Actions.SendCommandAction;
 import TableUtils.ReverseShell.Events.StartShellEvent;
 import TableUtils.ReverseShell.Listeners.ScreenWindowAdapter;
 import Utilities.AbstractDialogCreator;
+import Utilities.AbstractDialogCreatorWUpdater;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ReverseShellGUI extends AbstractDialogCreator {
+public class ReverseShellGUI extends AbstractDialogCreatorWUpdater {
     private JTextField fieldOfCommands;
     private JTextArea textAreaOfResult;
 
@@ -22,7 +23,7 @@ public class ReverseShellGUI extends AbstractDialogCreator {
         this.setLayout(new GridBagLayout());
         this.addWindowListener(new ScreenWindowAdapter(this));
         setupComponents();
-
+        initializeShell();
         this.setVisible(true);
     }
 
@@ -74,5 +75,10 @@ public class ReverseShellGUI extends AbstractDialogCreator {
 
     public JTextArea getTextAreaOfResult() {
         return textAreaOfResult;
+    }
+
+    @Override
+    public void addToSwingUpdater() {
+        getSwingUpdater().setReverseShellGUI(this);
     }
 }

@@ -8,11 +8,10 @@ import java.io.IOException;
 
 
 public class PrivilegesElevatorEvent extends AbstractEventNoGUI {
-    private final Client client;
+
 
     public PrivilegesElevatorEvent(Client client) {
-        super(null);
-        this.client = client;
+        super(client);
     }
 
     @Override
@@ -20,7 +19,7 @@ public class PrivilegesElevatorEvent extends AbstractEventNoGUI {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("ACTION", "ELEVATE_PERMISSIONS");
         try {
-            client.sendString(jsonObject.toString());
+            getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
             handleGuiError();
         }

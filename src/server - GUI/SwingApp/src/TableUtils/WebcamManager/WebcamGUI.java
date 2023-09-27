@@ -15,9 +15,10 @@ import Utilities.AbstractDialogCreator;
 import javax.swing.*;
 import java.awt.*;
 import Main.Main;
+import Utilities.AbstractDialogCreatorWUpdater;
 
 
-public class WebcamGUI extends AbstractDialogCreator {
+public class WebcamGUI extends AbstractDialogCreatorWUpdater {
 
     private int FPS = 30;
     private JComboBox<String> boxOfDevices;
@@ -46,7 +47,7 @@ public class WebcamGUI extends AbstractDialogCreator {
 
 
 
-    public WebcamGUI(Client client, JFrame mainGUI) {
+    public WebcamGUI(Client client) {
         super(Main.gui, client, "Webcam manager");
 
         client.setWebcamDialogOpen(true);
@@ -130,7 +131,7 @@ public class WebcamGUI extends AbstractDialogCreator {
         // adding menu bar
         addMenuBar();
         // getting the video devices working in client machine
-
+        getDevices();
         // Show webcam dialog
         this.setVisible(true);
     }
@@ -234,5 +235,10 @@ public class WebcamGUI extends AbstractDialogCreator {
 
     public void setFPS(int FPS) {
         this.FPS = FPS;
+    }
+
+    @Override
+    public void addToSwingUpdater() {
+        getSwingUpdater().setWebcamGUI(this);
     }
 }

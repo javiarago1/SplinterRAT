@@ -37,8 +37,10 @@ void FileManager::sendDirectory(nlohmann::json jsonObject){
     nlohmann::json json;
     json["RESPONSE"] = "DIRECTORY";
     json["requested_directory"] =  jsonObject["path"];
+    byte windowId = jsonObject["window_id"];
     std::string result = getFilesAndFolders(std::move(jsonObject));
     json["directory"] = result;
+    json["window_id"] = windowId;
     clientSocket.sendMessage(json.dump());
 }
 

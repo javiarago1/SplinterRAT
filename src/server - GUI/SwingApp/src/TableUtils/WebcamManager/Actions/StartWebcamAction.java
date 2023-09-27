@@ -4,7 +4,7 @@ import TableUtils.WebcamManager.Events.StartWebcamEvent;
 import TableUtils.WebcamManager.Events.SaveRecordEvent;
 import TableUtils.WebcamManager.Events.StopWebcamEvent;
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

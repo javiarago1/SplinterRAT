@@ -7,6 +7,7 @@ import Packets.SysNetInfo.SystemInformation;
 import Updater.UpdaterInterface;
 import Utils.FileWriterTask;
 import Utils.Time;
+import org.eclipse.jetty.util.IO;
 import org.eclipse.jetty.websocket.api.Session;
 import org.json.JSONObject;
 
@@ -126,7 +127,11 @@ public class Client {
 
 
     public void sendString(String message) throws IOException {
-        session.getRemote().sendString(message);
+        if (session.isOpen()){
+            session.getRemote().sendString(message);
+        } else {
+            throw new IOException("Attempted to send message on closed session.");
+        }
     }
 
     public void sendBytes(ByteBuffer byteBuffer) throws IOException {

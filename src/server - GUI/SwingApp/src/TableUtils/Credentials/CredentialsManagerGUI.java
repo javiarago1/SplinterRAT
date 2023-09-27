@@ -4,12 +4,13 @@ import Server.Client;
 import Main.Main;
 import TableUtils.Credentials.Actions.DumpAllAction;
 import Utilities.AbstractDialogCreator;
+import Utilities.AbstractDialogCreatorWUpdater;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class CredentialsManagerGUI extends AbstractDialogCreator {
+public class CredentialsManagerGUI extends AbstractDialogCreatorWUpdater {
     private DefaultTableModel accountsTableModel;
 
     private DefaultTableModel creditCardsTableModel;
@@ -86,5 +87,9 @@ public class CredentialsManagerGUI extends AbstractDialogCreator {
     }
 
 
+    @Override
+    public void addToSwingUpdater() {
+        getSwingUpdater().setCredentialsManagerGUI(this);
+    }
 }
 

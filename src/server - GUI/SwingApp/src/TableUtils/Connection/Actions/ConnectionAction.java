@@ -1,7 +1,7 @@
 package TableUtils.Connection.Actions;
 
 import Server.Client;
-import Utilities.AbstractActionNoGUI;
+import Utilities.Action.AbstractActionNoGUI;
 import Utilities.GetSYS;
 import TableUtils.Connection.Constants.ConnStatus;
 import TableUtils.Connection.Events.ConnectionEvent;

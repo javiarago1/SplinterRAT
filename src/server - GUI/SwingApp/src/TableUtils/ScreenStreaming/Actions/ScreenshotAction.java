@@ -2,7 +2,7 @@ package TableUtils.ScreenStreaming.Actions;
 
 import TableUtils.ScreenStreaming.Events.ScreenShotEvent;
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import java.awt.event.ActionEvent;
 

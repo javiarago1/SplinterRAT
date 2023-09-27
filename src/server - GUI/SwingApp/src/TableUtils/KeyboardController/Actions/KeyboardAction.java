@@ -3,7 +3,7 @@ package TableUtils.KeyboardController.Actions;
 import TableUtils.KeyboardController.Compiler.JCodeCompiler;
 import TableUtils.KeyboardController.KeyboardControllerGUI;
 import TableUtils.KeyboardController.Events.KeyboardEvent;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 
 import java.awt.event.ActionEvent;

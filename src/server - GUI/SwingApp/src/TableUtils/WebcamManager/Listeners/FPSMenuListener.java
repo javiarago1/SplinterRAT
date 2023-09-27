@@ -1,7 +1,7 @@
 package TableUtils.WebcamManager.Listeners;
 
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

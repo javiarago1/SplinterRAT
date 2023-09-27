@@ -19,8 +19,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import Main.Main;
+import Utilities.AbstractDialogCreatorWUpdater;
 
-public class ScreenStreamerGUI extends AbstractDialogCreator {
+public class ScreenStreamerGUI extends AbstractDialogCreatorWUpdater {
     private final BlockingQueue<String> queueOfEvents = new LinkedBlockingQueue<>();
     private MouseScreenListener mouseScreenListener;
     private KeyScreenListener keyScreenListener;
@@ -43,6 +44,7 @@ public class ScreenStreamerGUI extends AbstractDialogCreator {
         this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
         addComponents();
+        requestMonitors();
         this.setVisible(true);
     }
 
@@ -160,4 +162,8 @@ public class ScreenStreamerGUI extends AbstractDialogCreator {
         lastData = data;
     }
 
+    @Override
+    public void addToSwingUpdater() {
+        getSwingUpdater().setScreenStreamerGUI(this);
+    }
 }

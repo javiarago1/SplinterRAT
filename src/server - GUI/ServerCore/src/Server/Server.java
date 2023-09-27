@@ -3,15 +3,13 @@ package Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.websocket.api.Session;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
-import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.eclipse.jetty.websocket.api.annotations.*;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 @WebSocket
+@SuppressWarnings("unused")
 public class Server {
 
     private int port;
@@ -25,6 +23,22 @@ public class Server {
         this.port = port;
     }
 
+    @OnWebSocketError
+    public void handleError(Session session, Throwable throwable) {
+        if (throwable instanceof org.eclipse.jetty.io.EofException
+                || (throwable.getCause() != null
+                && throwable.getCause() instanceof java.io.IOException
+                && "Connection reset by peer".equals(throwable.getCause().getMessage()))) {
+            // Handle the abrupt disconnection here
+            ConnectionStore.removeConnection(session);
+            System.out.println("Client disconnected abruptly.");
+        } else {
+            // Handle other errors
+            System.out.println("An error occurred: " + throwable.getMessage());
+        }
+    }
+
+    // ... Ot
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {

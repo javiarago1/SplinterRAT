@@ -1,7 +1,7 @@
 package TableUtils.FileManager.Actions;
 
 import TableUtils.FileManager.FileManagerGUI;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

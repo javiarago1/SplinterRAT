@@ -1,7 +1,7 @@
 package TableUtils.SystemState.Actions;
 
 import Server.Client;
-import Utilities.AbstractActionNoGUI;
+import Utilities.Action.AbstractActionNoGUI;
 import Utilities.GetSYS;
 import TableUtils.SystemState.Constants.SystemStatus;
 import TableUtils.SystemState.Events.SystemStateEvent;
@@ -19,7 +19,7 @@ public class SystemStateAction extends AbstractActionNoGUI {
     @Override
     public void actionPerformed(ActionEvent e) {
         Client client = GetSYS.getClientHandler();
-        assert client != null;
-        client.getExecutor().submit(new SystemStateEvent(client, systemStatus));
+        if (client != null)
+            client.getExecutor().submit(new SystemStateEvent(client, systemStatus));
     }
 }

@@ -2,7 +2,7 @@ package TableUtils.WebcamManager.Actions;
 
 import TableUtils.WebcamManager.Events.SnapshotWebcamEvent;
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import java.awt.event.ActionEvent;
 

@@ -2,23 +2,17 @@ package TableUtils.KeyboardController.Listeners;
 
 import Server.Client;
 import Main.SplinterGUI;
+import Utilities.GUIFactory;
 import Utilities.GetSYS;
 import TableUtils.KeyboardController.KeyboardControllerGUI;
+import Utilities.MenuListenerClientAssigner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class KeyboardControllerMenuListener implements ActionListener {
+public class KeyboardControllerMenuListener extends MenuListenerClientAssigner<KeyboardControllerGUI> {
 
-    private final SplinterGUI mainGUI;
-
-    public KeyboardControllerMenuListener(SplinterGUI mainGUI) {
-        this.mainGUI = mainGUI;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandler();
-        new KeyboardControllerGUI(client);
+    public KeyboardControllerMenuListener(GUIFactory<KeyboardControllerGUI> guiFactory) {
+        super(guiFactory);
     }
 }

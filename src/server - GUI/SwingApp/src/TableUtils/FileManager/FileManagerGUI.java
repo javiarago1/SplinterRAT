@@ -12,6 +12,9 @@ import Utilities.AbstractDialogCreator;
 
 import Server.Client;
 import Main.Main;
+import Utilities.AbstractDialogCreatorWUpdater;
+import Utilities.AbstractMWDialogCreator;
+import Utilities.MultipleWindow;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -21,33 +24,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class FileManagerGUI extends AbstractDialogCreator {
+public class FileManagerGUI extends AbstractMWDialogCreator {
     private final Stack<String> stack = new Stack<>();
-
     private final JComboBox<String> diskComboBox;
-
     private final JTable table;
-
     private final JTextField pathField;
-
     private final JScrollPane scrollPane;
-
     private JPopupMenu popupMenu;
-
-    public void addDisks(List<String> disks) {
-        SwingUtilities.invokeLater(() -> {
-            if (disks != null) {
-                JComboBox<String> diskBox = diskComboBox;
-                DefaultComboBoxModel<String> boxModel = (DefaultComboBoxModel<String>) diskBox.getModel();
-                for (String e : disks) {
-                    if (boxModel.getIndexOf(e) == -1) {
-                        diskBox.addItem(e);
-                    }
-                }
-            }
-        });
-    }
 
 
     public FileManagerGUI(Client client) {
@@ -138,8 +123,23 @@ public class FileManagerGUI extends AbstractDialogCreator {
         table.addMouseListener(new MouseListener(this));
 
         this.setLocationRelativeTo(null);
+        requestDisks();
         this.setVisible(true);
 
+    }
+
+    public void addDisks(List<String> disks) {
+        SwingUtilities.invokeLater(() -> {
+            if (disks != null) {
+                JComboBox<String> diskBox = diskComboBox;
+                DefaultComboBoxModel<String> boxModel = (DefaultComboBoxModel<String>) diskBox.getModel();
+                for (String e : disks) {
+                    if (boxModel.getIndexOf(e) == -1) {
+                        diskBox.addItem(e);
+                    }
+                }
+            }
+        });
     }
 
 
@@ -260,4 +260,8 @@ public class FileManagerGUI extends AbstractDialogCreator {
     }
 
 
+    @Override
+    public void addToSwingUpdater() {
+        getSwingUpdater().setFileManagerGUI(this);
+    }
 }

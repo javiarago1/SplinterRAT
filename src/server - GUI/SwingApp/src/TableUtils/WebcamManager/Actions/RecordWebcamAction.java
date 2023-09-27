@@ -3,7 +3,7 @@ package TableUtils.WebcamManager.Actions;
 import TableUtils.WebcamManager.Events.RecordWebcamEvent;
 import TableUtils.WebcamManager.Events.StopRecordingEvent;
 import TableUtils.WebcamManager.WebcamGUI;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

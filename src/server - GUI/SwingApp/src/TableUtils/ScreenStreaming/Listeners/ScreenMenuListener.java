@@ -1,21 +1,19 @@
 package TableUtils.ScreenStreaming.Listeners;
 
 import Server.Client;
+import TableUtils.Permissions.Events.PrivilegesElevatorEvent;
+import Utilities.GUIFactory;
 import Utilities.GetSYS;
+import Utilities.MenuListenerClientAssigner;
 import Utilities.SwingUpdater;
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ScreenMenuListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Client client = GetSYS.getClientHandler();
-        assert client != null;
-        ScreenStreamerGUI screenStreamerGUI = new ScreenStreamerGUI(client);
-        SwingUpdater swingUpdater = (SwingUpdater) client.updater;
-        swingUpdater.setScreenStreamerGUI(screenStreamerGUI);
-        screenStreamerGUI.requestMonitors();
+public class ScreenMenuListener extends MenuListenerClientAssigner<ScreenStreamerGUI> {
+    public ScreenMenuListener(GUIFactory<ScreenStreamerGUI> guiFactory) {
+        super(guiFactory);
     }
+
 }

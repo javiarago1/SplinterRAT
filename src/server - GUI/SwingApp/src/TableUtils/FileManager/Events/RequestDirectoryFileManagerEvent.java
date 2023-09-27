@@ -15,8 +15,10 @@ public class RequestDirectoryFileManagerEvent extends FileManagerEvent {
     public void run() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("ACTION", "DIRECTORY");
+        jsonObject.put("window_id", getGUIManager().getWindowId());
         jsonObject.put("path", getCMElements().get(0));
         try {
+            System.out.println(getClient());
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
             handleGuiError();

@@ -3,7 +3,7 @@ package TableUtils.Credentials.Actions;
 
 import TableUtils.Credentials.CredentialsManagerGUI;
 import TableUtils.Credentials.Events.DumpAllEvent;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import java.awt.event.ActionEvent;
 

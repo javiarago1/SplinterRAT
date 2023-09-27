@@ -51,8 +51,6 @@ int main(int argc = 0, char *argv[] = nullptr) {
 
 
             clientSocket.startConnection();
-            std::cout << "xd" << std::endl;
-
             std::this_thread::sleep_for(std::chrono::milliseconds(TIMING_RETRY));
         }
     }

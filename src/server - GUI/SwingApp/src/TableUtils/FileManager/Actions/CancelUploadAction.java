@@ -2,7 +2,7 @@ package TableUtils.FileManager.Actions;
 
 import ProgressBar.UploadProgressBar;
 import TableUtils.FileManager.Events.CancelUploadEvent;
-import Utilities.AbstractActionGUI;
+import Utilities.Action.AbstractActionGUI;
 
 import java.awt.event.ActionEvent;
 import java.util.concurrent.atomic.AtomicBoolean;

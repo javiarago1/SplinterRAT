@@ -15,6 +15,7 @@ import TableUtils.ReverseShell.ReverseShellGUI;
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
 import TableUtils.WebcamManager.WebcamGUI;
 import Updater.UpdaterInterface;
+import Utils.UniqueByteIDGenerator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -48,6 +49,12 @@ public class SwingUpdater implements UpdaterInterface {
     private ReverseShellGUI reverseShellGUI;
 
     private final ConcurrentHashMap<Byte, Bar<?>> mapOfProgressBars = new ConcurrentHashMap<>();
+
+    private final WindowHandler<FileManagerGUI> fileManagerWindowHandler = new WindowHandler<>();
+
+    public void closeFileManagerWindowHandler(byte id){
+        fileManagerWindowHandler.finishInstance(id);
+    }
 
     private void convertJSON2NetAndSysInfo(JSONObject jsonObject) {
         String operatingSystem = jsonObject.getString("win_ver");
@@ -140,9 +147,11 @@ public class SwingUpdater implements UpdaterInterface {
 
     public void updateDirectory(JSONObject jsonObject) {
         String path = jsonObject.getString("requested_directory");
+        byte windowID = (byte) jsonObject.getInt("window_id");
         List<String> list = new ArrayList<>(Arrays.asList(jsonObject.getString("directory").split("\\|")));
         int divider = list.indexOf("/");
         System.out.println(divider);
+        FileManagerGUI fileManagerGUI = fileManagerWindowHandler.getWindow(windowID);
         list.remove(divider);
         SwingUtilities.invokeLater(() -> {
             if (list != null) {
@@ -324,6 +333,7 @@ public class SwingUpdater implements UpdaterInterface {
     }
 
     public void setFileManagerGUI(FileManagerGUI fileManagerGUI) {
+        fileManagerWindowHandler.createInstanceAndGetID(fileManagerGUI);
         this.fileManagerGUI = fileManagerGUI;
     }
 
