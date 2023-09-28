@@ -6,6 +6,7 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @WebSocket
@@ -49,7 +50,12 @@ public class Server {
     @OnWebSocketConnect
     public void onConnect(Session session) throws IOException {
         Client client = new Client(session);
-        ConnectionStore.addConnection(session, client);
+        String clientType = session.getUpgradeRequest().getHeader("Client-Type");
+        if (clientType.equals("Windows")){
+            System.out.println("Connection from victim!");
+            ConnectionStore.addConnection(session, client);
+        }
+
         System.out.println("New connection from " + session.getRemoteAddress().getAddress().getHostAddress());
     }
 

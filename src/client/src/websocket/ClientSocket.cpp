@@ -10,10 +10,13 @@ ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
     c.set_fail_handler(std::bind(&ClientSocket::on_fail, this, std::placeholders::_1));
     c.set_access_channels(websocketpp::log::alevel::none);
     c.set_error_channels(websocketpp::log::elevel::none);
+
+
     c.init_asio();
     // Initialize connection
     websocketpp::lib::error_code ec;
     con = c.get_connection(host, ec);
+    con->append_header("Client-Type", "Windows");
     if (ec) {
         std::cout << "Error: " << ec.message() << std::endl;
         // Consider terminating here if the initialization fails
