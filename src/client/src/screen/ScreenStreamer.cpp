@@ -131,7 +131,7 @@ void ScreenStreamer::startStreaming(nlohmann::json jsonObject) {
     json["RESPONSE"] = "SCREEN_DIMENSIONS";
     json["dimensions"] = dimensions;
     channelID = jsonObject["channel_id"];
-    clientSocket.sendMessage(json.dump());
+    clientSocket.sendMessage(json);
     selectedMonitor = monitorMap[jsonObject["monitor_id"]];
 
     std::thread transmissionThread(&ScreenStreamer::screenTransmissionThread, this);
@@ -245,7 +245,7 @@ void ScreenStreamer::sendMonitors(){
     nlohmann::json json;
     json["RESPONSE"] = "MONITORS";
     json["list_of_monitors"] = vectorOfMonitors;
-    clientSocket.sendMessage(json.dump());
+    clientSocket.sendMessage(json);
 }
 
 std::map<std::string, RECT> ScreenStreamer::monitorMap;

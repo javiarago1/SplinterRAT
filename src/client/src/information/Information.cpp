@@ -19,7 +19,7 @@ void Information::sendSystemAndNetworkInformation(){
         sysInfo[it.key()] = it.value();
     }
     sysInfo["RESPONSE"] = "SYS_NET_INFO";
-    clientSocket.sendMessage(sysInfo.dump());
+    clientSocket.sendMessage(sysInfo);
 }
 
 Information::Information(ClientSocket &clientSocket) : Handler(clientSocket){

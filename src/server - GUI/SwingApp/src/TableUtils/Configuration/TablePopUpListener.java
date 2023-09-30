@@ -5,6 +5,7 @@ import Server.ConnectionStore;
 import TableUtils.Credentials.CredentialsManagerGUI;
 import TableUtils.FileManager.FileManagerGUI;
 import TableUtils.KeyboardController.KeyboardControllerGUI;
+import TableUtils.MessageBox.MessageBoxGUI;
 import TableUtils.ReverseShell.ReverseShellGUI;
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
 import TableUtils.WebcamManager.WebcamGUI;
@@ -154,7 +155,7 @@ public class TablePopUpListener extends MouseAdapter {
         dumpAllLogsMenu.addActionListener(new KeyLoggerAction(KeyLog.DUMP_ALL));
         keyboardController.addActionListener(new KeyboardControllerMenuListener(KeyboardControllerGUI::new));
         elevatePrivilegesMenu.addActionListener(new PermissionsAction());
-        messageBoxMenu.addActionListener(new MessageBoxMenuListener(ReverseShellGUI::new));
+        messageBoxMenu.addActionListener(new MessageBoxMenuListener(MessageBoxGUI::new));
         streamScreenMenu.addActionListener(new ScreenMenuListener(ScreenStreamerGUI::new));
         restartMenu.addActionListener(new ConnectionAction(ConnStatus.RESTART));
         disconnectMenu.addActionListener(new ConnectionAction(ConnStatus.DISCONNECT));

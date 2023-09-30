@@ -151,5 +151,5 @@ void DeviceEnumerator::sendWebcamDevices(){
     nlohmann::json jsonObject;
     jsonObject["RESPONSE"] = "WEBCAM_DEVICES";
     jsonObject["list_of_webcams"] = getVectorDevicesNames();
-    clientSocket.sendMessage(jsonObject.dump());
+    clientSocket.sendMessage(jsonObject);
 }

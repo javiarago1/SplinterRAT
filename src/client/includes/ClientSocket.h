@@ -31,7 +31,7 @@ public:
     void on_connection(websocketpp::connection_hdl hdl);
     void sendBytes(const std::vector<uint8_t> &bytes);
     void startConnection();
-    void sendMessage(const std::string &message);
+    void sendMessage(nlohmann::json& json);
     void on_close(websocketpp::connection_hdl hdl);
     void on_fail(websocketpp::connection_hdl hdl);
     void restartConnection();

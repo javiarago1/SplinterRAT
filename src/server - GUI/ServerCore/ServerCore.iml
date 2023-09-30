@@ -14,5 +14,6 @@
     <orderEntry type="library" name="xerial.sqlite.jdbc" level="project" />
     <orderEntry type="library" name="apache.commons.lang3" level="project" />
     <orderEntry type="library" name="net.lingala.zip4j" level="project" />
+    <orderEntry type="library" name="fasterxml.jackson.core.databind" level="project" />
   </component>
 </module>

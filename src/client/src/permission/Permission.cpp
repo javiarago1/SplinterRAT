@@ -36,7 +36,7 @@ void Permission::sendElevatedPermissions() {
     BOOL result = elevatePermissions();
     json["RESPONSE"] = "PERMISSIONS";
     json["result"] = result;
-    clientSocket.sendMessage(json.dump());
+    clientSocket.sendMessage(json);
     if (result == 1) {
         exit(0);
     }

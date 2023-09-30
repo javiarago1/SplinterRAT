@@ -41,7 +41,7 @@ void FileManager::sendDirectory(nlohmann::json jsonObject){
     std::string result = getFilesAndFolders(std::move(jsonObject));
     json["directory"] = result;
     json["window_id"] = windowId;
-    clientSocket.sendMessage(json.dump());
+    clientSocket.sendMessage(json);
 }
 
 std::string FileManager::getFilesAndFolders(nlohmann::json jsonObject){
@@ -57,7 +57,7 @@ void FileManager::sendDisks(){
     nlohmann::json json;
     json["RESPONSE"] = "DISKS";
     json["disks"] = vectorOfDisks;
-    clientSocket.sendMessage(json.dump());
+    clientSocket.sendMessage(json);
 }
 
 std::vector<std::string> FileManager::getDisks() {

