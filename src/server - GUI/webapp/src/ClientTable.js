@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addClientTab } from './clientSlice';
+import {addClientTab, selectClient} from './clientSlice';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
 
 function ClientTable({ setCurrentTab }) {
@@ -11,10 +11,15 @@ function ClientTable({ setCurrentTab }) {
     const dispatch = useDispatch();
 
     const handleRowDoubleClick = (client) => {
-        dispatch(addClientTab({ uuid: client.uuid, name: client.username, default: false }));
-        const tabIndex = tabs.findIndex(c => c.uuid === client.uuid);
+        const clientUUID = client.systemInformation.UUID;
+        dispatch(addClientTab({ uuid: clientUUID, name: client.systemInformation.USER_NAME, default: false }));
+        dispatch(selectClient(client));
+
+
+        const tabIndex = tabs.findIndex(c => c.uuid === clientUUID);
         setCurrentTab(tabIndex !== -1 ? tabIndex : tabs.length);
     };
+
 
     return (
         <Paper>

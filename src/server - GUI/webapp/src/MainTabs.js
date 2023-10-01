@@ -12,12 +12,15 @@ function MainTabs() {
         setCurrentTab(newValue);
     };
 
+    console.log(clients);
+    console.log(currentTab)
+
     return (
         <div>
             <Paper>
                 <Tabs value={currentTab} onChange={handleChange}>
                     {clients.map(client => (
-                        <MuiTab key={client.id} label={client.name} />
+                        <MuiTab key={client.uuid} label={client.name} />
                     ))}
                 </Tabs>
             </Paper>

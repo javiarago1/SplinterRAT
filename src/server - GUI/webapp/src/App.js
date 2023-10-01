@@ -1,46 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux'; // importa useDispatch
-import { setClients } from './clientSlice'; // importa setClients
+// App.js
+
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import MainTabs from './MainTabs';
 
 function App() {
-    const [ws, setWs] = useState(null);
-    const dispatch = useDispatch(); // define dispatch usando el hook useDispatch
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const websocket = new WebSocket('ws://127.0.0.1:3055/web');
-
-        websocket.onopen = () => {
-            console.log("Conexión establecida.");
-        };
-
-        websocket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-
-            if (data.RESPONSE === "TABLE_INFO") {
-                dispatch(setClients(data.content));
-            }
-
-            console.log("Mensaje recibido:", event.data);
-        };
-
-        websocket.onerror = (error) => {
-            console.error("Error en WebSocket:", error);
-        };
-
-        websocket.onclose = (event) => {
-            console.log("Conexión cerrada. Código:", event.code, "Razón:", event.reason);
-        };
-
-        setWs(websocket);
+        dispatch({ type: 'WS_CONNECT' });
 
         return () => {
-            websocket.close();
+            dispatch({ type: 'WS_DISCONNECT' });
         };
-    }, [dispatch]); // agrega dispatch como dependencia al useEffect
+    }, [dispatch]);
 
     return (
         <Router>
