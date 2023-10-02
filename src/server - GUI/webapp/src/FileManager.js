@@ -5,17 +5,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { requestDisks } from './clientSlice';
 import { Autocomplete, TextField } from '@mui/material';
 
-function FileManager() {
+function FileManager( {currentTab} ) {
     const dispatch = useDispatch();
     const selectedClient = useSelector(state => state.client.selectedClient);
     const disksForSelectedClient = useSelector(state => state.client.disks[selectedClient.UUID]);
 
+    const [disksLoaded, setDisksLoaded] = React.useState(false);
+
+
     // Cuando se monta el componente, solicita los discos del cliente seleccionado
     useEffect(() => {
-        if (selectedClient) {
+        if (!disksLoaded && selectedClient) {
             dispatch(requestDisks(selectedClient.systemInformation.UUID));
+            setDisksLoaded(true);
         }
-    }, [selectedClient, dispatch]);
+    }, [selectedClient, dispatch, disksLoaded]);
+
 
     console.log(selectedClient)
 

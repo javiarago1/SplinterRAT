@@ -1,18 +1,18 @@
+// ClientManager.js
+
 import React from 'react';
-import { useSelector } from 'react-redux'; // importa useSelector
+import { useSelector } from 'react-redux';
 import { Paper, Tabs, Tab as MuiTab } from '@mui/material';
 import FileManager from "./FileManager";
 
 function ClientManager() {
-    const selectedClient = useSelector(state => state.client.selectedClient); // accede al cliente seleccionado
+    const selectedClient = useSelector(state => state.client.selectedClient);
 
     const [currentTab, setCurrentTab] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setCurrentTab(newValue);
     };
-
-    console.log(selectedClient);
 
     return (
         <Paper>
@@ -22,9 +22,15 @@ function ClientManager() {
                 <MuiTab label="Contact" />
             </Tabs>
 
-            {currentTab === 0 && <div>{selectedClient.systemInformation.UUID} - {selectedClient.systemInformation.USER_NAME}</div>}
-            {currentTab === 1 && <FileManager />}
-            {currentTab === 2 && <div>Contacto de {selectedClient.name}</div>}
+            <div style={{ display: currentTab === 0 ? 'block' : 'none' }}>
+                {selectedClient.systemInformation.UUID} - {selectedClient.systemInformation.USER_NAME}
+            </div>
+            <div style={{ display: currentTab === 1 ? 'block' : 'none' }}>
+                <FileManager />
+            </div>
+            <div style={{ display: currentTab === 2 ? 'block' : 'none' }}>
+                Contacto de {selectedClient.name}
+            </div>
         </Paper>
     );
 }
