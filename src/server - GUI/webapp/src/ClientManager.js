@@ -1,37 +1,49 @@
-// ClientManager.js
-
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab as MuiTab } from '@mui/material';
 import FileManager from "./FileManager";
+import { Button } from '@mui/material';
 
-function ClientManager() {
-    const selectedClient = useSelector(state => state.client.selectedClient);
 
-    const [currentTab, setCurrentTab] = React.useState(0);
+function ClientManager({ client, onBack }) {
+    const dispatch = useDispatch();
+
+    const [currentTab, setCurrentTab] = useState(0);
+    const [clientState, setClientState] = useState({
+        // Aquí puedes mantener cualquier otro estado específico del cliente que necesites
+    });
+
+    useEffect(() => {
+        // Reinicia el estado cuando cambies de cliente
+        setClientState({
+            // Reinicia el estado específico del cliente a sus valores predeterminados
+        });
+        setCurrentTab(0);
+    }, [client]);
 
     const handleChange = (event, newValue) => {
         setCurrentTab(newValue);
     };
 
     return (
-        <Paper>
-            <Tabs value={currentTab} onChange={handleChange}>
-                <MuiTab label="Information" />
-                <MuiTab label="File manager!!!" />
-                <MuiTab label="Contact" />
-            </Tabs>
+        <div>
+            <Button onClick={onBack} variant="outlined">Volver a la tabla</Button>
+            <Paper>
+                <Tabs value={currentTab} onChange={handleChange}>
+                    <MuiTab label="Information" />
+                    <MuiTab label="File manager" />
+                    <MuiTab label="Contact" />
+                </Tabs>
 
-            <div style={{ display: currentTab === 0 ? 'block' : 'none' }}>
-                {selectedClient.systemInformation.UUID} - {selectedClient.systemInformation.USER_NAME}
-            </div>
-            <div style={{ display: currentTab === 1 ? 'block' : 'none' }}>
-                <FileManager />
-            </div>
-            <div style={{ display: currentTab === 2 ? 'block' : 'none' }}>
-                Contacto de {selectedClient.name}
-            </div>
-        </Paper>
+                {currentTab === 0 && (
+                    <div>
+                        {client.systemInformation.UUID} - {client.systemInformation.USER_NAME}
+                    </div>
+                )}
+                {currentTab === 1 && <FileManager />}
+                {currentTab === 2 && <div>Contacto de {client.name}</div>}
+            </Paper>
+        </div>
     );
 }
 

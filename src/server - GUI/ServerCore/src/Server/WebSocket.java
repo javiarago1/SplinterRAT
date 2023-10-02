@@ -38,8 +38,9 @@ public class WebSocket {
 
     @OnWebSocketConnect
     public void onConnect(Session session) throws IOException {
-        Client client = new Client(session);
         String clientId = session.getUpgradeRequest().getHeader("Client-ID");
+        Client client = new Client(session);
+
         ConnectionStore.addConnection(session, client);
         ConnectionStore.addConnectionWithUUIDIdentifier(clientId, client);
 
@@ -59,6 +60,7 @@ public class WebSocket {
     @OnWebSocketMessage
     public void onMessage(Session session, byte[] buf, int offset, int length) {
         Client client = ConnectionStore.getConnection(session);
+
         ConcurrentHashMap<Byte, BytesChannel> sessionToFileChannels = client.getFileChannels();
 
         byte fileId = buf[offset];

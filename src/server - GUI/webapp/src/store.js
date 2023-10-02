@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import websocketMiddleware from './websocketMiddleware';
 import clientReducer from './clientSlice';
 
-export const store = configureStore({
+ export const store = configureStore({
     reducer: {
         client: clientReducer,
     },

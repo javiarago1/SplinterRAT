@@ -10,10 +10,11 @@ const websocketMiddleware = store => next => action => {
             websocket = new WebSocket('ws://127.0.0.1:3055/web');
             websocket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
+                console.log(data)
                 if (data.RESPONSE === "TABLE_INFO") {
                     store.dispatch(setClients(data.content));
                 } else if (data.RESPONSE === "DISKS") {
-                    store.dispatch(setDisks({ uuid: data.UUID, disks: data.disks }));
+                    store.dispatch(setDisks(data.disks));
                 }
             };
             break;

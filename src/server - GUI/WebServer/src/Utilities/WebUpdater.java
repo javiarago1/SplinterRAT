@@ -46,8 +46,6 @@ public class WebUpdater implements UpdaterInterface {
         Consumer<JSONObject> action = mapOfResponses.get(Response.valueOf(object.getString("RESPONSE")));
         if (action != null) {
             action.accept(object);
-        } else {
-            System.out.println("Action not found!");
         }
         if (webClient == null) {
             return;
@@ -55,7 +53,7 @@ public class WebUpdater implements UpdaterInterface {
         try {
             webClient.sendString(message);
         } catch (IOException e) {
-
+            System.out.println(e.getMessage());
         }
 
 

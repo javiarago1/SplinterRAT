@@ -1,25 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {addClientTab, selectClient} from './clientSlice';
+import { useSelector } from 'react-redux';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
 
-function ClientTable({ setCurrentTab }) {
-    // Obtener los clientes desde el estado de Redux
+function ClientTable({ onClientSelect }) {
     const clients = useSelector(state => state.client.clients);
-    const tabs = useSelector(state => state.client.tabs);
-
-    const dispatch = useDispatch();
-
-    const handleRowDoubleClick = (client) => {
-        const clientUUID = client.systemInformation.UUID;
-        dispatch(addClientTab({ uuid: clientUUID, name: client.systemInformation.USER_NAME, default: false }));
-        dispatch(selectClient(client));
-
-
-        const tabIndex = tabs.findIndex(c => c.uuid === clientUUID);
-        setCurrentTab(tabIndex !== -1 ? tabIndex : tabs.length);
-    };
-
 
     return (
         <Paper>
@@ -39,7 +23,7 @@ function ClientTable({ setCurrentTab }) {
                     {clients.map(client => {
                         return (<TableRow
                             key={client.systemInformation.UUID}
-                            onDoubleClick={() => handleRowDoubleClick(client)}
+                            onDoubleClick={() => onClientSelect(client)}
                         >
                             <TableCell>{client.systemInformation.UUID}</TableCell>
                             <TableCell>{client.networkInformation.IP}</TableCell>
@@ -48,7 +32,6 @@ function ClientTable({ setCurrentTab }) {
                             <TableCell>{client.systemInformation.USER_NAME}</TableCell>
                             <TableCell>{client.systemInformation.OPERATING_SYSTEM}</TableCell>
                             <TableCell> Connected </TableCell>
-                            {/* ... puedes agregar más celdas aquí según tus necesidades ... */}
                         </TableRow>)
                     })}
                 </TableBody>

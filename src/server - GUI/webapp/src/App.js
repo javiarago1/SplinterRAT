@@ -1,48 +1,34 @@
-// App.js
-
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import ClientManager from './ClientManager';
+import ClientTable from "./ClientTable";
 import { useDispatch } from 'react-redux';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import MainTabs from './MainTabs';
+import { selectClient } from './clientSlice';
 
 function App() {
+    const [selectedClient, setSelectedClient] = useState(null);
     const dispatch = useDispatch();
 
+    // Connect to the WebSocket when the component mounts
     useEffect(() => {
         dispatch({ type: 'WS_CONNECT' });
-
-        return () => {
-            dispatch({ type: 'WS_DISCONNECT' });
-        };
     }, [dispatch]);
 
-    return (
-        <Router>
-            <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                    </ul>
-                </nav>
+    function onBack(){
+        setSelectedClient(null)
+    }
 
-                <Routes>
-                    <Route path="/" element={<MainTabs />} />
-                </Routes>
-            </div>
-        </Router>
+
+    return (
+        <div>
+            {!selectedClient ?
+                <ClientTable onClientSelect={(client) => {
+                    dispatch(selectClient(client));
+                    setSelectedClient(client);
+                }} /> :
+                <ClientManager client={selectedClient} onBack={onBack} />
+            }
+        </div>
     );
 }
 
-function AppWrapper() {
-    return (
-        <Provider store={store}>
-            <App />
-        </Provider>
-    );
-}
-
-export default AppWrapper;
+export default App;

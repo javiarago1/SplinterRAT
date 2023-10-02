@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 @WebSocket
+
 public class WebSocketClient {
 
 
@@ -62,7 +63,9 @@ public class WebSocketClient {
         String clientId = object.getString("client_id");
         Client webClient = ConnectionStore.getWebConnectionIdentifiedByUUID(clientId);
         if (webClient == null) {
-            ConnectionStore.addConnectionToWebClientMap(clientId, new Client(session));
+            Client temp2 = new Client(session);
+            ConnectionStore.addConnectionToWebClientMap(clientId, temp2);
+            ConnectionStore.webSessionsMap.get(session).updater = ConnectionStore.connectionsMapIdentifiedByUUID.get(clientId).updater;
             System.out.println("Client doesn't exists so i create it in map");
         } else System.out.println("Client already exists");
         Client windowsClient = ConnectionStore.getWindowsConnectionByIdentifier(clientId);
@@ -78,7 +81,11 @@ public class WebSocketClient {
 
     @OnWebSocketClose
     public void onClose(Session session, int statusCode, String reason) {
-        // ConnectionStore.removeConnection(session);
+        Client tempClient = ConnectionStore.webSessionsMap.get(session);
+        String uuid = tempClient.updater.getSystemInformation().UUID();
+        ConnectionStore.removeConnection(session);
+        ConnectionStore.webClientsMap.remove(uuid);
+        System.out.println(ConnectionStore.webClientsMap);
         System.out.println("Closed connection toa " + session.getRemoteAddress().getAddress().getHostAddress());
     }
 

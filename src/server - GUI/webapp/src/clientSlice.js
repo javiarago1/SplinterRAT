@@ -1,35 +1,30 @@
-// clientSlice.js
-
 import { createSlice } from '@reduxjs/toolkit';
 
 const clientSlice = createSlice({
     name: 'client',
     initialState: {
         clients: [],
-        tabs: [{ uuid: 0, name: "Home", default: true }],
         selectedClient: null,
-        disks: {}, // uuid: disks[]
+        disks: [], // Un arreglo simple para los discos del cliente seleccionado
     },
     reducers: {
         setClients: (state, action) => {
             state.clients = action.payload;
         },
-        addClientTab: (state, action) => {
-            if (!state.tabs.some(tab => tab.uuid === action.payload.uuid)) {
-                state.tabs.push(action.payload);
-            }
-        },
         selectClient: (state, action) => {
             state.selectedClient = action.payload;
+            state.disks = []; // Reseteamos los discos cuando seleccionamos un nuevo cliente
         },
-        requestDisks: (state, action) => {
-
+        reorderDisks: (state, action) => {
+            const selectedDisk = action.payload;
+            state.disks = [selectedDisk, ...state.disks.filter(disk => disk !== selectedDisk)];
         },
+        requestDisks: (state, action) => {},
         setDisks: (state, action) => {
-            state.disks[action.payload.uuid] = action.payload.disks;
+            state.disks = action.payload; // Establecemos los discos directamente
         }
     }
 });
 
-export const { setClients, addClientTab, selectClient, requestDisks, setDisks } = clientSlice.actions;
+export const { setClients, selectClient, requestDisks, setDisks, reorderDisks } = clientSlice.actions;
 export default clientSlice.reducer;
