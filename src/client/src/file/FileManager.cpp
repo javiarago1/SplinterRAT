@@ -32,7 +32,7 @@ nlohmann::json FileManager::readDirectory(const std::filesystem::path &directory
     } catch (const std::filesystem::__cxx11::filesystem_error &) {
         paths["error"] = "ACCESS_DENIED";
     }
-
+    paths["requested_directory"] = directory;
     return paths;
 }
 
@@ -40,7 +40,6 @@ nlohmann::json FileManager::readDirectory(const std::filesystem::path &directory
 void FileManager::sendDirectory(nlohmann::json jsonObject){
     nlohmann::json json;
     json["RESPONSE"] = "DIRECTORY";
-    json["requested_directory"] = jsonObject["path"];
     json["window_id"] = jsonObject["window_id"];
     json["directory"] = readDirectory(jsonObject["path"]);
     clientSocket.sendMessage(json);

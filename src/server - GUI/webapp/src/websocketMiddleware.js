@@ -1,4 +1,4 @@
-import {setClients, setDisks} from "./clientSlice";
+import {setClients, setDisks, setDirectoryData } from "./clientSlice";
 import { WS_CONNECT} from "./actionTypes";
 import {REQUEST_DIRECTORY, REQUEST_DISKS} from "./fileManagerActions";
 
@@ -11,11 +11,12 @@ const handleWsConnect = (store) => {
 };
 
 const handleRequestDisks = (store, action) => {
+    console.log(action);
     if (websocket) {
         const message = {
             ACTION: 'DISKS',
             sendDirectory: action.payload.sendDirectory,
-            client_id: action.payload.id
+            client_id: action.payload.client_id
         };
         websocket.send(JSON.stringify(message));
         console.log("Sending message to " + action.payload);
@@ -30,18 +31,26 @@ const handleWebSocketMessage = (event, store) => {
         store.dispatch(setClients(data.content));
     } else if (data.RESPONSE === "DISKS") {
         store.dispatch(setDisks(data.disks));
+        if (data.firstDiskDirectory) {
+            store.dispatch(setDirectoryData(data.firstDiskDirectory));
+        }
+    } else if (data.RESPONSE === "DIRECTORY") {
+        store.dispatch(setDirectoryData(data.directory));
     }
 };
 
 const handleRequestDirectory = (store, action) =>{
     if (websocket) {
+        console.log("Final path");
+        console.log(action.payload.path);
         const message = {
             ACTION: 'DIRECTORY',
-            path: action.payload,
+            path: action.payload.path,
+            client_id: action.payload.client_id,
             window_id: ""
         };
         websocket.send(JSON.stringify(message));
-        console.log("Sending message to " + action.payload);
+        console.log("Sending message to " + action.payload.path);
     }
 }
 

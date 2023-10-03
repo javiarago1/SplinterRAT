@@ -145,7 +145,8 @@ public class SwingUpdater implements UpdaterInterface {
 
 
     public void updateDirectory(JSONObject jsonObject) {
-        String path = jsonObject.getString("requested_directory");
+        JSONObject directory = jsonObject.getJSONObject("directory");
+        String path = directory.getString("requested_directory");
         byte windowID = (byte) jsonObject.getInt("window_id");
         FileManagerGUI fileManagerGUI = fileManagerWindowHandler.getWindow(windowID);
 
