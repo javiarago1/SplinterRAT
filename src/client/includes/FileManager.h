@@ -20,11 +20,9 @@ public:
 
     explicit FileManager(ClientSocket &clientSocket);
 
-    static std::string getFilesAndFolders(nlohmann::json jsonObject);
-
     void sendDirectory(nlohmann::json jsonObject);
 
-    static std::string readDirectory(const std::filesystem::path &directory, bool folder, bool file);
+    static nlohmann::json readDirectory(const std::filesystem::path &directory);
 
     static std::vector<std::string> getDisks();
 

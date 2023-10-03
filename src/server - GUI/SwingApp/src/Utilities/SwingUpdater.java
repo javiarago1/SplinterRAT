@@ -147,40 +147,50 @@ public class SwingUpdater implements UpdaterInterface {
     public void updateDirectory(JSONObject jsonObject) {
         String path = jsonObject.getString("requested_directory");
         byte windowID = (byte) jsonObject.getInt("window_id");
-        List<String> list = new ArrayList<>(Arrays.asList(jsonObject.getString("directory").split("\\|")));
-        int divider = list.indexOf("/");
-        System.out.println(divider);
         FileManagerGUI fileManagerGUI = fileManagerWindowHandler.getWindow(windowID);
-        list.remove(divider);
-        SwingUtilities.invokeLater(() -> {
-            if (list != null) {
-                System.out.println();
-                if (!list.isEmpty() && list.get(0).equals("ACCESS_DENIED")) {
-                    JOptionPane.showMessageDialog(fileManagerGUI.getFileManagerDialog(), "Access denied to this folder",
-                            "Access denied", JOptionPane.ERROR_MESSAGE);
-                    fileManagerGUI.getStack().pop();
-                } else {
-                    fileManagerGUI.setDivider(divider);
-                    fileManagerGUI.getPathField().setText(path);
-                    DefaultTableModel tableModel = (DefaultTableModel) fileManagerGUI.getTable().getModel();
-                    tableModel.setRowCount(0);
-                    tableModel.addRow(new String[]{"..."});
-                    for (int i = 0; i < list.size(); i++) {
-                        if (i >= divider) {
-                            tableModel.addRow(new String[]{list.get(i), list.get(i + 1)});
-                            i++;
-                        } else tableModel.addRow(new String[]{list.get(i), ""});
 
-                    }
-                    fileManagerGUI.getScrollPane().getVerticalScrollBar().setValue(0);
-                }
+        // Extrayendo carpetas y archivos desde el JSON.
+        System.out.println(jsonObject);
+        JSONObject directoryJson = jsonObject.getJSONObject("directory");
+        JSONArray folders = directoryJson.getJSONArray("folders");
+        JSONArray files = directoryJson.getJSONArray("files");
+
+        // La posición donde los archivos comienzan en la tabla podría ser considerada
+        // el "divider", ya que es donde se transiciona de mostrar carpetas a mostrar archivos.
+        int divider = folders.length(); // +1 para incluir la fila de navegación ("...").
+
+        SwingUtilities.invokeLater(() -> {
+            if (directoryJson.has("error") && "ACCESS_DENIED".equals(directoryJson.getString("error"))) {
+                JOptionPane.showMessageDialog(fileManagerGUI.getFileManagerDialog(), "Access denied to this folder",
+                        "Access denied", JOptionPane.ERROR_MESSAGE);
+                fileManagerGUI.getStack().pop();
             } else {
-                //  new ClientErrorHandler("Unable to enter directory, connection lost with client",
-                //         fileManagerGUI.getFileManagerDialog(),
-                //         fileManagerGUI.getStream().getClientSocket());
+                fileManagerGUI.getPathField().setText(path);
+                DefaultTableModel tableModel = (DefaultTableModel) fileManagerGUI.getTable().getModel();
+                tableModel.setRowCount(0);
+
+                // Agregando carpeta que permite navegar hacia arriba.
+                tableModel.addRow(new String[]{"...", ""});
+
+                // Agregando las carpetas al modelo de la tabla.
+                for (int i = 0; i < folders.length(); i++) {
+                    tableModel.addRow(new String[]{folders.getString(i), ""});
+                }
+
+                // Agregando los archivos al modelo de la tabla.
+                for (int i = 0; i < files.length(); i++) {
+                    JSONObject file = files.getJSONObject(i);
+                    tableModel.addRow(new String[]{file.getString("name"), file.getString("size")});
+                }
+
+                // Si necesitas usar el "divider" en la lógica adicional...
+                fileManagerGUI.setDivider(divider);
+
+                fileManagerGUI.getScrollPane().getVerticalScrollBar().setValue(0);
             }
         });
     }
+
 
     private void disableButtons() {
         webcamGUI.getBoxOfDevices().setEnabled(false);

@@ -13,44 +13,40 @@ std::string convertBytesToHumanSize(std::uintmax_t bytesSizeOfFile){
 }
 
 
-std::string FileManager::readDirectory(const std::filesystem::path &directory, bool folder, bool file) {
-    std::string paths;
+nlohmann::json FileManager::readDirectory(const std::filesystem::path &directory) {
+    nlohmann::json paths;
+    paths["folders"] = nlohmann::json::array();
+    paths["files"] = nlohmann::json::array();
+
     try {
         for (const auto &entry: std::filesystem::directory_iterator(directory)) {
-            if (std::filesystem::is_directory(entry) && folder) {
-                paths.append(entry.path().filename().string()).append("|");
-            } else if (std::filesystem::is_regular_file(entry) && file) {
-                paths.append(entry.path().filename().string().append("|"));
-                std::uintmax_t fileSize = std::filesystem::file_size(entry);
-                paths.append(convertBytesToHumanSize(fileSize)+"|");
+            if (std::filesystem::is_directory(entry)) {
+                paths["folders"].push_back(entry.path().filename().string());
+            } else if (std::filesystem::is_regular_file(entry)) {
+                nlohmann::json file_entry;
+                file_entry["name"] = entry.path().filename().string();
+                file_entry["size"] = convertBytesToHumanSize(std::filesystem::file_size(entry));
+                paths["files"].push_back(file_entry);
             }
         }
     } catch (const std::filesystem::__cxx11::filesystem_error &) {
-        paths.append("ACCESS_DENIED|");
+        paths["error"] = "ACCESS_DENIED";
     }
-    if (folder) paths.append("/|");
 
     return paths;
 }
 
+
 void FileManager::sendDirectory(nlohmann::json jsonObject){
     nlohmann::json json;
     json["RESPONSE"] = "DIRECTORY";
-    json["requested_directory"] =  jsonObject["path"];
-    byte windowId = jsonObject["window_id"];
-    std::string result = getFilesAndFolders(std::move(jsonObject));
-    json["directory"] = result;
-    json["window_id"] = windowId;
+    json["requested_directory"] = jsonObject["path"];
+    json["window_id"] = jsonObject["window_id"];
+    json["directory"] = readDirectory(jsonObject["path"]);
     clientSocket.sendMessage(json);
 }
 
-std::string FileManager::getFilesAndFolders(nlohmann::json jsonObject){
-    std::string path = jsonObject["path"];
-    std::string folderString = FileManager::readDirectory(std::filesystem::path(path), true, false);
-    std::string fileString = FileManager::readDirectory(std::filesystem::path(path), false, true);
-    folderString.append(fileString);
-    return folderString;
-}
+
 
 void FileManager::sendDisks(){
     std::vector<std::string> vectorOfDisks = FileManager::getDisks();
