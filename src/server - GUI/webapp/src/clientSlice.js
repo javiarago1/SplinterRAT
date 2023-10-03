@@ -31,7 +31,6 @@ const clientSlice = createSlice({
         popDirectory: (state) => {
             state.directoryStack.pop();
             state.directoryStack.pop();
-            console.log(state.directoryStack.length)
         },
     }
 });
