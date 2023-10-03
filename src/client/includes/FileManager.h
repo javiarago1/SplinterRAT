@@ -26,7 +26,7 @@ public:
 
     static std::vector<std::string> getDisks();
 
-    void sendDisks();
+    void sendDisks(nlohmann::json jsonObject);
 
     void copyFiles(const std::vector<std::string>&,const std::vector<std::string>&);
 

