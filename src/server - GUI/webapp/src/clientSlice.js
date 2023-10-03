@@ -5,7 +5,7 @@ const clientSlice = createSlice({
     initialState: {
         clients: [],
         selectedClient: null,
-        disks: [], // Un arreglo simple para los discos del cliente seleccionado
+        disks: [],
     },
     reducers: {
         setClients: (state, action) => {
@@ -13,18 +13,17 @@ const clientSlice = createSlice({
         },
         selectClient: (state, action) => {
             state.selectedClient = action.payload;
-            state.disks = []; // Reseteamos los discos cuando seleccionamos un nuevo cliente
+            state.disks = [];
         },
         reorderDisks: (state, action) => {
             const selectedDisk = action.payload;
             state.disks = [selectedDisk, ...state.disks.filter(disk => disk !== selectedDisk)];
         },
-        requestDisks: (state, action) => {},
         setDisks: (state, action) => {
-            state.disks = action.payload; // Establecemos los discos directamente
+            state.disks = action.payload;
         }
     }
 });
 
-export const { setClients, selectClient, requestDisks, setDisks, reorderDisks } = clientSlice.actions;
+export const { setClients, selectClient, reorderDisks, setDisks } = clientSlice.actions;
 export default clientSlice.reducer;

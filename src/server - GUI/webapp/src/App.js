@@ -3,6 +3,7 @@ import ClientManager from './ClientManager';
 import ClientTable from "./ClientTable";
 import { useDispatch } from 'react-redux';
 import { selectClient } from './clientSlice';
+import { WS_CONNECT} from "./actionTypes";
 
 function App() {
     const [selectedClient, setSelectedClient] = useState(null);
@@ -10,7 +11,7 @@ function App() {
 
     // Connect to the WebSocket when the component mounts
     useEffect(() => {
-        dispatch({ type: 'WS_CONNECT' });
+        dispatch({ type: WS_CONNECT });
     }, [dispatch]);
 
     function onBack(){

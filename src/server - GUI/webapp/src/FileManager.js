@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { requestDisks, reorderDisks } from './clientSlice';
+import { reorderDisks } from './clientSlice';
 import { Autocomplete, TextField } from '@mui/material';
+import { REQUEST_DISKS, REQUEST_DIRECTORY } from "./fileManagerActions";
 
 function FileManager( {currentTab} ) {
     const dispatch = useDispatch();
@@ -11,13 +12,14 @@ function FileManager( {currentTab} ) {
 
     useEffect(() => {
         if (disks.length === 0 && selectedClient) {
-            dispatch(requestDisks(selectedClient.systemInformation.UUID));
+            dispatch({ type : REQUEST_DISKS, payload : selectedClient.systemInformation.UUID });
         }
     }, [selectedClient, dispatch, disks]);
 
     const handleDiskChange = (event, newValue) => {
         if (newValue) {
             dispatch(reorderDisks(newValue));
+            dispatch({ type: REQUEST_DIRECTORY, payload: newValue });
         }
     };
 

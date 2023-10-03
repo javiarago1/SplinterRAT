@@ -16,6 +16,7 @@ public class RequestDiskFileManagerEvent extends FileManagerEvent {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("ACTION", "DISKS");
+            jsonObject.put("sendDirectory", false);
             getClient().sendString(jsonObject.toString());
         } catch (IOException e) {
             handleGuiError();

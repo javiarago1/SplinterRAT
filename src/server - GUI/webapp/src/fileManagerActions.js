@@ -1,0 +1,3 @@
+export const REQUEST_DISKS = 'REQUEST_DISKS';
+
+export const REQUEST_DIRECTORY = 'REQUEST_DIRECTORY';
