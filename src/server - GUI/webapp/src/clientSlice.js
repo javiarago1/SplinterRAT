@@ -28,6 +28,7 @@ const fileManagerSlice = createSlice({
         },
         popDirectory: (state) => {
             state.currentDirectory = null;
+            state.selectedRows = [];
             state.directoryStack.pop();
             state.directoryStack.pop();
         },
