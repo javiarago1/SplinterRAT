@@ -2,11 +2,14 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import websocketMiddleware from './websocketMiddleware';
-import clientReducer from './clientSlice';
+import { clientReducer, fileManagerReducer } from "./clientSlice";
 
+
+const rootReducer = {
+    client: clientReducer,
+    fileManager: fileManagerReducer,
+};
  export const store = configureStore({
-    reducer: {
-        client: clientReducer,
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(websocketMiddleware),
+     reducer: rootReducer,
+     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(websocketMiddleware),
 });

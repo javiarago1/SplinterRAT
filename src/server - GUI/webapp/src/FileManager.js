@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { popDirectory, reorderDisks } from './clientSlice';
-import { Autocomplete, TextField, Button, Grid } from '@mui/material';
-import { REQUEST_DISKS, REQUEST_DIRECTORY } from "./fileManagerActions";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {clearClipboard, popDirectory, reorderDisks, setClipboard} from './clientSlice';
+import {Autocomplete, Button, Grid, TextField} from '@mui/material';
+import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS} from "./fileManagerActions";
 import FileTable from "./fileTable";
 
 function FileManager({ currentTab }) {
     const dispatch = useDispatch();
     const selectedClient = useSelector(state => state.client.selectedClient);
-    const disks = useSelector(state => state.client.disks);
-    const directoryStack = useSelector(state => state.client.directoryStack);
+    const disks = useSelector(state => state.fileManager.disks);
+    const directoryStack = useSelector(state => state.fileManager.directoryStack);
+    const clipboard  = useSelector(state => state.fileManager.clipboard);
+    const selectedRows = useSelector(state => state.fileManager.selectedRows);
+    const currentDirectory = useSelector(state => state.fileManager.currentDirectory);
+
 
     useEffect(() => {
         if (disks.length === 0 && selectedClient) {
@@ -36,7 +40,33 @@ function FileManager({ currentTab }) {
         dispatch({type: REQUEST_DIRECTORY, payload: {client_id: selectedClient.systemInformation.UUID, path: path}});
     };
 
-    const currentDirectory = directoryStack.length > 0 ? directoryStack[directoryStack.length - 1].requested_directory : '';
+
+    const handleCopy = () => {
+        console.log(selectedRows)
+        dispatch(setClipboard({ action: COPY, from_paths: selectedRows }));
+    };
+
+    const handleMove = () => {
+        dispatch(setClipboard({ action: MOVE, from_paths: selectedRows }));
+    };
+
+    const handlePaste = () => {
+        const to_paths = selectedRows.length === 0 ? [currentDirectory] : selectedRows.map(row => `${currentDirectory}\\${row.name}`);
+        dispatch({ type: clipboard.action, payload: { from_paths: clipboard.from_paths, to_paths: to_paths}});
+        dispatch(clearClipboard());
+    };
+
+    const isFolder = (item) => item.type === 'folder';
+
+    const isPasteEnabled = () => {
+        if (clipboard.action === null) return false;
+        const isMoveAndMultipleSelected = clipboard.action === MOVE && selectedRows.length === 1 && selectedRows.every(isFolder);
+        const isCopyAndNotAllFolders = clipboard.action === COPY && selectedRows.every(isFolder);
+        return isMoveAndMultipleSelected || isCopyAndNotAllFolders;
+    };
+
+    console.log(directoryStack)
+
 
     return (
         <div>
@@ -44,7 +74,7 @@ function FileManager({ currentTab }) {
                 <Grid item xs={6} sm={7} md={8}>
                     <TextField
                         label="Current Directory"
-                        value={currentDirectory}
+                        value={currentDirectory === null ? ' ' : currentDirectory}
                         variant="outlined"
                         fullWidth
                         InputProps={{
@@ -78,10 +108,27 @@ function FileManager({ currentTab }) {
                 </Grid>
             </Grid>
             <Grid container spacing={2} alignItems="center" style={{ marginTop: '10px' }}>
-                <Grid item xs={1}>
-                    <Button variant="contained" color="primary" onClick={handleGoBack} disabled={directoryStack.length < 2}>
-                        Go Back
-                    </Button>
+                <Grid container spacing={2} alignItems="center" style={{ marginTop: '10px' }}>
+                    <Grid item xs={1}>
+                        <Button variant="contained" color="primary" onClick={handleGoBack} disabled={directoryStack.length < 2}>
+                            Go Back
+                        </Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button disabled={selectedRows.length === 0} onClick={handleCopy}>
+                            Copy
+                        </Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button disabled={selectedRows.length === 0} onClick={handleMove}>
+                            Move
+                        </Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={handlePaste} disabled={!isPasteEnabled()}>
+                            Paste
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
             <FileTable />

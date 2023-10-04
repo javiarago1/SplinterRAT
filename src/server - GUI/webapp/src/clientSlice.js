@@ -1,21 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const clientSlice = createSlice({
-    name: 'client',
+const fileManagerSlice = createSlice({
+    name: 'fileManager',
     initialState: {
-        clients: [],
-        selectedClient: null,
         disks: [],
         directoryStack: [],
+        currentDirectory: null,
+        selectedRows: [],
+        clipboard: {
+            action: null,
+            from_paths: [],
+        }
     },
     reducers: {
-        setClients: (state, action) => {
-            state.clients = action.payload;
-        },
-        selectClient: (state, action) => {
-            state.selectedClient = action.payload;
-            state.disks = [];
-        },
         reorderDisks: (state, action) => {
             const selectedDisk = action.payload;
             state.disks = [selectedDisk, ...state.disks.filter(disk => disk !== selectedDisk)];
@@ -26,14 +23,72 @@ const clientSlice = createSlice({
         },
         setDirectoryData: (state, action) => {
             state.directoryStack.push(action.payload);
+            state.currentDirectory = action.payload.requested_directory;
             if (state.directoryStack.length > 1) state.directoryStack[state.directoryStack.length - 2].visited = true;
         },
         popDirectory: (state) => {
+            state.currentDirectory = null;
             state.directoryStack.pop();
             state.directoryStack.pop();
         },
+        selectRow: (state, action) => {
+            state.selectedRows.push(action.payload);
+        },
+        deselectRow: (state, action) => {
+            state.selectedRows = state.selectedRows.filter(
+                row => row.name !== action.payload.name || row.type !== action.payload.type
+            );
+        },
+        clearSelectedRows: (state) => {
+            state.selectedRows = [];
+        },
+        setClipboard: (state, action) => {
+            state.clipboard.action = action.payload.action;
+            state.clipboard.from_paths = action.payload.from_paths.map(path => state.currentDirectory + (state.directoryStack.length > 1 ? "\\" : "")  + path.name);
+            state.selectedRows = [];
+        },
+        clearClipboard: (state) => {
+            state.clipboard = {
+                action: null,
+                from_paths: [],
+            };
+        },
+
     }
 });
 
-export const { setClients, selectClient, reorderDisks, setDisks, setDirectoryData,popDirectory } = clientSlice.actions;
-export default clientSlice.reducer;
+
+const clientSlice = createSlice({
+    name: 'client',
+    initialState: {
+        clients: [],
+        selectedClient: null,
+    },
+    reducers: {
+        setClients: (state, action) => {
+            state.clients = action.payload;
+        },
+        selectClient: (state, action) => {
+            state.selectedClient = action.payload;
+        }
+    }
+});
+
+//... tus slices aquí ...
+
+export const { setClients, selectClient } = clientSlice.actions;
+export const {
+    reorderDisks,
+    setDisks,
+    setDirectoryData,
+    popDirectory,
+    selectRow,
+    clearSelectedRows ,
+    deselectRow,
+    setClipboard,
+    clearClipboard
+}  = fileManagerSlice.actions;
+
+export const clientReducer = clientSlice.reducer;
+export const fileManagerReducer = fileManagerSlice.reducer;
+

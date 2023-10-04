@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
 
 function ClientTable({ onClientSelect }) {
+    const state = useSelector(state => state);
+    console.log(state);
     const clients = useSelector(state => state.client.clients);
 
     return (

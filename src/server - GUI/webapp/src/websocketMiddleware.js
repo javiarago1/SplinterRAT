@@ -1,6 +1,6 @@
 import {setClients, setDisks, setDirectoryData } from "./clientSlice";
 import { WS_CONNECT} from "./actionTypes";
-import {REQUEST_DIRECTORY, REQUEST_DISKS} from "./fileManagerActions";
+import {COPY, REQUEST_DIRECTORY, REQUEST_DISKS} from "./fileManagerActions";
 
 let websocket = null;
 
@@ -31,6 +31,7 @@ const handleWebSocketMessage = (event, store) => {
         store.dispatch(setClients(data.content));
     } else if (data.RESPONSE === "DISKS") {
         store.dispatch(setDisks(data.disks));
+
         if (data.firstDiskDirectory) {
             store.dispatch(setDirectoryData(data.firstDiskDirectory));
         }
@@ -54,11 +55,26 @@ const handleRequestDirectory = (store, action) =>{
     }
 }
 
+const handleCopy = (store, action) =>{
+    if (websocket) {
+        const message = {
+            ACTION: 'COPY',
+            from_paths: action.payload.from_paths,
+            to_paths: action.payload.to_paths,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        //websocket.send(JSON.stringify(message));
+        console.log(message);
+        console.log("Copying !! mac: " + action.payload);
+    }
+}
+
 // Mapeo de tipos de acción a manejadores
 const actionHandlers = {
     [WS_CONNECT]: handleWsConnect,
     [REQUEST_DISKS]: handleRequestDisks,
-    [REQUEST_DIRECTORY]: handleRequestDirectory
+    [REQUEST_DIRECTORY]: handleRequestDirectory,
+    [COPY]: handleCopy,
 };
 
 // Middleware

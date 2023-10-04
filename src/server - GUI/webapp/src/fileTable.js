@@ -4,46 +4,46 @@ import {Table, TableBody, TableCell, TableHead, TableRow, CircularProgress} from
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import {REQUEST_DIRECTORY} from "./fileManagerActions";
-import ContextMenu from "./ContextMenu";
+import { selectRow, clearSelectedRows , deselectRow} from './clientSlice'
 
 const FileTable = () => {
-    const dispatch = useDispatch(); // Hook de Redux para despachar acciones
-    const stack = useSelector((state) => state.client.directoryStack);
+    const dispatch = useDispatch();
+    const stack = useSelector((state) => state.fileManager.directoryStack);
     const directoryData = stack[stack.length - 1];
     const selectedClient = useSelector(state => state.client.selectedClient);
-
-    const [contextMenu, setContextMenu] = useState({isVisible: false, x: 0, y: 0, type: ""});
-    const handleCloseContextMenu = () => {
-        setContextMenu({...contextMenu, isVisible: false});
-    };
-    const handleContextMenu = (event, type) => {
-        event.preventDefault();
-        setContextMenu({
-            isVisible: true,
-            x: event.clientX,
-            y: event.clientY,
-            type: type
-        });
-    };
+    const selectedRows = useSelector(state => state.fileManager.selectedRows);
+    const currentDirectory = useSelector(state => state.fileManager.currentDirectory);
 
 
     if (!directoryData || directoryData.visited) {
         return (
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px'}}>
                 <CircularProgress/>
             </div>
         );
     }
 
-    // Manejador para el doble clic en una fila de la tabla
     const handleRowDoubleClick = (path) => {
         let prePath = "";
-        if (stack.length > 0) prePath = stack[stack.length - 1].requested_directory + "\\";
+        if (currentDirectory) prePath = currentDirectory + (stack.length > 1 ? "\\" : "");
         const finalPath = prePath + path;
         dispatch({
             type: REQUEST_DIRECTORY,
             payload: {client_id: selectedClient.systemInformation.UUID, path: finalPath}
         });
+    };
+
+    const handleRowClick = (e, name, type) => {
+        if (e.ctrlKey) {
+            if (selectedRows.some(row => row.name === name && row.type === type)) {
+                dispatch(deselectRow({ name, type }));
+            } else {
+                dispatch(selectRow({ name, type }));
+            }
+        } else {
+            dispatch(clearSelectedRows());
+            dispatch(selectRow({ name, type }));
+        }
     };
 
     return (
@@ -61,8 +61,8 @@ const FileTable = () => {
                             key={folderName}
                             data-type="folder"
                             onDoubleClick={() => handleRowDoubleClick(folderName)}
-                            onContextMenu={(e) => handleContextMenu(e, 'folder')}
-
+                            onClick={(e) => handleRowClick(e, folderName, 'folder')}
+                            selected={selectedRows.some(row => row.name === folderName && row.type === 'folder')}
                         >
                             <TableCell>
                                 <FolderIcon/> {folderName}
@@ -74,8 +74,8 @@ const FileTable = () => {
                         <TableRow
                             key={file.name}
                             data-type="file"
-                            onContextMenu={(e) => handleContextMenu(e, 'file')}
-
+                            onClick={(e) => handleRowClick(e, file.name, 'file')}
+                            selected={selectedRows.some(row => row.name === file.name && row.type === 'file')}
                         >
                             <TableCell>
                                 <InsertDriveFileIcon/> {file.name}
@@ -85,15 +85,6 @@ const FileTable = () => {
                     ))}
                 </TableBody>
             </Table>
-            {contextMenu.isVisible && (
-                <ContextMenu
-
-                    type={contextMenu.type}
-                    x={contextMenu.x}
-                    y={contextMenu.y}
-                    onClose={handleCloseContextMenu}
-                />
-            )}
         </div>
     );
 };
