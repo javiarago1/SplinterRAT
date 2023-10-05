@@ -103,7 +103,7 @@ function FileManager({ currentTab }) {
                     )}
                 </Grid>
                 <Grid item xs={2} sm={2} md={1}>
-                    <Button  onClick={() => dispatch({ type: REQUEST_DISKS, payload: { client_id: selectedClient.systemInformation.UUID, sendDirectory: true } })}>
+                    <Button  onClick={() => dispatch({ type: REQUEST_DISKS, payload: { client_id: selectedClient.systemInformation.UUID, sendDirectory: false } })}>
                         Refresh Disks
                     </Button>
                 </Grid>
