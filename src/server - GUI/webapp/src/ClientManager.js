@@ -27,7 +27,7 @@ function ClientManager({ client, onBack }) {
 
     return (
         <div>
-            <Button onClick={onBack} variant="outlined">Volver a la tabla</Button>
+            <Button onClick={onBack} >Volver a la tabla</Button>
             <Paper>
                 <Tabs value={currentTab} onChange={handleChange}>
                     <MuiTab label="Information" />

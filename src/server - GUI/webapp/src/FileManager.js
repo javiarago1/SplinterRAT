@@ -83,7 +83,7 @@ function FileManager({ currentTab }) {
                     />
                 </Grid>
                 <Grid item xs={1}>
-                    <Button variant="contained" color="primary" onClick={() => dispatch({ type: REQUEST_DIRECTORY, payload: { client_id: selectedClient.systemInformation.UUID, path: currentDirectory } })}>
+                    <Button  onClick={() => dispatch({ type: REQUEST_DIRECTORY, payload: { client_id: selectedClient.systemInformation.UUID, path: currentDirectory } })}>
                         Refresh Directory
                     </Button>
                 </Grid>
@@ -102,7 +102,7 @@ function FileManager({ currentTab }) {
                     )}
                 </Grid>
                 <Grid item xs={2} sm={2} md={1}>
-                    <Button variant="contained" color="primary" onClick={() => dispatch({ type: REQUEST_DISKS, payload: { client_id: selectedClient.systemInformation.UUID, sendDirectory: true } })}>
+                    <Button  onClick={() => dispatch({ type: REQUEST_DISKS, payload: { client_id: selectedClient.systemInformation.UUID, sendDirectory: true } })}>
                         Refresh Disks
                     </Button>
                 </Grid>
@@ -110,7 +110,7 @@ function FileManager({ currentTab }) {
             <Grid container spacing={2} alignItems="center" style={{ marginTop: '10px' }}>
                 <Grid container spacing={2} alignItems="center" style={{ marginTop: '10px' }}>
                     <Grid item xs={1}>
-                        <Button variant="contained" color="primary" onClick={handleGoBack} disabled={directoryStack.length < 2}>
+                        <Button onClick={handleGoBack} disabled={directoryStack.length < 2}>
                             Go Back
                         </Button>
                     </Grid>
