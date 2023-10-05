@@ -2,7 +2,8 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import websocketMiddleware from './websocketMiddleware';
-import { clientReducer, fileManagerReducer } from "./clientSlice";
+import { clientReducer } from "./clientSlice";
+import { fileManagerReducer} from "./fileManagerSlicer";
 
 
 const rootReducer = {

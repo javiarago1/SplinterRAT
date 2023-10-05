@@ -4,7 +4,7 @@ import {Table, TableBody, TableCell, TableHead, TableRow, CircularProgress} from
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import {REQUEST_DIRECTORY} from "./fileManagerActions";
-import { selectRow, clearSelectedRows , deselectRow} from './clientSlice'
+import { selectRow, clearSelectedRows , deselectRow} from './fileManagerSlicer'
 
 const FileTable = () => {
     const dispatch = useDispatch();

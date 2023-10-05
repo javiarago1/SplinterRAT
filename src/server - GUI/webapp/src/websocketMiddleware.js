@@ -1,4 +1,5 @@
-import {setClients, setDisks, setDirectoryData } from "./clientSlice";
+import { setClients } from './clientSlice'
+import { setDisks, setDirectoryData } from "./fileManagerSlicer";
 import { WS_CONNECT} from "./actionTypes";
 import {COPY, DELETE, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS, RUN} from "./fileManagerActions";
 
