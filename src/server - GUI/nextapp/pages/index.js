@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import ClientManager from './components/Manager/ClientManager';
-import ClientTable from "./components/Table/ClientTable";
+import ClientManager from '@components/Manager/ClientManager';
+import ClientTable from "@components/Table/ClientTable";
 import { useDispatch } from 'react-redux';
-import { selectClient } from './redux/slices/clientSlice';
-import { WS_CONNECT} from "./redux/actions/connectionActions";
+import { selectClient } from '@redux/slices/clientSlice';
+import { WS_CONNECT } from "@redux/actions/connectionActions";
 
-function App() {
+function Home() {
     const [selectedClient, setSelectedClient] = useState(null);
     const dispatch = useDispatch();
 
@@ -14,10 +14,9 @@ function App() {
         dispatch({ type: WS_CONNECT });
     }, [dispatch]);
 
-    function onBack(){
-        setSelectedClient(null)
+    function onBack() {
+        setSelectedClient(null);
     }
-
 
     return (
         <div>
@@ -32,4 +31,4 @@ function App() {
     );
 }
 
-export default App;
+export default Home;

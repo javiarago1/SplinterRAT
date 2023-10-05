@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {clearClipboard, clearSelectedRows, popDirectory, reorderDisks, setClipboard} from './fileManagerSlicer';
+import {clearClipboard, clearSelectedRows, popDirectory, reorderDisks, setClipboard} from '../../../redux/slices/fileManagerSlice';
 import {Autocomplete, Button, Grid, TextField} from '@mui/material';
-import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS, DELETE , RUN} from "./fileManagerActions";
-import FileTable from "./fileTable";
+import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS, DELETE , RUN} from "../../../redux/actions/fileManagerActions";
+import FileTable from "./FileTable";
 
 function FileManager({ currentTab }) {
     const dispatch = useDispatch();

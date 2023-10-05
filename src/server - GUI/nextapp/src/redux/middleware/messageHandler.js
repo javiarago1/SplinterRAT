@@ -1,5 +1,5 @@
-import { setClients } from "./clientSlice";
-import {setDirectoryData, setDisks} from "./fileManagerSlicer";
+import { setClients } from "../slices/clientSlice";
+import {setDirectoryData, setDisks} from "../slices/fileManagerSlice";
 
 export const handleWebSocketMessage = (store, data) => {
     if (data.RESPONSE === "TABLE_INFO") {

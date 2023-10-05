@@ -3,8 +3,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Table, TableBody, TableCell, TableHead, TableRow, CircularProgress} from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import {REQUEST_DIRECTORY} from "./fileManagerActions";
-import { selectRow, clearSelectedRows , deselectRow} from './fileManagerSlicer'
+import {REQUEST_DIRECTORY} from "../../../redux/actions/fileManagerActions";
+import { selectRow, clearSelectedRows , deselectRow} from '../../../redux/slices/fileManagerSlice'
 
 const FileTable = () => {
     const dispatch = useDispatch();

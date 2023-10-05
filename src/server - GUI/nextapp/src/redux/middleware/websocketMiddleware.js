@@ -1,7 +1,7 @@
-import {  REQUEST_DISKS, REQUEST_DIRECTORY, COPY, MOVE, DELETE, RUN } from "./fileManagerActions";
+import {  REQUEST_DISKS, REQUEST_DIRECTORY, COPY, MOVE, DELETE, RUN } from "../actions/fileManagerActions";
 import { handleRequestDisks, handleCopy, handleMove, handleDelete, handleRun, handleRequestDirectory } from './actionHandlers';
-import { handleWebSocketMessage } from './messageHandlers';
-import {WS_CONNECT} from "./actionTypes";
+import { handleWebSocketMessage } from './messageHandler';
+import {WS_CONNECT} from "../actions/connectionActions";
 
 let websocket = null;
 

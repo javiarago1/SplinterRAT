@@ -1,4 +1,4 @@
-import {DELETE, MOVE, RUN} from "./fileManagerActions";
+import {DELETE, MOVE, RUN} from "../actions/fileManagerActions";
 
 export const handleRequestDisks = (websocket, store, action) => {
     if (websocket) {

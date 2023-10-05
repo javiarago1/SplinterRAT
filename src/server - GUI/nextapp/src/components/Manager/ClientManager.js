@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab as MuiTab } from '@mui/material';
-import FileManager from "./FileManager";
+import FileManager from "../Funcionalities/FileManager/FileManager";
 import { Button } from '@mui/material';
 
 

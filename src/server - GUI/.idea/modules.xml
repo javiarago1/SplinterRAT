@@ -5,8 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/ServerCore/ServerCore.iml" filepath="$PROJECT_DIR$/ServerCore/ServerCore.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwingApp/SwingApp.iml" filepath="$PROJECT_DIR$/SwingApp/SwingApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/WebServer/WebServer.iml" filepath="$PROJECT_DIR$/WebServer/WebServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nextapp.iml" filepath="$PROJECT_DIR$/nextapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/server - GUI.iml" filepath="$PROJECT_DIR$/server - GUI.iml" />
-      <module fileurl="file://$PROJECT_DIR$/webapp.iml" filepath="$PROJECT_DIR$/webapp.iml" />
     </modules>
   </component>
 </project>
