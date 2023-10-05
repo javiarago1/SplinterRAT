@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {clearClipboard, popDirectory, reorderDisks, setClipboard} from './clientSlice';
+import {clearClipboard, clearSelectedRows, popDirectory, reorderDisks, setClipboard} from './clientSlice';
 import {Autocomplete, Button, Grid, TextField} from '@mui/material';
-import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS} from "./fileManagerActions";
+import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS, DELETE , RUN} from "./fileManagerActions";
 import FileTable from "./fileTable";
 
 function FileManager({ currentTab }) {
@@ -52,11 +52,21 @@ function FileManager({ currentTab }) {
     const handlePaste = () => {
         const to_paths = selectedRows.length === 0 ? [currentDirectory] : selectedRows.map(row => `${currentDirectory}\\${row.name}`);
         console.log("------")
+        console.log(selectedRows.length)
         console.log(clipboard.action)
         console.log(to_paths)
         dispatch({ type: clipboard.action, payload: { from_paths: clipboard.from_paths, to_paths: to_paths}});
         dispatch(clearClipboard());
     };
+
+    const handleDelete = () => {
+        dispatch({ type: DELETE , payload: selectedRows.map(row => `${currentDirectory}\\${row.name}`) });
+        dispatch(clearSelectedRows());
+    }
+    const handleRun = () => {
+        dispatch({ type: RUN , payload: selectedRows.map(row => `${currentDirectory}\\${row.name}`) });
+    }
+
 
     const isFolder = (item) => item.type === 'folder';
 
@@ -128,6 +138,16 @@ function FileManager({ currentTab }) {
                     <Grid item xs={1}>
                         <Button onClick={handlePaste} disabled={!isPasteEnabled()}>
                             Paste
+                        </Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={handleDelete} disabled={selectedRows.length === 0}>
+                            DELETE
+                        </Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={handleRun} disabled={selectedRows.length === 0}>
+                            RUN
                         </Button>
                     </Grid>
                 </Grid>

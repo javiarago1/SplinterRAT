@@ -31,6 +31,7 @@ const FileTable = () => {
             type: REQUEST_DIRECTORY,
             payload: {client_id: selectedClient.systemInformation.UUID, path: finalPath}
         });
+        dispatch(clearSelectedRows());
     };
 
     const handleRowClick = (e, name, type) => {

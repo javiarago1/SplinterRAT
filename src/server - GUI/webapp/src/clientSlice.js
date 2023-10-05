@@ -28,7 +28,6 @@ const fileManagerSlice = createSlice({
                 dir => dir.requested_directory === newDirectoryData.requested_directory
             );
             if (existingIndex !== -1) {
-                console.log("already")
                 state.directoryStack[existingIndex].folders = newDirectoryData.folders;
                 state.directoryStack[existingIndex].files = newDirectoryData.files;
                 state.directoryStack[existingIndex].visited = false;

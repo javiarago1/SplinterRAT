@@ -1,6 +1,6 @@
 import {setClients, setDisks, setDirectoryData } from "./clientSlice";
 import { WS_CONNECT} from "./actionTypes";
-import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS} from "./fileManagerActions";
+import {COPY, DELETE, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS, RUN} from "./fileManagerActions";
 
 let websocket = null;
 
@@ -82,6 +82,32 @@ const handleMove = (store, action) =>{
     }
 }
 
+const handleDelete = (store, action) =>{
+    if (websocket) {
+        const message = {
+            ACTION: DELETE,
+            from_paths: action.payload,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log(message);
+        console.log("Delete !! mac: " + action.payload);
+    }
+}
+
+const handleRun = (store, action) =>{
+    if (websocket) {
+        const message = {
+            ACTION: RUN,
+            from_paths: action.payload,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log(message);
+        console.log("Delete !! mac: " + action.payload);
+    }
+}
+
 // Mapeo de tipos de acción a manejadores
 const actionHandlers = {
     [WS_CONNECT]: handleWsConnect,
@@ -89,6 +115,8 @@ const actionHandlers = {
     [REQUEST_DIRECTORY]: handleRequestDirectory,
     [COPY]: handleCopy,
     [MOVE]: handleMove,
+    [DELETE]: handleDelete,
+    [RUN]: handleRun
 };
 
 // Middleware
