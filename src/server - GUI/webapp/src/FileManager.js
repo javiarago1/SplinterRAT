@@ -42,7 +42,6 @@ function FileManager({ currentTab }) {
 
 
     const handleCopy = () => {
-        console.log(selectedRows)
         dispatch(setClipboard({ action: COPY, from_paths: selectedRows }));
     };
 
@@ -52,6 +51,9 @@ function FileManager({ currentTab }) {
 
     const handlePaste = () => {
         const to_paths = selectedRows.length === 0 ? [currentDirectory] : selectedRows.map(row => `${currentDirectory}\\${row.name}`);
+        console.log("------")
+        console.log(clipboard.action)
+        console.log(to_paths)
         dispatch({ type: clipboard.action, payload: { from_paths: clipboard.from_paths, to_paths: to_paths}});
         dispatch(clearClipboard());
     };
@@ -60,13 +62,12 @@ function FileManager({ currentTab }) {
 
     const isPasteEnabled = () => {
         if (clipboard.action === null) return false;
-        const isMoveAndMultipleSelected = clipboard.action === MOVE && selectedRows.length === 1 && selectedRows.every(isFolder);
+        const isMoveAndMultipleSelected = clipboard.action === MOVE && selectedRows.length < 2 && selectedRows.every(isFolder);
         const isCopyAndNotAllFolders = clipboard.action === COPY && selectedRows.every(isFolder);
         return isMoveAndMultipleSelected || isCopyAndNotAllFolders;
     };
 
     console.log(directoryStack)
-
 
     return (
         <div>

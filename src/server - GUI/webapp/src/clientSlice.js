@@ -22,14 +22,26 @@ const fileManagerSlice = createSlice({
             state.disks = action.payload;
         },
         setDirectoryData: (state, action) => {
-            state.directoryStack.push(action.payload);
-            state.currentDirectory = action.payload.requested_directory;
-            if (state.directoryStack.length > 1) state.directoryStack[state.directoryStack.length - 2].visited = true;
+            const newDirectoryData = action.payload;
+            console.log(newDirectoryData)
+            const existingIndex = state.directoryStack.findIndex(
+                dir => dir.requested_directory === newDirectoryData.requested_directory
+            );
+            if (existingIndex !== -1) {
+                state.directoryStack[existingIndex].folders = newDirectoryData.folders;
+                state.directoryStack[existingIndex].files = newDirectoryData.files;
+                state.directoryStack[existingIndex].visited = false;
+                state.currentDirectory = newDirectoryData.requested_directory;
+            } else {
+                state.directoryStack.push(newDirectoryData);
+                state.currentDirectory = newDirectoryData.requested_directory;
+            }
+            if (state.directoryStack.length > 1) {
+                state.directoryStack[state.directoryStack.length - 2].visited = true;
+            }
         },
         popDirectory: (state) => {
-            state.currentDirectory = null;
             state.selectedRows = [];
-            state.directoryStack.pop();
             state.directoryStack.pop();
         },
         selectRow: (state, action) => {

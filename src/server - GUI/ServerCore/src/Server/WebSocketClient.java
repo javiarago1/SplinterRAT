@@ -60,6 +60,7 @@ public class WebSocketClient {
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
         JSONObject object = new JSONObject(message);
+        System.out.println("Action"+object);
         String clientId = object.getString("client_id");
         Client webClient = ConnectionStore.getWebConnectionIdentifiedByUUID(clientId);
         if (webClient == null) {
