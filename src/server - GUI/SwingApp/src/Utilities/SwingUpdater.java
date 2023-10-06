@@ -340,6 +340,10 @@ public class SwingUpdater implements UpdaterInterface {
         }
     }
 
+    @Override
+    public boolean shouldExtract() {
+        return true;
+    }
 
     public void showDownloadedFiles(JSONObject jsonObject) {
         FolderOpener.open(jsonObject.getString("path"));

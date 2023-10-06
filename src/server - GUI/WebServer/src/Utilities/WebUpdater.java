@@ -59,6 +59,11 @@ public class WebUpdater implements UpdaterInterface {
 
     }
 
+    @Override
+    public boolean shouldExtract() {
+        return false;
+    }
+
     public WebUpdater() {
         setupMapOfResponses();
     }

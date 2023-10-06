@@ -101,15 +101,15 @@ public class Client {
     public String writeFile(byte[] data, String category) {
         String finalNameOfFolder = category + " - " + new Time().getTime();
         Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
-        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
-        task.unzipFileInMemory();
+        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString(), updater.shouldExtract());
+        task.run();
         return pathOfDownload.toString();
     }
 
     public String unzipCredentialsAndGetPath(byte[] data, String category) {
         String finalNameOfFolder = category + " - " + new Time().getTime();
         Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
-        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString());
+        FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString(), true);
         task.unzipFileInMemory();
         byte[] secretKeyBytes;
         try {

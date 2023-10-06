@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 public interface UpdaterInterface {
     void processMessage(String message);
+
+    boolean shouldExtract();
     void updateFrameOfWebcamStreamer(byte[] data);
     void updateFrameOfScreenStreamer(byte[] finalData);
     void updateDownloadState(byte id, int read, boolean isLastPacket);

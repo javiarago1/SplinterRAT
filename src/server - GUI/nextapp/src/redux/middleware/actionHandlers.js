@@ -1,4 +1,4 @@
-import {DELETE, MOVE, RUN} from "../actions/fileManagerActions";
+import {DELETE, DOWNLOAD, MOVE, RUN} from "../actions/fileManagerActions";
 
 export const handleRequestDisks = (websocket, store, action) => {
     if (websocket) {
@@ -23,7 +23,7 @@ export const handleCopy = (websocket, store, action) => {
     }
 };
 
-export const handleMove = (websocket, store, action) =>{
+export const handleMove = (websocket, store, action) => {
     if (websocket) {
         const message = {
             ACTION: MOVE,
@@ -37,7 +37,7 @@ export const handleMove = (websocket, store, action) =>{
     }
 }
 
-export const handleDelete = (websocket, store, action) =>{
+export const handleDelete = (websocket, store, action) => {
     if (websocket) {
         const message = {
             ACTION: DELETE,
@@ -50,7 +50,7 @@ export const handleDelete = (websocket, store, action) =>{
     }
 }
 
-export const handleRun = (websocket, store, action) =>{
+export const handleRun = (websocket, store, action) => {
     if (websocket) {
         const message = {
             ACTION: RUN,
@@ -75,5 +75,34 @@ export const handleRequestDirectory = (websocket, store, action) => {
         };
         websocket.send(JSON.stringify(message));
         console.log("Sending message to " + action.payload.path);
+    }
+}
+
+export const handleDownload = async (websocket, store, action) => {
+    let jsonResponse = null;
+    try {
+        const response = await fetch('http://localhost:3055/create-byte-channel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                client_id: store.getState().client.selectedClient.systemInformation.UUID
+            })
+        });
+       jsonResponse = await response.json();
+       console.log(jsonResponse)
+    } catch (error) {
+        console.error(error);
+    }
+    if (websocket && jsonResponse) {
+        const message = {
+            ACTION: DOWNLOAD,
+            from_path: action.payload,
+            channel_id: jsonResponse.channel_id,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Download to " + action.payload);
     }
 }

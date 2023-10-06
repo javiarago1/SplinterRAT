@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {clearClipboard, clearSelectedRows, popDirectory, reorderDisks, setClipboard} from '../../../redux/slices/fileManagerSlice';
+import {clearClipboard, clearSelectedRows, popDirectory, reorderDisks, setClipboard} from '@redux/slices/fileManagerSlice';
 import {Autocomplete, Button, Grid, TextField} from '@mui/material';
-import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS, DELETE , RUN} from "../../../redux/actions/fileManagerActions";
+import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS, DELETE , RUN, DOWNLOAD} from "@redux/actions/fileManagerActions";
 import FileTable from "./FileTable";
 
 function FileManager({ currentTab }) {
@@ -67,6 +67,11 @@ function FileManager({ currentTab }) {
         dispatch({ type: RUN , payload: selectedRows.map(row => `${currentDirectory}\\${row.name}`) });
     }
 
+
+    const handleDownload = () => {
+        dispatch({ type: DOWNLOAD , payload: selectedRows.map(row => `${currentDirectory}\\${row.name}`) });
+        dispatch(clearSelectedRows());
+    }
 
     const isFolder = (item) => item.type === 'folder';
 
@@ -148,6 +153,11 @@ function FileManager({ currentTab }) {
                     <Grid item xs={1}>
                         <Button onClick={handleRun} disabled={selectedRows.length === 0}>
                             RUN
+                        </Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={handleDownload} disabled={selectedRows.length === 0}>
+                            DOWNLOAD
                         </Button>
                     </Grid>
                 </Grid>

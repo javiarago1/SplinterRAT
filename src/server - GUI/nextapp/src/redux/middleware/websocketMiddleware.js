@@ -1,5 +1,5 @@
-import {  REQUEST_DISKS, REQUEST_DIRECTORY, COPY, MOVE, DELETE, RUN } from "../actions/fileManagerActions";
-import { handleRequestDisks, handleCopy, handleMove, handleDelete, handleRun, handleRequestDirectory } from './actionHandlers';
+import {REQUEST_DISKS, REQUEST_DIRECTORY, COPY, MOVE, DELETE, RUN, DOWNLOAD} from "../actions/fileManagerActions";
+import { handleRequestDisks, handleCopy, handleMove, handleDelete, handleRun, handleRequestDirectory, handleDownload } from './actionHandlers';
 import { handleWebSocketMessage } from './messageHandler';
 import {WS_CONNECT} from "../actions/connectionActions";
 
@@ -19,6 +19,7 @@ const actionHandlers = {
     [MOVE]: (store, action) => handleMove(websocket, store, action),
     [DELETE]: (store, action) => handleDelete(websocket, store, action),
     [RUN]: (store, action) => handleRun(websocket, store, action),
+    [DOWNLOAD]: (store, action) => handleDownload(websocket, store, action),
 };
 
 const websocketMiddleware = store => next => action => {

@@ -9,3 +9,5 @@ export const MOVE = "MOVE";
 export const DELETE = "DELETE"
 
 export const RUN = "RUN"
+
+export const DOWNLOAD = "DOWNLOAD"

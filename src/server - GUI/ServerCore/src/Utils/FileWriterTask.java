@@ -8,12 +8,13 @@ public class FileWriterTask implements Runnable {
     private final byte[] data;
     private final String outputPath;
 
+    private final boolean shouldExtract;
 
-    public FileWriterTask(byte[] data, String outputPath) {
+    public FileWriterTask(byte[] data, String outputPath, boolean shouldExtract) {
         this.data = data;
         this.outputPath = outputPath;
+        this.shouldExtract = shouldExtract;
     }
-
 
     public void unzipFileInMemory() {
         File folder = new File(outputPath);
@@ -43,9 +44,36 @@ public class FileWriterTask implements Runnable {
         }
     }
 
+    public void saveZipFile() {
+        File outputFile = new File(outputPath + ".zip");
+        try {
+            // Crear directorios padre si no existen
+            File parentDir = outputFile.getParentFile();
+            if (!parentDir.exists()) {
+                boolean dirsCreated = parentDir.mkdirs();
+                if (!dirsCreated) {
+                    System.err.println("No se pudieron crear los directorios padre para " + outputPath);
+                    return;
+                }
+            }
+
+            // Escribir el archivo
+            try (FileOutputStream fos = new FileOutputStream(outputFile)) {
+                fos.write(data);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
-        unzipFileInMemory();
+        if (shouldExtract) {
+            unzipFileInMemory();
+        } else {
+            saveZipFile();
+        }
     }
+
 }
 
