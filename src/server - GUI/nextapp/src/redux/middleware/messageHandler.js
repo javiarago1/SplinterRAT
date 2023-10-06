@@ -1,9 +1,14 @@
-import { setClients } from "../slices/clientSlice";
-import {setDirectoryData, setDisks} from "../slices/fileManagerSlice";
+import {addSingleClientToTable, setClients} from "@redux/slices/clientSlice";
+import {setDirectoryData, setDisks} from "@redux/slices/fileManagerSlice";
 
 export const handleWebSocketMessage = (store, data) => {
+    console.log("Received message")
+    console.log(data)
     if (data.RESPONSE === "TABLE_INFO") {
         store.dispatch(setClients(data.content));
+    } else if (data.RESPONSE === "SYS_NET_INFO"){
+        console.log("row?")
+        store.dispatch(addSingleClientToTable(data));
     } else if (data.RESPONSE === "DISKS") {
         store.dispatch(setDisks(data.disks));
         if (data.firstDiskDirectory) {

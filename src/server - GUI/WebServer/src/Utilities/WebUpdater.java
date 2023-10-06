@@ -41,6 +41,16 @@ public class WebUpdater implements UpdaterInterface {
     public void processMessage(String message) {
         System.out.println("Happened! " + message);
         JSONObject object = new JSONObject(message);
+        /*if (object.getString("RESPONSE").equals("SYS_NET_INFO")){
+            for (Session e: ConnectionStore.webSessionsMap.keySet()){
+                System.out.println("Sending row to web client");
+                try {
+                    if (e.isOpen())e.getRemote().sendString(message);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        }*/
         String clientId = object.getString("client_id");
         Client webClient = ConnectionStore.getWebConnectionIdentifiedByUUID(clientId);
         Consumer<JSONObject> action = mapOfResponses.get(Response.valueOf(object.getString("RESPONSE")));

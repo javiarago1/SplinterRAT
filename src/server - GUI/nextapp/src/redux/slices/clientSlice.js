@@ -12,12 +12,15 @@ const clientSlice = createSlice({
         },
         selectClient: (state, action) => {
             state.selectedClient = action.payload;
+        },
+        addSingleClientToTable: (state, action) => {
+            state.clients.push(action.payload);
         }
     }
 });
 
 
-export const { setClients, selectClient } = clientSlice.actions;
+export const { setClients, selectClient, addSingleClientToTable } = clientSlice.actions;
 
 export const clientReducer = clientSlice.reducer;
 
