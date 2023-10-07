@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Table, TableBody, TableCell, TableHead, TableRow, CircularProgress} from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import {REQUEST_DIRECTORY} from "../../../redux/actions/fileManagerActions";
-import { selectRow, clearSelectedRows , deselectRow} from '../../../redux/slices/fileManagerSlice'
+import {REQUEST_DIRECTORY} from "@redux/actions/fileManagerActions";
+import { selectRow, clearSelectedRows , deselectRow} from '@redux/slices/fileManagerSlice'
 
 const FileTable = () => {
     const dispatch = useDispatch();
@@ -13,7 +13,14 @@ const FileTable = () => {
     const selectedClient = useSelector(state => state.client.selectedClient);
     const selectedRows = useSelector(state => state.fileManager.selectedRows);
     const currentDirectory = useSelector(state => state.fileManager.currentDirectory);
+    const containerRef = useRef();
 
+
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollTop = 0;
+        }
+    }, [directoryData]);
 
     if (!directoryData || directoryData.visited) {
         return (
@@ -24,9 +31,7 @@ const FileTable = () => {
     }
 
     const handleRowDoubleClick = (path) => {
-        let prePath = "";
-        if (currentDirectory) prePath = currentDirectory + (stack.length > 1 ? "\\" : "");
-        const finalPath = prePath + path;
+        const finalPath = currentDirectory + path + "\\";
         dispatch({
             type: REQUEST_DIRECTORY,
             payload: {client_id: selectedClient.systemInformation.UUID, path: finalPath}
@@ -48,7 +53,7 @@ const FileTable = () => {
     };
 
     return (
-        <div style={{height: '400px', overflowY: 'auto'}}>
+        <div style={{height: '400px', overflowY: 'auto'}}  ref={containerRef}>
             <Table>
                 <TableHead>
                     <TableRow>

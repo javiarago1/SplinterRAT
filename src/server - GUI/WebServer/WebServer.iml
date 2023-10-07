@@ -10,5 +10,6 @@
     <orderEntry type="module" module-name="ServerCore" exported="" />
     <orderEntry type="library" name="json" level="project" />
     <orderEntry type="library" name="eclipse.jetty.websocket.server" level="project" />
+    <orderEntry type="library" name="fasterxml.jackson.core.databind" level="project" />
   </component>
 </module>

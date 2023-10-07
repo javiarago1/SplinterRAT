@@ -8,12 +8,15 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.json.JSONObject;
 
 import javax.servlet.DispatcherType;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.Scanner;
 
@@ -21,6 +24,7 @@ public class Server {
     private int port;
     private boolean isWebServer;
     private org.eclipse.jetty.server.Server server;
+
     public Server(int port) {
         this.port = port;
         configureServer();
@@ -31,6 +35,7 @@ public class Server {
         this.isWebServer = isWebServer;
         configureServer();
     }
+
 
     public static class MyHttpServlet extends HttpServlet {
         @Override
@@ -60,7 +65,7 @@ public class Server {
         }
     }
 
-    private void configureServer(){
+    private void configureServer() {
         server = new org.eclipse.jetty.server.Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
@@ -93,6 +98,7 @@ public class Server {
             context.addServlet(wsHolder, "/web");
         }
 
+
         // TODO PLEASE FIX THIS (T＿T)
         FilterHolder cors = new FilterHolder(CrossOriginFilter.class);
         cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
@@ -102,6 +108,13 @@ public class Server {
         context.addFilter(cors, "/*", EnumSet.of(DispatcherType.REQUEST));
         context.addServlet(new ServletHolder(new MyHttpServlet()), "/create-byte-channel");
 
+        ServletHolder servletHolder = new ServletHolder(new FileUploadServlet());
+        long maxFileSize = 10 * 1024 * 1024; // 10 MB
+        long maxRequestSize = 10 * 1024 * 1024; // 10 MB
+        int fileSizeThreshold = 64 * 1024; // 64 KB
+        MultipartConfigElement multipartConfig = new MultipartConfigElement("",maxFileSize, maxRequestSize, fileSizeThreshold);
+        servletHolder.getRegistration().setMultipartConfig(multipartConfig);
+        context.addServlet(servletHolder, "/upload-files");
 
     }
 

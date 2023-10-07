@@ -8,6 +8,9 @@ import Server.Client;
 import Server.ConnectionStore;
 import Updater.UpdaterInterface;
 import Utils.Converter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.eclipse.jetty.websocket.api.Session;
 import org.json.JSONObject;
 
@@ -37,20 +40,36 @@ public class WebUpdater implements UpdaterInterface {
         mapOfResponses.put(Response.SYS_NET_INFO, this::addRowOfNewConnection);
     }
 
+    // TODO FIX THIS
     @Override
     public void processMessage(String message) {
         System.out.println("Happened! " + message);
         JSONObject object = new JSONObject(message);
-        /*if (object.getString("RESPONSE").equals("SYS_NET_INFO")){
-            for (Session e: ConnectionStore.webSessionsMap.keySet()){
-                System.out.println("Sending row to web client");
-                try {
-                    if (e.isOpen())e.getRemote().sendString(message);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+        if (object.getString("RESPONSE").equals("SYS_NET_INFO")) {
+            Information information = Converter.convertJSON2NetAndSysInfo(object);
+            ObjectMapper mapper = new ObjectMapper();
+
+            try {
+                ObjectNode infoNode = mapper.valueToTree(information);
+                infoNode.put("RESPONSE", "SYS_NET_INFO");
+                String result = mapper.writeValueAsString(infoNode);
+                for (Session e: ConnectionStore.webSessionsMap.keySet()){
+                    System.out.println("Sending row to web client");
+                    try {
+                        if (e.isOpen()) {
+                            e.getRemote().sendString(result);
+                            System.out.println(result);
+                            System.out.println("Found opened");
+                        }
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
             }
-        }*/
+        }
+
         String clientId = object.getString("client_id");
         Client webClient = ConnectionStore.getWebConnectionIdentifiedByUUID(clientId);
         Consumer<JSONObject> action = mapOfResponses.get(Response.valueOf(object.getString("RESPONSE")));

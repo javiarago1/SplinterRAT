@@ -23,15 +23,17 @@ const fileManagerSlice = createSlice({
         },
         setDirectoryData: (state, action) => {
             const newDirectoryData = action.payload;
+            console.log("Directory data")
             console.log(newDirectoryData)
-            const existingIndex = state.directoryStack.findIndex(
-                dir => dir.requested_directory === newDirectoryData.requested_directory
-            );
-            if (existingIndex !== -1) {
+
+            const existingIndex = state.directoryStack.length - 1;
+            console.log("comparisson")
+            console.log(state.currentDirectory)
+            console.log(newDirectoryData.requested_directory )
+            if (state.currentDirectory === newDirectoryData.requested_directory) {
                 state.directoryStack[existingIndex].folders = newDirectoryData.folders;
                 state.directoryStack[existingIndex].files = newDirectoryData.files;
                 state.directoryStack[existingIndex].visited = false;
-                state.currentDirectory = newDirectoryData.requested_directory;
             } else {
                 state.directoryStack.push(newDirectoryData);
                 state.currentDirectory = newDirectoryData.requested_directory;
@@ -43,6 +45,7 @@ const fileManagerSlice = createSlice({
         popDirectory: (state) => {
             state.selectedRows = [];
             state.directoryStack.pop();
+            state.currentDirectory = state.directoryStack[state.directoryStack.length - 1].requested_directory;
         },
         selectRow: (state, action) => {
             state.selectedRows.push(action.payload);
@@ -57,7 +60,7 @@ const fileManagerSlice = createSlice({
         },
         setClipboard: (state, action) => {
             state.clipboard.action = action.payload.action;
-            state.clipboard.from_paths = action.payload.from_paths.map(path => state.currentDirectory + (state.directoryStack.length > 1 ? "\\" : "")  + path.name);
+            state.clipboard.from_paths = action.payload.from_paths.map(path => state.currentDirectory + path.name);
             state.selectedRows = [];
         },
         clearClipboard: (state) => {
@@ -66,6 +69,25 @@ const fileManagerSlice = createSlice({
                 from_paths: [],
             };
         },
+        deleteFilesFromTable: (state, action) => {
+            const itemsToDelete = action.payload;
+            const directory = state.directoryStack[state.directoryStack.length - 1];
+            itemsToDelete.forEach(item => {
+                if(item.type === 'file') {
+                    const fileIndex = directory.files.findIndex(file => file.name === item.name);
+                    if(fileIndex !== -1) {
+                        directory.files.splice(fileIndex, 1);
+                    }
+                }
+                else if(item.type === 'folder') {
+                    const folderIndex = directory.folders.indexOf(item.name);
+                    if(folderIndex !== -1) {
+                        directory.folders.splice(folderIndex, 1);
+                    }
+                }
+            });
+
+        }
 
     }
 });
@@ -79,7 +101,8 @@ export const {
     clearSelectedRows ,
     deselectRow,
     setClipboard,
-    clearClipboard
+    clearClipboard,
+    deleteFilesFromTable
 }  = fileManagerSlice.actions;
 
 
