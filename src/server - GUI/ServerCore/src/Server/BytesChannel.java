@@ -2,6 +2,7 @@ package Server;
 
 import Packets.Identificators.Category;
 import Updater.UpdaterInterface;
+import org.json.JSONObject;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -54,10 +55,19 @@ public class BytesChannel {
         return id;
     }
 
+    private JSONObject generateProgressBarJSONInformation(String uuid, byte id, int length, boolean isLastPacket){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("RESPONSE", "PROGRESS_BAR");
+        jsonObject.put("client_id", uuid);
+        jsonObject.put("channel_id", id);
+        jsonObject.put("read_size", length);
+        jsonObject.put("is_last_packet", isLastPacket);
+        return jsonObject;
+    }
 
     public byte[] handleMessage(byte[] buf, int offset, int length, byte control) {
         boolean isLastPacket = control == 0x02;
-        updaterInterface.updateDownloadState(id,length - offset, isLastPacket);
+        updaterInterface.processMessage(generateProgressBarJSONInformation(updaterInterface.getSystemInformation().UUID(), id, length - offset, isLastPacket).toString());
         write(buf, offset + 2, length - 2);
         if (isLastPacket) {
             return flipAndGet();

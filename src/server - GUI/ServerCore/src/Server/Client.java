@@ -60,6 +60,7 @@ public class Client {
                 String outputFolder = writeFile(finalData, bytesChannel.getCategoryOutputFolder());
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("RESPONSE", "SHOW_DOWNLOADED");
+                jsonObject.put("client_id", getUUID());
                 jsonObject.put("path", outputFolder);
                 updater.processMessage(jsonObject.toString());
                 closeFileChannel(bytesChannel.getId());

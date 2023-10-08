@@ -11,7 +11,6 @@ public interface UpdaterInterface {
     boolean shouldExtract();
     void updateFrameOfWebcamStreamer(byte[] data);
     void updateFrameOfScreenStreamer(byte[] finalData);
-    void updateDownloadState(byte id, int read, boolean isLastPacket);
     Information getInformation();
     SystemInformation getSystemInformation();
     NetworkInformation getNetworkInformation();

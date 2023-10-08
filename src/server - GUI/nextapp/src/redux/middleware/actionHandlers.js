@@ -1,4 +1,5 @@
 import {DELETE, DOWNLOAD, MOVE, RUN} from "../actions/fileManagerActions";
+import {addProgressBar} from "@redux/slices/fileManagerSlice";
 
 export const handleRequestDisks = (websocket, store, action) => {
     if (websocket) {
@@ -95,6 +96,8 @@ export const handleDownload = async (websocket, store, action) => {
     } catch (error) {
         console.error(error);
     }
+    if (jsonResponse == null) return;
+    store.dispatch(addProgressBar({ channel_id: jsonResponse.channel_id }));
     if (websocket && jsonResponse) {
         const message = {
             ACTION: DOWNLOAD,

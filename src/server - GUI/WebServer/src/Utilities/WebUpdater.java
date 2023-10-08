@@ -17,7 +17,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 
@@ -104,11 +103,6 @@ public class WebUpdater implements UpdaterInterface {
 
     @Override
     public void updateFrameOfScreenStreamer(byte[] finalData) {
-
-    }
-
-    @Override
-    public void updateDownloadState(byte id, int read, boolean isLastPacket) {
 
     }
 

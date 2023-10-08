@@ -10,7 +10,8 @@ const fileManagerSlice = createSlice({
         clipboard: {
             action: null,
             from_paths: [],
-        }
+        },
+        progressBars: {},
     },
     reducers: {
         reorderDisks: (state, action) => {
@@ -86,9 +87,21 @@ const fileManagerSlice = createSlice({
                     }
                 }
             });
-
-        }
-
+        },
+        addProgressBar: (state, action) => {
+            state.progressBars[action.payload.channel_id] = {
+                channel_id: action.payload.channel_id,
+                progress: 0,
+            };
+        },
+        updateProgressBar: (state, action) => {
+            const progressBar = state.progressBars[action.payload.channel_id];
+            if (action.payload.is_last_packet) {
+                delete state.progressBars[action.payload.channel_id];
+            } else {
+                progressBar.progress += action.payload.read_size;
+            }
+        },
     }
 });
 
@@ -102,7 +115,9 @@ export const {
     deselectRow,
     setClipboard,
     clearClipboard,
-    deleteFilesFromTable
+    deleteFilesFromTable,
+    addProgressBar,
+    updateProgressBar,
 }  = fileManagerSlice.actions;
 
 

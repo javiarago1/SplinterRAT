@@ -9,15 +9,8 @@ function ClientManager({ client, onBack }) {
     const dispatch = useDispatch();
 
     const [currentTab, setCurrentTab] = useState(0);
-    const [clientState, setClientState] = useState({
-        // Aquí puedes mantener cualquier otro estado específico del cliente que necesites
-    });
 
     useEffect(() => {
-        // Reinicia el estado cuando cambies de cliente
-        setClientState({
-            // Reinicia el estado específico del cliente a sus valores predeterminados
-        });
         setCurrentTab(0);
     }, [client]);
 

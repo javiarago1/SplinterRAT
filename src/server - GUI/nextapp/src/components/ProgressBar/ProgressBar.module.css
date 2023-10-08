@@ -1,0 +1,22 @@
+.download-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.download-panel {
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.download-panel.hidden {
+    transform: translateY(100%);
+    opacity: 0;
+}
