@@ -53,8 +53,8 @@ const FileTable = () => {
     };
 
     return (
-        <div style={{height: '400px', overflowY: 'auto'}}  ref={containerRef}>
-            <Table>
+        <div style={{ maxHeight: '380px', overflowY: 'auto' }}>
+        <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell>Name</TableCell>

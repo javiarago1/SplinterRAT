@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
     clearClipboard, clearSelectedRows, deleteFilesFromTable, popDirectory, reorderDisks, setClipboard
 } from '@redux/slices/fileManagerSlice';
-import {Autocomplete, Box, Button, Container, Grid, IconButton, TextField} from '@mui/material';
+import {Autocomplete, Box, Button, Container, Divider, Grid, IconButton, TextField} from '@mui/material';
 import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS, DELETE, RUN, DOWNLOAD} from "@redux/actions/fileManagerActions";
 import FileTable from "./FileTable";
 import ProgressBar from "@components/ProgressBar/ProgressBar";
@@ -149,7 +149,7 @@ function FileManager({currentTab}) {
                 <IconButton
                     onClick={() => dispatch({
                         type: REQUEST_DIRECTORY,
-                        payload: { client_id: selectedClient.systemInformation.UUID, path: currentDirectory }
+                        payload: {client_id: selectedClient.systemInformation.UUID, path: currentDirectory}
                     })}
                     title="Refresh Directory"
                 >
@@ -175,7 +175,7 @@ function FileManager({currentTab}) {
 
                     onClick={() => dispatch({
                         type: REQUEST_DISKS,
-                        payload: { client_id: selectedClient.systemInformation.UUID, sendDirectory: false }
+                        payload: {client_id: selectedClient.systemInformation.UUID, sendDirectory: false}
                     })}
                     title="Refresh Disks"
 
@@ -185,63 +185,69 @@ function FileManager({currentTab}) {
             </Grid>
         </Grid>
 
+        <Divider sx={{mt: 3, mb: 2}}/>
 
         <Box mt={2}>
-                <Grid container spacing={3} alignItems="center">
-                    <Grid item >
-                        <IconButton aria-label="" onClick={handleGoBack} disabled={directoryStack.length < 2}>
-                            <ArrowCircleLeft sx={{ fontSize: 36 }}/>
-                        </IconButton>
-                    </Grid>
-                    <Grid item >
-                        <Button variant="outlined" startIcon={<ContentCopy />} disabled={selectedRows.length === 0} onClick={handleCopy}>
-                            Copy
-                        </Button>
-                    </Grid>
-                    <Grid item>
-                        <Button variant="outlined" startIcon={<ContentCut/>} disabled={selectedRows.length === 0} onClick={handleMove}>
-                            Move
-                        </Button>
-                    </Grid>
-                    <Grid item>
-                        <Button variant="outlined" startIcon={<ContentPaste/>} onClick={handlePaste} disabled={!isPasteEnabled()}>
-                            Paste
-                        </Button>
-                    </Grid>
-                    <Grid item>
-                        <Button variant="outlined" startIcon={<Delete/>} onClick={handleDelete} disabled={selectedRows.length === 0}>
-                            DELETE
-                        </Button>
-                    </Grid>
-                    <Grid item >
-                        <Button variant="outlined" startIcon={<PlayArrow/>} onClick={handleRun}>
-                            RUN
-                        </Button>
-                    </Grid>
-                    <Grid item >
-                        <input
-                            type="file"
-                            ref={fileInputRef}
-                            onChange={handleFileUpload}
-                            style={{display: 'none'}}
-                        />
-                        <Button variant="outlined" startIcon={<FileUpload/>} onClick={handleUpload}
-                                disabled={!selectedRows.every(isFolder) || selectedRows.length !== 1}>
-                            UPLOAD
-                        </Button>
-
-                    </Grid>
-                    <Grid item >
-                        <Button variant="outlined" startIcon={<FileDownload/>} onClick={handleDownload} disabled={selectedRows.length === 0}>
-                            DOWNLOAD
-                        </Button>
-                    </Grid>
+            <Grid container spacing={3} alignItems="center">
+                <Grid item>
+                    <IconButton aria-label="" onClick={handleGoBack} disabled={directoryStack.length < 2}>
+                        <ArrowCircleLeft sx={{fontSize: 36}}/>
+                    </IconButton>
+                </Grid>
+                <Grid item>
+                    <Button variant="outlined" startIcon={<ContentCopy/>} disabled={selectedRows.length === 0}
+                            onClick={handleCopy}>
+                        Copy
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button variant="outlined" startIcon={<ContentCut/>} disabled={selectedRows.length === 0}
+                            onClick={handleMove}>
+                        Move
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button variant="outlined" startIcon={<ContentPaste/>} onClick={handlePaste}
+                            disabled={!isPasteEnabled()}>
+                        Paste
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button variant="outlined" startIcon={<Delete/>} onClick={handleDelete}
+                            disabled={selectedRows.length === 0}>
+                        DELETE
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button variant="outlined" startIcon={<PlayArrow/>} onClick={handleRun}>
+                        RUN
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileUpload}
+                        style={{display: 'none'}}
+                    />
+                    <Button variant="outlined" startIcon={<FileUpload/>} onClick={handleUpload}
+                            disabled={!selectedRows.every(isFolder) || selectedRows.length !== 1}>
+                        UPLOAD
+                    </Button>
 
                 </Grid>
-            </Box>
-            <FileTable/>
-            <ProgressBar/>
-        </Box>);
+                <Grid item>
+                    <Button variant="outlined" startIcon={<FileDownload/>} onClick={handleDownload}
+                            disabled={selectedRows.length === 0}>
+                        DOWNLOAD
+                    </Button>
+                </Grid>
+
+            </Grid>
+        </Box>
+        <FileTable/>
+        <ProgressBar/>
+    </Box>);
 }
 
 export default FileManager;
