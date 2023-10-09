@@ -21,15 +21,6 @@ public class ConnectionStore {
         webSessionsMap.put(session, client);
     }
 
-    public static Client getWebConnectionIdentifiedByUUID(String uuid){
-        return webClientsMap.get(uuid);
-    }
-
-
-    public static void addConnectionToWebClientMap(String uuid, Client client){
-        webClientsMap.put(uuid, client);
-    }
-
     public static void addConnection(String session, Client client) {
         connectionsMap.put(session, client);
     }
