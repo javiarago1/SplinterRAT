@@ -24,7 +24,7 @@ const FileTable = () => {
 
     if (!directoryData || directoryData.visited) {
         return (
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px'}}>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '360px'}}>
                 <CircularProgress/>
             </div>
         );
@@ -53,7 +53,7 @@ const FileTable = () => {
     };
 
     return (
-        <div style={{ maxHeight: '380px', overflowY: 'auto' }}>
+        <div style={{ maxHeight: '360px', overflowY: 'auto' }}>
         <Table>
                 <TableHead>
                     <TableRow>

@@ -1,31 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import ClientManager from '@components/Manager/ClientManager';
 import ClientTable from "@components/Table/ClientTable";
-import { useDispatch } from 'react-redux';
-import { selectClient } from '@redux/slices/clientSlice';
-import { WS_CONNECT } from "@redux/actions/connectionActions";
+import {useDispatch, useSelector} from 'react-redux';
+import { removeSelectedClient, selectClient} from '@redux/slices/clientSlice';
+import { SELECT_CLIENT, WS_CONNECT} from "@redux/actions/connectionActions";
 
 function Home() {
-    const [selectedClient, setSelectedClient] = useState(null);
     const dispatch = useDispatch();
+    const selectedClient = useSelector(state => state.client.selectedClient);
 
-    // Connect to the WebSocket when the component mounts
+
     useEffect(() => {
         dispatch({ type: WS_CONNECT });
     }, [dispatch]);
 
-    function onBack() {
-        setSelectedClient(null);
+    const onClientSelect =  (client) => {
+        dispatch({type: SELECT_CLIENT, payload: { client_id: client.systemInformation.UUID, set_null: false} });
+    };
+
+    const onBack = () => {
+        dispatch({type: SELECT_CLIENT, payload: { client_id: selectedClient.systemInformation.UUID, set_null: true} })
+        dispatch(removeSelectedClient())
+        console.log("Selected client after going back: " +selectClient)
     }
+
 
     return (
         <div>
             {!selectedClient ?
-                <ClientTable onClientSelect={(client) => {
-                    dispatch(selectClient(client));
-                    setSelectedClient(client);
-                }} /> :
-                <ClientManager client={selectedClient} onBack={onBack} />
+                <ClientTable onClientSelect={onClientSelect} /> :
+                !selectedClient ?
+                    <p>Loading...</p> :
+                    <ClientManager client={selectedClient} onBack={onBack} />
             }
         </div>
     );

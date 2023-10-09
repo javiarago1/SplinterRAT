@@ -20,7 +20,8 @@ public class WebSocket {
                 && throwable.getCause() instanceof java.io.IOException
                 && "Connection reset by peer".equals(throwable.getCause().getMessage()))) {
             // Handle the abrupt disconnection here
-            ConnectionStore.removeConnection(session);
+            String clientId = session.getUpgradeRequest().getHeader("Client-ID");
+            ConnectionStore.removeConnection(clientId);
             System.out.println("Client disconnected abruptly.");
         } else {
             // Handle other errors
@@ -32,8 +33,9 @@ public class WebSocket {
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
+        String clientId = session.getUpgradeRequest().getHeader("Client-ID");
         System.out.println(message);
-        ConnectionStore.getConnection(session).updater.processMessage(message);
+        ConnectionStore.getConnection(clientId).updater.processMessage(message);
     }
 
     @OnWebSocketConnect
@@ -41,16 +43,16 @@ public class WebSocket {
         String clientId = session.getUpgradeRequest().getHeader("Client-ID");
         Client client = new Client(session);
 
-        ConnectionStore.addConnection(session, client);
-        ConnectionStore.addConnectionWithUUIDIdentifier(clientId, client);
+        ConnectionStore.addConnection(clientId, client);
 
         System.out.println("New connection from " + session.getRemoteAddress().getAddress().getHostAddress());
     }
 
     @OnWebSocketClose
     public void onClose(Session session, int statusCode, String reason) {
-        ConnectionStore.removeConnection(session);
-        System.out.println("Closed connection to " + session.getRemoteAddress().getAddress().getHostAddress());
+        String clientId = session.getUpgradeRequest().getHeader("Client-ID");
+        ConnectionStore.removeConnection(clientId);
+        System.out.println("Closed connection to " + clientId);
     }
 
     // Java (Servidor)
@@ -59,7 +61,8 @@ public class WebSocket {
 
     @OnWebSocketMessage
     public void onMessage(Session session, byte[] buf, int offset, int length) {
-        Client client = ConnectionStore.getConnection(session);
+        String clientId = session.getUpgradeRequest().getHeader("Client-ID");
+        Client client = ConnectionStore.getConnection(clientId);
 
         ConcurrentHashMap<Byte, BytesChannel> sessionToFileChannels = client.getFileChannels();
 

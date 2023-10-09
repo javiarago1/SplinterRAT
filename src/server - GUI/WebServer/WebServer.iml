@@ -11,5 +11,7 @@
     <orderEntry type="library" name="json" level="project" />
     <orderEntry type="library" name="eclipse.jetty.websocket.server" level="project" />
     <orderEntry type="library" name="fasterxml.jackson.core.databind" level="project" />
+    <orderEntry type="library" name="eclipse.jetty.servlets" level="project" />
+    <orderEntry type="library" name="net.lingala.zip4j" level="project" />
   </component>
 </module>

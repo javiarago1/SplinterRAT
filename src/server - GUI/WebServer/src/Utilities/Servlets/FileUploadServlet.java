@@ -1,5 +1,7 @@
-package Server;
+package Utilities.Servlets;
 
+import Server.Client;
+import Server.ConnectionStore;
 import Utils.UniqueByteIDGenerator;
 import org.json.JSONObject;
 import net.lingala.zip4j.ZipFile;
@@ -60,7 +62,7 @@ public class FileUploadServlet extends HttpServlet {
 
         // 3. Send the compressed file
         try (FileInputStream fis = new FileInputStream(tempZipPath)) {
-            Client client = ConnectionStore.connectionsMapIdentifiedByUUID.get(jsonObject.getString("client_id"));
+            Client client = ConnectionStore.connectionsMap.get(jsonObject.getString("client_id"));
             UniqueByteIDGenerator uniqueByteIDGeneratorOut = client.getUniqueByteIDGeneratorOut();
             byte id = uniqueByteIDGeneratorOut.getID();
             JSONObject json2 = new JSONObject();

@@ -1,5 +1,18 @@
 import {DELETE, DOWNLOAD, MOVE, RUN} from "../actions/fileManagerActions";
 import {addProgressBar} from "@redux/slices/fileManagerSlice";
+import {START_WEBCAM} from "@redux/actions/webcamManagerActions";
+import {SELECT_CLIENT} from "@redux/actions/connectionActions";
+
+export const handleSelectClient = (websocket, store, action) => {
+    if (websocket) {
+        const message = {
+            ACTION: SELECT_CLIENT,
+            client_id: action.payload.client_id,
+            set_null: action.payload.set_null
+        };
+        websocket.send(JSON.stringify(message));
+    }
+};
 
 export const handleRequestDisks = (websocket, store, action) => {
     if (websocket) {
@@ -79,8 +92,7 @@ export const handleRequestDirectory = (websocket, store, action) => {
     }
 }
 
-export const handleDownload = async (websocket, store, action) => {
-    let jsonResponse = null;
+export const fetchChannelId = async (store) => {
     try {
         const response = await fetch('http://localhost:3055/create-byte-channel', {
             method: 'POST',
@@ -91,18 +103,48 @@ export const handleDownload = async (websocket, store, action) => {
                 client_id: store.getState().client.selectedClient.systemInformation.UUID
             })
         });
-       jsonResponse = await response.json();
-       console.log(jsonResponse)
+
+        const jsonResponse = await response.json();
+        return jsonResponse.channel_id || null;
     } catch (error) {
         console.error(error);
+        return null;
     }
-    if (jsonResponse == null) return;
-    store.dispatch(addProgressBar({ channel_id: jsonResponse.channel_id }));
-    if (websocket && jsonResponse) {
+};
+
+export const handleStartWebcam = async (websocket, store, action) => {
+    const channelId = await fetchChannelId(store);
+    if (channelId === null) {
+        console.error("Failed to retrieve channel ID.");
+        return;
+    }
+    if (websocket) {
+        const message = {
+            ACTION: START_WEBCAM,
+            channel_id: channelId,
+            selected_device: "Irun Webcam",
+            is_fragmented: false,
+            fps: 30,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Start webcam to " + action.payload);
+    }
+}
+
+export const handleDownload =  async (websocket, store, action) => {
+    const channelId = await fetchChannelId(store);
+
+    if (channelId === null) {
+        console.error("Failed to retrieve channel ID.");
+        return;
+    }
+    store.dispatch(addProgressBar({channel_id: channelId}));
+    if (websocket) {
         const message = {
             ACTION: DOWNLOAD,
             from_path: action.payload,
-            channel_id: jsonResponse.channel_id,
+            channel_id: channelId,
             client_id: store.getState().client.selectedClient.systemInformation.UUID
         };
         websocket.send(JSON.stringify(message));

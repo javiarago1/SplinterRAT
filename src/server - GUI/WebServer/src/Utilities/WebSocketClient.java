@@ -1,4 +1,4 @@
-package Server;
+package Utilities;
 
 import Packets.SysNetInfo.Information;
 import Server.Client;
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.eclipse.jetty.util.ajax.JSON;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -25,26 +26,26 @@ public class WebSocketClient {
 
     @OnWebSocketConnect
     public void onConnect(Session session) throws IOException {
-        // Client client = new Client(session);
         Client client = new Client(session);
         ConnectionStore.addToWebSessionMap(session, client);
-        ConcurrentHashMap<Session, Client> tempMap = ConnectionStore.connectionsMap;
         ObjectMapper mapper = new ObjectMapper();
 
         // Create the root JSON object
         ObjectNode rootNode = mapper.createObjectNode();
         rootNode.put("RESPONSE", "TABLE_INFO");
 
-        // Create the 'content' array that will store the Information objects
-        ArrayNode contentArray = mapper.createArrayNode();
+        // Create the 'content' object that will store the Information objects using UUID as key
+        ObjectNode contentObject = mapper.createObjectNode();
 
         for (Client clientInstance : ConnectionStore.connectionsMap.values()) {
             Information information = clientInstance.updater.getInformation();
-            contentArray.add(mapper.valueToTree(information));
+
+            // Use UUID as the key for each client's information
+            contentObject.set(information.systemInformation().UUID(), mapper.valueToTree(information));
         }
 
-        // Add the 'content' array to the root object
-        rootNode.set("content", contentArray);
+        // Add the 'content' object to the root object
+        rootNode.set("content", contentObject);
 
         try {
             String result = mapper.writeValueAsString(rootNode);
@@ -53,27 +54,39 @@ public class WebSocketClient {
             throw new RuntimeException(e);
         }
 
-        System.out.println("New connection froma " + session.getRemoteAddress().getAddress().getHostAddress());
+        System.out.println("New connection from " + session.getRemoteAddress().getAddress().getHostAddress());
     }
 
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
         JSONObject object = new JSONObject(message);
-        System.out.println("Action"+object);
         String clientId = object.getString("client_id");
-        Client webClient = ConnectionStore.getWebConnectionIdentifiedByUUID(clientId);
-        if (webClient == null) {
-            Client temp2 = new Client(session);
-            ConnectionStore.addConnectionToWebClientMap(clientId, temp2);
-            ConnectionStore.webSessionsMap.get(session).updater = ConnectionStore.connectionsMapIdentifiedByUUID.get(clientId).updater;
-            System.out.println("Client doesn't exists so i create it in map");
-        } else System.out.println("Client already exists");
-        Client windowsClient = ConnectionStore.getWindowsConnectionByIdentifier(clientId);
-        try {
-            windowsClient.sendString(message);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        System.out.println(message);
+        if (object.getString("ACTION").equals("SELECT_CLIENT")){
+            Client mainClient = ConnectionStore.getConnection(clientId);
+            WebUpdater webUpdater = (WebUpdater) mainClient.updater;
+            if (object.getBoolean("set_null")){
+                System.out.println("Let's set to null the selected client");
+                webUpdater.setCurrentClient(null);
+            } else {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("RESPONSE","CLIENT_SET");
+                jsonObject.put("client_id", clientId);
+                webUpdater.setCurrentClient(new Client(session));
+                try {
+                    session.getRemote().sendString(jsonObject.toString());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            Client windowsClient = ConnectionStore.getConnection(clientId);
+            try {
+                windowsClient.sendString(message);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -84,7 +97,7 @@ public class WebSocketClient {
     public void onClose(Session session, int statusCode, String reason) {
         Client tempClient = ConnectionStore.webSessionsMap.get(session);
         String uuid = tempClient.updater.getSystemInformation().UUID();
-        ConnectionStore.removeConnection(session);
+        ConnectionStore.removeConnectionWeb(session);
         ConnectionStore.webClientsMap.remove(uuid);
         System.out.println(ConnectionStore.webClientsMap);
         System.out.println("Closed connection toa " + session.getRemoteAddress().getAddress().getHostAddress());

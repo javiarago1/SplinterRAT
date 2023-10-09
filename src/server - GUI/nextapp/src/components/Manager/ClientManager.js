@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab as MuiTab } from '@mui/material';
 import FileManager from "../Funcionalities/FileManager/FileManager";
 import { Button } from '@mui/material';
+import WebcamManager from "@components/Funcionalities/WebcamManager/WebcamManager";
 
 
 function ClientManager({ client, onBack }) {
@@ -19,7 +20,7 @@ function ClientManager({ client, onBack }) {
     };
 
     return (
-        <div>
+        <div style={{height: '100%'}}>
             <Button onClick={onBack} >Volver a la tabla</Button>
             <Paper>
                 <Tabs value={currentTab} onChange={handleChange}>
@@ -34,7 +35,7 @@ function ClientManager({ client, onBack }) {
                     </div>
                 )}
                 {currentTab === 1 && <FileManager />}
-                {currentTab === 2 && <div>Contacto de {client.name}</div>}
+                {currentTab === 2 && <WebcamManager />}
             </Paper>
         </div>
     );

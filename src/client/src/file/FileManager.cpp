@@ -64,6 +64,7 @@ void FileManager::sendDisks(nlohmann::json jsonObject) {
         json["firstDiskDirectory"] = firstDiskDirectory;
     }
 
+
     clientSocket.sendMessage(json);
 }
 

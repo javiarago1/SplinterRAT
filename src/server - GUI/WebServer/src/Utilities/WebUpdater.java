@@ -29,6 +29,8 @@ public class WebUpdater implements UpdaterInterface {
 
     private Information information;
 
+    private Client currentClient;
+
     private void addRowOfNewConnection(JSONObject jsonObject) {
         information = Converter.convertJSON2NetAndSysInfo(jsonObject);
         systemInformation = information.systemInformation();
@@ -69,17 +71,15 @@ public class WebUpdater implements UpdaterInterface {
             }
         }
 
-        String clientId = object.getString("client_id");
-        Client webClient = ConnectionStore.getWebConnectionIdentifiedByUUID(clientId);
         Consumer<JSONObject> action = mapOfResponses.get(Response.valueOf(object.getString("RESPONSE")));
         if (action != null) {
             action.accept(object);
         }
-        if (webClient == null) {
+        if (currentClient == null) {
             return;
         }
         try {
-            webClient.sendString(message);
+            currentClient.sendString(message);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -119,5 +119,9 @@ public class WebUpdater implements UpdaterInterface {
     @Override
     public NetworkInformation getNetworkInformation() {
         return networkInformation;
+    }
+
+    public void setCurrentClient(Client currentClient) {
+        this.currentClient = currentClient;
     }
 }

@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
 
 function ClientTable({ onClientSelect }) {
-    const state = useSelector(state => state);
-    console.log(state);
     const clients = useSelector(state => state.client.clients);
 
     return (
@@ -22,8 +20,8 @@ function ClientTable({ onClientSelect }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {clients.map(client => {
-                        return (<TableRow
+                    {Object.values(clients).map(client => (
+                        <TableRow
                             key={client.systemInformation.UUID}
                             onDoubleClick={() => onClientSelect(client)}
                         >
@@ -34,8 +32,8 @@ function ClientTable({ onClientSelect }) {
                             <TableCell>{client.systemInformation.USER_NAME}</TableCell>
                             <TableCell>{client.systemInformation.OPERATING_SYSTEM}</TableCell>
                             <TableCell> Connected </TableCell>
-                        </TableRow>)
-                    })}
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
         </Paper>

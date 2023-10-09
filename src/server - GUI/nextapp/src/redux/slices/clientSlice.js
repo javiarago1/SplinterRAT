@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 const clientSlice = createSlice({
     name: 'client',
     initialState: {
-        clients: [],
+        clients: {},
         selectedClient: null,
     },
     reducers: {
@@ -13,15 +13,19 @@ const clientSlice = createSlice({
         selectClient: (state, action) => {
             state.selectedClient = action.payload;
         },
+        selectClientByUUID: (state, action) => {
+            state.selectedClient = state.clients[action.payload.client_id];
+        },
         addSingleClientToTable: (state, action) => {
-            state.clients.push(action.payload);
+            const client = action.payload;
+            state.clients[client.systemInformation.UUID] = client;
+        },
+        removeSelectedClient: (state, action) => {
+            state.selectedClient = null;
         }
     }
 });
 
-
-export const { setClients, selectClient, addSingleClientToTable } = clientSlice.actions;
+export const {setClients, selectClient, addSingleClientToTable, selectClientByUUID, removeSelectedClient} = clientSlice.actions;
 
 export const clientReducer = clientSlice.reducer;
-
-

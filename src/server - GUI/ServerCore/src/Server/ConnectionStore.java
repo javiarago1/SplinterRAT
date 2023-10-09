@@ -10,9 +10,7 @@ public class ConnectionStore {
 
     public static UpdaterFactory updaterFactory;
 
-    public static final ConcurrentHashMap<Session, Client> connectionsMap = new ConcurrentHashMap<>();
-
-    public static final ConcurrentHashMap<String, Client> connectionsMapIdentifiedByUUID = new ConcurrentHashMap<>();
+    public static final ConcurrentHashMap<String, Client> connectionsMap = new ConcurrentHashMap<>();
 
     // duplicated above just for normal server
 
@@ -27,26 +25,20 @@ public class ConnectionStore {
         return webClientsMap.get(uuid);
     }
 
-    public static Client getWindowsConnectionByIdentifier(String uuid){
-        return connectionsMapIdentifiedByUUID.get(uuid);
-    }
 
-    public static void addConnectionWithUUIDIdentifier(String uuid, Client client){
-        connectionsMapIdentifiedByUUID.put(uuid, client);
-    }
     public static void addConnectionToWebClientMap(String uuid, Client client){
         webClientsMap.put(uuid, client);
     }
 
-    public static void addConnection(Session session, Client client) {
+    public static void addConnection(String session, Client client) {
         connectionsMap.put(session, client);
     }
 
-    public static Client getConnection(Session session) {
+    public static Client getConnection(String session) {
         return connectionsMap.get(session);
     }
 
-    public static void removeConnection(Session session) {
+    public static void removeConnection(String session) {
         connectionsMap.remove(session);
     }
 
@@ -55,5 +47,7 @@ public class ConnectionStore {
     }
 
 
-
+    public static void removeConnectionWeb(Session session) {
+        webSessionsMap.remove(session);
+    }
 }

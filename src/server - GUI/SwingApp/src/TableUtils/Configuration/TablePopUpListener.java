@@ -63,11 +63,11 @@ public class TablePopUpListener extends MouseAdapter {
         javax.swing.table.TableModel tableModel = Main.gui.getConnectionsTable().getModel();
         int row = Main.gui.getConnectionsTable().getSelectedRow();
         String UUID = (String) tableModel.getValueAt(row, 0);
-        ConcurrentHashMap<Session, Client> map = ConnectionStore.connectionsMap;
-        Iterator<Map.Entry<Session, Client>> iterator = map.entrySet().iterator();
+        ConcurrentHashMap<String, Client> map = ConnectionStore.connectionsMap;
+        Iterator<Map.Entry<String, Client>> iterator = map.entrySet().iterator();
         boolean found = false;
         while (iterator.hasNext() && !found) {
-            Map.Entry<Session, Client> entry = iterator.next();
+            Map.Entry<String, Client> entry = iterator.next();
             if ((UUID).equals(entry.getValue().getUUID())) {
                 tableModel.setValueAt("Connected", row, tableModel.getColumnCount() - 1);
                 found = true;

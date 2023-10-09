@@ -1,0 +1,3 @@
+export const START_WEBCAM = "START_WEBCAM"
+
+export const START_DOWNLOAD = "START_DOWNLOAD"

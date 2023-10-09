@@ -32,6 +32,7 @@ void ClientSocket::on_message(websocketpp::connection_hdl hdl, client::message_p
         if (msg->get_opcode() == websocketpp::frame::opcode::text) {
             // Handle text message
             jsonObject =  nlohmann::json::parse(std::string(msg->get_payload()));
+            std::cout << jsonObject.dump() << std::endl;
             std::string action = jsonObject["ACTION"];
             std::cout << "Action: " << action << std::endl;
             auto it = actionMap.find(action);

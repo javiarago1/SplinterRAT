@@ -24,7 +24,7 @@ public abstract class AbstractEventGUI<T extends AbstractDialogCreator> extends 
             JOptionPane.showMessageDialog(getGUIManager(), "Connection with the client has been lost.", "Error", JOptionPane.ERROR_MESSAGE);
             getGUIManager().closeDialog();
         });
-        ConnectionStore.removeConnection(getClient().getSession());
+        ConnectionStore.removeConnection(getClient().getUUID());
     }
 
 

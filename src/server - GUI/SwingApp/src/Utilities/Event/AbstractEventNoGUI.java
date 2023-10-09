@@ -20,7 +20,7 @@ public abstract class AbstractEventNoGUI implements AbstractEvent{
             Main.gui.updateUserStateToDisconnected();
             JOptionPane.showMessageDialog(null, "Connection with the client has been lost.", "Error", JOptionPane.ERROR_MESSAGE);
         });
-        ConnectionStore.removeConnection(getClient().getSession());
+        ConnectionStore.removeConnection(getClient().getUUID());
     }
     @Override
     public Client getClient() {

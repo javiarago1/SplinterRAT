@@ -1,4 +1,4 @@
-import {addSingleClientToTable, setClients} from "@redux/slices/clientSlice";
+import {addSingleClientToTable, selectClientByUUID, setClients} from "@redux/slices/clientSlice";
 import {setDirectoryData, setDisks, updateProgressBar} from "@redux/slices/fileManagerSlice";
 
 export const handleWebSocketMessage = (store, data) => {
@@ -6,6 +6,8 @@ export const handleWebSocketMessage = (store, data) => {
     console.log(data)
     if (data.RESPONSE === "TABLE_INFO") {
         store.dispatch(setClients(data.content));
+    } else if (data.RESPONSE === "CLIENT_SET"){
+        store.dispatch(selectClientByUUID(data));
     } else if (data.RESPONSE === "SYS_NET_INFO"){
         store.dispatch(addSingleClientToTable(data));
     } else if (data.RESPONSE === "DISKS") {
