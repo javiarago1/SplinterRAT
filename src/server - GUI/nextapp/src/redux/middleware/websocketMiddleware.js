@@ -7,11 +7,11 @@ import {
     handleRun,
     handleRequestDirectory,
     handleDownload,
-    handleStartWebcam, handleSelectClient
+    handleStartWebcam, handleSelectClient, handleWebcamDevices
 } from './actionHandlers';
-import { handleWebSocketMessage } from './messageHandler';
+import {handleWebSocketBinary, handleWebSocketMessage} from './messageHandler';
 import {SELECT_CLIENT, WS_CONNECT} from "../actions/connectionActions";
-import {START_WEBCAM} from "@redux/actions/webcamManagerActions";
+import {START_WEBCAM, WEBCAM_DEVICES} from "@redux/actions/webcamManagerActions";
 
 let websocket = null;
 
@@ -19,8 +19,10 @@ const actionHandlers = {
     [WS_CONNECT]: (store) => {
         websocket = new WebSocket('ws://127.0.0.1:3055/web');
         websocket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            handleWebSocketMessage(store, data);
+            if (typeof event.data === "string")
+                handleWebSocketMessage(store, JSON.parse(event.data));
+            else if (event.data instanceof Blob)
+                handleWebSocketBinary(store, event.data);
         };
     },
     [REQUEST_DISKS]: (store, action) => handleRequestDisks(websocket, store, action),
@@ -32,7 +34,7 @@ const actionHandlers = {
     [DOWNLOAD]: (store, action) => handleDownload(websocket, store, action),
     [START_WEBCAM]: (store, action) => handleStartWebcam(websocket, store, action),
     [SELECT_CLIENT]: (store, action) => handleSelectClient(websocket, store, action),
-
+    [WEBCAM_DEVICES]: (store, action) => handleWebcamDevices(websocket, store, action),
 };
 
 const websocketMiddleware = store => next => action => {

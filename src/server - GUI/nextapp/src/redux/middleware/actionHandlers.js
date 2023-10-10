@@ -1,6 +1,6 @@
 import {DELETE, DOWNLOAD, MOVE, RUN} from "../actions/fileManagerActions";
 import {addProgressBar} from "@redux/slices/fileManagerSlice";
-import {START_WEBCAM} from "@redux/actions/webcamManagerActions";
+import {START_WEBCAM, WEBCAM_DEVICES} from "@redux/actions/webcamManagerActions";
 import {SELECT_CLIENT} from "@redux/actions/connectionActions";
 
 export const handleSelectClient = (websocket, store, action) => {
@@ -92,7 +92,7 @@ export const handleRequestDirectory = (websocket, store, action) => {
     }
 }
 
-export const fetchChannelId = async (store) => {
+export const fetchChannelId = async (store, category) => {
     try {
         const response = await fetch('http://localhost:3055/create-byte-channel', {
             method: 'POST',
@@ -100,7 +100,8 @@ export const fetchChannelId = async (store) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                client_id: store.getState().client.selectedClient.systemInformation.UUID
+                client_id: store.getState().client.selectedClient.systemInformation.UUID,
+                category: category
             })
         });
 
@@ -113,7 +114,7 @@ export const fetchChannelId = async (store) => {
 };
 
 export const handleStartWebcam = async (websocket, store, action) => {
-    const channelId = await fetchChannelId(store);
+    const channelId = await fetchChannelId(store, "WEBCAM_STREAMING");
     if (channelId === null) {
         console.error("Failed to retrieve channel ID.");
         return;
@@ -122,7 +123,7 @@ export const handleStartWebcam = async (websocket, store, action) => {
         const message = {
             ACTION: START_WEBCAM,
             channel_id: channelId,
-            selected_device: "Irun Webcam",
+            selected_device: action.payload.selected_device,
             is_fragmented: false,
             fps: 30,
             client_id: store.getState().client.selectedClient.systemInformation.UUID
@@ -133,7 +134,7 @@ export const handleStartWebcam = async (websocket, store, action) => {
 }
 
 export const handleDownload =  async (websocket, store, action) => {
-    const channelId = await fetchChannelId(store);
+    const channelId = await fetchChannelId(store, "ZIP_FILE");
 
     if (channelId === null) {
         console.error("Failed to retrieve channel ID.");
@@ -145,6 +146,17 @@ export const handleDownload =  async (websocket, store, action) => {
             ACTION: DOWNLOAD,
             from_path: action.payload,
             channel_id: channelId,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Download to " + action.payload);
+    }
+}
+
+export const handleWebcamDevices =  async (websocket, store, action) => {
+    if (websocket) {
+        const message = {
+            ACTION: WEBCAM_DEVICES,
             client_id: store.getState().client.selectedClient.systemInformation.UUID
         };
         websocket.send(JSON.stringify(message));

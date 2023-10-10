@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import websocketMiddleware from '../middleware/websocketMiddleware';
 import { clientReducer } from "../slices/clientSlice";
 import { fileManagerReducer} from "../slices/fileManagerSlice";
-import {webcamManagerReducer} from "@redux/slices/webcamManagerSlice";
+import {setWebcamFrame, webcamManagerReducer} from "@redux/slices/webcamManagerSlice";
 
 
 const rootReducer = {
@@ -12,7 +12,12 @@ const rootReducer = {
     fileManager: fileManagerReducer,
     webcamManager: webcamManagerReducer
 };
- export const store = configureStore({
-     reducer: rootReducer,
-     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(websocketMiddleware),
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [setWebcamFrame.type],
+            },
+        }).concat(websocketMiddleware),
 });

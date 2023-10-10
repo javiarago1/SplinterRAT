@@ -1,5 +1,6 @@
 import {addSingleClientToTable, selectClientByUUID, setClients} from "@redux/slices/clientSlice";
 import {setDirectoryData, setDisks, updateProgressBar} from "@redux/slices/fileManagerSlice";
+import {setWebcamDevices, setWebcamFrame} from "@redux/slices/webcamManagerSlice";
 
 export const handleWebSocketMessage = (store, data) => {
     console.log("Received message")
@@ -19,5 +20,11 @@ export const handleWebSocketMessage = (store, data) => {
         store.dispatch(setDirectoryData(data.directory));
     } else if (data.RESPONSE === "PROGRESS_BAR"){
         store.dispatch(updateProgressBar(data));
+    } else if (data.RESPONSE === "WEBCAM_DEVICES"){
+        store.dispatch(setWebcamDevices(data))
     }
+};
+
+export const handleWebSocketBinary = (store, data) => {
+    store.dispatch(setWebcamFrame(data));
 };

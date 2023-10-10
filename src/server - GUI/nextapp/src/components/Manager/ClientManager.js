@@ -26,7 +26,7 @@ function ClientManager({ client, onBack }) {
                 <Tabs value={currentTab} onChange={handleChange}>
                     <MuiTab label="Information" />
                     <MuiTab label="File manager" />
-                    <MuiTab label="Contact" />
+                    <MuiTab label="Webcam manager" />
                 </Tabs>
 
                 {currentTab === 0 && (

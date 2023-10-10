@@ -15,6 +15,7 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -98,7 +99,11 @@ public class WebUpdater implements UpdaterInterface {
 
     @Override
     public void updateFrameOfWebcamStreamer(byte[] data) {
-
+        try {
+            currentClient.sendBytes(ByteBuffer.wrap(data));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
