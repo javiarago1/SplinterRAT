@@ -1,4 +1,4 @@
-package Server;
+package Packets.Servlet;
 
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletHolder;

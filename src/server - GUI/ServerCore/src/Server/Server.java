@@ -1,12 +1,12 @@
 package Server;
 
+import Packets.Servlet.ServletConfiguration;
+import Packets.Servlet.ServletPacket;
 import org.eclipse.jetty.servlet.FilterHolder;
-import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import javax.servlet.DispatcherType;
-import javax.servlet.MultipartConfigElement;
 
 import java.util.EnumSet;
 import java.util.List;

@@ -13,7 +13,6 @@ public class ConnectionStore {
     public static final ConcurrentHashMap<String, Client> connectionsMap = new ConcurrentHashMap<>();
 
     // duplicated above just for normal server
-
     public static final ConcurrentHashMap<Session, Client> webSessionsMap = new ConcurrentHashMap<>();
     public static final ConcurrentHashMap<String, Client> webClientsMap = new ConcurrentHashMap<>();
 

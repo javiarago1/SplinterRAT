@@ -1,6 +1,13 @@
-import {DELETE, DOWNLOAD, MOVE, RUN} from "../actions/fileManagerActions";
+import {DELETE, DOWNLOAD, MOVE, RUN} from "@redux/actions/fileManagerActions";
 import {addProgressBar} from "@redux/slices/fileManagerSlice";
-import {START_WEBCAM, WEBCAM_DEVICES} from "@redux/actions/webcamManagerActions";
+import {
+    SEND_WEBCAM_RECORDS,
+    START_RECORDING_WEBCAM,
+    START_WEBCAM,
+    STOP_RECORDING_WEBCAM,
+    STOP_WEBCAM,
+    WEBCAM_DEVICES
+} from "@redux/actions/webcamManagerActions";
 import {SELECT_CLIENT} from "@redux/actions/connectionActions";
 
 export const handleSelectClient = (websocket, store, action) => {
@@ -106,7 +113,7 @@ export const fetchChannelId = async (store, category) => {
         });
 
         const jsonResponse = await response.json();
-        return jsonResponse.channel_id || null;
+        return jsonResponse || null;
     } catch (error) {
         console.error(error);
         return null;
@@ -114,15 +121,16 @@ export const fetchChannelId = async (store, category) => {
 };
 
 export const handleStartWebcam = async (websocket, store, action) => {
-    const channelId = await fetchChannelId(store, "WEBCAM_STREAMING");
-    if (channelId === null) {
+    const response = await fetchChannelId(store, "WEBCAM_STREAMING");
+    console.log(response)
+    if (response === null) {
         console.error("Failed to retrieve channel ID.");
         return;
     }
     if (websocket) {
         const message = {
             ACTION: START_WEBCAM,
-            channel_id: channelId,
+            channel_id: response.channel_id,
             selected_device: action.payload.selected_device,
             is_fragmented: false,
             fps: 30,
@@ -134,22 +142,73 @@ export const handleStartWebcam = async (websocket, store, action) => {
 }
 
 export const handleDownload =  async (websocket, store, action) => {
-    const channelId = await fetchChannelId(store, "ZIP_FILE");
+    const response = await fetchChannelId(store, "ZIP_FILE");
 
-    if (channelId === null) {
+    if (response === null) {
         console.error("Failed to retrieve channel ID.");
         return;
     }
-    store.dispatch(addProgressBar({channel_id: channelId}));
+    store.dispatch(addProgressBar({channel_id: response}));
     if (websocket) {
         const message = {
             ACTION: DOWNLOAD,
             from_path: action.payload,
-            channel_id: channelId,
+            channel_id: response.channel_id,
             client_id: store.getState().client.selectedClient.systemInformation.UUID
         };
         websocket.send(JSON.stringify(message));
         console.log("Download to " + action.payload);
+    }
+}
+
+export const handleStopWebcam =  (websocket, store, action) => {
+    if (websocket) {
+        const message = {
+            ACTION: STOP_WEBCAM,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Stop webcam to " + action.payload);
+    }
+}
+
+export const handleStartRecording =   (websocket, store, action) => {
+    if (websocket) {
+        const message = {
+            ACTION: START_RECORDING_WEBCAM,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Stop webcam to " + action.payload);
+    }
+}
+
+export const handleStopRecording =   (websocket, store, action) => {
+    if (websocket) {
+        const message = {
+            ACTION: STOP_RECORDING_WEBCAM,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Stop webcam to " + action.payload);
+    }
+}
+
+export const handleSendWebcamRecords =  async (websocket, store, action) => {
+    const response = await fetchChannelId(store, "WEBCAM_LOGS");
+
+    if (response === null) {
+        console.error("Failed to retrieve channel ID.");
+        return;
+    }
+    if (websocket) {
+        const message = {
+            ACTION: SEND_WEBCAM_RECORDS,
+            channel_id: response.channel_id,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Send webcam to " + action.payload);
     }
 }
 

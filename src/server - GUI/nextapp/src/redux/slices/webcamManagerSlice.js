@@ -7,6 +7,7 @@ const webcamManagerSlice = createSlice({
         frame: null,
         isWebcamOn: false,
         isRecording: false,
+        canSendRecords: false
     },
     reducers: {
         setWebcamDevices: (state, action) => {
@@ -19,17 +20,33 @@ const webcamManagerSlice = createSlice({
             }
             state.frame = URL.createObjectURL(newBlob);
         },
+        setWebcamState: (state, action) => {
+            state.isWebcamOn = action.payload;
+        },
+        setSendState:(state, action) => {
+            if (action.payload) state.canSendRecords =  action.payload;
+        },
+        setRecordState: (state, action) => {
+            state.isRecording = action.payload;
+        },
         reorderWebcamDevices: (state, action) => {
             const selectedDevice = action.payload;
             state.webcamDevices = [selectedDevice, ...state.webcamDevices.filter(device => device !== selectedDevice)];
         },
+        sendRecords: (state, action) => {
+            state.canSendRecords = false;
+        }
     }
 });
 
 export const {
     setWebcamDevices,
     setWebcamFrame,
-    reorderWebcamDevices
+    reorderWebcamDevices,
+    setWebcamState,
+    setRecordState,
+    sendRecords,
+    setSendState
 }  = webcamManagerSlice.actions;
 
 

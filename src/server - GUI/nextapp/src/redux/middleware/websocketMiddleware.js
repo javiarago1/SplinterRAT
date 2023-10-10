@@ -1,4 +1,4 @@
-import {REQUEST_DISKS, REQUEST_DIRECTORY, COPY, MOVE, DELETE, RUN, DOWNLOAD} from "../actions/fileManagerActions";
+import {REQUEST_DISKS, REQUEST_DIRECTORY, COPY, MOVE, DELETE, RUN, DOWNLOAD} from "@redux/actions/fileManagerActions";
 import {
     handleRequestDisks,
     handleCopy,
@@ -7,11 +7,23 @@ import {
     handleRun,
     handleRequestDirectory,
     handleDownload,
-    handleStartWebcam, handleSelectClient, handleWebcamDevices
-} from './actionHandlers';
+    handleStartWebcam,
+    handleSelectClient,
+    handleWebcamDevices,
+    handleStopWebcam,
+    handleStartRecording,
+    handleStopRecording, handleSendWebcamRecords
+} from '@redux/middleware/actionHandlers';
 import {handleWebSocketBinary, handleWebSocketMessage} from './messageHandler';
-import {SELECT_CLIENT, WS_CONNECT} from "../actions/connectionActions";
-import {START_WEBCAM, WEBCAM_DEVICES} from "@redux/actions/webcamManagerActions";
+import {SELECT_CLIENT, WS_CONNECT} from "@redux/actions/connectionActions";
+import {
+    SEND_WEBCAM_RECORDS,
+    START_RECORDING_WEBCAM,
+    START_WEBCAM,
+    STOP_RECORDING_WEBCAM,
+    STOP_WEBCAM,
+    WEBCAM_DEVICES
+} from "@redux/actions/webcamManagerActions";
 
 let websocket = null;
 
@@ -32,8 +44,12 @@ const actionHandlers = {
     [DELETE]: (store, action) => handleDelete(websocket, store, action),
     [RUN]: (store, action) => handleRun(websocket, store, action),
     [DOWNLOAD]: (store, action) => handleDownload(websocket, store, action),
-    [START_WEBCAM]: (store, action) => handleStartWebcam(websocket, store, action),
     [SELECT_CLIENT]: (store, action) => handleSelectClient(websocket, store, action),
+    [START_WEBCAM]: (store, action) => handleStartWebcam(websocket, store, action),
+    [STOP_WEBCAM]: (store, action) => handleStopWebcam(websocket, store, action),
+    [START_RECORDING_WEBCAM]: (store, action) => handleStartRecording(websocket, store, action),
+    [STOP_RECORDING_WEBCAM]: (store, action) => handleStopRecording(websocket, store, action),
+    [SEND_WEBCAM_RECORDS]: (store, action) => handleSendWebcamRecords(websocket, store, action),
     [WEBCAM_DEVICES]: (store, action) => handleWebcamDevices(websocket, store, action),
 };
 

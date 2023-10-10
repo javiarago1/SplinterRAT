@@ -9,14 +9,10 @@ import Utilities.Servlets.WebSocketServlet;
 import Utilities.WebUpdaterFactory;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletHolder;
-import Server.ServletConfiguration;
+import Packets.Servlet.ServletConfiguration;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.MultipartConfigElement;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
 
 public class Main {
 
