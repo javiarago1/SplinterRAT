@@ -119,11 +119,12 @@ void WebcamManager::stopRecording(){
 }
 
 void WebcamManager::sendRecord(nlohmann::json jsonObject){
+    initialized.store(false);
     if (!fragmented) output.release();
-    jsonObject["from_path"] = Converter::wstring2string(locationOfVideos);
+    jsonObject["from_path"] = {Converter::wstring2string(locationOfVideos)};
     download.downloadContent(jsonObject);
     removeTempFiles();
-    initialized=false;
+
     pathVector.clear();
 }
 
