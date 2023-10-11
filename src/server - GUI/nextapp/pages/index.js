@@ -29,7 +29,7 @@ function Home() {
         <div>
             {!selectedClient ?
                 <ClientTable onClientSelect={onClientSelect} /> :
-                !selectedClient ?
+                !selectClient ?
                     <p>Loading...</p> :
                     <ClientManager client={selectedClient} onBack={onBack} />
             }

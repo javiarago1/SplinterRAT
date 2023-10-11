@@ -1,0 +1,20 @@
+.webcamFrame {
+    min-width: 640px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.webcamImage {
+    width: 100%;
+    max-width: 640px;
+    max-height: 400px;
+}
+
+.placeholderText {
+    color: #ccc;
+    font-size: 16px;
+}

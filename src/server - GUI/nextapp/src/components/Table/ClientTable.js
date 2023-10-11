@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
+import styles from './ClienTable.module.css'
 
 function ClientTable({ onClientSelect }) {
     const clients = useSelector(state => state.client.clients);
 
     return (
-        <Paper>
+        <Paper elevation={10}>
             <Table>
                 <TableHead>
                     <TableRow>
@@ -23,7 +24,8 @@ function ClientTable({ onClientSelect }) {
                     {Object.values(clients).map(client => (
                         <TableRow
                             key={client.systemInformation.UUID}
-                            onDoubleClick={() => onClientSelect(client)}
+                            onClick={() => onClientSelect(client)}
+                            className = {styles.clientRow}
                         >
                             <TableCell>{client.systemInformation.UUID}</TableCell>
                             <TableCell>{client.networkInformation.IP}</TableCell>

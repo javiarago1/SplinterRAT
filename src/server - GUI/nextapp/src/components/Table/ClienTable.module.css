@@ -1,0 +1,10 @@
+.clientRow {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.clientRow:hover {
+    background-color: #424242;
+}
+

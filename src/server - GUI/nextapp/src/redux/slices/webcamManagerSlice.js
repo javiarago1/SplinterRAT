@@ -23,10 +23,8 @@ const webcamManagerSlice = createSlice({
         setWebcamState: (state, action) => {
             state.isWebcamOn = action.payload;
         },
-        setSendState:(state, action) => {
-            if (action.payload) state.canSendRecords =  action.payload;
-        },
         setRecordState: (state, action) => {
+            if (state.isRecording) state.canSendRecords = true;
             state.isRecording = action.payload;
         },
         reorderWebcamDevices: (state, action) => {
@@ -46,7 +44,6 @@ export const {
     setWebcamState,
     setRecordState,
     sendRecords,
-    setSendState
 }  = webcamManagerSlice.actions;
 
 

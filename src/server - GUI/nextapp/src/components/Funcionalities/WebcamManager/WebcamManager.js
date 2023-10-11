@@ -8,7 +8,7 @@ import {
     DialogTitle,
     Dialog,
     DialogActions,
-    DialogContent, DialogContentText
+    DialogContent, DialogContentText, Box, Divider
 } from '@mui/material';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -26,10 +26,12 @@ import {
     sendRecords,
     setSendState
 } from "@redux/slices/webcamManagerSlice";
+import {FiberManualRecord, PlayArrow, Save, Stop} from "@mui/icons-material";
 
 const WebcamViewer = () => {
     const dispatch = useDispatch();
-    const [open, setOpen] = useState(false)
+    const [openFirstDialog, setOpenFirstDialog] = useState(false)
+    const [openSecondDialog, setOpenSecondDialog] = useState(false)
     const {isWebcamOn, isRecording, webcamDevices, canSendRecords} = useSelector(state => state.webcamManager);
 
     useEffect(() => {
@@ -47,10 +49,10 @@ const WebcamViewer = () => {
     );
 
     const toggleStart = () => {
-        if (isWebcamOn && (canSendRecords || isRecording)) {
-            setOpen(true)
-            console.log("called!!!!!")
-            console.log(isWebcamOn + "|"+canSendRecords+"|"+isRecording)
+        if (isWebcamOn && isRecording) {
+            setOpenFirstDialog(true)
+        } else if (isWebcamOn && canSendRecords) {
+            setOpenSecondDialog(true);
         } else {
             dispatch(!isWebcamOn ? {
                 type: START_WEBCAM,
@@ -62,38 +64,55 @@ const WebcamViewer = () => {
 
     const toggleRecording = () => {
         dispatch({type: !isRecording ? START_RECORDING_WEBCAM : STOP_RECORDING_WEBCAM});
-        dispatch(setSendState(isRecording));
         dispatch(setRecordState(!isRecording));
     }
 
     const toggleSendRecords = () => {
         dispatch(sendRecords())
-        dispatch(setRecordState(false));
-        dispatch(setRecordState(!isRecording));
         dispatch({type: SEND_WEBCAM_RECORDS});
     }
 
-    // Si no hay dispositivos, mostrar un indicador de carga
     if (!webcamDevices || webcamDevices.length === 0) {
         return <CircularProgress/>;
     }
 
-    const handleAccept = () => {
-        toggleSendRecords();
-        toggleStart();
-        setOpen(false)
-    };
+    const firstDialogAccept = () => {
+        toggleRecording();
+        setOpenFirstDialog(false)
+    }
 
-    const handleDeny = () => {
-        toggleStart();
-        setOpen(false)
-    };
+    const secondDialogAccept = () => {
+        toggleSendRecords();
+        setOpenSecondDialog(false);
+    }
+
 
     return (
         <div>
             <Dialog
-                open={open}
-                onClose={handleDeny}
+                open={openFirstDialog}
+                onClose={() => setOpenFirstDialog(false)}
+                aria-labelledby="is-currently-recording"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="is-currently-recording">{"Warning: you are currently recording"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        You are currently recording, finish recording in order to stop streaming the webcam.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenFirstDialog(false)} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={firstDialogAccept} color="primary" autoFocus>
+                        Stop recording
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={openSecondDialog}
+                onClose={() => setOpenSecondDialog(false)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -104,44 +123,60 @@ const WebcamViewer = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleDeny} color="primary">
+                    <Button onClick={toggleStart} color="primary">
                         Discard
                     </Button>
-                    <Button onClick={handleAccept} color="primary" autoFocus>
-                        Download
+                    <Button onClick={secondDialogAccept} color="primary" autoFocus>
+                        Save recordings
                     </Button>
                 </DialogActions>
             </Dialog>
-            <WebcamFrame/>
-            <Grid container spacing={2}>
-                <Grid item>
-                    <Button onClick={toggleStart}>
-                        {isWebcamOn ? "Stop Webcam" : "Start Webcam"}
-                    </Button>
+            <Box margin={2} padding={2} pb={3} >
+
+                <Grid container spacing={3} alignItems="flex-start">
+                    {/* Webcam Frame */}
+                    <Grid item>
+                        <WebcamFrame/>
+                    </Grid>
+
+                    {/* Controls */}
+                    <Grid item xs>
+                        <Grid container direction="column" spacing={2} alignItems="flex-start">
+                            <Grid item>
+                                <Button variant="outlined" startIcon={!isWebcamOn ? <PlayArrow/> : <Stop/>}
+                                        onClick={toggleStart}>
+                                    {isWebcamOn ? "Stop" : "Start"}
+                                </Button>
+                            </Grid>
+                            <Grid item>
+                                <Select
+                                    disabled={isWebcamOn}
+                                    value={webcamDevices[0]}
+                                    onChange={(e) => handleChangeDevice(e)}
+                                >
+                                    {webcamDevices.map((device) => (
+                                        <MenuItem key={device} value={device}>{device}</MenuItem>
+                                    ))}
+                                </Select>
+                            </Grid>
+                            <Grid item>
+                                <Button variant="outlined" startIcon={!isRecording ? <FiberManualRecord/> : <Stop/>}
+                                        disabled={!isWebcamOn} onClick={toggleRecording}>
+                                    {isRecording ? "Stop record" : "Record"}
+                                </Button>
+                            </Grid>
+                            <Grid item>
+                                <Button variant="outlined" startIcon={<Save/>} disabled={!canSendRecords}
+                                        onClick={toggleSendRecords}>
+                                    Download records
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Select disabled={isWebcamOn}
-                            value={webcamDevices[0]}
-                            onChange={(e) => handleChangeDevice(e)}
-                    >
-                        {webcamDevices.map((device) => (
-                            <MenuItem key={device} value={device}>{device}</MenuItem>
-                        ))}
-                    </Select>
-                </Grid>
-                <Grid item>
-                    <Button disabled={!isWebcamOn} onClick={toggleRecording}>
-                        {isRecording ? "Stop Recording" : "Start Recording"}
-                    </Button>
-                </Grid>
-                <Grid item>
-                    <Button disabled={!canSendRecords} onClick={toggleSendRecords}>
-                        Download records
-                    </Button>
-                </Grid>
-            </Grid>
-        </div>
-    );
+            </Box>
+        </div>);
+
 };
 
 export default WebcamViewer;
