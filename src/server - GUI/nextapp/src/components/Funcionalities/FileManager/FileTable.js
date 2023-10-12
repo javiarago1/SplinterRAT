@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Table, TableBody, TableCell, TableHead, TableRow, CircularProgress} from '@mui/material';
+import {Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Box} from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import {REQUEST_DIRECTORY} from "@redux/actions/fileManagerActions";
@@ -53,7 +53,23 @@ const FileTable = () => {
     };
 
     return (
-        <div style={{ maxHeight: '360px', overflowY: 'auto' }}>
+        <Box
+            sx={{
+                maxHeight: '360px',
+                overflowY: 'auto',
+                '&::-webkit-scrollbar': {
+                    width: '0.4em'
+                },
+                '&::-webkit-scrollbar-track': {
+                    boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+                    webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: 'rgba(0,0,0,.1)',
+                    outline: '1px solid slategrey'
+                }
+            }}
+        >
         <Table>
                 <TableHead>
                     <TableRow>
@@ -91,7 +107,7 @@ const FileTable = () => {
                     ))}
                 </TableBody>
             </Table>
-        </div>
+        </Box>
     );
 };
 

@@ -1,4 +1,11 @@
 import { createTheme } from '@mui/material/styles';
+import NextLink from "next/link";
+import {forwardRef} from "react";
+
+const LinkBehaviour = forwardRef(function LinkBehaviour(props, ref) {
+    return <NextLink ref={ref} {...props} />;
+});
+
 
 const darkTheme = createTheme({
     palette: {
@@ -41,6 +48,24 @@ const darkTheme = createTheme({
         fontWeightMedium: 500,
         fontWeightBold: 700,
     },
+    components: {
+        MuiLink: {
+            defaultProps: {
+                underline: 'none',
+                component: LinkBehaviour
+            },
+            styleOverrides: {
+                root: {
+                    width: '100%',
+                },
+            },
+        },
+        MuiButtonBase: {
+            defaultProps: {
+                LinkComponent: LinkBehaviour
+            }
+        }
+    }
 });
 
 export default darkTheme;
