@@ -95,12 +95,7 @@ public class WebSocketClient {
 
     @OnWebSocketClose
     public void onClose(Session session, int statusCode, String reason) {
-        Client tempClient = ConnectionStore.webSessionsMap.get(session);
-        String uuid = tempClient.updater.getSystemInformation().UUID();
-        ConnectionStore.removeConnectionWeb(session);
-        ConnectionStore.webClientsMap.remove(uuid);
-        System.out.println(ConnectionStore.webClientsMap);
-        System.out.println("Closed connection toa " + session.getRemoteAddress().getAddress().getHostAddress());
+
     }
 
 

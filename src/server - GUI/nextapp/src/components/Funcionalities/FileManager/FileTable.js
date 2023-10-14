@@ -4,7 +4,8 @@ import {Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Box}
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import {REQUEST_DIRECTORY} from "@redux/actions/fileManagerActions";
-import { selectRow, clearSelectedRows , deselectRow} from '@redux/slices/fileManagerSlice'
+import {selectRow, clearSelectedRows, deselectRow} from '@redux/slices/fileManagerSlice'
+import {Description} from "@mui/icons-material";
 
 const FileTable = () => {
     const dispatch = useDispatch();
@@ -42,13 +43,13 @@ const FileTable = () => {
     const handleRowClick = (e, name, type) => {
         if (e.ctrlKey) {
             if (selectedRows.some(row => row.name === name && row.type === type)) {
-                dispatch(deselectRow({ name, type }));
+                dispatch(deselectRow({name, type}));
             } else {
-                dispatch(selectRow({ name, type }));
+                dispatch(selectRow({name, type}));
             }
         } else {
             dispatch(clearSelectedRows());
-            dispatch(selectRow({ name, type }));
+            dispatch(selectRow({name, type}));
         }
     };
 
@@ -70,7 +71,7 @@ const FileTable = () => {
                 }
             }}
         >
-        <Table>
+            <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell>Name</TableCell>
@@ -87,8 +88,15 @@ const FileTable = () => {
                             selected={selectedRows.some(row => row.name === folderName && row.type === 'folder')}
                         >
                             <TableCell>
-                                <FolderIcon/> {folderName}
+                                <Box sx={{display: 'flex', alignItems: 'center'}}>
+                                    <FolderIcon sx={{mr: 1}}/>
+                                    <span style={{marginTop: '0.25em'}}>
+                                        {folderName}
+                                    </span>
+                                </Box>
                             </TableCell>
+
+
                             <TableCell></TableCell>
                         </TableRow>
                     ))}
@@ -100,7 +108,12 @@ const FileTable = () => {
                             selected={selectedRows.some(row => row.name === file.name && row.type === 'file')}
                         >
                             <TableCell>
-                                <InsertDriveFileIcon/> {file.name}
+                                <Box sx={{display: 'flex', alignItems: 'center'}}>
+                                    <Description sx={{mr: 1}}/>
+                                    <span style={{marginTop: '0.25em'}}>
+                                        {file.name}
+                                    </span>
+                                </Box>
                             </TableCell>
                             <TableCell>{file.size}</TableCell>
                         </TableRow>
