@@ -7,7 +7,9 @@ const webcamManagerSlice = createSlice({
         frame: null,
         isWebcamOn: false,
         isRecording: false,
-        canSendRecords: false
+        canSendRecords: false,
+        fps: 30,
+        isFragmented: false,
     },
     reducers: {
         setWebcamDevices: (state, action) => {
@@ -33,7 +35,13 @@ const webcamManagerSlice = createSlice({
         },
         sendRecords: (state, action) => {
             state.canSendRecords = false;
-        }
+        },
+        setFps: (state, action) => {
+            state.fps = action.payload;
+        },
+        setFragmented: (state, action) => {
+            state.isFragmented = action.payload;
+        },
     }
 });
 
@@ -44,6 +52,9 @@ export const {
     setWebcamState,
     setRecordState,
     sendRecords,
+    setFps,
+    setFragmented,
+    setChannelId
 }  = webcamManagerSlice.actions;
 
 

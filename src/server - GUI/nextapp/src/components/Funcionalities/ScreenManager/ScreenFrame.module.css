@@ -1,5 +1,5 @@
-.webcamFrame {
-    min-width: 600px;
+.screenFrame {
+    min-width: 30vw;
     min-height: 60vh;
     display: flex;
     align-items: center;
@@ -9,9 +9,9 @@
     overflow: auto;
 }
 
-.webcamImage {
-    width: 100%;
+.screenImage {
     max-height: 60vh;
+    max-width: 60vw;
 }
 
 .placeholderText {

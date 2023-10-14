@@ -97,18 +97,29 @@ public class WebUpdater implements UpdaterInterface {
         setupMapOfResponses();
     }
 
+    public ByteBuffer addHeadToByteData(byte[]data, byte value){
+        byte[] newData = new byte[data.length + 1];
+        newData[0] = value;
+        System.arraycopy(data, 0, newData, 1, data.length);
+        return ByteBuffer.wrap(newData);
+    }
+
     @Override
     public void updateFrameOfWebcamStreamer(byte[] data) {
         try {
-            currentClient.sendBytes(ByteBuffer.wrap(data));
+            currentClient.sendBytes(addHeadToByteData(data, (byte)0x00));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void updateFrameOfScreenStreamer(byte[] finalData) {
-
+    public void updateFrameOfScreenStreamer(byte[] data) {
+        try {
+            currentClient.sendBytes(addHeadToByteData(data, (byte)0x01));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

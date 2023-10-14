@@ -30,7 +30,7 @@ private:
     std::string keyKeyWord = "key/";
     std::atomic<bool> streamingState = false;
     void screenTransmissionThread();
-    static void clickOnCoordinates(std::vector<int> infoOfClick);
+    static void clickOnCoordinates(const nlohmann::json& clickData);
     void screenEventsThread();
     void stopStreaming();
     byte channelID;

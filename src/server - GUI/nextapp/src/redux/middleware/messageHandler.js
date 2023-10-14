@@ -1,6 +1,7 @@
 import {addSingleClientToTable, selectClientByUUID, setClients} from "@redux/slices/clientSlice";
 import {setDirectoryData, setDisks, updateProgressBar} from "@redux/slices/fileManagerSlice";
 import {setWebcamDevices, setWebcamFrame} from "@redux/slices/webcamManagerSlice";
+import {setOriginalDimensions, setScreenFrame, setScreens} from "@redux/slices/screenManagerSlice";
 
 export const handleWebSocketMessage = (store, data) => {
     console.log("Received message")
@@ -22,9 +23,25 @@ export const handleWebSocketMessage = (store, data) => {
         store.dispatch(updateProgressBar(data));
     } else if (data.RESPONSE === "WEBCAM_DEVICES"){
         store.dispatch(setWebcamDevices(data))
+    } else if (data.RESPONSE === "MONITORS"){
+        store.dispatch(setScreens(data));
+    } else if (data.RESPONSE === "SCREEN_DIMENSIONS"){
+        store.dispatch(setOriginalDimensions(data));
     }
 };
 
 export const handleWebSocketBinary = (store, data) => {
-    store.dispatch(setWebcamFrame(data));
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(data);
+    reader.onload = function(event) {
+        const byteArray = new Uint8Array(event.target.result);
+        const distinctionByte = byteArray[0];
+        const actualData = byteArray.slice(1);
+        if (distinctionByte === 0){
+            store.dispatch(setWebcamFrame(actualData.buffer));
+        } else if (distinctionByte === 1){
+            store.dispatch(setScreenFrame(actualData.buffer));
+        }
+    };
 };
+

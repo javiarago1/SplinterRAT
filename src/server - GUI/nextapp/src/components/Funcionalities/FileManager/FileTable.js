@@ -56,8 +56,8 @@ const FileTable = () => {
     return (
         <Box
             sx={{
-                maxHeight: '360px',
-                overflowY: 'auto',
+                height: '40vh',
+                overflow: 'auto',
                 '&::-webkit-scrollbar': {
                     width: '0.4em'
                 },

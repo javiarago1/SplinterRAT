@@ -5,6 +5,7 @@ import FileManager from "../Funcionalities/FileManager/FileManager";
 import {Button} from '@mui/material';
 import WebcamManager from "@components/Funcionalities/WebcamManager/WebcamManager";
 import {ArrowBack, Toc} from "@mui/icons-material";
+import ScreenManager from "@components/Funcionalities/ScreenManager/ScreenManager";
 
 
 function ClientManager({client, onBack}) {
@@ -21,14 +22,15 @@ function ClientManager({client, onBack}) {
     };
 
     return (
-        <Paper elevation={10}>
-            <IconButton onClick={onBack} sx={{mt: 1, ml: 1}} startIcon={<Toc/>}>
+        <Paper sx={{height: "100%", overflow:'hidden', mb:1}} elevation={10}>
+            <IconButton onClick={onBack} sx={{mt: 1, ml: 1}}>
                 <ArrowBack/>
             </IconButton>
             <Tabs value={currentTab} onChange={handleChange}>
                 <MuiTab label="Information"/>
                 <MuiTab label="File manager"/>
                 <MuiTab label="Webcam manager"/>
+                <MuiTab label="Screen manager"/>
             </Tabs>
 
             {currentTab === 0 && (
@@ -38,7 +40,7 @@ function ClientManager({client, onBack}) {
             )}
             {currentTab === 1 && <FileManager/>}
             {currentTab === 2 && <WebcamManager/>}
-
+            {currentTab === 3 && <ScreenManager/>}
         </Paper>
     );
 }

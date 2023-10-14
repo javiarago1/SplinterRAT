@@ -25,11 +25,11 @@ void ScreenStreamer::stopStreaming(){
     blockingQueue.push("END");
 }
 
-void ScreenStreamer::clickOnCoordinates(std::vector<int> infoOfClick) {
+void ScreenStreamer::clickOnCoordinates(const nlohmann::json& clickData) {
     double fScreenWidth = ::GetSystemMetrics(SM_CXSCREEN) - 1;
     double fScreenHeight = ::GetSystemMetrics(SM_CYSCREEN) - 1;
-    double fx = infoOfClick[2] * (65535.0f / fScreenWidth);
-    double fy = infoOfClick[3] * (65535.0f / fScreenHeight);
+    double fx = clickData["x"].get<double>() * (65535.0f / fScreenWidth);
+    double fy = clickData["y"].get<double>() * (65535.0f / fScreenHeight);
     std::cout << fScreenWidth << std::endl;
     std::cout << fScreenHeight << std::endl;
     INPUT Input = {0};
@@ -40,28 +40,20 @@ void ScreenStreamer::clickOnCoordinates(std::vector<int> infoOfClick) {
     SendInput(1, &Input, sizeof(INPUT));
     ::ZeroMemory(&Input, sizeof(INPUT));
     Input.type = INPUT_MOUSE;
-    Input.mi.dwFlags = infoOfClick[0] | infoOfClick[1];
+    std::vector<int> values = clickData["values"].get<std::vector<int>>();
+    Input.mi.dwFlags = values[0] | values[1];
     ::SendInput(1, &Input, sizeof(INPUT));
     ::ZeroMemory(&Input, sizeof(INPUT));
 }
 
 void ScreenStreamer::screenEventsThread() {
-    std::string whereTo;
-    while ((whereTo = blockingQueue.pop()) != "END") {
-        if (whereTo.rfind(clickKeyWord) != -1) {
-            std::string newString = whereTo.substr(clickKeyWord.length(), whereTo.length());
-            std::string segment;
-            std::vector<int> seglist;
-            std::stringstream ss(newString);
-
-            while (std::getline(ss, segment, ',')) {
-                std::cout << newString << std::endl;
-                seglist.push_back(stoi(segment));
-            }
-
-            clickOnCoordinates(seglist);
-        } else if (whereTo.rfind(keyKeyWord, 0) == 0) {
-            char character = whereTo.at(keyKeyWord.length());
+    std::string jsonString;
+    while ((jsonString = blockingQueue.pop()) != "END") {
+        auto data = nlohmann::json::parse(jsonString);
+        if (data.contains("clickType")) {
+            clickOnCoordinates(data);
+        } else if (data.contains("keyEvent")) {
+            char character = data["keyEvent"].get<char>();
             KeyboardExecuter::pressKey(VkKeyScanA(character));
         }
     }

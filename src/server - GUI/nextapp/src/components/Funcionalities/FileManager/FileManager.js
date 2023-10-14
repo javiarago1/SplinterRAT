@@ -132,122 +132,123 @@ function FileManager({currentTab}) {
 
     console.log(directoryStack)
 
-    return (<Box sx={{ml: 3, mr: 3, mt: 2}}>
-        <Grid container spacing={2} alignItems="stretch" style={{display: 'flex'}}>
-            <Grid item xs={12} sm={7} md={8}>
-                <TextField
-                    label="Current Directory"
-                    value={currentDirectory === null ? ' ' : currentDirectory}
-                    variant="outlined"
-                    fullWidth
-                    InputProps={{
-                        readOnly: true,
-                    }}
-                />
-            </Grid>
-            <Grid item xs={4} sm={1} md={1} style={{display: 'flex'}}>
-                <IconButton
-                    onClick={() => dispatch({
-                        type: REQUEST_DIRECTORY,
-                        payload: {client_id: selectedClient.systemInformation.UUID, path: currentDirectory}
-                    })}
-                    title="Refresh Directory"
-                >
-                    <RefreshOutlined/>
-                </IconButton>
-            </Grid>
-            <Grid item xs={4} sm={2} md={2}>
-                {disks && (
-                    <Autocomplete
-                        options={disks}
-                        value={disks[0] || null}
-                        onChange={handleDiskChange}
-                        freeSolo={false}
-                        disableClearable
-                        renderInput={(params) => (
-                            <TextField {...params} label="Select Disk" variant="outlined" fullWidth/>
-                        )}
+    return (
+        <Box sx={{ml: 3, mr: 3, mt: 2, height:'60hv'}}>
+            <Grid container spacing={2} alignItems="stretch" style={{display: 'flex'}}>
+                <Grid item xs={12} sm={7} md={8}>
+                    <TextField
+                        label="Current Directory"
+                        value={currentDirectory === null ? ' ' : currentDirectory}
+                        variant="outlined"
+                        fullWidth
+                        InputProps={{
+                            readOnly: true,
+                        }}
                     />
-                )}
-            </Grid>
-            <Grid item xs={4} sm={1} md={1} style={{display: 'flex', alignItems: 'stretch'}}>
-                <IconButton
-
-                    onClick={() => dispatch({
-                        type: REQUEST_DISKS,
-                        payload: {client_id: selectedClient.systemInformation.UUID, sendDirectory: false}
-                    })}
-                    title="Refresh Disks"
-
-                >
-                    <RefreshOutlined/>
-                </IconButton>
-            </Grid>
-        </Grid>
-
-        <Divider sx={{mt: 3, mb: 2}}/>
-
-        <Box mt={2}>
-            <Grid container spacing={3} alignItems="center">
-                <Grid item>
-                    <IconButton aria-label="" onClick={handleGoBack} disabled={directoryStack.length < 2}>
-                        <ArrowCircleLeft sx={{fontSize: 36}}/>
+                </Grid>
+                <Grid item xs={4} sm={1} md={1} style={{display: 'flex'}}>
+                    <IconButton
+                        onClick={() => dispatch({
+                            type: REQUEST_DIRECTORY,
+                            payload: {client_id: selectedClient.systemInformation.UUID, path: currentDirectory}
+                        })}
+                        title="Refresh Directory"
+                    >
+                        <RefreshOutlined/>
                     </IconButton>
                 </Grid>
-                <Grid item>
-                    <Button variant="outlined" startIcon={<ContentCopy/>} disabled={selectedRows.length === 0}
-                            onClick={handleCopy}>
-                        Copy
-                    </Button>
+                <Grid item xs={4} sm={2} md={2}>
+                    {disks && (
+                        <Autocomplete
+                            options={disks}
+                            value={disks[0] || null}
+                            onChange={handleDiskChange}
+                            freeSolo={false}
+                            disableClearable
+                            renderInput={(params) => (
+                                <TextField {...params} label="Select Disk" variant="outlined" fullWidth/>
+                            )}
+                        />
+                    )}
                 </Grid>
-                <Grid item>
-                    <Button variant="outlined" startIcon={<ContentCut/>} disabled={selectedRows.length === 0}
-                            onClick={handleMove}>
-                        Move
-                    </Button>
-                </Grid>
-                <Grid item>
-                    <Button variant="outlined" startIcon={<ContentPaste/>} onClick={handlePaste}
-                            disabled={!isPasteEnabled()}>
-                        Paste
-                    </Button>
-                </Grid>
-                <Grid item>
-                    <Button variant="outlined" startIcon={<Delete/>} onClick={handleDelete}
-                            disabled={selectedRows.length === 0}>
-                        DELETE
-                    </Button>
-                </Grid>
-                <Grid item>
-                    <Button variant="outlined" startIcon={<PlayArrow/>} onClick={handleRun}>
-                        RUN
-                    </Button>
-                </Grid>
-                <Grid item>
-                    <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleFileUpload}
-                        style={{display: 'none'}}
-                    />
-                    <Button variant="outlined" startIcon={<FileUpload/>} onClick={handleUpload}
-                            disabled={!selectedRows.every(isFolder) || selectedRows.length !== 1}>
-                        UPLOAD
-                    </Button>
+                <Grid item xs={4} sm={1} md={1} style={{display: 'flex', alignItems: 'stretch'}}>
+                    <IconButton
 
-                </Grid>
-                <Grid item>
-                    <Button variant="outlined" startIcon={<FileDownload/>} onClick={handleDownload}
-                            disabled={selectedRows.length === 0}>
-                        DOWNLOAD
-                    </Button>
-                </Grid>
+                        onClick={() => dispatch({
+                            type: REQUEST_DISKS,
+                            payload: {client_id: selectedClient.systemInformation.UUID, sendDirectory: false}
+                        })}
+                        title="Refresh Disks"
 
+                    >
+                        <RefreshOutlined/>
+                    </IconButton>
+                </Grid>
             </Grid>
-        </Box>
-        <FileTable/>
-        <ProgressBar/>
-    </Box>);
+
+            <Divider sx={{mt: 3, mb: 2}}/>
+
+            <Box mt={2}>
+                <Grid container spacing={3} alignItems="center">
+                    <Grid item>
+                        <IconButton aria-label="" onClick={handleGoBack} disabled={directoryStack.length < 2}>
+                            <ArrowCircleLeft sx={{fontSize: 36}}/>
+                        </IconButton>
+                    </Grid>
+                    <Grid item>
+                        <Button variant="outlined" startIcon={<ContentCopy/>} disabled={selectedRows.length === 0}
+                                onClick={handleCopy}>
+                            Copy
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button variant="outlined" startIcon={<ContentCut/>} disabled={selectedRows.length === 0}
+                                onClick={handleMove}>
+                            Move
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button variant="outlined" startIcon={<ContentPaste/>} onClick={handlePaste}
+                                disabled={!isPasteEnabled()}>
+                            Paste
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button variant="outlined" startIcon={<Delete/>} onClick={handleDelete}
+                                disabled={selectedRows.length === 0}>
+                            DELETE
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button variant="outlined" startIcon={<PlayArrow/>} onClick={handleRun}>
+                            RUN
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleFileUpload}
+                            style={{display: 'none'}}
+                        />
+                        <Button variant="outlined" startIcon={<FileUpload/>} onClick={handleUpload}
+                                disabled={!selectedRows.every(isFolder) || selectedRows.length !== 1}>
+                            UPLOAD
+                        </Button>
+
+                    </Grid>
+                    <Grid item>
+                        <Button variant="outlined" startIcon={<FileDownload/>} onClick={handleDownload}
+                                disabled={selectedRows.length === 0}>
+                            DOWNLOAD
+                        </Button>
+                    </Grid>
+
+                </Grid>
+            </Box>
+            <FileTable sx={{paddingBottom: 15}}/>
+            <ProgressBar/>
+        </Box>);
 }
 
 export default FileManager;

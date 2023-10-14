@@ -2,6 +2,9 @@ package TableUtils.ScreenStreaming.Listeners;
 
 import TableUtils.ScreenStreaming.ScreenStreamerGUI;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,15 +29,47 @@ public class MouseScreenListener extends MouseAdapter {
         int finalX = (int) Math.round(x * factorX);
         int finalY = (int) Math.round(y * factorY);
         System.out.println("Calculo final " + finalX + ", " + finalY);
-        screenStreamerGUI.getQueueOfEvents().add(typeOfClick(e) + "," + finalX + "," + finalY);
+
+        // Crear objeto JSON y añadirlo a la cola
+        JSONObject clickEvent = new JSONObject();
+        clickEvent.put("x", finalX);
+        clickEvent.put("y", finalY);
+
+        JSONObject clickType = typeOfClick(e);
+        clickEvent.put("clickType", clickType.getString("type"));
+        clickEvent.put("values", clickType.getJSONArray("values"));
+
+        screenStreamerGUI.getQueueOfEvents().add(clickEvent.toString());
     }
 
-    private String typeOfClick(MouseEvent e) {
-        return switch (e.getButton()) {
-            case MouseEvent.BUTTON1 -> "click/2,4";
-            case MouseEvent.BUTTON3 -> "click/8,16";
-            default -> "click/";
-        };
+    private JSONObject typeOfClick(MouseEvent e) {
+        JSONObject clickType = new JSONObject();
 
+        JSONArray valuesArray = new JSONArray();
+
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1 -> {
+                clickType.put("type", "click");
+                int[] values = new int[]{2, 4};
+                for (int value : values) {
+                    valuesArray.put(value);
+                }
+            }
+            case MouseEvent.BUTTON3 -> {
+                clickType.put("type", "click");
+                int[] values = new int[]{8, 16};
+                for (int value : values) {
+                    valuesArray.put(value);
+                }
+            }
+            default -> {
+                clickType.put("type", "click");
+            }
+        }
+
+        clickType.put("values", valuesArray);
+
+        return clickType;
     }
+
 }

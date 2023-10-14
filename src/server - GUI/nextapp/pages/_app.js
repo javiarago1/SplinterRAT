@@ -43,7 +43,7 @@ function MyApp({Component, pageProps}) {
 
 
                         {/* Main Content */}
-                        <Box component="main" sx={{flexGrow: 1, p: 2}}>
+                        <Box component="main" height="85vh" sx={{flexGrow: 1, p: 2}}>
                             <Component {...pageProps} />
                         </Box>
                     </Box>

@@ -26,7 +26,7 @@ function Home() {
 
 
     return (
-        <div>
+        <div  style={{height: "100%"}}>
             {!selectedClient ?
                 <ClientTable onClientSelect={onClientSelect} /> :
                 !selectClient ?

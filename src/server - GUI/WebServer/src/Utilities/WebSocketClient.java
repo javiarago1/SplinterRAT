@@ -54,7 +54,7 @@ public class WebSocketClient {
             throw new RuntimeException(e);
         }
 
-        System.out.println("New connection from " + session.getRemoteAddress().getAddress().getHostAddress());
+        System.out.println("New web connection from " + session.getRemoteAddress().getAddress().getHostAddress());
     }
 
 

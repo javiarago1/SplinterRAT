@@ -8,7 +8,7 @@ import {
     DialogTitle,
     Dialog,
     DialogActions,
-    DialogContent, DialogContentText, Box, Divider
+    DialogContent, DialogContentText, Box, Divider, TextField, ToggleButton
 } from '@mui/material';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -24,15 +24,23 @@ import {
     setRecordState,
     setWebcamState,
     sendRecords,
-    setSendState
+    setFps,
+    setFragmented
 } from "@redux/slices/webcamManagerSlice";
-import {FiberManualRecord, PlayArrow, Save, Stop} from "@mui/icons-material";
+import {Check, Close, FiberManualRecord, PlayArrow, Save, Stop} from "@mui/icons-material";
 
 const WebcamViewer = () => {
     const dispatch = useDispatch();
     const [openFirstDialog, setOpenFirstDialog] = useState(false)
     const [openSecondDialog, setOpenSecondDialog] = useState(false)
-    const {isWebcamOn, isRecording, webcamDevices, canSendRecords} = useSelector(state => state.webcamManager);
+    const {
+        isWebcamOn,
+        isRecording,
+        webcamDevices,
+        canSendRecords,
+        fps,
+        isFragmented
+    } = useSelector(state => state.webcamManager);
 
     useEffect(() => {
         if (!webcamDevices || webcamDevices.length === 0) {
@@ -40,13 +48,14 @@ const WebcamViewer = () => {
         }
     }, [dispatch, webcamDevices]);
 
-    const handleChangeDevice = useCallback(
-        (event) => {
-            const selectedDevice = event.target.value;
-            dispatch(reorderWebcamDevices(selectedDevice));
-        },
-        [dispatch]
-    );
+    const handleFpsChange = (event) => {
+        dispatch(setFps(event.target.value));
+    };
+
+    const handleChangeDevice = (event) => {
+        dispatch(reorderWebcamDevices(event.target.value));
+    };
+
 
     const toggleStart = () => {
         if (isWebcamOn && isRecording) {
@@ -56,7 +65,7 @@ const WebcamViewer = () => {
         } else {
             dispatch(!isWebcamOn ? {
                 type: START_WEBCAM,
-                payload: {selected_device: webcamDevices[0]}
+                payload: {selected_device: webcamDevices[0], fps: fps, isFragmented: isFragmented}
             } : {type: STOP_WEBCAM});
             dispatch(setWebcamState(!isWebcamOn));
         }
@@ -88,7 +97,7 @@ const WebcamViewer = () => {
 
 
     return (
-        <div>
+        <>
             <Dialog
                 open={openFirstDialog}
                 onClose={() => setOpenFirstDialog(false)}
@@ -131,7 +140,7 @@ const WebcamViewer = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Box margin={2} padding={2} pb={3} >
+            <Box sx={{height: '65vh'}} ml={3} mt={2} mb={1}>
 
                 <Grid container spacing={3} alignItems="flex-start">
                     {/* Webcam Frame */}
@@ -148,6 +157,7 @@ const WebcamViewer = () => {
                                     {isWebcamOn ? "Stop" : "Start"}
                                 </Button>
                             </Grid>
+
                             <Grid item>
                                 <Select
                                     disabled={isWebcamOn}
@@ -158,6 +168,27 @@ const WebcamViewer = () => {
                                         <MenuItem key={device} value={device}>{device}</MenuItem>
                                     ))}
                                 </Select>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    disabled={isWebcamOn}
+                                    label="FPS"
+                                    variant="outlined"
+                                    value={fps}
+                                    onChange={handleFpsChange}
+                                    type="number"
+                                    helperText="Enter the desired FPS value (Not recommended to change it)"
+                                />
+                            </Grid>
+                            <Grid item>
+                                <ToggleButton
+                                    value="fragmented"
+                                    selected={isFragmented}
+                                    disabled={isWebcamOn}
+                                    onChange={() => dispatch(setFragmented(!isFragmented))}
+                                >
+                                    Fragmented
+                                </ToggleButton>
                             </Grid>
                             <Grid item>
                                 <Button variant="outlined" startIcon={!isRecording ? <FiberManualRecord/> : <Stop/>}
@@ -175,8 +206,8 @@ const WebcamViewer = () => {
                     </Grid>
                 </Grid>
             </Box>
-        </div>);
-
+        </>
+    );
 };
 
 export default WebcamViewer;

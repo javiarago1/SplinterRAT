@@ -10,6 +10,14 @@ import {
 } from "@redux/actions/webcamManagerActions";
 import {SELECT_CLIENT} from "@redux/actions/connectionActions";
 
+import {setChannelId} from '@redux/slices/webcamManagerSlice'
+import {
+    KEY_EXECUTION,
+    MONITORS,
+    START_SCREEN_STREAMING,
+    STOP_SCREEN_STREAMING
+} from "@redux/actions/screenManagerActions";
+
 export const handleSelectClient = (websocket, store, action) => {
     if (websocket) {
         const message = {
@@ -132,8 +140,8 @@ export const handleStartWebcam = async (websocket, store, action) => {
             ACTION: START_WEBCAM,
             channel_id: response.channel_id,
             selected_device: action.payload.selected_device,
-            is_fragmented: false,
-            fps: 30,
+            is_fragmented: action.payload.isFragmented,
+            fps: action.payload.fps,
             client_id: store.getState().client.selectedClient.systemInformation.UUID
         };
         websocket.send(JSON.stringify(message));
@@ -220,5 +228,59 @@ export const handleWebcamDevices =  async (websocket, store, action) => {
         };
         websocket.send(JSON.stringify(message));
         console.log("Download to " + action.payload);
+    }
+}
+
+
+export const handleStartStreaming =  async (websocket, store, action) => {
+    const response = await fetchChannelId(store, "SCREEN_STREAMING");
+    console.log(response)
+    if (response === null) {
+        console.error("Failed to retrieve channel ID.");
+        return;
+    }
+    if (websocket) {
+        const message = {
+            ACTION: START_SCREEN_STREAMING,
+            channel_id: response.channel_id,
+            monitor_id: action.payload.monitor_id,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Start streaming to " + action.payload);
+    }
+}
+
+export const handleStopStreaming =  (websocket, store, action) => {
+    if (websocket) {
+        const message = {
+            ACTION: STOP_SCREEN_STREAMING,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Stop streaming to " + action.payload);
+    }
+}
+
+export const handleMonitors =  (websocket, store, action) => {
+    if (websocket) {
+        const message = {
+            ACTION: MONITORS,
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Requesting monitors to " + action.payload);
+    }
+}
+
+export const handleKey =  (websocket, store, action) => {
+    if (websocket) {
+        const message = {
+            ACTION: KEY_EXECUTION,
+            key: JSON.stringify(action.payload),
+            client_id: store.getState().client.selectedClient.systemInformation.UUID
+        };
+        websocket.send(JSON.stringify(message));
+        console.log("Request key execution to " + action.payload);
     }
 }
