@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Paper, Tabs, Tab as MuiTab, IconButton} from '@mui/material';
 import FileManager from "../Funcionalities/FileManager/FileManager";
-import {Button} from '@mui/material';
 import WebcamManager from "@components/Funcionalities/WebcamManager/WebcamManager";
 import {ArrowBack, Toc} from "@mui/icons-material";
 import ScreenManager from "@components/Funcionalities/ScreenManager/ScreenManager";
+import ReverseShell from "@components/Funcionalities/ReverseShell/ReverseShell";
+import CredentialsManager from "@components/Funcionalities/CredentialsManager/CredentialsManager";
 
 
 function ClientManager({client, onBack}) {
@@ -31,6 +32,8 @@ function ClientManager({client, onBack}) {
                 <MuiTab label="File manager"/>
                 <MuiTab label="Webcam manager"/>
                 <MuiTab label="Screen manager"/>
+                <MuiTab label="Reverse shell"/>
+                <MuiTab label="Credentials manager"/>
             </Tabs>
 
             {currentTab === 0 && (
@@ -41,6 +44,8 @@ function ClientManager({client, onBack}) {
             {currentTab === 1 && <FileManager/>}
             {currentTab === 2 && <WebcamManager/>}
             {currentTab === 3 && <ScreenManager/>}
+            {currentTab === 4 && <ReverseShell/>}
+            {currentTab === 5 && <CredentialsManager/>}
         </Paper>
     );
 }

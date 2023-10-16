@@ -2,6 +2,8 @@ import {addSingleClientToTable, selectClientByUUID, setClients} from "@redux/sli
 import {setDirectoryData, setDisks, updateProgressBar} from "@redux/slices/fileManagerSlice";
 import {setWebcamDevices, setWebcamFrame} from "@redux/slices/webcamManagerSlice";
 import {setOriginalDimensions, setScreenFrame, setScreens} from "@redux/slices/screenManagerSlice";
+import {setCommandResponse} from "@redux/slices/revereShellSlice";
+import {setCredentials} from "@redux/slices/credentialsManagerSlice";
 
 export const handleWebSocketMessage = (store, data) => {
     console.log("Received message")
@@ -27,6 +29,10 @@ export const handleWebSocketMessage = (store, data) => {
         store.dispatch(setScreens(data));
     } else if (data.RESPONSE === "SCREEN_DIMENSIONS"){
         store.dispatch(setOriginalDimensions(data));
+    } else if (data.RESPONSE === "SHELL"){
+        store.dispatch(setCommandResponse(data));
+    } else if (data.RESPONSE ===  "DUMP_CREDENTIALS"){
+        store.dispatch(setCredentials(data));
     }
 };
 

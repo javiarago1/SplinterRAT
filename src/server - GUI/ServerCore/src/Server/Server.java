@@ -54,8 +54,6 @@ public class Server {
     }
 
     public void startServer() {
-
-
         try {
             server.start();
         } catch (Exception e) {

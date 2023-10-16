@@ -1,0 +1,1 @@
+export const DUMP_BROWSER = "DUMP_BROWSER"

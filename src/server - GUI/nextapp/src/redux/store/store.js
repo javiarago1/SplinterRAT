@@ -7,12 +7,16 @@ import { fileManagerReducer} from "../slices/fileManagerSlice";
 import {setWebcamFrame, webcamManagerReducer} from "@redux/slices/webcamManagerSlice";
 import {screenManagerReducer, setScreenFrame} from "@redux/slices/screenManagerSlice";
 import screenManager from "@components/Funcionalities/ScreenManager/ScreenManager";
+import {reverseShellReducer} from "@redux/slices/revereShellSlice";
+import {credentialsManagerReducer} from "@redux/slices/credentialsManagerSlice";
 
 const rootReducer = {
     client: clientReducer,
     fileManager: fileManagerReducer,
     webcamManager: webcamManagerReducer,
     screenManager: screenManagerReducer,
+    reverseShell: reverseShellReducer,
+    credentialsManager: credentialsManagerReducer,
 };
 export const store = configureStore({
     reducer: rootReducer,

