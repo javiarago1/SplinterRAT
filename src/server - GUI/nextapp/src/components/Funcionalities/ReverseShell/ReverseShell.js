@@ -10,8 +10,8 @@ const ReverseShell = () => {
     const textAreaRef = useRef(null);
 
     useEffect(() => {
-        dispatch({type: START_REVERSE_SHELL});
-    }, [dispatch]);
+        if (command.length === 0) dispatch({type: START_REVERSE_SHELL});
+    }, [command.length ,dispatch]);
 
     useEffect(() => {
         if (textAreaRef.current) {

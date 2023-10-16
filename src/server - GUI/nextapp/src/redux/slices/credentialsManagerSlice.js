@@ -7,7 +7,6 @@ const credentialsManagerSlice = createSlice({
     },
     reducers: {
         setCredentials: (state, action) => {
-            console.log(action.payload.info)
             state.credentials = action.payload.info;
         },
 
