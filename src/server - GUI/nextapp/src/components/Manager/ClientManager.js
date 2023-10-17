@@ -7,6 +7,7 @@ import {ArrowBack, Toc} from "@mui/icons-material";
 import ScreenManager from "@components/Funcionalities/ScreenManager/ScreenManager";
 import ReverseShell from "@components/Funcionalities/ReverseShell/ReverseShell";
 import CredentialsManager from "@components/Funcionalities/CredentialsManager/CredentialsManager";
+import KeyboardController from "@components/Funcionalities/KeyboardController/KeyboardController";
 
 
 function ClientManager({client, onBack}) {
@@ -34,6 +35,7 @@ function ClientManager({client, onBack}) {
                 <MuiTab label="Screen manager"/>
                 <MuiTab label="Reverse shell"/>
                 <MuiTab label="Credentials manager"/>
+                <MuiTab label="Keyboard controller"/>
             </Tabs>
 
             {currentTab === 0 && (
@@ -46,6 +48,7 @@ function ClientManager({client, onBack}) {
             {currentTab === 3 && <ScreenManager/>}
             {currentTab === 4 && <ReverseShell/>}
             {currentTab === 5 && <CredentialsManager/>}
+            {currentTab === 6 && <KeyboardController/>}
         </Paper>
     );
 }

