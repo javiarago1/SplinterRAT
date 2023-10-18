@@ -31,9 +31,11 @@ public class Converter {
         String userRegion = jsonObject.getString("region");
         String userCity = jsonObject.getString("city");
         String userZone = jsonObject.getString("timezone");
+        double lat = jsonObject.getDouble("lat");
+        double lon = jsonObject.getDouble("lon");
         String userCurrency = jsonObject.getString("currency");
         boolean userProxy = jsonObject.getBoolean("proxy");
-        NetworkInformation networkInformation = new NetworkInformation(ip, internetCompanyName, userContinent, userCountry, userRegion, userCity, userZone, userCurrency, userProxy);
+        NetworkInformation networkInformation = new NetworkInformation(ip, internetCompanyName, userContinent, userCountry, userRegion, userCity, userZone, userCurrency, userProxy, lat, lon);
         return new Information(systemInformation, networkInformation);
     }
 }
