@@ -1,0 +1,1 @@
+export const SHOW_MESSAGE_BOX = "SHOW_MESSAGE_BOX"

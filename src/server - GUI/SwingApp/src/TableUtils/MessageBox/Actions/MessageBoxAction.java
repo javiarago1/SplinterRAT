@@ -17,10 +17,13 @@ public class MessageBoxAction extends AbstractActionGUI<MessageBoxGUI> {
     @Override
     public void actionPerformed(ActionEvent e) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("title", getGUIManager().getTitleTextField().getText());
-        jsonObject.put("content", getGUIManager().getContentTextArea().getText());
-        jsonObject.put("type", getGUIManager().getTypeOfBox().getSelectedIndex());
-        jsonObject.put("icon", getGUIManager().getIconOfBox().getSelectedIndex());
+        jsonObject.put("ACTION", "SHOW_MESSAGE_BOX");
+        JSONObject boxInformation = new JSONObject();
+        boxInformation.put("title", getGUIManager().getTitleTextField().getText());
+        boxInformation.put("content", getGUIManager().getContentTextArea().getText());
+        boxInformation.put("type", getGUIManager().getTypeOfBox().getSelectedIndex());
+        boxInformation.put("icon", getGUIManager().getIconOfBox().getSelectedIndex());
+        jsonObject.put("info", boxInformation);
         getClient().getExecutor().submit(new MessageBoxEvent(getGUIManager(), jsonObject));
     }
 }

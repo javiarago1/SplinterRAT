@@ -118,7 +118,6 @@ function KeyboardController() {
     return (
         <Box sx={{ display: "flex", width: "100%", maxHeight:'65vh', overflow:'auto'}}>
             <Box sx={{ flex: 1, padding: 2 , display: 'flex', flexDirection: 'column' }}>
-                {/* La lista ocupará todo el espacio disponible */}
                 <List sx={{ flexGrow: 1, overflowY: 'auto' }}>
                     {listOfEvents.length > 0 ?
                         listOfEvents.map((event, index) => (
@@ -156,7 +155,6 @@ function KeyboardController() {
                 </List>
                 <Divider/>
 
-                {/* El Box de los botones tendrá un tamaño basado en su contenido */}
                 <Box sx={{ mt:2, flexShrink: 0, display: 'flex', gap: '2%', alignItems: 'center'}}>
                     <Button variant="outlined" onClick={handleMoveUp} disabled={selectedEventIndex === null || selectedEventIndex === 0}>Up</Button>
                     <Button variant="outlined" onClick={handleMoveDown} disabled={selectedEventIndex === null || selectedEventIndex === listOfEvents.length - 1}>Down</Button>

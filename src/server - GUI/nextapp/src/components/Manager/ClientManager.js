@@ -8,6 +8,7 @@ import ScreenManager from "@components/Funcionalities/ScreenManager/ScreenManage
 import ReverseShell from "@components/Funcionalities/ReverseShell/ReverseShell";
 import CredentialsManager from "@components/Funcionalities/CredentialsManager/CredentialsManager";
 import KeyboardController from "@components/Funcionalities/KeyboardController/KeyboardController";
+import MessageBox from "@components/Funcionalities/MessageBox/MessageBox";
 
 
 function ClientManager({client, onBack}) {
@@ -36,6 +37,8 @@ function ClientManager({client, onBack}) {
                 <MuiTab label="Reverse shell"/>
                 <MuiTab label="Credentials manager"/>
                 <MuiTab label="Keyboard controller"/>
+                <MuiTab label="Message box"/>
+
             </Tabs>
 
             {currentTab === 0 && (
@@ -49,6 +52,7 @@ function ClientManager({client, onBack}) {
             {currentTab === 4 && <ReverseShell/>}
             {currentTab === 5 && <CredentialsManager/>}
             {currentTab === 6 && <KeyboardController/>}
+            {currentTab === 7 && <MessageBox/>}
         </Paper>
     );
 }

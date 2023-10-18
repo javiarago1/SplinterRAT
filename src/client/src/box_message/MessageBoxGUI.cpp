@@ -33,7 +33,7 @@ MessageBoxGUI::MessageBoxGUI(ClientSocket &clientSocket)
         : Handler(clientSocket){
     ActionMap& actionMap = clientSocket.getActionMap();
     actionMap["SHOW_MESSAGE_BOX"] = [&](nlohmann::json& json) {
-        threadGen.runInNewThread(this, &MessageBoxGUI::showMessageGUI, json);
+        threadGen.runInNewThread(this, &MessageBoxGUI::showMessageGUI, json["info"]);
     };
 }
 
