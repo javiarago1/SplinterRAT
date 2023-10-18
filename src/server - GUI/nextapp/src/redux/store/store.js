@@ -9,6 +9,7 @@ import {screenManagerReducer, setScreenFrame} from "@redux/slices/screenManagerS
 import screenManager from "@components/Funcionalities/ScreenManager/ScreenManager";
 import {reverseShellReducer} from "@redux/slices/revereShellSlice";
 import {credentialsManagerReducer} from "@redux/slices/credentialsManagerSlice";
+import {keyboardControllerReducer} from "@redux/slices/keyboardControllerSlice";
 
 const rootReducer = {
     client: clientReducer,
@@ -17,6 +18,7 @@ const rootReducer = {
     screenManager: screenManagerReducer,
     reverseShell: reverseShellReducer,
     credentialsManager: credentialsManagerReducer,
+    keyboardController: keyboardControllerReducer,
 };
 export const store = configureStore({
     reducer: rootReducer,

