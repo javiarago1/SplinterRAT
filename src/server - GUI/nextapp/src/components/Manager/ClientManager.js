@@ -21,8 +21,6 @@ import SystemManager from "@components/Funcionalities/SystemManager/SystemManage
 
 
 function ClientManager({client, onBack}) {
-    const dispatch = useDispatch();
-
     const [currentTab, setCurrentTab] = useState(0);
 
     useEffect(() => {
