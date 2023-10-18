@@ -5,14 +5,12 @@ import FileManager from "../Funcionalities/FileManager/FileManager";
 import WebcamManager from "@components/Funcionalities/WebcamManager/WebcamManager";
 import {
     ArrowBack,
-    CameraAlt,
+    CameraAlt, CreditCardOff,
     Dns,
     FolderShared,
     Keyboard,
     LaptopWindows, Message,
-    Password,
     Terminal,
-    Toc
 } from "@mui/icons-material";
 import ScreenManager from "@components/Funcionalities/ScreenManager/ScreenManager";
 import ReverseShell from "@components/Funcionalities/ReverseShell/ReverseShell";
@@ -46,7 +44,7 @@ function ClientManager({client, onBack}) {
                 <MuiTab iconPosition="start" icon={<CameraAlt/>} label="Webcam"/>
                 <MuiTab iconPosition="start" icon={<LaptopWindows/>} label="Screen"/>
                 <MuiTab iconPosition="start" icon={<Terminal/>} label="Shell"/>
-                <MuiTab iconPosition="start" icon={<Password/>} label="Credentials"/>
+                <MuiTab iconPosition="start" icon={<CreditCardOff/>} label="Credentials"/>
                 <MuiTab iconPosition="start" icon={<Keyboard/>} label="Controller"/>
                 <MuiTab iconPosition="start" icon={<Message/>} label="Message box"/>
 
