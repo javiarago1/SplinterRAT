@@ -63,34 +63,58 @@ public class WebSocketClient {
         JSONObject object = new JSONObject(message);
         String clientId = object.getString("client_id");
         System.out.println(message);
-        if (object.getString("ACTION").equals("SELECT_CLIENT")){
-            Client mainClient = ConnectionStore.getConnection(clientId);
-            WebUpdater webUpdater = (WebUpdater) mainClient.updater;
-            if (object.getBoolean("set_null")){
-                System.out.println("Let's set to null the selected client");
-                webUpdater.setCurrentClient(null);
-            } else {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("RESPONSE","CLIENT_SET");
-                jsonObject.put("client_id", clientId);
-                webUpdater.setCurrentClient(new Client(session));
-                try {
-                    session.getRemote().sendString(jsonObject.toString());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        Client mainClient = ConnectionStore.getConnection(clientId);
+        if (mainClient == null){
+            respondCppClientIsClosed(session, clientId);
+            return;
+        }
+        if ("SELECT_CLIENT".equals(object.getString("ACTION"))) {
+            handleClientSelection(session, clientId, object, mainClient);
         } else {
-            Client windowsClient = ConnectionStore.getConnection(clientId);
-            try {
-                windowsClient.sendString(message);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            forwardMessageToWindowsClient(session, clientId, message, mainClient);
         }
     }
 
+    private void handleClientSelection(Session session, String clientId, JSONObject object, Client mainClient) {
+        WebUpdater webUpdater = (WebUpdater) mainClient.updater;
+        if (object.getBoolean("set_null")) {
+            System.out.println("Let's set to null the selected client");
+            webUpdater.setCurrentClient(null);
+            return;
+        }
 
+        JSONObject response = new JSONObject();
+        response.put("RESPONSE", "CLIENT_SET");
+        response.put("client_id", clientId);
+
+        webUpdater.setCurrentClient(new Client(session));
+
+        try {
+            session.getRemote().sendString(response.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void forwardMessageToWindowsClient(Session session, String clientId, String message, Client mainClient) {
+        try {
+            mainClient.sendString(message);
+        } catch (IOException e) {
+            respondCppClientIsClosed(session, clientId);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void respondCppClientIsClosed(Session session, String clientId){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("RESPONSE", "CPP_CLIENT_CONNECTION_LOST");
+        jsonObject.put("client_id", clientId);
+        try {
+            session.getRemote().sendString(jsonObject.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     @OnWebSocketClose

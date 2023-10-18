@@ -1,9 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
+import {useSelector} from 'react-redux';
+import {Table, TableBody, TableCell, TableHead, TableRow, Paper} from '@mui/material';
 import styles from './ClienTable.module.css'
 
-function ClientTable({ onClientSelect }) {
+function ClientTable({onClientSelect}) {
     const clients = useSelector(state => state.client.clients);
 
     return (
@@ -25,7 +25,7 @@ function ClientTable({ onClientSelect }) {
                         <TableRow
                             key={client.systemInformation.UUID}
                             onClick={() => onClientSelect(client)}
-                            className = {styles.clientRow}
+                            className={styles.clientRow}
                         >
                             <TableCell>{client.systemInformation.UUID}</TableCell>
                             <TableCell>{client.networkInformation.IP}</TableCell>
@@ -33,7 +33,11 @@ function ClientTable({ onClientSelect }) {
                             <TableCell>{client.systemInformation.TAG_NAME}</TableCell>
                             <TableCell>{client.systemInformation.USER_NAME}</TableCell>
                             <TableCell>{client.systemInformation.OPERATING_SYSTEM}</TableCell>
-                            <TableCell> Connected </TableCell>
+                            <TableCell>
+                                <span
+                                    style={{color: client.isConnected ? 'green' : 'red'}}>{client.isConnected ? "Connected" : "Disconnected"}
+                                </span>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

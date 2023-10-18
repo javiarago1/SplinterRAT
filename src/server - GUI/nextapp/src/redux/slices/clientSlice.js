@@ -8,7 +8,11 @@ const clientSlice = createSlice({
     },
     reducers: {
         setClients: (state, action) => {
-            state.clients = action.payload;
+            Object.values(action.payload).forEach(client => {
+                const clientId = client.systemInformation.UUID;
+                state.clients[clientId] = client;
+                state.clients[clientId].isConnected = true;
+            });
         },
         selectClient: (state, action) => {
             state.selectedClient = action.payload;
@@ -16,16 +20,28 @@ const clientSlice = createSlice({
         selectClientByUUID: (state, action) => {
             state.selectedClient = state.clients[action.payload.client_id];
         },
-        addSingleClientToTable: (state, action) => {
-            const client = action.payload;
-            state.clients[client.systemInformation.UUID] = client;
-        },
         removeSelectedClient: (state, action) => {
             state.selectedClient = null;
+        },
+        disconnectClient: (state, action) => {
+            const clientId = action.payload.client_id;
+            const client = state.clients[clientId];
+            if (client) {
+                client.isConnected = false;
+            }
+            if (state.selectedClient && state.selectedClient.systemInformation.UUID === clientId) {
+                state.selectedClient = null;
+            }
         }
+
     }
 });
 
-export const {setClients, selectClient, addSingleClientToTable, selectClientByUUID, removeSelectedClient} = clientSlice.actions;
+export const {setClients,
+    selectClient,
+    selectClientByUUID,
+    removeSelectedClient,
+    disconnectClient
+} = clientSlice.actions;
 
 export const clientReducer = clientSlice.reducer;

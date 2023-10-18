@@ -138,8 +138,8 @@ function SystemInformation() {
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Shutdown system">
-                        <IconButton >
-                            <PowerSettingsNew onClick={() => dispatch({type:SYSTEM_STATE, payload: 1})}/>
+                        <IconButton onClick={() => dispatch({type:SYSTEM_STATE, payload: 1})}>
+                            <PowerSettingsNew />
                         </IconButton>
                     </Tooltip>
 
