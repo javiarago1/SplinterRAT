@@ -11,6 +11,7 @@ import {reverseShellReducer} from "@redux/slices/revereShellSlice";
 import {credentialsManagerReducer} from "@redux/slices/credentialsManagerSlice";
 import {keyboardControllerReducer} from "@redux/slices/keyboardControllerSlice";
 import {messageBoxReducer} from "@redux/slices/messageBoxSlice";
+import {compilerReducer} from "@redux/slices/compilerSlice";
 
 const rootReducer = {
     client: clientReducer,
@@ -21,6 +22,7 @@ const rootReducer = {
     credentialsManager: credentialsManagerReducer,
     keyboardController: keyboardControllerReducer,
     messageBox: messageBoxReducer,
+    compiler: compilerReducer,
 };
 export const store = configureStore({
     reducer: rootReducer,
