@@ -9,6 +9,7 @@ import ReverseShell from "@components/Funcionalities/ReverseShell/ReverseShell";
 import CredentialsManager from "@components/Funcionalities/CredentialsManager/CredentialsManager";
 import KeyboardController from "@components/Funcionalities/KeyboardController/KeyboardController";
 import MessageBox from "@components/Funcionalities/MessageBox/MessageBox";
+import SystemManager from "@components/Funcionalities/SystemManager/SystemManager";
 
 
 function ClientManager({client, onBack}) {
@@ -41,11 +42,7 @@ function ClientManager({client, onBack}) {
 
             </Tabs>
 
-            {currentTab === 0 && (
-                <div>
-                    {client.systemInformation.UUID} - {client.systemInformation.USER_NAME}
-                </div>
-            )}
+            {currentTab === 0 && <SystemManager/>}
             {currentTab === 1 && <FileManager/>}
             {currentTab === 2 && <WebcamManager/>}
             {currentTab === 3 && <ScreenManager/>}

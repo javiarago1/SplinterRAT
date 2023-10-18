@@ -23,7 +23,18 @@ function MessageBox() {
     };
 
     return (
-        <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 1, maxHeight: '65vh', overflow: 'auto'}}>
+        <Box
+            sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 1,
+                maxHeight: '65vh',
+                overflow: 'auto',
+                maxWidth: '50%',
+                marginRight: 'auto',
+            }}
+        >
             <TextField
                 fullWidth
                 sx={{mb:2}}
