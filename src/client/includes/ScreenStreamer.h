@@ -4,7 +4,7 @@
 
 #include "KeyboardExecuter.h"
 
-#include "Gdiplus.h"
+#include "gdiplus.h"
 #include "ClientSocket.h"
 #include "Handler.h"
 #include "BlockingQueue.h"

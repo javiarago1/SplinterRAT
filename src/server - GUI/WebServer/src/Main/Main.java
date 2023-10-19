@@ -2,10 +2,7 @@ package Main;
 
 import Server.Server;
 import Server.ConnectionStore;
-import Utilities.Servlets.ByteChannelServlet;
-import Utilities.Servlets.FileUploadServlet;
-import Utilities.Servlets.SelectClientServlet;
-import Utilities.Servlets.WebSocketServlet;
+import Utilities.Servlets.*;
 import Utilities.WebUpdaterFactory;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -30,6 +27,7 @@ public class Main {
         servletConfiguration.addServlet(new ServletHolder(new WebSocketServlet()),"/web");
         servletConfiguration.addServlet(new ServletHolder(new ByteChannelServlet()),"/create-byte-channel");
         servletConfiguration.addServlet(new ServletHolder(new SelectClientServlet()),"/select-client");
+        servletConfiguration.addServlet(new ServletHolder(new CompilationServlet()), "/compile");
 
         // TODO PLEASE FIX THIS (T＿T)
         FilterHolder cors = new FilterHolder(CrossOriginFilter.class);

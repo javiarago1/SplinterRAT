@@ -69,7 +69,7 @@ public class ClientExtractor implements Callable<Boolean> {
                 return false;
             }
             zipFile.extractAll(localClientFiles.toString());
-            System.out.println(localClientFiles);
+            System.out.println("Extracted local files: "+localClientFiles);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

