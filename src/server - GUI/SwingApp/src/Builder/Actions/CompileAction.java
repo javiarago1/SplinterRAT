@@ -75,11 +75,10 @@ public class CompileAction implements ActionListener {
             String pathOfUtilities = "";
 
             if (!utilities.equals("g++ / windres")) pathOfUtilities = utilities;
-            String assemblyCommand = Path.of(pathOfUtilities, "windres") + " assembly.rc compiled_assembly.opc";
             int cores = Runtime.getRuntime().availableProcessors();
-            String compileCommand = Path.of(pathOfUtilities, "mingw32-make") + ""; // -j
+            String compileCommand = Path.of(pathOfUtilities, "mingw32-make -j"+cores).toString();
 
-            compilerGUI.getExecutor().submit(new CompileWorker(compilerGUI,compileCommand, assemblyCommand, ClientExtractor.localClientFiles));
+            compilerGUI.getExecutor().submit(new CompileWorker(compilerGUI,compileCommand, ClientExtractor.localClientFiles));
         }
 
     }

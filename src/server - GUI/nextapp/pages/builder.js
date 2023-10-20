@@ -39,6 +39,8 @@ import {
     toggleWebcam,
 } from '@redux/slices/compilerSlice';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -70,24 +72,56 @@ function CompilerGUI() {
         };
     }
 
-    const handleCompileClick = () => {
+    const handleCompileClick = async () => {
         const jsonData = generateJSON();
-        console.log(jsonData)
-         fetch('http://127.0.0.1:3055/compile', {
-             method: 'POST',
-             headers: {
-                 'Content-Type': 'application/json'
-             },
-             body: JSON.stringify(jsonData)
-         })
-         .then(response => response.json())
-         .then(data => {
-             console.log(data);
-         })
-         .catch(error => {
-             console.error('Error:', error);
-         });
+        console.log(jsonData);
+
+        const toastId = toast.loading("Compiling...");
+
+        try {
+            const response = await fetch('http://127.0.0.1:3055/compile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonData)
+            });
+
+            const data = await response.json();
+
+            switch (response.status) {
+                case 200: // HTTP 200 OK
+                    if (data.status === 0) {
+                        toast.update(toastId, { render: "Compilation successful!", type: "success", isLoading: false, autoClose: 5000, closeOnClick: true, closeButton: true });
+                    } else {
+                        const errorMessage = data.message || 'Unexpected server response.';
+                        toast.update(toastId, { render: errorMessage, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true, closeButton: true });
+                    }
+                    break;
+                case 409: // HTTP 409 Conflict
+                    const conflictMessage = data.message || 'Compilation already in progress.';
+                    toast.update(toastId, { render: conflictMessage, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true, closeButton: true });
+                    break;
+                case 500: // HTTP 500 Internal Server Error
+                    const errorMessage = data.message || 'Error during compilation.';
+                    toast.update(toastId, { render: errorMessage, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true, closeButton: true });
+                    break;
+                default:
+                    toast.update(toastId, { render: 'Server error: ' + response.status, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true, closeButton: true });
+                    break;
+            }
+
+        } catch (error) {
+            // For unexpected errors (e.g., network issues)
+            toast.update(toastId, { render: 'Unexpected error: ' + error.message, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true, closeButton: true });
+        }
     }
+
+
+
+
+
+
 
 
     const [currentTab, setCurrentTab] = useState(0);
@@ -97,6 +131,7 @@ function CompilerGUI() {
 
     return (
         <Paper elevation={10} sx={{height: '82vh', maxHeight: '82vh', overflow: 'auto', maxWidth: '100%'}}>
+            <ToastContainer theme="dark" />
             <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
                 <Tab label="Identification"/>
                 <Tab label="Installation"/>

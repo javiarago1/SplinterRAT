@@ -11,16 +11,14 @@ public class CompileWorker extends SwingWorker<Void,Void> {
 
     private final CompilerGUI compilerGUI;
     private final String compileCommand;
-    private final String assemblyCommand;
     private final Path pathOfClientFiles;
 
     private final CompilingAnimationDialog compilingAnimationDialog;
     private int result;
 
-    public CompileWorker(CompilerGUI compilerGUI, String compileCommand, String assemblyCommand, Path pathOfClientFiles){
+    public CompileWorker(CompilerGUI compilerGUI, String compileCommand, Path pathOfClientFiles){
         this.compilerGUI = compilerGUI;
         this.compileCommand = compileCommand;
-        this.assemblyCommand = assemblyCommand;
         this.pathOfClientFiles = pathOfClientFiles;
         compilingAnimationDialog = new CompilingAnimationDialog(compilerGUI);
         compilingAnimationDialog.startDialog();
@@ -28,7 +26,7 @@ public class CompileWorker extends SwingWorker<Void,Void> {
 
     @Override
     protected Void doInBackground() {
-        CompilerProcess compilerProcess = new CompilerProcess(compileCommand, assemblyCommand, pathOfClientFiles);
+        CompilerProcess compilerProcess = new CompilerProcess(compileCommand, pathOfClientFiles);
         result = compilerProcess.call();
         return null;
     }
