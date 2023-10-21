@@ -76,7 +76,12 @@ public class CompileAction implements ActionListener {
 
             if (!utilities.equals("g++ / windres")) pathOfUtilities = utilities;
             int cores = Runtime.getRuntime().availableProcessors();
-            String compileCommand = Path.of(pathOfUtilities, "mingw32-make -j"+cores).toString();
+            File selectedFile = chooser.getSelectedFile();
+
+
+            String compileCommand = Path.of(pathOfUtilities, "mingw32-make").toString();
+
+            compileCommand += " TARGET=\""+selectedFile+".exe\" -j"+cores;
 
             compilerGUI.getExecutor().submit(new CompileWorker(compilerGUI,compileCommand, ClientExtractor.localClientFiles));
         }
