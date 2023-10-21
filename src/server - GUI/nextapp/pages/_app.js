@@ -16,7 +16,7 @@ function MyApp({Component, pageProps}) {
                 <FileDownloader/>
                 <CssBaseline/>
                 <Box sx={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
-                    {/* AppBar Section */}
+                    {/* AppBar*/}
                     <Box component="header" sx={{flexShrink: 0}}>
                         <AppBar position="static">
                             <Toolbar sx={{display: 'flex', justifyContent: 'center', padding: 1}}>
@@ -25,11 +25,11 @@ function MyApp({Component, pageProps}) {
                         </AppBar>
                     </Box>
 
-                    {/* Content Section */}
+                    {/* Content */}
 
                     <Box sx={{display: 'flex', flexGrow: 1, overflow: 'auto'}}>
 
-                        {/* Navigation Drawer */}
+                        {/* Navigation */}
                         <Box
 
                             component="nav"
@@ -46,7 +46,7 @@ function MyApp({Component, pageProps}) {
                         </Box>
 
 
-                        {/* Main Content */}
+                        {/* Main content */}
                         <Box component="main" height="86vh" sx={{flexGrow: 1, p: 2}}>
                             <ToastContainer theme="dark" />
                             <Component {...pageProps} />

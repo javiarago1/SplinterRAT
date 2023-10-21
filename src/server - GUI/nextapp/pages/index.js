@@ -4,6 +4,7 @@ import ClientTable from "@components/Table/ClientTable";
 import {useDispatch, useSelector} from 'react-redux';
 import { removeSelectedClient, selectClient} from '@redux/slices/clientSlice';
 import { SELECT_CLIENT, WS_CONNECT} from "@redux/actions/connectionActions";
+import {Box} from "@mui/material";
 
 function Home() {
     const dispatch = useDispatch();
@@ -26,14 +27,14 @@ function Home() {
 
 
     return (
-        <div  style={{height: "100%"}}>
+        <Box  style={{height: "100%"}}>
             {!selectedClient ?
                 <ClientTable onClientSelect={onClientSelect} /> :
                 !selectClient ?
                     <p>Loading...</p> :
                     <ClientManager client={selectedClient} onBack={onBack} />
             }
-        </div>
+        </Box>
     );
 }
 

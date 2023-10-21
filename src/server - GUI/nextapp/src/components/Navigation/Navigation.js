@@ -9,8 +9,8 @@ export default function Navigation() {
     return (
         <List>
             <ListItem disableGutters>
-                <Link href="/home" >
-                    <ListItemButton>
+                <Link  href="/home" >
+                    <ListItemButton >
                         <ListItemIcon>
                             <HomeIcon />
                         </ListItemIcon>
@@ -40,16 +40,7 @@ export default function Navigation() {
                 </Link>
             </ListItem>
             <Divider />
-            <ListItem disableGutters>
-                <Link  href="/about" >
-                    <ListItemButton >
-                        <ListItemIcon>
-                            <InfoIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="About" />
-                    </ListItemButton>
-                </Link>
-            </ListItem>
+
         </List>
     );
 }

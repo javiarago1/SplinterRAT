@@ -29,6 +29,8 @@ const ScreenFrame = () => {
     };
 
     const handleKeyDown = useCallback((e) => {
+        if (!canControl) return;
+
         if (e.key.length === 1){
             const charCode = e.key.charCodeAt(0);
             dispatch({type: KEY_EXECUTION, payload:{keyEvent: charCode} })
@@ -44,6 +46,8 @@ const ScreenFrame = () => {
     }, [handleKeyDown]);
 
     const handleClick = useCallback((e) => {
+        if (!canControl) return;
+
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -63,7 +67,7 @@ const ScreenFrame = () => {
 
         console.log(JSON.stringify(clickEvent));
         dispatch({type: KEY_EXECUTION, payload: clickEvent});
-    }, [dispatch]);  // <-- arreglo de dependencias vacío para useCallback
+    }, [canControl, dispatch]);  // <-- arreglo de dependencias vacío para useCallback
 
     useEffect(() => {
         if (isScreenOn && frame) {
@@ -78,7 +82,7 @@ const ScreenFrame = () => {
                 ctx.drawImage(img, 0, 0, img.width, img.height);
             };
         }
-    }, [frame, isScreenOn]);
+    }, [frame, canControl, isScreenOn]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -93,7 +97,7 @@ const ScreenFrame = () => {
                 canvas.removeEventListener('mousedown', handleClick);
             };
         }
-    }, [handleClick, frame, isScreenOn]);
+    }, [handleClick, canControl, frame, isScreenOn]);
 
     return (
         <div className={styles.screenFrame}>
