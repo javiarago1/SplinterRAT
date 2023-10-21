@@ -24,7 +24,8 @@ LIBS = -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460
 
 SOURCES = $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(wildcard src/*/*/*.cpp)
 OBJECTS = $(SOURCES:.cpp=.o) compile_configuration/compiled_assembly.opc
-TARGET = client.exe
+TARGET ?= client.exe
+
 
 
 $(TARGET): $(OBJECTS)
