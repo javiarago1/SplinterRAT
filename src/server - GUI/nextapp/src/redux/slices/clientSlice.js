@@ -5,6 +5,7 @@ const clientSlice = createSlice({
     initialState: {
         clients: {},
         selectedClient: null,
+        fileToDownload: "",
     },
     reducers: {
         setClients: (state, action) => {
@@ -13,6 +14,9 @@ const clientSlice = createSlice({
                 state.clients[clientId] = client;
                 state.clients[clientId].isConnected = true;
             });
+        },
+        setFileToDownload: (state, action) => {
+            state.fileToDownload = action.payload.path;
         },
         selectClient: (state, action) => {
             state.selectedClient = action.payload;
@@ -41,7 +45,8 @@ export const {setClients,
     selectClient,
     selectClientByUUID,
     removeSelectedClient,
-    disconnectClient
+    disconnectClient,
+    setFileToDownload
 } = clientSlice.actions;
 
 export const clientReducer = clientSlice.reducer;

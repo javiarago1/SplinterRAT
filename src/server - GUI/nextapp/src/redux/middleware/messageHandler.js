@@ -1,4 +1,4 @@
-import { disconnectClient, selectClientByUUID, setClients} from "@redux/slices/clientSlice";
+import {disconnectClient, selectClientByUUID, setClients, setFileToDownload} from "@redux/slices/clientSlice";
 import {setDirectoryData, setDisks, updateProgressBar} from "@redux/slices/fileManagerSlice";
 import {setWebcamDevices, setWebcamFrame} from "@redux/slices/webcamManagerSlice";
 import {setOriginalDimensions, setScreenFrame, setScreens} from "@redux/slices/screenManagerSlice";
@@ -35,6 +35,8 @@ export const handleWebSocketMessage = (store, data) => {
         store.dispatch(setCredentials(data));
     } else if (data.RESPONSE === "CPP_CLIENT_CONNECTION_LOST"){
         store.dispatch(disconnectClient(data));
+    } else if (data.RESPONSE === "SHOW_DOWNLOADED"){
+        store.dispatch(setFileToDownload(data));
     }
 };
 

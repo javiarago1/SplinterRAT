@@ -1,10 +1,13 @@
-import React from 'react';
 import {Provider} from 'react-redux';
 import {CssBaseline, ThemeProvider, AppBar, Toolbar, Box, Paper} from '@mui/material';
 import Image from 'next/image';
 import darkTheme from "../src/theme/theme";
 import Navigation from "@components/Navigation/Navigation";
 import {store} from '@redux/store/store';
+import {ToastContainer} from "react-toastify";
+import FileDownloader from "@components/Downloader/FileDownloader";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({Component, pageProps}) {
     return (
@@ -44,6 +47,8 @@ function MyApp({Component, pageProps}) {
 
                         {/* Main Content */}
                         <Box component="main" height="86vh" sx={{flexGrow: 1, p: 2}}>
+                            <ToastContainer theme="dark" />
+                            <FileDownloader/>
                             <Component {...pageProps} />
                         </Box>
                     </Box>

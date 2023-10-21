@@ -45,7 +45,7 @@ public class FileWriterTask implements Runnable {
     }
 
     public void saveZipFile() {
-        File outputFile = new File(outputPath + ".zip");
+        File outputFile = new File(outputPath);
         try {
             // Crear directorios padre si no existen
             File parentDir = outputFile.getParentFile();

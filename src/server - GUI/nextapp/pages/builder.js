@@ -39,8 +39,7 @@ import {
     toggleWebcam,
 } from '@redux/slices/compilerSlice';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 
 
@@ -131,7 +130,6 @@ function CompilerGUI() {
 
     return (
         <Paper elevation={10} sx={{height: '82vh', maxHeight: '82vh', overflow: 'auto', maxWidth: '100%'}}>
-            <ToastContainer theme="dark" />
             <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
                 <Tab label="Identification"/>
                 <Tab label="Installation"/>

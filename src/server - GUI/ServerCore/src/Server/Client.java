@@ -38,6 +38,8 @@ public class Client {
     private final UniqueByteIDGenerator uniqueByteIDGeneratorOut = new UniqueByteIDGenerator();
     private final ConcurrentHashMap<Byte, BytesChannel> activeChannels = new ConcurrentHashMap<>();
 
+    private final String FOLDER_OF_DOWNLOADS = "downloads";
+
     public ConcurrentHashMap<Byte, BytesChannel> getFileChannels() {
         return activeChannels;
     }
@@ -100,7 +102,7 @@ public class Client {
 
 
     public String writeFile(byte[] data, String category) {
-        String finalNameOfFolder = category + " - " + new Time().getTime();
+        String finalNameOfFolder = Path.of(category, new Time().getTime())+".zip";
         Path pathOfDownload = Path.of(getSessionFolder(), finalNameOfFolder);
         FileWriterTask task = new FileWriterTask(data, pathOfDownload.toString(), updater.shouldExtract());
         task.run();
@@ -136,7 +138,7 @@ public class Client {
 
 
     public String getSessionFolder() {
-        return "Session - " + getIdentifier();
+        return Path.of(FOLDER_OF_DOWNLOADS,"Session - " + getIdentifier()).toString();
     }
 
 
@@ -158,10 +160,6 @@ public class Client {
 
     public String getIdentifier() {
         return updater.getNetworkInformation().IP() + " - " + updater.getSystemInformation().USER_NAME();
-    }
-
-    public Session getSession() {
-        return session;
     }
 
     public UniqueByteIDGenerator getUniqueByteIDGeneratorOut() {

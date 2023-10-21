@@ -116,7 +116,7 @@ export const handleRequestDirectory = (websocket, store, action) => {
 
 export const fetchChannelId = async (store, category) => {
     try {
-        const response = await fetch('http://localhost:3055/create-byte-channel', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/create-byte-channel`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -160,7 +160,7 @@ export const handleDownload = async (websocket, store, action) => {
         console.error("Failed to retrieve channel ID.");
         return;
     }
-    store.dispatch(addProgressBar({channel_id: response}));
+    store.dispatch(addProgressBar(response));
     const message = {
         ACTION: DOWNLOAD,
         from_path: action.payload,

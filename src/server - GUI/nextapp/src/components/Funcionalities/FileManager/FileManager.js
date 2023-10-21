@@ -6,7 +6,6 @@ import {
 import {Autocomplete, Box, Button, Container, Divider, Grid, IconButton, TextField} from '@mui/material';
 import {COPY, MOVE, REQUEST_DIRECTORY, REQUEST_DISKS, DELETE, RUN, DOWNLOAD} from "@redux/actions/fileManagerActions";
 import FileTable from "./FileTable";
-import ProgressBar from "@components/ProgressBar/ProgressBar";
 import {
     ArrowCircleLeft,
     ContentCopy,
@@ -99,7 +98,6 @@ function FileManager({currentTab}) {
         const formData = new FormData();
         formData.append('file', file);
 
-        // Añadir JSON adicional
         const additionalData = {
             to_path: currentDirectory + selectedRows[0].name, client_id: selectedClient.systemInformation.UUID,
         };
@@ -107,7 +105,7 @@ function FileManager({currentTab}) {
 
         formData.append('metadata', JSON.stringify(additionalData));
 
-        fetch('http://localhost:3055/upload-files', {
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload-files`, {
             method: 'POST', body: formData,
         })
             .then(response => response.json())
@@ -247,7 +245,6 @@ function FileManager({currentTab}) {
                 </Grid>
             </Box>
             <FileTable sx={{paddingBottom: 15}}/>
-            <ProgressBar/>
         </Box>);
 }
 

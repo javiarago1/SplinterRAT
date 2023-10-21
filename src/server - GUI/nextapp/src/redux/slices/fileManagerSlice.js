@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {toast} from "react-toastify";
 
 const fileManagerSlice = createSlice({
     name: 'fileManager',
@@ -89,17 +90,21 @@ const fileManagerSlice = createSlice({
             });
         },
         addProgressBar: (state, action) => {
-            state.progressBars[action.payload.channel_id] = {
-                channel_id: action.payload.channel_id,
-                progress: 0,
-            };
+            toast("Zipping...", {
+                toastId: action.payload.channel_id,
+                autoClose: false,
+                type: toast.TYPE.INFO
+            });
+            state.progressBars[action.payload.channel_id] = 0;
         },
         updateProgressBar: (state, action) => {
-            const progressBar = state.progressBars[action.payload.channel_id];
             if (action.payload.is_last_packet) {
+                toast.update(action.payload.channel_id, { render: "Successful download!", type: toast.TYPE.SUCCESS, autoClose: 3000});
                 delete state.progressBars[action.payload.channel_id];
             } else {
-                progressBar.progress += action.payload.read_size;
+                state.progressBars[action.payload.channel_id] += action.payload.read_size;
+                const content = `${state.progressBars[action.payload.channel_id]} bytes downloaded`;
+                toast.update(action.payload.channel_id, { render: content});
             }
         },
     }

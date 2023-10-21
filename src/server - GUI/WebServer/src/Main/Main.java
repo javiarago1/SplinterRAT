@@ -28,6 +28,8 @@ public class Main {
         servletConfiguration.addServlet(new ServletHolder(new ByteChannelServlet()),"/create-byte-channel");
         servletConfiguration.addServlet(new ServletHolder(new SelectClientServlet()),"/select-client");
         servletConfiguration.addServlet(new ServletHolder(new CompilationServlet()), "/compile");
+        servletConfiguration.addServlet(new ServletHolder(new FileDownloadServlet()), "/downloads/*");
+
 
         // TODO PLEASE FIX THIS (T＿T)
         FilterHolder cors = new FilterHolder(CrossOriginFilter.class);
