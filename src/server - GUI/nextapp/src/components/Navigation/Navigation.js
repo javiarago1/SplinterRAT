@@ -39,8 +39,6 @@ export default function Navigation() {
                     </ListItemButton>
                 </Link>
             </ListItem>
-            <Divider />
-
         </List>
     );
 }
