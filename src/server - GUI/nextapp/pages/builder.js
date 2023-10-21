@@ -40,6 +40,7 @@ import {
 } from '@redux/slices/compilerSlice';
 
 import { toast } from 'react-toastify';
+import {setFileToDownload} from "@redux/slices/clientSlice";
 
 
 
@@ -91,6 +92,7 @@ function CompilerGUI() {
             switch (response.status) {
                 case 200: // HTTP 200 OK
                     if (data.status === 0) {
+                        dispatch(setFileToDownload(data));
                         toast.update(toastId, { render: "Compilation successful!", type: "success", isLoading: false, autoClose: 5000, closeOnClick: true, closeButton: true });
                     } else {
                         const errorMessage = data.message || 'Unexpected server response.';

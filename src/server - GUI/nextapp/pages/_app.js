@@ -13,6 +13,7 @@ function MyApp({Component, pageProps}) {
     return (
         <Provider store={store}>
             <ThemeProvider theme={darkTheme}>
+                <FileDownloader/>
                 <CssBaseline/>
                 <Box sx={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
                     {/* AppBar Section */}
@@ -48,7 +49,6 @@ function MyApp({Component, pageProps}) {
                         {/* Main Content */}
                         <Box component="main" height="86vh" sx={{flexGrow: 1, p: 2}}>
                             <ToastContainer theme="dark" />
-                            <FileDownloader/>
                             <Component {...pageProps} />
                         </Box>
                     </Box>

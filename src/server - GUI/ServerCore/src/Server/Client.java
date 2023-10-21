@@ -38,7 +38,7 @@ public class Client {
     private final UniqueByteIDGenerator uniqueByteIDGeneratorOut = new UniqueByteIDGenerator();
     private final ConcurrentHashMap<Byte, BytesChannel> activeChannels = new ConcurrentHashMap<>();
 
-    private final String FOLDER_OF_DOWNLOADS = "downloads";
+    public static final String FOLDER_OF_DOWNLOADS = "downloads";
 
     public ConcurrentHashMap<Byte, BytesChannel> getFileChannels() {
         return activeChannels;
