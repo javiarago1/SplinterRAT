@@ -26,7 +26,7 @@ const HomePage = () => {
                     </Typography>
 
                     <Typography paragraph>
-                        Throughout the development, my initial excitement was tempered by contemplation. The more I understood its potential, the more I found myself reflecting on its rightful place in the world. Instead of making it publicly available, I began to see SplinterRAT as a deeply personal project, born from curiosity but bounded by ethical considerations. The choice to keep it as a testament to my exploration into the world of RATs, rather than a tool for public use, was fueled by the moral responsibility that accompanies such power. In the ever-evolving world of technology, it is essential to remember that just because we can, doesn't always mean we should.
+                        Throughout the development, my initial excitement was tempered by contemplation. The more I understood its potential, the more I found myself reflecting on its rightful place in the world. Instead of making it publicly available, I began to see SplinterRAT as a deeply personal project, born from curiosity but bounded by ethical considerations. The choice to keep it as a testament to my exploration into the world of RATs, rather than a tool for public use, was fueled by the moral responsibility that accompanies such power. In the ever-evolving world of technology, it is essential to remember that just because we can, doesn&apos;t always mean we should.
                     </Typography>
 
 
