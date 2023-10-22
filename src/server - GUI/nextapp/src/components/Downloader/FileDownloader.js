@@ -7,7 +7,7 @@ function FileDownloader() {
     useEffect(() => {
         if (fileToDownload) {
             console.log("New file to download! "+fileToDownload)
-            window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_FILES_URL}/${fileToDownload}`;
+            window.location.href = `${process.env.NEXT_PUBLIC_ENDPOINT_URL}/${fileToDownload}`;
         }
     }, [fileToDownload]);
 
