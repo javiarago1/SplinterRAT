@@ -79,7 +79,7 @@ function CompilerGUI() {
         const toastId = toast.loading("Compiling...");
 
         try {
-            const response = await fetch('http://127.0.0.1:3055/compile', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT_URL}/compile`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
