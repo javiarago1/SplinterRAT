@@ -50,7 +50,7 @@ let websocket = null;
 
 const actionHandlers = {
     [WS_CONNECT]: (store) => {
-        websocket = new WebSocket( `ws://${process.env.NEXT_PUBLIC_BACKEND_URL}/web`);
+        websocket = new WebSocket( `${process.env.NEXT_PUBLIC_WS_URL}`);
         websocket.onmessage = (event) => {
             if (typeof event.data === "string")
                 handleWebSocketMessage(store, JSON.parse(event.data));
