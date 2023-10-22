@@ -116,7 +116,7 @@ export const handleRequestDirectory = (websocket, store, action) => {
 
 export const fetchChannelId = async (store, category) => {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/create-byte-channel`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT_URL}/create-byte-channel`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
