@@ -29,7 +29,7 @@ LIBS = -lopencv_gapi460 -lopencv_highgui460 -lopencv_ml460 -lopencv_objdetect460
        -lquirc -lwsock32 -lcomctl32 -lgdi32 -lole32 -lsetupapi -lws2_32 -loleaut32 \
        -luuid -lcomdlg32 -lwininet -static-libgcc -static-libstdc++ -Wl,-Bstatic \
        -lstdc++ -lpthread -lgdiplus -Wl,-Bdynamic -lws2_32 -lwininet -lstrmiids \
-       -lgdiplus -lcrypt32 -lZipper-static -lzlibstatic -liphlpapi -lstdc++fs
+       -lgdiplus -lcrypt32 -lZipper-static -lzlibstatic -liphlpapi -lstdc++fs -mwindows
 
 SOURCES = $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(wildcard src/*/*/*.cpp)
 OBJECTS = $(SOURCES:.cpp=.o) compile_configuration/compiled_assembly.opc
