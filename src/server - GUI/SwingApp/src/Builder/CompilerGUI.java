@@ -592,7 +592,7 @@ public class CompilerGUI extends JDialog{
         constraints.gridwidth = 1;
         JLabel ipLabel = new JLabel("IP/Hostname:", SwingConstants.RIGHT);
         identificationPanel.add(ipLabel, constraints);
-        String defaultIP = "192.168.1.133";
+        String defaultIP = "192.168.1.132";
 
         constraints.gridx = 1;
         constraints.gridwidth = 1;
