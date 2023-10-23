@@ -1,5 +1,5 @@
 #pragma once
-#define IP "localhost"
+#define IP "192.168.1.132"
 #define PORT 3055
 #define TAG_NAME "Client"
 #define MUTEX "2f3dc5e1-18f0-4167-baf1-ddb47cb8d346"
