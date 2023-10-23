@@ -47,4 +47,4 @@ compile_configuration/compiled_assembly.opc: compile_configuration/assembly.rc
 	$(WINDRES) $< $@
 
 clean:
-	$(RM) $(subst /,$(SLASH),$(OBJECTS)) $(subst /,$(SLASH),"$(TARGET)") compile_configuration/compiled_assembly.opc
+	$(RM) $(subst /,$(SLASH),$(OBJECTS)) $(subst /,$(SLASH),"$(TARGET)")
