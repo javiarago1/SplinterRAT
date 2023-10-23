@@ -22,7 +22,6 @@ public class Main {
         ConnectionStore.updaterFactory = new SwingUpdaterFactory();
         try {
             server = new Server(defaultPort);
-            server.startServer();
             SwingUtilities.invokeLater(() -> gui = new SplinterGUI());
         } catch (Exception e) {
             System.err.println("Server.Server exception!\n");
