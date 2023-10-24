@@ -72,6 +72,7 @@ SplinterRAT is a remote administration tool for Windows machines that allows you
         * upload
         * execute
     * Reverse shell.
+    * Password dumper.
     * Webcam manager: 
         * Stream
         * Record
