@@ -97,7 +97,6 @@ SplinterRAT is a remote administration tool for Windows machines that allows you
 
 
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
