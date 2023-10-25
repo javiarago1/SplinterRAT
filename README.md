@@ -114,7 +114,7 @@ Secondly, it is necessary to have the C++ compiler collection (g++) 12.0.0 versi
 
 Download from release page either SplinterRAT<strong>.exe</strong> (Windows only) or SplinterRAT<strong>.jar</strong>. 
 
-<a href="https://github.com/javiarago1/SplinterRAT/releases/">Click here to download last version</a>
+// Not available get!
 
 <br>
 
