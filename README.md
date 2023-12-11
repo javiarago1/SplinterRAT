@@ -50,7 +50,7 @@
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
-## Click to see demo!
+<h2>Click to see demo!</h2>
 
 [![Video](http://img.youtube.com/vi/XUY-lIyy33k/0.jpg)](http://www.youtube.com/watch?v=XUY-lIyy33k "Video Title")
 
