@@ -114,7 +114,7 @@ Secondly, it is necessary to have the C++ compiler collection (g++) 12.0.0 versi
 
 Download from release page either SplinterRAT<strong>.exe</strong> (Windows only) or SplinterRAT<strong>.jar</strong>. 
 
-// Not available get!
+<strong>50 STARS to unlock releases!</strong>
 
 <br>
 
