@@ -51,6 +51,7 @@
   </ol>
 </details>
 
+[![Video](http://img.youtube.com/vi/XUY-lIyy33k/0.jpg)](http://www.youtube.com/watch?v=XUY-lIyy33k "Video Title")
 
 <br>
 
